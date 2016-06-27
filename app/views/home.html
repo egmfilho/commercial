@@ -1,33 +1,16 @@
-<style>
+<div id="menu-home" class="">
 
-    #menu-home {
-        width: 100%;
-        max-width: 950px;
-    }
-
-    .botao-menu {
-        margin: 7px auto;
-        padding: 20px;
-        width: 300px;
-        height: 200px;
-        text-align: center;
-        font-size: 2em;
-    }
-
-    .botao-menu span {
-        font-size: 3em;
-        margin-bottom: 40px;
-    }
-
-</style>
-
-<div id="menu-home" class="container">
   <div class="row">
-    <div class="menuHighlight col-lg-4 col-md-4 col-sm-6 col-xs-12" ng-repeat="botao in botoes">
-      <div class="botao-menu fundo-verde fonte-branca" ng-click="abrirTela(botao.url)">
-        <span class="glyphicon" ng-class="botao.icone"></span>
-        <p>{{botao.nome}}</p>
+    <div class="col-md-12">
+      <div class="col-sm-6 col-md-4" ng-repeat="botao in botoes">
+        <div class="botao-menu highlight fundo-verde fonte-branca" redireciona="{{botao.url}}">
+          <div class="centerX centerY">
+            <span class="glyphicon" ng-class="botao.icone"></span>
+            <p>{{botao.nome}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
 </div>
