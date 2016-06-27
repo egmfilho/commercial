@@ -1,78 +1,3 @@
-<style>
-
-    #login {
-        width: 340px;
-        height: 320px;
-        text-align: center;
-        margin: auto;
-        display: block;
-        position: relative;
-    }
-
-    #login input {
-        width: 100%;
-        height: 50px;
-        font-size: 1.4em;
-        padding: 10px;
-    }
-
-    #login #usuario {
-        border: 1px solid #ccc;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        margin-top: 30px;
-    }
-
-    #login #senha {
-        margin-top: -1px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        -webkit-border-bottom-right-radius: 5px;
-        -webkit-border-bottom-left-radius: 5px;
-        -moz-border-radius-bottomright: 5px;
-        -moz-border-radius-bottomleft: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-    }
-
-    #login #btnlogin {
-        width: 100%;
-        margin-top: 10px;
-        font-size: 1.4em;
-        height: 50px;
-    }
-
-    #logoNomeLogin {
-        background-image: url('../images/logo_nome.png');
-        width: 100%;
-        height: 50px;
-        background-size: 20%;
-        background-repeat: no-repeat;
-        margin: 10px auto;
-        background-position: center;
-    }
-
-   #logoIconeLogin
-    {
-      background-image: url('../images/logo_icone.png');
-      width: 50px;
-      height: 50px;
-      background-size: 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin: 10px auto 0 auto;
-    }
-
-    .label {
-      font-size: 0.9em;
-    }
-
-</style>
-
 <div class="row">
     <div style="text-align: center; color: #777;">
         <alerta titulo="Aviso!" mensagem="main.erro" uib-collapse="main.erro"></alerta>
@@ -82,10 +7,8 @@
         <br>
         <div id="login" class="card">
             <h1><span class="glyphicon glyphicon-user"></span></h1>
-            <!--<div id="logoIconeLogin"></div>-->
             <input type="text" id="usuario" placeholder="Usuário" ng-model="username">
             <input type="password" id="senha" placeholder="Senha" ng-model="password">
-            <!--<span class="label label-warning" ng-if="main.erros">Usuário ou senha incorretos</span>-->
             <button id="btnlogin" class="btn btn-default" ng-click="main.login()" >Login</button>
         </div>
     </div>
