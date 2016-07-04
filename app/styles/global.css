@@ -1,0 +1,183 @@
+body {
+  background-color: #ddd;
+  padding-bottom: 100px; }
+
+.centerY {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.centerX {
+  width: 100%;
+  margin: 0 auto; }
+
+.center-absolute {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px; }
+
+.card {
+  -webkit-box-shadow: 0px 2px 4px #999;
+  -moz-box-shadow: 0px 2px 4px #999;
+  box-shadow: 0px 2px 4px #999;
+  background-color: white;
+  padding: 10px 30px; }
+
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  border: 1px solid #00a79c; }
+
+.banner {
+  background-image: url("../images/logotipo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 300px;
+  width: 100%;
+  height: 110px;
+  background-color: white; }
+
+.navbar-default {
+  background-color: #00a79c;
+  border: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  font-size: 1.2em;
+  -webkit-box-shadow: 0px 2px 4px #999;
+  -moz-box-shadow: 0px 2px 4px #999;
+  box-shadow: 0px 2px 4px #999; }
+  .navbar-default .navbar-nav {
+    float: none;
+    text-align: center; }
+    .navbar-default .navbar-nav li {
+      display: inline-block;
+      float: none; }
+      .navbar-default .navbar-nav li a, .navbar-default .navbar-nav li a:hover {
+        color: white; }
+    .navbar-default .navbar-nav li:hover {
+      background-color: #00c4c1; }
+    .navbar-default .navbar-nav .active a, .navbar-default .navbar-nav .active a:hover {
+      background-color: #008278;
+      color: white; }
+  .navbar-default .navbar-fixed-bottom {
+    color: white;
+    height: 70px;
+    padding: 10px 0px; }
+    .navbar-default .navbar-fixed-bottom div {
+      width: 100%;
+      height: 100%;
+      border-top: 1px dashed white;
+      border-bottom: 1px dashed white; }
+
+#titulo-login {
+  text-align: center;
+  color: #777; }
+
+#login {
+  width: 340px;
+  height: 320px;
+  text-align: center;
+  margin: auto;
+  display: block;
+  position: relative; }
+  #login input {
+    width: 100%;
+    height: 50px;
+    font-size: 1.4em;
+    padding: 10px;
+    z-index: 1; }
+
+#usuario {
+  border: 1px solid #ccc;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-top: 30px; }
+
+#senha {
+  z-index: 1;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-width: 0px; }
+
+#usuario:focus, #senha:focus {
+  border: 1px solid #00a79c;
+  z-index: 100; }
+
+#btn-login {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 1.4em;
+  height: 50px; }
+
+#logo-login {
+  background-image: url("../images/logo_nome.png");
+  width: 100%;
+  height: 50px;
+  background-size: 20%;
+  background-repeat: no-repeat;
+  margin: 10px auto;
+  background-position: center; }
+
+#menu-home {
+  padding: 30px; }
+
+.botao-menu {
+  margin: 14px 0;
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  font-size: 2em;
+  position: relative;
+  box-shadow: 0px 2px 4px #999;
+  background-color: #00a79c;
+  color: white; }
+
+.botao-menu:hover {
+  top: -10px;
+  box-shadow: 0px 12px 14px #999;
+  -webkit-transition: background-color 0.5s ease;
+  -moz-transition: background-color 0.5s ease;
+  -ms-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+  background-color: #00c4c1;
+  cursor: pointer;
+  cursor: hand; }
+
+.botao-menu span {
+  font-size: 2em;
+  margin-bottom: 40px; }
+
+.form-control:focus {
+  box-shadow: none;
+  border: none; }
+
+.dropdown-menu {
+  min-width: 200px;
+  width: 97.5%; }
+
+.dropdown-menu li > a {
+  color: #00a79c; }
+
+.dropdown-menu .active > a:hover,
+.dropdown-menu .active > a:focus,
+.dropdown-menu .active > a {
+  background-color: #00c4c1;
+  color: white; }
+
+/*# sourceMappingURL=global.css.map */
