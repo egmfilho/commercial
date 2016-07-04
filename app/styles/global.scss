@@ -1,0 +1,61 @@
+$cor-principal: rgb(0, 167, 156);
+$cor-highlight: rgb(0, 196, 193);
+$cor-de-fundo: #ddd;
+
+body {
+  background-color: $cor-de-fundo;
+  padding-bottom: 100px;
+}
+
+.centerY {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.centerX {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.center-absolute {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.card {
+  -webkit-box-shadow: 0px 2px 4px #999;
+  -moz-box-shadow: 0px 2px 4px #999;
+  box-shadow: 0px 2px 4px #999;
+  background-color: white;
+  padding: 10px 30px;
+}
+
+.hightlight:hover, .hightlight:focus {
+  -webkit-transition: background-color 0.5s ease;
+  -moz-transition: background-color 0.5s ease;
+  -ms-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+  background-color: $cor-highlight;
+  cursor: pointer;
+  cursor: hand;
+}
+
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  border: 1px solid $cor-principal;
+}
+
+@import 'login';
+@import 'home';
+@import 'orcamento';
+
+
+

@@ -1,0 +1,20 @@
+.form-control:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.dropdown-menu {
+  min-width: 200px;
+  width: 97.5%;
+}
+
+.dropdown-menu li > a {
+  color: rgb(0, 167, 156);
+}
+
+.dropdown-menu .active > a:hover,
+.dropdown-menu .active > a:focus,
+.dropdown-menu .active > a {
+  background-color: $cor-highlight;
+  color: white;
+}
