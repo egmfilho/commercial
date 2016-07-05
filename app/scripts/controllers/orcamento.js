@@ -7,6 +7,11 @@
 angular.module('commercialApp')
   .controller('OrcamentoCtrl', ['$scope', 'ProviderProduto', '$http', function($scope, provider, $http) {
 
+    // retira o padding que compensa o scroll se o SO for um MacOS
+    if (navigator.platform === 'MacIntel') {
+      angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
+    }
+
     $scope.produtos = [];
 
     $scope.buscaCodigo = function(codigo) {
