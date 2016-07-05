@@ -6,17 +6,113 @@
 .dropdown-menu {
   min-width: 200px;
   width: 97.5%;
+
+  li > a {
+    color: $cor-principal;
+  }
+
+  .active {
+    a, a:hover, a:focus {
+      background-color: $cor-principal;
+      color: white;
+    }
+  }
 }
 
-.dropdown-menu li > a {
-  color: $cor-principal;
+#formulario-orcamento {
+  div {
+    padding: 4px 4px;
+  }
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  h3 > a {
+    color: $cor-principal;
+  }
+
+  table {
+    border: 2px solid $cor-principal;
+    margin-bottom: 0px;
+
+    a {
+      color: $cor-principal;
+    }
+
+    thead {
+      background-color: $cor-principal;
+    }
+
+    th {
+      border-bottom: none;
+      background-color: $cor-principal;
+      color: white;
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+  }
 }
 
-.dropdown-menu .active > a:hover,
-.dropdown-menu .active > a:focus,
-.dropdown-menu .active > a {
+#tabela-orcamento {
+  thead, tbody, tr, td, th {
+    display: block;
+  }
+
+  thead tr {
+    padding-right: 18px;
+  }
+
+  th, td {
+    float: left;
+  }
+
+  tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+
+  tbody {
+    height: 225px;
+    overflow-y: scroll;
+  }
+
+  th:nth-child(1), td:nth-child(1),
+  th:nth-child(3), td:nth-child(3),
+  th:nth-child(4), td:nth-child(4),
+  th:nth-child(5), td:nth-child(5),
+  th:nth-child(6), td:nth-child(6),
+  th:nth-child(7), td:nth-child(7),
+  th:nth-child(8), td:nth-child(8),
+  th:nth-child(9), td:nth-child(9) {
+    width: 7.5%;
+  }
+
+  th:nth-child(2), td:nth-child(2) {
+    width: 40%;
+  }
+}
+
+#controle-tabela-orcamento .row {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.input-display[readonly] {
   background-color: $cor-principal;
+  font-size: 1.8em;
   color: white;
+  text-align: center;
+  height: 50px;
+  border: none;
 }
-
-@import 'tabela-orcamento';

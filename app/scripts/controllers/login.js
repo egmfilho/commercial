@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('commercialApp')
-  .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+  .controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
 
     this.erro = true;
 

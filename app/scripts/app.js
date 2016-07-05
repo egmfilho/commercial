@@ -22,14 +22,14 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/home', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',
         controlelrAs: 'home'
+      })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        controllerAs: 'login'
       })
       .when('/clientes', {
         templateUrl: 'views/cliente.html',
@@ -49,4 +49,9 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .run(['$rootScope', '$location', function($rootScope, $location) {
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      console.log('route change started!');
+    });
+  }]);
