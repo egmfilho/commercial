@@ -9,22 +9,15 @@
   text-align: center;
   font-size: 2em;
   position: relative;
-  box-shadow: 0px 2px 4px #999;
   background-color: $cor-principal;
   color: white;
+  @extend .sombra;
 }
 
 .botao-menu:hover {
   top: -10px;
   box-shadow: 0px 12px 14px #999;
-  -webkit-transition: background-color 0.5s ease;
-  -moz-transition: background-color 0.5s ease;
-  -ms-transition: background-color 0.5s ease;
-  -o-transition: background-color 0.5s ease;
-  transition: background-color 0.5s ease;
-  background-color: $cor-highlight;
-  cursor: pointer;
-  cursor: hand;
+  @extend .highlight;
 }
 
 .botao-menu span {

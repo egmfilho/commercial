@@ -1,6 +1,6 @@
 .form-control:focus {
-  box-shadow: none;
-  border: none;
+  //box-shadow: none;
+  //border: none;
 }
 
 .dropdown-menu {
@@ -9,12 +9,14 @@
 }
 
 .dropdown-menu li > a {
-  color: rgb(0, 167, 156);
+  color: $cor-principal;
 }
 
 .dropdown-menu .active > a:hover,
 .dropdown-menu .active > a:focus,
 .dropdown-menu .active > a {
-  background-color: $cor-highlight;
+  background-color: $cor-principal;
   color: white;
 }
+
+@import 'tabela-orcamento';

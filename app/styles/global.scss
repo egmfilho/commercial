@@ -1,5 +1,5 @@
-$cor-principal: rgb(0, 167, 156);
-$cor-highlight: rgb(0, 196, 193);
+$cor-principal: #3b5998; //rgb(0, 167, 156);
+$cor-highlight: #29487d; //rgb(0, 196, 193);
 $cor-active:    rgb(0, 130, 120);
 $cor-de-fundo:  #ddd;
 
@@ -31,27 +31,33 @@ body {
   left: 0px;
 }
 
-.card {
+.highlight {
+  -webkit-transition: background-color 0.5s ease;
+  -moz-transition: background-color 0.5s ease;
+  -ms-transition: background-color 0.5s ease;
+  -o-transition: background-color 0.5s ease;
+  transition: background-color 0.5s ease;
+  background-color: $cor-highlight;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.sombra {
   -webkit-box-shadow: 0px 2px 4px #999;
   -moz-box-shadow: 0px 2px 4px #999;
   box-shadow: 0px 2px 4px #999;
+}
+
+.card {
+  @extend .sombra;
   background-color: white;
   padding: 10px 30px;
 }
 
-//.hightlight:hover, .hightlight:focus {
-//  -webkit-transition: background-color 0.5s ease;
-//  -moz-transition: background-color 0.5s ease;
-//  -ms-transition: background-color 0.5s ease;
-//  -o-transition: background-color 0.5s ease;
-//  transition: background-color 0.5s ease;
-//  background-color: $cor-highlight;
-//  cursor: pointer;
-//  cursor: hand;
-//}
-
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
+  outline: none;
   border: 1px solid $cor-principal;
+  box-shadow: 0 0 6px $cor-principal;
 }
 
 @import 'header';
