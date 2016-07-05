@@ -5,9 +5,9 @@
 'use strict';
 
 angular.module('commercialApp')
-  .controller('OrcamentoCtrl', ['$scope', 'ProviderProduto', '$http', function($scope, provider, $http) {
+  .controller('OrcamentoCtrl', ['$scope', 'ProviderProduto', function($scope, provider) {
 
-    // retira o padding que compensa o scroll se o SO for um MacOS
+    // retira o padding-right que compensa o scroll se o SO for um MacOS
     if (navigator.platform === 'MacIntel') {
       angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
     }
