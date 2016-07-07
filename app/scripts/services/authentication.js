@@ -5,9 +5,10 @@ angular.module('commercialApp')
     '$http',
     '$cookieStore',
     '$rootScope',
-    function($http, $cookieStore, $rootScope) {
+    'URLS',
+    function($http, $cookieStore, $rootScope, URLS) {
 
-      var service = { };
+      var service = {};
 
       service.login = Login;
       service.setCredentials = SetCredentials;
@@ -17,9 +18,17 @@ angular.module('commercialApp')
 
       function Login(username, password, callback) {
 
-        $http.post('/api/', { username: username, password: password })
-          .success(function(response) {
-            callback(response);
+        console.log('usuario: ' + username);
+        console.log('senha: ' + password);
+
+        $http({
+          method: 'POST',
+          url: URLS.login,
+          data: { user: username, pass: password }
+          //headers: { }
+        }).success(function(response) {
+            console.log('response: ' + response);
+            //callback(response);
           });
 
       }
@@ -34,14 +43,14 @@ angular.module('commercialApp')
           }
         };
 
-
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
         $cookieStore.put('globals', $rootScope.globals);
       }
 
       function ClearCredentials() {
         $rootScope.globals = { };
         $cookieStore.remove('globals');
-
+        $http.defaults.headers.common.Authorization = 'Basic';
       }
 
     }]);

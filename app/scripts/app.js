@@ -52,6 +52,10 @@ angular
   })
   .run(['$rootScope', '$location', function($rootScope, $location) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
-      console.log('route change started!');
+      if ($rootScope.globals == null || $rootScope.globals.currentUser == null) {
+        if (next.templateUrl != 'views/login.html') {
+          $location.path('/login');
+        }
+      }
     });
   }]);
