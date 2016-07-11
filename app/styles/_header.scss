@@ -1,5 +1,5 @@
 .banner {
-  //background-image: url('../images/logotipo.png');
+  background-image: url('../images/logotipo.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 300px;
@@ -26,8 +26,11 @@
       display: inline-block;
       float: none;
 
-      a, a:hover, a:focus {
+      a {
         color: white;
+        &:hover, &:focus {
+          color: white;
+        }
       }
     }
 
@@ -36,9 +39,11 @@
     }
 
     .active {
-      a, a:hover {
-        background-color: $cor-active;
-        color: white;
+      a {
+        &:hover {
+          background-color: $cor-active;
+          color: white;
+        }
       }
     }
   }

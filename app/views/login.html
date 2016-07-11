@@ -1,11 +1,11 @@
+<alerta titulo="Aviso!" mensagem="{{login.erro}}" uib-collapse="{{login.erro}}"></alerta>
 <div class="row">
-    <div id="titulo-login">
-        <alerta titulo="Aviso!" mensagem="login.erro" uib-collapse="login.erro"></alerta>
+    <div id="login">
         <div id="logo-login"></div>
         <br>
         <h4>Digite seu nome de usuário e senha</h4>
         <br>
-        <div id="login" class="card">
+        <div id="form-login" class="card">
             <h1><span class="glyphicon glyphicon-user"></span></h1>
             <input type="text" id="usuario" placeholder="Usuário" ng-model="username">
             <input type="password" id="senha" placeholder="Senha" ng-model="password">

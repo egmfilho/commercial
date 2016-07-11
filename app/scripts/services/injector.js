@@ -1,5 +1,5 @@
 /**
- * Created by egmfilho on 07/07/16.
+ * Created by egmfilho on 11/07/16.
  */
 
 'use strict';
@@ -65,11 +65,13 @@ angular.module('commercialApp')
         expiration.setDate(expiration.getDate() + 1);
         //expiration.setSeconds(expiration.getSeconds() + 10);
 
+        //$http.defaults.headers.common['user-session-id'] = token;
         $cookies.putObject('currentUser', data, { 'expires': expiration });
       }
 
       function ClearCredentials() {
         $cookies.remove('currentUser');
+        //$http.defaults.headers.common.Authorization = 'Basic';
       }
 
     }]);

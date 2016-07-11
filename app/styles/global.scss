@@ -60,6 +60,39 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   box-shadow: 0 0 6px $cor-principal;
 }
 
+alerta {
+  @extend .center-absolute;
+  text-align: center;
+}
+
+.tabela {
+  border: 2px solid $cor-principal;
+  margin-bottom: 0px;
+
+  a {
+    color: $cor-principal;
+  }
+
+  thead {
+    background-color: $cor-principal;
+  }
+
+  th {
+    border-bottom: none;
+    background-color: $cor-principal;
+    color: white;
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f0f0f0;
+  }
+}
+
 @import 'header';
 @import 'login';
 @import 'home';

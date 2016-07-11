@@ -24,7 +24,7 @@ angular
       .when('/', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',
-        controlelrAs: 'home'
+        controllerAs: 'home'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -34,12 +34,12 @@ angular
       .when('/clientes', {
         templateUrl: 'views/cliente.html',
         controller: 'ClienteCtrl',
-        controlelrAs: 'cliente'
+        controllerAs: 'cliente'
       })
       .when('/orcamento', {
         templateUrl: 'views/orcamento.html',
         controller: 'OrcamentoCtrl',
-        controlelrAs: 'orcamento'
+        controllerAs: 'orcamento'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -50,12 +50,19 @@ angular
         redirectTo: '/'
       });
   })
+  //.run(['$rootScope', function($rootScope) {
+  //  $rootScope.teste = false;
+  //}])
   .run(['$rootScope', '$location', function($rootScope, $location) {
+
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      $rootScope.currentPath = $location.path();
+
       if ($rootScope.globals == null || $rootScope.globals.currentUser == null) {
         if (next.templateUrl != 'views/login.html') {
           $location.path('/login');
         }
       }
     });
+
   }]);
