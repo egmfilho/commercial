@@ -1,4 +1,5 @@
-<a ng-href="{{match.model.buscar}}">
-  <span ng-if="!match.model.buscar">{{match.model.CdProduto}} - </span>
+<!--<a ng-href="{{match.model.buscar}}" press-enter="match.model.action()">-->
+<a href="">
+  <span ng-if="match.model.CdProduto != -1">{{match.model.CdProduto}} - </span>
   <span ng-bind-html="match.model.NmProduto | uibTypeaheadHighlight:query"></span>
 </a>

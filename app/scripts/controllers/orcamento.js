@@ -12,17 +12,40 @@ angular.module('commercialApp')
       angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
     }
 
-    $scope.produtos = [];
+    function limparDados() {
+      $scope.cdProduto = '';
+      $scope.nmProduto = '';
+    }
 
-    $scope.buscaCodigo = function(codigo) {
+    this.produtos = [];
+
+    this.selectProduto = function(item) {
+
+      if (item.CdProduto == -1) {
+        alert('mais resultados');
+        $scope.nmProduto = '';
+      } else {
+        this.buscaCodigo(item.CdProduto);
+      }
 
     };
 
-    $scope.buscaDescricao = function(descricao) {
+    this.buscaCodigo = function(codigo) {
+
+      provider.obterProdutoPorCodigo(codigo).then(function(data) {
+        console.log(data);
+        $scope.cdProduto = data[0].CdProduto;
+        $scope.nmProduto = data[0].NmProduto;
+      }, function(err) {
+        console.log(err);
+      });
+
+    };
+
+    this.buscaDescricao = function(descricao) {
 
         return provider.obterProdutosPorDescricao(descricao).then(function(data) {
-          data.push({ NmProduto: 'Mais resultados...', buscar: '#/home'});
-          console.log(data);
+          data.push({ NmProduto: 'Mais resultados...', CdProduto: -1});
           return data;
         }, function(err) {
           console.log(err);

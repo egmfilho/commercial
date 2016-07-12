@@ -5,7 +5,7 @@
 angular.module('commercialApp')
   .provider('ProviderProduto', [function() {
 
-    var url = 'http://enterprise/commercial/public/teste.php?action=productSearch&:parametro=:valor&limit=:limite',
+    var url = 'http://enterprise/commercial/public/order.php?action=:action&:parametro=:valor&limit=:limite',
         provider = null;
 
       this.$get = ['$resource', function($resource) {
@@ -20,16 +20,25 @@ angular.module('commercialApp')
         return {
           obterProdutosPorDescricao: function(produto) {
             return provider.query({
+              action: 'searchProduct',
               parametro: 'NmProduto',
               valor: produto,
               limite: 10
             }).$promise;
           },
-          obterProdutosPorCodigo: function(codigo) {
+          obterProdutoPorCodigo: function(codigo) {
             return provider.query({
+              action: 'getProduct',
               parametro: 'CdProduto',
               valor: codigo,
               limite: ''
+            }).$promise;
+          },
+          obterProdutoPorId: function(id) {
+            return provider.query({
+              action: 'getProduct',
+              parametro: 'IdProduto',
+              valor: id
             }).$promise;
           }
         }

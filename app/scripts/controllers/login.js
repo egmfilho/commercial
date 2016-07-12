@@ -5,6 +5,12 @@ angular.module('commercialApp')
 
     this.erro = 'O servidor encontra-se em manutenção. Tente novamente mais tarde.';
 
+    //var elem = document.getElementById('login');
+    //
+    //$(window).resize(function() {
+    //  elem.style.transform = 'translateY(' + Math.round((window.innerHeight - elem.style.height) / 4) + 'px)';
+    //});
+
     this.login = function() {
 
       authentication.login($scope.username, $scope.password, function(response) {

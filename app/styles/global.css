@@ -108,11 +108,7 @@ alerta {
 #login {
   text-align: center;
   color: #777;
-  -webkit-transform: translateY(50%);
-  -moz-transform: translateY(50%);
-  -ms-transform: translateY(50%);
-  -o-transform: translateY(50%);
-  transform: translateY(50%); }
+  margin: auto; }
 
 #form-login {
   width: 340px;
@@ -200,9 +196,15 @@ alerta {
   width: 97.5%; }
   .dropdown-menu li > a {
     color: #3b5998; }
-  .dropdown-menu .active a a:hover, .dropdown-menu .active a a:focus {
+    .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
+      background-color: #3b5998;
+      color: white; }
+  .dropdown-menu > .active a {
     background-color: #3b5998;
     color: white; }
+    .dropdown-menu > .active a:hover, .dropdown-menu > .active a:focus {
+      background-color: #3b5998;
+      color: white; }
 
 #formulario-orcamento div {
   padding: 4px 4px; }

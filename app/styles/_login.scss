@@ -1,11 +1,13 @@
 #login {
+  //$y: 20%;
   text-align: center;
   color: #777;
-  -webkit-transform: translateY(50%);
-  -moz-transform: translateY(50%);
-  -ms-transform: translateY(50%);
-  -o-transform: translateY(50%);
-  transform: translateY(50%);
+  //-webkit-transform: translateY($y);
+  //-moz-transform: translateY($y);
+  //-ms-transform: translateY($y);
+  //-o-transform: translateY($y);
+  //transform: translateY($y);
+  margin: auto;
 }
 
 #form-login {

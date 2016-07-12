@@ -60,7 +60,7 @@ angular
 
       if ($rootScope.globals == null || $rootScope.globals.currentUser == null) {
         if (next.templateUrl != 'views/login.html') {
-          $location.path('/login');
+          //$location.path('/login');
         }
       }
     });

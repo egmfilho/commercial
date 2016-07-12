@@ -9,15 +9,24 @@
 
   li > a {
     color: $cor-principal;
+
+    &:hover, &:focus {
+      background-color: $cor-principal;
+      color: white;
+    }
   }
 
-  .active {
+  > .active {
     a {
-      a:hover, a:focus {
+      background-color: $cor-principal;
+      color: white;
+
+      &:hover, &:focus {
         background-color: $cor-principal;
         color: white;
       }
     }
+
   }
 }
 
