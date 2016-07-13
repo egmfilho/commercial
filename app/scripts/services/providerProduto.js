@@ -13,6 +13,11 @@ angular.module('commercialApp')
           get: {
             method: 'GET',
             headers: '',
+            isArray: false
+          },
+          query: {
+            method: 'GET',
+            headers: '',
             isArray: true
           }
         });
@@ -27,15 +32,14 @@ angular.module('commercialApp')
             }).$promise;
           },
           obterProdutoPorCodigo: function(codigo) {
-            return provider.query({
+            return provider.get({
               action: 'getProduct',
               parametro: 'CdProduto',
               valor: codigo,
-              limite: ''
             }).$promise;
           },
           obterProdutoPorId: function(id) {
-            return provider.query({
+            return provider.get({
               action: 'getProduct',
               parametro: 'IdProduto',
               valor: id

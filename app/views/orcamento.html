@@ -56,53 +56,62 @@
       <div class="col-xs-3 col-sm-2">
         <div><h4 class="fonte-verde">Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Código" aria-describedby="basic-addon2" ng-model="cdProduto" press-enter="orcamento.buscaCodigo(cdProduto)">
+          <input type="text" class="form-control" placeholder="Código" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaCodigo(produto.cdProduto)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaCodigo(produto.cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
       <div class="col-xs-5 col-sm-7">
         <div><h4 class="fonte-verde">Descrição</h4></div>
         <div>
-          <input type="text" class="form-control" ng-model="nmProduto"
+          <input type="text" class="form-control" ng-model="produto.nmProduto"
                  uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaDescricao($viewValue)"
                  typeahead-template-url="../partials/produtosTypeaheadPopup.html"
                  typeahead-min-length="3"
                  typeahead-loading="orcamento.carregandoProdutos"
                  typeahead-wait-ms="100";
-                 typeahead-on-select="orcamento.selectProduto($item); asyncSelected = '';" required>
+                 typeahead-on-select="orcamento.selectProduto($item);" required>
         </div>
       </div>
       <div class="col-xs-4 col-sm-3">
         <div><h4 class="fonte-verde">Valor unitário</h4></div>
-        <div>
-          <input type="text" class="form-control" readonly="true" tabindex="-1">
+        <div class="input-group">
+          <span class="input-group-addon">R$</span>
+          <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.vlPreco">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4 class="fonte-verde">Quantidade</h4></div>
-        <div>
-          <input type="text" class="form-control">
+        <div class="input-group">
+          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.updateTotal()">
+          <span class="input-group-addon" ng-if="produto.unidade">{{produto.unidade}}</span>
+          <span class="input-group-addon" ng-if="!produto.unidade">(un)</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4 class="fonte-verde">Desconto %</h4></div>
-        <div>
-          <input type="text" class="form-control">
+        <div class="input-group">
+          <input type="number" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.updateTotal()">
+          <span class="input-group-addon">%</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4 class="fonte-verde">Desconto R$</h4></div>
-        <div>
-          <input type="text" class="form-control">
+        <div class="input-group">
+          <span class="input-group-addon">R$</span>
+          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.updateTotal()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4 class="fonte-verde">Total</h4></div>
-        <div>
-          <input type="text" class="form-control" readonly="true" tabindex="-1">
+        <div class="input-group">
+          <span class="input-group-addon">R$</span>
+          <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.total">
         </div>
+        <!--<div style="text-align: center; background-color: #0040D0; height: 34px; margin: 3px 2px;border-radius: 5px; padding-top: 5px; font-size: 1.2em; color: white;">-->
+          <!--{{100.00 | currency : "R$ "}}-->
+        <!--</div>-->
       </div>
     </div>
   <!--</div>-->
