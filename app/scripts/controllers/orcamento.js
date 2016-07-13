@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp')
-  .controller('OrcamentoCtrl', ['$scope', '$filter', 'ProviderProduto', function($scope, $filter, provider) {
+  .controller('OrcamentoCtrl', ['$scope', 'ProviderProduto', function($scope, provider) {
 
     // retira o padding-right que compensa o scroll se o SO for um MacOS
     if (navigator.platform === 'MacIntel') {
@@ -17,10 +17,14 @@ angular.module('commercialApp')
     });
 
     function limparDados() {
-      //$scope.produto.cdProduto = '';
-      //$scope.produto.nmProduto = '';
-      //$scope.produto.vlPreco = '';
-      //$scope.produto.unidade = 'und';
+      $scope.produto.cdProduto = '';
+      $scope.produto.nmProduto = '';
+      $scope.produto.vlPreco = '';
+      $scope.produto.unidade = '';
+      $scope.produto.quantidade = 0;
+      $scope.produto.desconto_percent = 0;
+      $scope.produto.desconto_dinheiro = 0;
+      $scope.produto.total = 0;
     }
 
     this.produtos = [];
@@ -36,7 +40,14 @@ angular.module('commercialApp')
 
     };
 
-    this.updateTotal = function() {
+    this.recalcular = function(campo) {
+
+      if (campo === 'desconto_dinheiro') {
+        $scope.produto.desconto_percent = ($scope.produto.desconto_dinheiro  * 100) / $scope.produto.vlPreco;
+      } else if (campo === 'desconto_percent') {
+        $scope.produto.desconto_dinheiro = ($scope.produto.vlPreco * $scope.produto.quantidade) * ($scope.produto.desconto_percent / 100);
+      }
+
       $scope.produto.total = ($scope.produto.vlPreco * $scope.produto.quantidade) - $scope.produto.desconto_dinheiro;
     };
 

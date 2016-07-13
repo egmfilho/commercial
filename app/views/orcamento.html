@@ -9,7 +9,7 @@
   <div class="row card">
     <div class="col-lg-4 col-md-4">
       <div class="col-xs-3 col-sm-2 col-md-4">
-        <div><h4 class="fonte-verde">Vendedor</h4></div>
+        <div><h4>Vendedor</h4></div>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Cod" aria-describedby="basic-addon2">
           <span class="input-group-btn">
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="col-xs-9 col-sm-10 col-md-8">
-        <div><h4 class="fonte-verde">Nome</h4></div>
+        <div><h4>Nome</h4></div>
         <div>
           <input type="text" class="form-control" readonly="true" tabindex="-1">
         </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="col-lg-8 col-md-8">
       <div class="col-xs-3 col-sm-2">
-        <div><h4 class="fonte-verde">Cliente</h4></div>
+        <div><h4>Cliente</h4></div>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Cod" aria-describedby="basic-addon2">
           <span class="input-group-btn">
@@ -35,13 +35,13 @@
         </div>
       </div>
       <div class="col-xs-5 col-sm-7">
-        <div><h4 class="fonte-verde">Nome</h4></div>
+        <div><h4>Nome</h4></div>
         <div id="nome-cliente">
           <input type="text" class="form-control" readonly="true" tabindex="-1">
         </div>
       </div>
       <div class="col-xs-4 col-sm-3">
-        <div><h4 class="fonte-verde">Telefone</h4></div>
+        <div><h4>Telefone</h4></div>
         <div id="tel-cliente">
           <input type="text" class="form-control" readonly="true" tabindex="-1">
         </div>
@@ -54,7 +54,7 @@
   <div class="row card">
     <div class="col-md-12" id="controle-tabela-orcamento">
       <div class="col-xs-3 col-sm-2">
-        <div><h4 class="fonte-verde">Código</h4></div>
+        <div><h4>Código</h4></div>
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Código" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaCodigo(produto.cdProduto)">
           <span class="input-group-btn">
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="col-xs-5 col-sm-7">
-        <div><h4 class="fonte-verde">Descrição</h4></div>
+        <div><h4>Descrição</h4></div>
         <div>
           <input type="text" class="form-control" ng-model="produto.nmProduto"
                  uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaDescricao($viewValue)"
@@ -75,43 +75,40 @@
         </div>
       </div>
       <div class="col-xs-4 col-sm-3">
-        <div><h4 class="fonte-verde">Valor unitário</h4></div>
+        <div><h4>Valor unitário</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
           <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.vlPreco">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
-        <div><h4 class="fonte-verde">Quantidade</h4></div>
+        <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.updateTotal()">
+          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.recalcular()">
           <span class="input-group-addon" ng-if="produto.unidade">{{produto.unidade}}</span>
           <span class="input-group-addon" ng-if="!produto.unidade">(un)</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
-        <div><h4 class="fonte-verde">Desconto %</h4></div>
+        <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.updateTotal()">
+          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.recalcular('desconto_percent')">
           <span class="input-group-addon">%</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
-        <div><h4 class="fonte-verde">Desconto R$</h4></div>
+        <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.updateTotal()">
+          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.recalcular('desconto_dinheiro')">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
-        <div><h4 class="fonte-verde">Total</h4></div>
+        <div><h4>Total</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
           <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.total">
         </div>
-        <!--<div style="text-align: center; background-color: #0040D0; height: 34px; margin: 3px 2px;border-radius: 5px; padding-top: 5px; font-size: 1.2em; color: white;">-->
-          <!--{{100.00 | currency : "R$ "}}-->
-        <!--</div>-->
       </div>
     </div>
   <!--</div>-->
@@ -149,15 +146,15 @@
         <div class="col-md-4"></div>
         <div class="col-md-8">
           <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4 class="fonte-verde">Desconto R$</h4></div>
+            <div><h4>Desconto R$</h4></div>
             <input type="text" class="form-control input-display" readonly="true">
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4 class="fonte-verde">Desconto %</h4></div>
+            <div><h4>Desconto %</h4></div>
             <input type="text" class="form-control input-display" readonly="true">
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4 class="fonte-verde">Total do pedido</h4></div>
+            <div><h4>Total do pedido</h4></div>
             <input type="text" class="form-control input-display" readonly="true">
           </div>
         </div>
@@ -169,7 +166,7 @@
   <br>
   <div class="row card">
     <div class="col-md-12">
-      <div><h3 class="fonte-verde">Pagamento <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></h3></div>
+      <div><h3>Pagamento <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></h3></div>
       <div class="">
         <table class="table" id="tabela-pagamento">
           <thead>

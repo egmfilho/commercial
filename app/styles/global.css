@@ -210,9 +210,14 @@ alerta {
   padding: 4px 4px; }
 #formulario-orcamento h4 {
   margin-top: 0;
-  margin-bottom: 0; }
-#formulario-orcamento h3 > a {
+  margin-bottom: 0;
   color: #3b5998; }
+#formulario-orcamento h3 {
+  color: #3b5998; }
+  #formulario-orcamento h3 > a {
+    color: #3b5998; }
+#formulario-orcamento .input-group input {
+  text-align: right; }
 
 #tabela-orcamento thead, #tabela-orcamento tbody, #tabela-orcamento tr, #tabela-orcamento td, #tabela-orcamento th {
   display: block; }

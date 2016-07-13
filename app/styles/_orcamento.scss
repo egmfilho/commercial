@@ -38,11 +38,19 @@
   h4 {
     margin-top: 0;
     margin-bottom: 0;
+    color: $cor-principal;
   }
 
   h3 {
+    color: $cor-principal;
     > a {
       color: $cor-principal;
+    }
+  }
+
+  .input-group {
+    input {
+      text-align: right;
     }
   }
 }

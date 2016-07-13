@@ -12,7 +12,7 @@ angular.module('commercialApp')
         ngModelController.$parsers.push(function(data) {
           // converte o dado no formato da view para o formato do model
           if (data) {
-            return data.toString().replace(',', '.');
+            return (Math.round(data * 100) / 100).toString().replace(',', '.');
           } else {
             return data;
           }
@@ -21,7 +21,7 @@ angular.module('commercialApp')
         ngModelController.$formatters.push(function(data) {
           // converte o dado do modelo do formato para o modelo da view
           if (data) {
-            return data.toString().replace('.', ',');
+            return (Math.round(data * 100) / 100).toString().replace('.', ',');
           } else {
             return data;
           }
