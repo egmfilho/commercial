@@ -40,11 +40,11 @@ angular.module('commercialApp')
 
     };
 
-    this.recalcular = function(campo) {
+    this.recalcular = function(campoAlterado) {
 
-      if (campo === 'desconto_dinheiro') {
-        $scope.produto.desconto_percent = ($scope.produto.desconto_dinheiro  * 100) / $scope.produto.vlPreco;
-      } else if (campo === 'desconto_percent') {
+      if (campoAlterado === 'desconto_dinheiro') {
+        $scope.produto.desconto_percent = ($scope.produto.desconto_dinheiro  * 100) / ($scope.produto.vlPreco * $scope.produto.quantidade);
+      } else if (campoAlterado === 'desconto_percent' || campoAlterado === 'quantidade') {
         $scope.produto.desconto_dinheiro = ($scope.produto.vlPreco * $scope.produto.quantidade) * ($scope.produto.desconto_percent / 100);
       }
 
@@ -54,7 +54,6 @@ angular.module('commercialApp')
     this.buscaCodigo = function(codigo) {
 
       provider.obterProdutoPorCodigo(codigo).then(function(data) {
-        console.log(data);
         $scope.produto.cdProduto = data.CdProduto;
         $scope.produto.nmProduto = data.NmProduto;
         $scope.produto.vlPreco = data.VlPreco;
