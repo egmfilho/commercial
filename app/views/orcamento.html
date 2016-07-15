@@ -6,44 +6,86 @@
 
 <div id="formulario-orcamento">
 
+  <!--VENDEDOR-->
   <div class="row card">
-    <div class="col-lg-4 col-md-4">
-      <div class="col-xs-3 col-sm-2 col-md-4">
-        <div><h4>Vendedor</h4></div>
+    <div class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor">
+      <div class="head">
+        <h3>Vendedor
+          <span ng-if="!formularios.vendedor && orcamento.vendedor.nmVendedor"> &raquo; ({{orcamento.vendedor.cdVendedor}} - {{orcamento.vendedor.nmVendedor}})</span>
+          <span ng-if="formularios.vendedor" class="glyphicon glyphicon-menu-up"></span>
+          <span ng-if="!formularios.vendedor" class="glyphicon glyphicon-menu-down"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-12" uib-collapse="!formularios.vendedor">
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Cod" aria-describedby="basic-addon2">
+          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="orcamento.vendedor.cdVendedor" press-enter="orcamento.buscaVendedorPorCodigo(orcamento.vendedor.cdVendedor)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo(orcamento.vendedor.cdVendedor)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
-      <div class="col-xs-9 col-sm-10 col-md-8">
+      <div class="col-xs-9 col-sm-9">
         <div><h4>Nome</h4></div>
         <div>
-          <input type="text" class="form-control" readonly="true" tabindex="-1">
+          <input type="text" class="form-control" tabindex="-1" ng-model="orcamento.vendedor.nmVendedor">
         </div>
       </div>
     </div>
-    <div class="col-lg-8 col-md-8">
-      <div class="col-xs-3 col-sm-2">
-        <div><h4>Cliente</h4></div>
+  </div>
+
+  <!--CLIENTE-->
+  <br>
+  <div class="row card">
+    <div class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente">
+      <div class="head">
+        <h3>Cliente
+          <span ng-if="!formularios.cliente && orcamento.cliente.nmCliente"> &raquo; ({{orcamento.cliente.cdCliente}} - {{orcamento.cliente.nmCliente}})</span>
+          <span ng-if="formularios.cliente" class="glyphicon glyphicon-menu-up"></span>
+          <span ng-if="!formularios.cliente" class="glyphicon glyphicon-menu-down"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-12" uib-collapse="!formularios.cliente">
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Cod" aria-describedby="basic-addon2">
+          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="orcamento.cliente.cdCliente" press-enter="orcamento.buscaClientePorCodigo(orcamento.cliente.cdCliente)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(orcamento.cliente.cdCliente)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
-      <div class="col-xs-5 col-sm-7">
+      <div class="col-xs-9 col-sm-9">
         <div><h4>Nome</h4></div>
         <div id="nome-cliente">
-          <input type="text" class="form-control" readonly="true" tabindex="-1">
+          <input type="text" class="form-control" ng-model="orcamento.cliente.nmCliente">
         </div>
       </div>
-      <div class="col-xs-4 col-sm-3">
+      <div class="col-xs-3 col-sm-3">
         <div><h4>Telefone</h4></div>
         <div id="tel-cliente">
-          <input type="text" class="form-control" readonly="true" tabindex="-1">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Celular</h4></div>
+        <div id="cel-cliente">
+          <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Email</h4></div>
+        <div id="email-cliente">
+          <input type="text" class="form-control" ng-model="orcamento.orcamentocliente.email">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Alguma coisa</h4></div>
+        <div id="">
+          <input type="text" class="form-control">
         </div>
       </div>
     </div>
@@ -52,21 +94,29 @@
   <!--PRODUTOS-->
   <br>
   <div class="row card">
-    <div class="col-md-12" id="controle-tabela-orcamento">
-      <div class="col-xs-3 col-sm-2">
+    <div class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos">
+      <div class="head">
+        <h3>Produtos
+          <span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span>
+          <span ng-if="!formularios.produtos" class="glyphicon glyphicon-menu-down"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-12" id="controle-tabela-orcamento" uib-collapse="!formularios.produtos">
+      <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Código" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaCodigo(produto.cdProduto)">
+          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaProdutoPorCodigo(produto.cdProduto)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaCodigo(produto.cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(produto.cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
-      <div class="col-xs-5 col-sm-7">
+      <div class="col-xs-5 col-sm-6">
         <div><h4>Descrição</h4></div>
         <div>
           <input type="text" class="form-control" ng-model="produto.nmProduto"
-                 uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaDescricao($viewValue)"
+                 uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaProdutoPorDescricao($viewValue)"
                  typeahead-template-url="../partials/produtosTypeaheadPopup.html"
                  typeahead-min-length="3"
                  typeahead-loading="orcamento.carregandoProdutos"
@@ -111,9 +161,8 @@
         </div>
       </div>
     </div>
-  <!--</div>-->
-  <!--<div class="row">-->
-    <div class="col-md-12">
+    <!--TABELA PRODUTOS-->
+    <div class="col-md-12" uib-collapse="!formularios.produtos">
       <div class="">
         <table id="tabela-orcamento" class="table">
           <thead>
@@ -130,15 +179,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">
-              <td>001</td>
-              <td>Teste teste teste teste teste teste.</td>
-              <td>1</td>
-              <td>1</td>
-              <td>10,00</td>
-              <td>10%</td>
-              <td>9,00</td>
-              <td>9,00</td>
+            <tr ng-repeat="produto in orcamento.produtos">
+              <td>{{produto.cdProduto}}</td>
+              <td>{{produto.nmProduto}}</td>
+              <td>{{produto.unindade}}</td>
+              <td>{{produto.quantidade}}</td>
+              <td>{{produto.vlPreco}}</td>
+              <td>{{produto.desconto_percent}}</td>
+              <td>{{produto.desconto_dinheiro}}</td>
+              <td>{{produto.total}}</td>
               <td><a href="" tabindex="-1"><span class="glyphicon glyphicon-trash"></span></a></td>
             </tr>
           </tbody>
@@ -165,8 +214,17 @@
   <!--PAGAMENTO-->
   <br>
   <div class="row card">
+    <div class="col-md-12" ng-init="formularios.pagamentos = true" ng-click="formularios.pagamentos = !formularios.pagamentos">
+      <div class="head">
+        <h3>Pagamento
+          <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a>
+          <span ng-if="formularios.pagamentos" class="glyphicon glyphicon-menu-up"></span>
+          <span ng-if="!formularios.pagamentos" class="glyphicon glyphicon-menu-down"></span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-md-12" uib-collapse="!formularios.pagamentos">
     <div class="col-md-12">
-      <div><h3>Pagamento <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></h3></div>
       <div class="">
         <table class="table" id="tabela-pagamento">
           <thead>

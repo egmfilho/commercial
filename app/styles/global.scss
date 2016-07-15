@@ -1,7 +1,8 @@
-$cor-principal: #3b5998; //rgb(0, 167, 156);
-$cor-highlight: #29487d; //rgb(0, 196, 193);
-$cor-active:    rgb(0, 130, 120);
-$cor-de-fundo:  #ddd;
+$cor-principal:       #3b5998; //rgb(0, 167, 156);
+$cor-principal-clara: #6481bb;
+$cor-highlight:       #29487d; //rgb(0, 196, 193);
+$cor-active:          rgb(0, 130, 120);
+$cor-de-fundo:        #ddd;
 
 body {
   background-color: $cor-de-fundo;
@@ -56,8 +57,8 @@ body {
 
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
-  border: 1px solid $cor-principal;
-  box-shadow: 0 0 6px $cor-principal;
+  border: 1px solid $cor-principal-clara;
+  box-shadow: 0 0 6px $cor-principal-clara;
 }
 
 alerta {
@@ -66,20 +67,20 @@ alerta {
 }
 
 .tabela {
-  border: 2px solid $cor-principal;
+  border: 2px solid $cor-principal-clara;
   margin-bottom: 0px;
 
   a {
-    color: $cor-principal;
+    color: $cor-principal-clara;
   }
 
   thead {
-    background-color: $cor-principal;
+    background-color: $cor-principal-clara;
   }
 
   th {
     border-bottom: none;
-    background-color: $cor-principal;
+    background-color: $cor-principal-clara;
     color: white;
     text-align: center;
   }

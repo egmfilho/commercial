@@ -43,22 +43,22 @@ body {
 
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
-  border: 1px solid #3b5998;
-  box-shadow: 0 0 6px #3b5998; }
+  border: 1px solid #6481bb;
+  box-shadow: 0 0 6px #6481bb; }
 
 alerta {
   text-align: center; }
 
 .tabela, #tabela-orcamento, #tabela-pagamento {
-  border: 2px solid #3b5998;
+  border: 2px solid #6481bb;
   margin-bottom: 0px; }
   .tabela a, #tabela-orcamento a, #tabela-pagamento a {
-    color: #3b5998; }
+    color: #6481bb; }
   .tabela thead, #tabela-orcamento thead, #tabela-pagamento thead {
-    background-color: #3b5998; }
+    background-color: #6481bb; }
   .tabela th, #tabela-orcamento th, #tabela-pagamento th {
     border-bottom: none;
-    background-color: #3b5998;
+    background-color: #6481bb;
     color: white;
     text-align: center; }
   .tabela td, #tabela-orcamento td, #tabela-pagamento td {
@@ -195,15 +195,15 @@ alerta {
   min-width: 200px;
   width: 97.5%; }
   .dropdown-menu li > a {
-    color: #3b5998; }
+    color: #6481bb; }
     .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
-      background-color: #3b5998;
+      background-color: #6481bb;
       color: white; }
   .dropdown-menu > .active a {
-    background-color: #3b5998;
+    background-color: #6481bb;
     color: white; }
     .dropdown-menu > .active a:hover, .dropdown-menu > .active a:focus {
-      background-color: #3b5998;
+      background-color: #6481bb;
       color: white; }
 
 #formulario-orcamento div {
@@ -211,11 +211,18 @@ alerta {
 #formulario-orcamento h4 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #3b5998; }
-#formulario-orcamento h3 {
-  color: #3b5998; }
-  #formulario-orcamento h3 > a {
-    color: #3b5998; }
+  color: #6481bb; }
+#formulario-orcamento .head {
+  color: white;
+  background-color: #6481bb;
+  cursor: hand;
+  cursor: pointer; }
+  #formulario-orcamento .head h3 {
+    margin: 10px; }
+  #formulario-orcamento .head a {
+    color: white; }
+  #formulario-orcamento .head .glyphicon-menu-up, #formulario-orcamento .head .glyphicon-menu-down {
+    float: right; }
 #formulario-orcamento .input-group input {
   text-align: right; }
 
@@ -247,7 +254,7 @@ alerta {
   margin-bottom: 0; }
 
 .input-display[readonly] {
-  background-color: #3b5998;
+  background-color: #6481bb;
   font-size: 1.8em;
   color: white;
   text-align: center;

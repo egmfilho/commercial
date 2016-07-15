@@ -2,10 +2,12 @@
  * Created by egmfilho on 16/06/16.
  */
 
+'use strict';
+
 angular.module('commercialApp')
   .provider('ProviderProduto', [function() {
 
-    var url = 'http://enterprise/commercial/public/order.php?action=:action&:parametro=:valor&limit=:limite',
+    var url = 'http://172.16.4.17/commercial/public/php/order.php?action=:action&:parametro=:valor&limit=:limite',
         provider = null;
 
       this.$get = ['$resource', function($resource) {
