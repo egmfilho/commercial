@@ -71,7 +71,6 @@ angular.module('commercialApp')
           $scope.produto.desconto_percent = 0;
           $scope.produto.desconto_dinheiro = 0;
           $scope.produto.total = $scope.produto.vlPreco * $scope.produto.quantidade;
-          self.addProduto($scope.produto);
         }, function(err) {
           console.log(err);
         });
