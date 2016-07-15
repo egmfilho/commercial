@@ -69,6 +69,7 @@ alerta {
 .tabela {
   border: 2px solid $cor-principal-clara;
   margin-bottom: 0px;
+  background-color: #f2f2f2;
 
   a {
     color: $cor-principal-clara;
@@ -76,6 +77,10 @@ alerta {
 
   thead {
     background-color: $cor-principal-clara;
+
+    tr {
+      background-color: $cor-principal-clara !important;
+    }
   }
 
   th {
@@ -87,10 +92,12 @@ alerta {
 
   td {
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
-  tr:nth-child(even) {
-    background-color: #f0f0f0;
+  tr:nth-child(odd) {
+    background-color: white;
   }
 }
 

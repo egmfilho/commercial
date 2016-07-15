@@ -51,20 +51,25 @@ alerta {
 
 .tabela, #tabela-orcamento, #tabela-pagamento {
   border: 2px solid #6481bb;
-  margin-bottom: 0px; }
+  margin-bottom: 0px;
+  background-color: #f2f2f2; }
   .tabela a, #tabela-orcamento a, #tabela-pagamento a {
     color: #6481bb; }
   .tabela thead, #tabela-orcamento thead, #tabela-pagamento thead {
     background-color: #6481bb; }
+    .tabela thead tr, #tabela-orcamento thead tr, #tabela-pagamento thead tr {
+      background-color: #6481bb !important; }
   .tabela th, #tabela-orcamento th, #tabela-pagamento th {
     border-bottom: none;
     background-color: #6481bb;
     color: white;
     text-align: center; }
   .tabela td, #tabela-orcamento td, #tabela-pagamento td {
-    text-align: center; }
-  .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even), #tabela-pagamento tr:nth-child(even) {
-    background-color: #f0f0f0; }
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; }
+  .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd), #tabela-pagamento tr:nth-child(odd) {
+    background-color: white; }
 
 .banner {
   background-image: url("../images/logotipo.png");
@@ -194,11 +199,13 @@ alerta {
 .dropdown-menu {
   min-width: 200px;
   width: 97.5%; }
-  .dropdown-menu li > a {
-    color: #6481bb; }
-    .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
-      background-color: #6481bb;
-      color: white; }
+  .dropdown-menu li {
+    overflow-x: hidden; }
+    .dropdown-menu li > a {
+      color: #6481bb; }
+      .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
+        background-color: #6481bb;
+        color: white; }
   .dropdown-menu > .active a {
     background-color: #6481bb;
     color: white; }
@@ -253,12 +260,13 @@ alerta {
   margin-top: 0;
   margin-bottom: 0; }
 
-.input-display[readonly] {
+.display {
   background-color: #6481bb;
-  font-size: 1.8em;
+  font-size: 2.1em;
   color: white;
   text-align: center;
+  width: 100%;
   height: 50px;
-  border: none; }
+  border-radius: 5px; }
 
 /*# sourceMappingURL=global.css.map */

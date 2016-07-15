@@ -106,7 +106,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaProdutoPorCodigo(produto.cdProduto)">
+          <input id="CdProduto" type="text" class="form-control" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaProdutoPorCodigo(produto.cdProduto)">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(produto.cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
@@ -134,7 +134,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.recalcular('quantidade')" press-enter="">
+          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.recalcular('quantidade')" press-enter="orcamento.addProduto()">
           <span class="input-group-addon" ng-if="produto.unidade">{{produto.unidade}}</span>
           <span class="input-group-addon" ng-if="!produto.unidade">(un)</span>
         </div>
@@ -142,7 +142,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.recalcular('desconto_percent')">
+          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.recalcular('desconto_percent')" press-enter="orcamento.addProduto()">
           <span class="input-group-addon">%</span>
         </div>
       </div>
@@ -150,7 +150,7 @@
         <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.recalcular('desconto_dinheiro')">
+          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.recalcular('desconto_dinheiro')" press-enter="orcamento.addProduto()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
@@ -179,33 +179,35 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="produto in orcamento.produtos">
-              <td>{{produto.cdProduto}}</td>
-              <td>{{produto.nmProduto}}</td>
-              <td>{{produto.unindade}}</td>
-              <td>{{produto.quantidade}}</td>
-              <td>{{produto.vlPreco}}</td>
-              <td>{{produto.desconto_percent}}</td>
-              <td>{{produto.desconto_dinheiro}}</td>
-              <td>{{produto.total}}</td>
+            <tr ng-repeat="p in orcamento.pedido.getProdutos()">
+              <td>{{p.cdProduto}}</td>
+              <td>{{p.nmProduto | limitTo : 50 }}</td>
+              <td>{{p.unidade}}</td>
+              <td>{{p.quantidade}}</td>
+              <td>{{p.vlPreco | currency}}</td>
+              <td>{{p.desconto_percent | filtroDecimal }}%</td>
+              <td>{{p.desconto_dinheiro | currency}}</td>
+              <td>{{p.total | currency}}</td>
               <td><a href="" tabindex="-1"><span class="glyphicon glyphicon-trash"></span></a></td>
             </tr>
           </tbody>
         </table>
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-          <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4>Desconto R$</h4></div>
-            <input type="text" class="form-control input-display" readonly="true">
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4>Desconto %</h4></div>
-            <input type="text" class="form-control input-display" readonly="true">
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-4">
-            <div><h4>Total do pedido</h4></div>
-            <input type="text" class="form-control input-display" readonly="true">
-          </div>
+      </div>
+    </div>
+    <div class="col-md-12" uib-collapse="!formularios.produtos">
+      <div class="col-md-4"></div>
+      <div class="col-md-8">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <div><h4>Desconto %</h4></div>
+          <div class="display">{{orcamento.pedido.getDescontoPercentTotal() | currency : ""}}%</div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <div><h4>Desconto R$</h4></div>
+          <div class="display">{{orcamento.pedido.getDescontoDinheiroTotal() | currency : "R$ "}}</div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <div><h4>Total do pedido</h4></div>
+          <div class="display">{{orcamento.pedido.getValorTotal() | currency : "R$ "}}</div>
         </div>
       </div>
     </div>
@@ -224,7 +226,6 @@
       </div>
     </div>
     <div class="col-md-12" uib-collapse="!formularios.pagamentos">
-    <div class="col-md-12">
       <div class="">
         <table class="table" id="tabela-pagamento">
           <thead>
@@ -250,7 +251,7 @@
         </table>
       </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" uib-collapse="!formularios.pagamentos">
       <div class="col-md-4"></div>
       <div class="col-md-8">
         <div class="col-xs-4 col-sm-4 col-md-4"></div>

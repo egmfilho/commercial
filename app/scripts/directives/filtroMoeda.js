@@ -21,7 +21,6 @@ angular.module('commercialApp')
         ngModelController.$formatters.push(function(data) {
           // converte o dado do modelo do formato para o modelo da view
           if (data) {
-            //return (Math.round(data * 100) / 100).toString().replace('.', ',');
             return $filter('number')(data, 2).replace('.', ',');
           }
 

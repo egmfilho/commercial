@@ -10,11 +10,12 @@ angular.module('commercialApp')
     'ProviderVendedor',
     'ProviderCliente',
     'ProviderProduto',
-    function($scope, providerVendedor, providerCliente, providerProduto) {
+    'Pedido',
+    function($scope, providerVendedor, providerCliente, providerProduto, pedido) {
 
       var self = this;
 
-      this.produtos = [];
+      this.pedido = pedido;
 
       // retira o padding-right que compensa o scroll se o SO for um MacOS
       if (navigator.platform === 'MacIntel') {
@@ -33,6 +34,7 @@ angular.module('commercialApp')
         providerVendedor.obterVendedorPorCodigo(codigo).then(function(data) {
           self.vendedor.cdVendedor = data.CdVendedor;
           self.vendedor.nmVendedor = data.NmVendedor;
+          pedido.vendedor = self.vendedor;
         });
 
       };
@@ -43,8 +45,9 @@ angular.module('commercialApp')
           self.cliente.cdCliente = data.CdCliente;
           self.cliente.nmCliente = data.NmCliente;
           self.cliente.email = data.Email;
-          self.cpf_cnpj = data.CPF_CNPJ;
-          self.tpCliente = data.TpCliente;
+          self.cliente.cpf_cnpj = data.CPF_CNPJ;
+          self.cliente.tpCliente = data.TpCliente;
+          pedido.cliente = self.cliente;
         });
 
       };
@@ -54,11 +57,11 @@ angular.module('commercialApp')
         $scope.produto.nmProduto = '';
         $scope.produto.vlPreco = '';
         $scope.produto.unidade = '';
-        $scope.produto.quantidade = 0;
-        $scope.produto.desconto_percent = 0;
-        $scope.produto.desconto_dinheiro = 0;
-        $scope.produto.total = 0;
-      }
+        $scope.produto.quantidade = null;
+        $scope.produto.desconto_percent = null;
+        $scope.produto.desconto_dinheiro = null;
+        $scope.produto.total = null;
+      };
 
       this.buscaProdutoPorCodigo = function(codigo) {
 
@@ -110,9 +113,11 @@ angular.module('commercialApp')
         $scope.produto.total = ($scope.produto.vlPreco * $scope.produto.quantidade) - $scope.produto.desconto_dinheiro;
       };
 
-      this.addProduto = function(produto) {
-        this.produtos.push(produto);
+      this.addProduto = function() {
+        pedido.addProduto($scope.produto);
         this.limparProdutos();
+        $scope.$apply();
+        $('#CdProduto').focus();
       };
 
     }
