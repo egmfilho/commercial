@@ -52,7 +52,7 @@ angular.module('commercialApp')
 
       };
 
-      this.limparProdutos = function() {
+      this.limparProduto = function() {
         $scope.produto.cdProduto = '';
         $scope.produto.nmProduto = '';
         $scope.produto.vlPreco = '';
@@ -102,6 +102,19 @@ angular.module('commercialApp')
 
       };
 
+      this.editarProduto = function(produto) {
+
+        $scope.produto = produto;
+        pedido.removerProduto(produto);
+
+      };
+
+      this.removerProduto = function(produto) {
+        if (confirm('Deseja excluir o produto?')) {
+          pedido.removerProduto(produto);
+        }
+      };
+
       this.recalcular = function(campoAlterado) {
 
         if (campoAlterado === 'desconto_dinheiro') {
@@ -115,7 +128,7 @@ angular.module('commercialApp')
 
       this.addProduto = function() {
         pedido.addProduto($scope.produto);
-        this.limparProdutos();
+        this.limparProduto();
         $scope.$apply();
         $('#CdProduto').focus();
       };

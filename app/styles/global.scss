@@ -1,8 +1,10 @@
-$cor-principal:       #3b5998; //rgb(0, 167, 156);
-$cor-principal-clara: #6481bb;
-$cor-highlight:       #29487d; //rgb(0, 196, 193);
-$cor-active:          rgb(0, 130, 120);
-$cor-de-fundo:        #ddd;
+$cor-principal:        #3b5998; //rgb(0, 167, 156);
+$cor-principal-clara:  #6481bb;
+$cor-highlight:        #29487d; //rgb(0, 196, 193);
+$cor-active:           rgb(0, 130, 120);
+$cor-de-fundo:         #ddd;
+$cor-fundo-tabela:     #f2f2f2;
+$cor-tabela-highlight: #dedede;
 
 body {
   background-color: $cor-de-fundo;
@@ -69,7 +71,7 @@ alerta {
 .tabela {
   border: 2px solid $cor-principal-clara;
   margin-bottom: 0px;
-  background-color: #f2f2f2;
+  background-color: $cor-fundo-tabela;
 
   a {
     color: $cor-principal-clara;
@@ -96,8 +98,20 @@ alerta {
     white-space: nowrap;
   }
 
-  tr:nth-child(odd) {
-    background-color: white;
+  tr {
+    &:nth-child(odd) {
+      background-color: white;
+    }
+
+    &:nth-child(even) {
+      background-color: white;
+    }
+
+    &:hover {
+      background-color: $cor-tabela-highlight;
+      cursor: hand;
+      cursor: pointer;
+    }
   }
 }
 

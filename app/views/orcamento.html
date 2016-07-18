@@ -179,7 +179,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="p in orcamento.pedido.getProdutos()">
+            <tr ng-repeat="p in orcamento.pedido.getProdutos() track by $index">
               <td>{{p.cdProduto}}</td>
               <td>{{p.nmProduto | limitTo : 50 }}</td>
               <td>{{p.unidade}}</td>
@@ -188,14 +188,20 @@
               <td>{{p.desconto_percent | filtroDecimal }}%</td>
               <td>{{p.desconto_dinheiro | currency}}</td>
               <td>{{p.total | currency}}</td>
-              <td><a href="" tabindex="-1"><span class="glyphicon glyphicon-trash"></span></a></td>
+              <td>
+                <a tabindex="-1" ng-click="orcamento.editarProduto(p)"><span class="glyphicon glyphicon-pencil"></span></a>
+                &nbsp;
+                <a tabindex="-1" ng-click="orcamento.removerProduto(p)"><span class="glyphicon glyphicon-trash"></span></a>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
     <div class="col-md-12" uib-collapse="!formularios.produtos">
-      <div class="col-md-4"></div>
+      <div class="col-md-4">
+
+      </div>
       <div class="col-md-8">
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Desconto %</h4></div>
@@ -207,7 +213,7 @@
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Total do pedido</h4></div>
-          <div class="display">{{orcamento.pedido.getValorTotal() | currency : "R$ "}}</div>
+          <div class="display">{{orcamento.pedido.getValorTotalComDesconto() | currency : "R$ "}}</div>
         </div>
       </div>
     </div>
@@ -226,6 +232,7 @@
       </div>
     </div>
     <div class="col-md-12" uib-collapse="!formularios.pagamentos">
+      <br>
       <div class="">
         <table class="table" id="tabela-pagamento">
           <thead>
@@ -257,8 +264,10 @@
         <div class="col-xs-4 col-sm-4 col-md-4"></div>
         <div class="col-xs-4 col-sm-4 col-md-4"></div>
         <div class="col-xs-4 col-sm-4 col-md-4">
-          <input type="text" class="form-control input-display" readonly="true">
+          <!--<input type="text" class="form-control input-display" readonly="true">-->
+          <div class="display"></div>
         </div>
+
       </div>
     </div>
   </div>

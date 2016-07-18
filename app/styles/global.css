@@ -70,6 +70,12 @@ alerta {
     white-space: nowrap; }
   .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd), #tabela-pagamento tr:nth-child(odd) {
     background-color: white; }
+  .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even), #tabela-pagamento tr:nth-child(even) {
+    background-color: white; }
+  .tabela tr:hover, #tabela-orcamento tr:hover, #tabela-pagamento tr:hover {
+    background-color: #dedede;
+    cursor: hand;
+    cursor: pointer; }
 
 .banner {
   background-image: url("../images/logotipo.png");
