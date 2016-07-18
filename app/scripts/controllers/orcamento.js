@@ -29,6 +29,15 @@ angular.module('commercialApp')
         $scope.formularios.pagamentos = false;
       });
 
+      this.scrollTo = function($event) {
+        var container = $('body'),
+            scrollTo = $('#' + $event.currentTarget.id);
+
+        container.animate({
+          scrollTop: scrollTo.offset().top - 20// - container.offset().top + container.scrollTop()
+        });
+      };
+
       this.buscaVendedorPorCodigo = function(codigo) {
 
         providerVendedor.obterVendedorPorCodigo(codigo).then(function(data) {

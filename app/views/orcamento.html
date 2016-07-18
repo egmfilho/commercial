@@ -8,7 +8,7 @@
 
   <!--VENDEDOR-->
   <div class="row card">
-    <div class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor">
+    <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Vendedor
           <span ng-if="!formularios.vendedor && orcamento.vendedor.nmVendedor"> &raquo; ({{orcamento.vendedor.cdVendedor}} - {{orcamento.vendedor.nmVendedor}})</span>
@@ -39,7 +39,7 @@
   <!--CLIENTE-->
   <br>
   <div class="row card">
-    <div class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente">
+    <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Cliente
           <span ng-if="!formularios.cliente && orcamento.cliente.nmCliente"> &raquo; ({{orcamento.cliente.cdCliente}} - {{orcamento.cliente.nmCliente}})</span>
@@ -94,7 +94,7 @@
   <!--PRODUTOS-->
   <br>
   <div class="row card">
-    <div class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos">
+    <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Produtos
           <span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span>
@@ -222,7 +222,7 @@
   <!--PAGAMENTO-->
   <br>
   <div class="row card">
-    <div class="col-md-12" ng-init="formularios.pagamentos = true" ng-click="formularios.pagamentos = !formularios.pagamentos">
+    <div id="form-pagamentos" class="col-md-12" ng-init="formularios.pagamentos = true" ng-click="formularios.pagamentos = !formularios.pagamentos; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Pagamento
           <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a>
