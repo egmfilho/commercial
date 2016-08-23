@@ -3,94 +3,105 @@
  */
 'use strict';
 
-angular.module('commercialApp')
-  .factory('Pedido', function() {
+angular.module('commercialApp.services')
+  .factory('Pedido', ['ItemPedido', 'Pessoa', 'DataSaida', function(ItemPedido, Pessoa, dataSaida) {
 
-    var pedido = { };
+    function Pedido(p) {
+      this.id = p ? p.id : '';
+      this.idCliente = p ? p.idCliente : '';
+      this.idVendedor = p ? p.idVendedor : '';
+      this.status = p ? p.status : '';
+      this.dataAtualizacao = p ? p.dataAtualizacao : new Date();
+      this.dataPedido = p ? p.dataPedido : new Date();
 
-    pedido.produtos = [];
-
-    function getDescontoPercentTotal() {
-      var valor_total = this.getValorTotalSemDesconto(),
-          desc_dinheiro = this.getDescontoDinheiroTotal();
-
-      return valor_total === 0 ? 0 : (desc_dinheiro * 100) / valor_total;
+      this.vendedor = p ? p.vendedor : new Pessoa();
+      this.cliente = p ? p.cliente : new Pessoa();
+      this.items = p ? p.items : [ ];
     }
 
-    function getDescontoDinheiroTotal() {
-      return this.getValorTotalSemDesconto() - this.getValorTotalComDesconto();
-    }
+    Pedido.prototype = {
 
-    function getValorTotalSemDesconto() {
-      var i, total = 0;
-
-      for (i = 0; i < pedido.produtos.length; i++) {
-        total += pedido.produtos[i].vlPreco * pedido.produtos[i].quantidade;
-      }
-
-      return total;
-    }
-
-    function getValorTotalComDesconto() {
-      var i, total = 0;
-
-      for (i = 0; i < pedido.produtos.length; i++) {
-        total += pedido.produtos[i].total;
-      }
-
-      return total;
-    }
-
-    function removerProduto(produto) {
-
-      pedido.produtos.splice(pedido.produtos.indexOf(produto), 1);
-
-    }
-
-    return {
-      addVendedor: function(vendedor) {
-        pedido.vendedor = {
-          cdVendedor: vendedor.cdVendedor,
-          nmVendedor: vendedor.nmVendedor,
-        };
+      setVendedor: function(vendedor) {
+        this.idVendedor = vendedor.id;
+        this.vendedor = vendedor;
       },
 
-      addCliente: function(cliente) {
-        pedido.cliente = {
-          cdCliente: cliente.cdCliente,
-          nmCliente: cliente.nmCliente,
-          email: cliente.email,
-          cpf_cnpj: cliente.cpf_cnpj,
-          tp_cliente: cliente.tp_cliente
-        };
+      setCliente: function(cliente) {
+        this.idCliente = cliente.id;
+        this.cliente = cliente;
       },
 
-      addProduto: function(produto) {
-        pedido.produtos.push({
-          cdProduto: produto.cdProduto,
-          nmProduto: produto.nmProduto,
-          unidade: produto.unidade,
-          quantidade: produto.quantidade,
-          vlPreco: produto.vlPreco,
-          desconto_percent: produto.desconto_percent,
-          desconto_dinheiro: produto.desconto_dinheiro,
-          total: produto.total
+      addItem: function(itemPedido) {
+        this.items.push(new ItemPedido(itemPedido));
+      },
+
+      removerItem: function(itemPedido) {
+        console.log(itemPedido);
+        this.items.splice(this.items.indexOf(itemPedido), 1);
+      },
+
+      getDescontoPercentTotal: function() {
+        return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
+      },
+
+      getDescontoDinheiroTotal: function() {
+        var total = 0;
+
+        angular.forEach(this.items, function(item, index) {
+          total += item.descontoDinheiro;
         });
+
+        return total;
       },
 
-      removerProduto: removerProduto,
+      getValorTotalSemDesconto: function() {
+        var total = 0;
 
-      getProdutos: function() {
-        return pedido.produtos;
+        angular.forEach(this.items, function(item, index) {
+          total += item.getTotalSemDesconto();
+        });
+
+        return total;
       },
 
-      getDescontoPercentTotal: getDescontoPercentTotal,
+      getValorTotalComDesconto: function() {
+        var total = 0;
 
-      getDescontoDinheiroTotal: getDescontoDinheiroTotal,
+        angular.forEach(this.items, function(item, index) {
+          total += item.getTotalComDesconto();
+        });
 
-      getValorTotalSemDesconto: getValorTotalSemDesconto,
+        return total;
+      }
 
-      getValorTotalComDesconto: getValorTotalComDesconto
-    }
+    };
 
-  });
+    Pedido.converterEmEntrada = function(p) {
+      var pedido = { };
+
+      pedido.id = p.IdPedido;
+      pedido.idCliente = p.IdCliente;
+      pedido.idVendedor = p.IdVendedor;
+      pedido.status = p.StatusPedido;
+      pedido.dataAtualizacao = new Date(p.DtAtualizacao);
+      pedido.dataPedido = new Date(p.DtPedido);
+
+      return pedido;
+    };
+
+    Pedido.converterEmSaida = function(pedido) {
+      var p = { };
+
+      p.IdPedido = pedido.id;
+      p.IdCliente = pedido.idCliente;
+      p.IdVendedor = pedido.idVendedor;
+      p.StatusPedido = pedido.status;
+      p.DtAtualizacao = dataSaida.converter(pedido.dataAtualizacao);
+      p.DtPedido = dataSaida.converter(pedido.dataPedido);
+
+      return p;
+    };
+
+    return Pedido;
+
+  }]);

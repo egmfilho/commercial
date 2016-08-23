@@ -21,11 +21,11 @@ angular.module('commercialApp')
         ngModelController.$formatters.push(function(data) {
           // converte o dado do modelo do formato para o modelo da view
           if (data) {
-            return $filter('number')(data, 2).replace('.', ',');
+            return $filter('filtroDecimal')(data, 2).replace('.', ',');
           }
 
           return data;
         });
       }
-    }
+    };
   }]);

@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.constants')
   .constant('KEY_CODES', {
     BACKSPACE: 8,
     TAB: 9,

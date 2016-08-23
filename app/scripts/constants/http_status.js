@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.constants')
   .constant('HTTP_STATUS', {
     ok: 200,
     criado: 201,

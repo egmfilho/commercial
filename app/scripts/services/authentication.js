@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp')
-  .factory('AuthenticationService', [
+  .factory('AuthenticationService.services', [
     '$http',
     '$httpParamSerializerJQLike',
     '$cookies',
@@ -18,8 +18,6 @@ angular.module('commercialApp')
       service.logout = Logout;
       //service.setCredentials = SetCredentials;
       //service.clearCredentials = ClearCredentials;
-
-      return service;
 
       function Login(username, password, callback) {
 
@@ -71,5 +69,7 @@ angular.module('commercialApp')
       function ClearCredentials() {
         $cookies.remove('currentUser');
       }
+
+      return service;
 
     }]);

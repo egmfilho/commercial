@@ -16,7 +16,7 @@ angular.module('commercialApp')
       authentication.login($scope.username, $scope.password, function(response) {
         console.log(response);
 
-        if (response.status.flag == status.sucesso) {
+        if (response.status.flag === status.sucesso) {
           console.log('Sucesso!');
         }
       });

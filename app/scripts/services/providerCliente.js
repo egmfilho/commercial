@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.services')
   .provider('ProviderCliente', [function() {
 
     var url = 'http://172.16.4.17/commercial/public/php/order.php?action=:action&:parametro=:valor',
@@ -32,14 +32,14 @@ angular.module('commercialApp')
             valor: codigo,
           }).$promise;
         },
-        obterClientePorNome: function(nome){
+        obterClientePorNome: function(nome) {
           return provider.query({
             action: 'searchClient',
             parametro: 'NmCliente',
             valor: nome
           }).$promise;
         }
-      }
+      };
 
     }];
   }]);

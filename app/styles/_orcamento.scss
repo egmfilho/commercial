@@ -119,6 +119,31 @@
       width: 40%;
     }
   }
+
+  td {
+    &:nth-child(4), &:nth-child(6), &:nth-child(7) {
+      span {
+        display: inherit;
+      }
+      input {
+        display: none;
+        width: 100%;
+        text-align: center;
+        margin: 0;
+      }
+
+      &:hover {
+        padding-top: 5px;
+        padding-bottom: 4px;
+        span {
+          display: none;
+        }
+        input {
+          display: inherit;
+        }
+      }
+    }
+  }
 }
 
 #controle-tabela-orcamento .row {

@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.services')
   .provider('ProviderProduto', [function() {
 
     var url = 'http://172.16.4.17/commercial/public/php/order.php?action=:action&:parametro=:valor&limit=:limite',
@@ -37,7 +37,7 @@ angular.module('commercialApp')
             return provider.get({
               action: 'getProduct',
               parametro: 'CdProduto',
-              valor: codigo,
+              valor: codigo
             }).$promise;
           },
           obterProdutoPorId: function(id) {
@@ -47,7 +47,7 @@ angular.module('commercialApp')
               valor: id
             }).$promise;
           }
-        }
+        };
 
       }];
   }]);

@@ -4,8 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.constants')
   .constant('URLS', {
-    root: 'http://enterprise/commercial/public/',
-    login: 'http://enterprise/commercial/public/login.php'
+    root: 'http://172.16.4.17/commercial/public/php/'
   });

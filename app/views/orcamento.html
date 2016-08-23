@@ -11,7 +11,7 @@
     <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Vendedor
-          <span ng-if="!formularios.vendedor && orcamento.vendedor.nmVendedor"> &raquo; ({{orcamento.vendedor.cdVendedor}} - {{orcamento.vendedor.nmVendedor}})</span>
+          <span ng-if="!formularios.vendedor && orcamento.pedido.vendedor.nome"> &raquo; ({{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}})</span>
           <span ng-if="formularios.vendedor" class="glyphicon glyphicon-menu-up"></span>
           <span ng-if="!formularios.vendedor" class="glyphicon glyphicon-menu-down"></span>
         </h3>
@@ -21,16 +21,16 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="orcamento.vendedor.cdVendedor" press-enter="orcamento.buscaVendedorPorCodigo(orcamento.vendedor.cdVendedor)">
+          <input type="number" class="form-control" aria-describedby="basic-addon2" ng-model="cdVendedor" ng-blur="blurCdVendedor()" press-enter="orcamento.buscaVendedorPorCodigo(cdVendedor)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo(orcamento.vendedor.cdVendedor)"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo(cdVendedor)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
       <div class="col-xs-9 col-sm-9">
         <div><h4>Nome</h4></div>
         <div>
-          <input type="text" class="form-control" tabindex="-1" ng-model="orcamento.vendedor.nmVendedor">
+          <input type="text" class="form-control" tabindex="-1" ng-value="orcamento.pedido.vendedor.nome" readonly="true">
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
     <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Cliente
-          <span ng-if="!formularios.cliente && orcamento.cliente.nmCliente"> &raquo; ({{orcamento.cliente.cdCliente}} - {{orcamento.cliente.nmCliente}})</span>
+          <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome"> &raquo; ({{orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}})</span>
           <span ng-if="formularios.cliente" class="glyphicon glyphicon-menu-up"></span>
           <span ng-if="!formularios.cliente" class="glyphicon glyphicon-menu-down"></span>
         </h3>
@@ -52,40 +52,40 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" aria-describedby="basic-addon2" ng-model="orcamento.cliente.cdCliente" press-enter="orcamento.buscaClientePorCodigo(orcamento.cliente.cdCliente)">
+          <input type="number" class="form-control" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(orcamento.cliente.cdCliente)"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(cdCliente)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
       <div class="col-xs-9 col-sm-9">
         <div><h4>Nome</h4></div>
         <div id="nome-cliente">
-          <input type="text" class="form-control" ng-model="orcamento.cliente.nmCliente">
+          <input type="text" class="form-control" ng-value="orcamento.pedido.cliente.nome" readonly="true">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Telefone</h4></div>
         <div id="tel-cliente">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" ng-value="orcamento.pedido.cliente.telefone" readonly="true">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Celular</h4></div>
         <div id="cel-cliente">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" ng-value="orcamento.pedido.cliente.celular" readonly="true">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Email</h4></div>
         <div id="email-cliente">
-          <input type="text" class="form-control" ng-model="orcamento.orcamentocliente.email">
+          <input type="text" class="form-control" ng-value="orcamento.pedido.cliente.email" readonly="true">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Alguma coisa</h4></div>
         <div id="">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" readonly="true">
         </div>
       </div>
     </div>
@@ -97,6 +97,7 @@
     <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; orcamento.scrollTo($event);">
       <div class="head">
         <h3>Produtos
+          <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; ({{orcamento.pedido.items.length}} Produtos - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}})</span>
           <span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span>
           <span ng-if="!formularios.produtos" class="glyphicon glyphicon-menu-down"></span>
         </h3>
@@ -106,21 +107,21 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input id="CdProduto" type="text" class="form-control" aria-describedby="basic-addon2" ng-model="produto.cdProduto" press-enter="orcamento.buscaProdutoPorCodigo(produto.cdProduto)">
+          <input id="CdProduto" type="text" class="form-control" aria-describedby="basic-addon2" ng-model="item.produto.codigo" press-enter="orcamento.buscaProdutoPorCodigo(item.produto.codigo)">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(produto.cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(item.produto.codigo)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
         </div>
       </div>
       <div class="col-xs-5 col-sm-6">
         <div><h4>Descrição</h4></div>
         <div>
-          <input type="text" class="form-control" ng-model="produto.nmProduto"
+          <input id="NmProduto" type="text" class="form-control" ng-model="item.produto.nome" press-enter="orcamento.avancar('#quantidade')"
                  uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaProdutoPorDescricao($viewValue)"
                  typeahead-template-url="../partials/produtosTypeaheadPopup.html"
                  typeahead-min-length="3"
-                 typeahead-loading="orcamento.carregandoProdutos"
-                 typeahead-wait-ms="100";
+                 typeahead-loading="isLoading"
+                 typeahead-wait-ms="100"
                  typeahead-on-select="orcamento.selectProduto($item);" required>
         </div>
       </div>
@@ -128,21 +129,21 @@
         <div><h4>Valor unitário</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.vlPreco">
+          <input type="text" class="form-control" readonly="true" tabindex="-1" ng-value="item.produto.preco | currency: ''">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" ng-model="produto.quantidade" ng-change="orcamento.recalcular('quantidade')" press-enter="orcamento.addProduto()">
-          <span class="input-group-addon" ng-if="produto.unidade">{{produto.unidade}}</span>
+          <input id="quantidade" type="number" class="form-control" ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" press-enter="orcamento.avancar('#percent')">
+          <span class="input-group-addon" ng-if="produto.unidade">{{item.produto.unidade}}</span>
           <span class="input-group-addon" ng-if="!produto.unidade">(un)</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_percent" ng-change="orcamento.recalcular('desconto_percent')" press-enter="orcamento.addProduto()">
+          <input id="percent" type="text" class="form-control" filtro-moeda ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" ng-model-options="{ debounce: 500 }" press-enter="orcamento.avancar('#dinheiro')">
           <span class="input-group-addon">%</span>
         </div>
       </div>
@@ -150,14 +151,14 @@
         <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" filtro-moeda ng-model="produto.desconto_dinheiro" ng-change="orcamento.recalcular('desconto_dinheiro')" press-enter="orcamento.addProduto()">
+          <input id="dinheiro" type="text" class="form-control" filtro-moeda ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" ng-model-options="{ debounce: 500 }" press-enter="orcamento.addProduto()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Total</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" readonly="true" tabindex="-1" filtro-moeda ng-model="produto.total">
+          <input type="text" class="form-control" readonly="true" tabindex="-1" ng-value="item.getTotalComDesconto() | currency: ''">
         </div>
       </div>
     </div>
@@ -179,19 +180,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="p in orcamento.pedido.getProdutos() track by $index">
-              <td>{{p.cdProduto}}</td>
-              <td>{{p.nmProduto | limitTo : 50 }}</td>
-              <td>{{p.unidade}}</td>
-              <td>{{p.quantidade}}</td>
-              <td>{{p.vlPreco | currency}}</td>
-              <td>{{p.desconto_percent | filtroDecimal }}%</td>
-              <td>{{p.desconto_dinheiro | currency}}</td>
-              <td>{{p.total | currency}}</td>
+            <tr ng-repeat="i in orcamento.pedido.items track by $index">
+              <td>{{i.produto.codigo}}</td>
+              <td>{{i.produto.nome | limitTo : 50 }}</td>
+              <td>{{i.produto.unidade}}</td>
+              <td><span>{{i.quantidade}}</span><input type="number" ng-model="i.quantidade"></td>
+              <td>{{i.produto.preco | currency}}</td>
+              <td><span>{{i.descontoPercent | currency : ""}}%</span><input type="number" filtro-moeda ng-model="i.descontoPercent" ng-change="i.setDescontoPercent(i.descontoPercent)"></td>
+              <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span><input type="number" filtro-moeda ng-model="i.descontoDinheiro" ng-change="i.setDescontoDinheiro(i.descontoDinheiro)"></td>
+              <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
               <td>
-                <a tabindex="-1" ng-click="orcamento.editarProduto(p)"><span class="glyphicon glyphicon-pencil"></span></a>
-                &nbsp;
-                <a tabindex="-1" ng-click="orcamento.removerProduto(p)"><span class="glyphicon glyphicon-trash"></span></a>
+                <a tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
               </td>
             </tr>
           </tbody>
@@ -205,7 +204,7 @@
       <div class="col-md-8">
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Desconto %</h4></div>
-          <div class="display">{{orcamento.pedido.getDescontoPercentTotal() | currency : ""}}%</div>
+          <div class="display">{{(orcamento.pedido.getDescontoPercentTotal() | currency : "")  || "0,00"}}%</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Desconto R$</h4></div>

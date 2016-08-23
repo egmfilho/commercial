@@ -2,7 +2,9 @@
  * Created by egmfilho on 05/07/16.
  */
 
-angular.module('commercialApp')
+'use strict';
+
+angular.module('commercialApp.services')
   .service('Browser', ['$window', function($window) {
 
     return function() {
@@ -15,9 +17,9 @@ angular.module('commercialApp')
         if (browsers[key].test(userAgent)) {
           return key;
         }
-      };
+      }
 
       return 'unknown';
-    }
+    };
 
 }]);

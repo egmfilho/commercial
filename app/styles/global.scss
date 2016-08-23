@@ -11,6 +11,29 @@ body {
   padding-bottom: 100px;
 }
 
+#loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+  //background-image: url('../images/ring-alt.gif');
+  background-color: rgba(0, 0, 0, 0.6);
+  //background-repeat: no-repeat;
+  //background-position: center;
+
+  > div {
+    position: absolute;
+    transform: scale(0.75);
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
 .centerY {
   position: absolute;
   top: 50%;
@@ -63,7 +86,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   box-shadow: 0 0 6px $cor-principal-clara;
 }
 
-alerta {
+.alerta {
   @extend .center-absolute;
   text-align: center;
 }
@@ -119,6 +142,7 @@ alerta {
 @import 'login';
 @import 'home';
 @import 'orcamento';
+@import 'loading';
 
 
 

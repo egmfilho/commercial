@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.services')
   .provider('ProviderVendedor', [function() {
 
     var url = 'http://172.16.4.17/commercial/public/php/order.php?action=:action&:parametro=:valor',
@@ -38,7 +38,7 @@ angular.module('commercialApp')
             valor: nome
           }).$promise;
         }
-      }
+      };
 
     }];
   }]);

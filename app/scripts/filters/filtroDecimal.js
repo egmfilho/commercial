@@ -3,11 +3,16 @@
  */
 'use strict';
 
-angular.module('commercialApp')
-  .filter('filtroDecimal', [function() {
+angular.module('commercialApp.filters')
+  .filter('filtroDecimal', ['$filter', function($filter) {
 
-    return function(input) {
-      return input ?  input.toString().replace('.', ',') : null;
-    }
+    return function(value, fractionSize) {
+
+      if (!value) return '';
+
+      var number = parseFloat(value);
+
+      return number ? $filter('number')(number, fractionSize).toString().replace('.', ',') : value;
+    };
 
   }]);

@@ -1,16 +1,17 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name yoApp
- * @description
- * # yoApp
- *
- * Main module of the application.
- */
-
+angular.module('commercialApp.constants', [ ]);
+angular.module('commercialApp.filters', [ ]);
+angular.module('commercialApp.services', [ ]);
+angular.module('commercialApp.directives', [ ]);
+angular.module('commercialApp.controllers', [ ]);
 angular
   .module('commercialApp', [
+    'commercialApp.constants',
+    'commercialApp.filters',
+    'commercialApp.services',
+    'commercialApp.directives',
+    'commercialApp.controllers',
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -19,6 +20,9 @@ angular
     'ngTouch',
     'ui.bootstrap'
   ])
+  .config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('SessionInjector');
+  }])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -50,19 +54,18 @@ angular
         redirectTo: '/'
       });
   })
-  //.run(['$rootScope', function($rootScope) {
-  //  $rootScope.teste = false;
-  //}])
   .run(['$rootScope', '$location', function($rootScope, $location) {
+
+    $rootScope.isLoading = false;
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
       $rootScope.currentPath = $location.path();
 
-      if ($rootScope.globals == null || $rootScope.globals.currentUser == null) {
-        if (next.templateUrl != 'views/login.html') {
+      //if ($rootScope.globals === null || $rootScope.globals.currentUser === null) {
+      //  if (next.templateUrl !== 'views/login.html') {
           //$location.path('/login');
-        }
-      }
+        //}
+      //}
     });
 
   }]);
