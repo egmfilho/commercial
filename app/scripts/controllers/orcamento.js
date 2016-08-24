@@ -25,6 +25,7 @@ angular.module('commercialApp')
       $scope.$on('$viewContentLoaded', function() {
         self.pedido = new Pedido();
         $scope.item = new ItemPedido();
+        $scope.cliente = { novo: false };
 
         $scope.formularios.vendedor = true;
         $scope.formularios.cliente = false;
@@ -117,6 +118,12 @@ angular.module('commercialApp')
 
       };
 
+      this.novoCliente = function() {
+        $scope.cliente.novo = true;
+        $scope.apply;
+        console.log('oi', $scope.cliente.novo);
+      };
+
       this.limparProduto = function() {
         $scope.item = new ItemPedido();
       };
@@ -167,6 +174,11 @@ angular.module('commercialApp')
       this.addProduto = function() {
         if (this.carregandoProdutos) return;
 
+        if (!$scope.item.codigo || !$scope.item.nome) {
+          $('#CdProduto').focus();
+          return;
+        }
+
         this.pedido.addItem($scope.item);
         this.limparProduto();
         $scope.$apply();
@@ -174,7 +186,7 @@ angular.module('commercialApp')
       };
 
       this.avancar = function(id) {
-        $(id).focus();
+        $(id).focus().select();
       }
 
     }
