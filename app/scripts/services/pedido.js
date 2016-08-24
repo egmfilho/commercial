@@ -36,7 +36,6 @@ angular.module('commercialApp.services')
       },
 
       removerItem: function(itemPedido) {
-        console.log(itemPedido);
         this.items.splice(this.items.indexOf(itemPedido), 1);
       },
 

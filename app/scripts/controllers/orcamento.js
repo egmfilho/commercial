@@ -30,6 +30,10 @@ angular.module('commercialApp')
         $scope.formularios.cliente = false;
         $scope.formularios.produtos = false;
         $scope.formularios.pagamentos = false;
+
+        setTimeout(function() {
+          $('#CdVendedor').focus();
+        }, 500);
       });
 
       $scope.blurCdVendedor = function() {
@@ -59,7 +63,18 @@ angular.module('commercialApp')
 
       this.buscaVendedorPorCodigo = function(codigo) {
 
-        if (!codigo || parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) return;
+        if (!codigo) return;
+
+        if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) {
+          $scope.formularios.vendedor = false;
+          $scope.formularios.produtos = true;
+          $scope.$apply();
+          setTimeout(function() {
+            $('#CdProduto').focus();
+          }, 500);
+
+          return;
+        }
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Vendedor', codigo).then(function(success) {
@@ -67,14 +82,27 @@ angular.module('commercialApp')
           self.pedido.setVendedor(new Pessoa(Pessoa.converterEmEntrada(success.data)));
         }, function(error) {
           $rootScope.isLoading = false;
-          console.log(error);
+          if (error.status == 404) {
+            console.log('Vendedor não encontrado!');
+          }
         });
 
       };
 
       this.buscaClientePorCodigo = function(codigo) {
 
-        if (!codigo || parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) return;
+        if (!codigo) return;
+
+        //if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+        //  $scope.formularios.cliente = false;
+        //  $scope.formularios.produtos = true;
+        //  $scope.$apply();
+        //  setTimeout(function() {
+        //    $('#CdProduto').focus();
+        //  }, 500);
+        //
+        //  return;
+        //}
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function(success) {
@@ -82,7 +110,9 @@ angular.module('commercialApp')
           self.pedido.setCliente(new Pessoa(Pessoa.converterEmEntrada(success.data)));
         }, function(error) {
           $rootScope.isLoading = false;
-          console.log(error);
+          if (error.status == 404) {
+            console.log('Cliente não encontrado!');
+          }
         });
 
       };
@@ -128,11 +158,6 @@ angular.module('commercialApp')
         }
       };
 
-      this.editarProduto = function(produto) {
-        //$scope.produto = new Produto(produto);
-        //pedido.removerProduto(produto);
-      };
-
       this.removerItem = function(item) {
         if (confirm('Deseja excluir o produto?')) {
           this.pedido.removerItem(item);
@@ -146,8 +171,6 @@ angular.module('commercialApp')
         this.limparProduto();
         $scope.$apply();
         $('#CdProduto').focus();
-        console.log(this.pedido);
-        console.log('Total', this.pedido.getValorTotalComDesconto());
       };
 
       this.avancar = function(id) {

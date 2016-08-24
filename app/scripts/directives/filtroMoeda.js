@@ -12,16 +12,16 @@ angular.module('commercialApp')
         ngModelController.$parsers.push(function(data) {
           // converte o dado no formato da view para o formato do model
           if (data) {
-            return data.toString().replace(',', '.');
+            return parseFloat(data.toString().replace(',', '.'));
           }
 
-          return data;
+          return parseFloat(data);
         });
 
         ngModelController.$formatters.push(function(data) {
           // converte o dado do modelo do formato para o modelo da view
           if (data) {
-            return $filter('filtroDecimal')(data, 2).replace('.', ',');
+            return $filter('number')(data, 2).replace('.', ',');
           }
 
           return data;
