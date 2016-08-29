@@ -2,7 +2,7 @@
 
   <!--VENDEDOR-->
   <div class="row card">
-    <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor; orcamento.scrollTo($event);">
+    <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor; scrollTo($event);">
       <div class="head">
         <h3>Vendedor
           <span ng-if="!formularios.vendedor && orcamento.pedido.vendedor.nome"> &raquo; ({{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}})</span>
@@ -34,7 +34,7 @@
   <!--PRODUTOS-->
   <br>
   <div class="row card">
-    <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; orcamento.scrollTo($event);">
+    <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; scrollTo($event);">
       <div class="head">
         <h3>Produtos
           <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; ({{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}})</span>
@@ -48,7 +48,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input id="CdProduto" type="text" class="form-control" aria-describedby="basic-addon2" ng-model="item.produto.codigo" press-enter="orcamento.buscaProdutoPorCodigo(item.produto.codigo)">
+          <input id="CdProduto" type="text" class="form-control" aria-describedby="basic-addon2" ng-model="item.produto.codigo" press-enter="orcamento.buscaProdutoPorCodigo(item.produto.codigo)" press-shift-enter="orcamento.escapeProdutos()">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(item.produto.codigo)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
@@ -57,7 +57,7 @@
       <div class="col-xs-5 col-sm-6">
         <div><h4>Descrição</h4></div>
         <div>
-          <input id="NmProduto" type="text" class="form-control" ng-model="item.produto.nome" press-enter="orcamento.avancar('#quantidade')"
+          <input id="NmProduto" type="text" class="form-control" ng-model="item.produto.nome" press-enter="orcamento.avancar('#quantidade')" press-shift-enter="orcamento.escapeProdutos()"
                  uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaProdutoPorDescricao($viewValue)"
                  typeahead-template-url="../partials/produtosTypeaheadPopup.html"
                  typeahead-min-length="3"
@@ -76,14 +76,14 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input id="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" press-enter="orcamento.avancar('#percent')">
+          <input id="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" press-enter="orcamento.avancar('#percent')" press-shift-enter="orcamento.escapeProdutos()">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input id="percent" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" press-enter="orcamento.avancar('#dinheiro')">
+          <input id="percent" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" press-enter="orcamento.avancar('#dinheiro')" press-shift-enter="orcamento.escapeProdutos()">
           <span class="input-group-addon">%</span>
         </div>
       </div>
@@ -91,7 +91,7 @@
         <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input id="dinheiro" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" press-enter="orcamento.addItem()">
+          <input id="dinheiro" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" press-enter="orcamento.addItem()" press-shift-enter="orcamento.escapeProdutos()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
@@ -161,7 +161,7 @@
   <!--CLIENTE-->
   <br>
   <div class="row card">
-    <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente; orcamento.scrollTo($event);">
+    <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente; scrollTo($event);">
       <div class="head">
         <h3>Cliente
           <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome"> &raquo; ({{cliente.novo ? 'Novo Cliente' : orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}})</span>
@@ -175,7 +175,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" id="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)" ng-readonly="cliente.novo">
+          <input type="number" class="form-control" id="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)" press-shift-enter="" ng-readonly="cliente.novo">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(cdCliente)"><span class="glyphicon glyphicon-search"></span></button>
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()"><span class="glyphicon glyphicon-plus"></span></button>
@@ -233,59 +233,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!--PAGAMENTO-->
-  <br>
-  <div class="row card">
-    <div id="form-pagamentos" class="col-md-12" ng-init="formularios.pagamentos = true" ng-click="formularios.pagamentos = !formularios.pagamentos; orcamento.scrollTo($event);">
-      <div class="head">
-        <h3>Pagamento
-          <a href=""><span class="glyphicon glyphicon-plus-sign"></span></a>
-          <span ng-if="formularios.pagamentos" class="glyphicon glyphicon-menu-up"></span>
-          <span ng-if="!formularios.pagamentos" class="glyphicon glyphicon-menu-down"></span>
-        </h3>
-      </div>
-    </div>
-    <div class="col-md-12" uib-collapse="!formularios.pagamentos">
-      <br>
-      <div class="">
-        <table class="table" id="tabela-pagamento">
-          <thead>
-            <tr>
-              <th>Month</th>
-              <th>Savings</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>January</td>
-              <td>$100</td>
-            </tr>
-            <tr>
-              <td>February</td>
-              <td>$50</td>
-            </tr>
-            <tr>
-              <td>March</td>
-              <td>$20</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-12" uib-collapse="!formularios.pagamentos">
-      <div class="col-md-4"></div>
-      <div class="col-md-8">
-        <div class="col-xs-4 col-sm-4 col-md-4"></div>
-        <div class="col-xs-4 col-sm-4 col-md-4"></div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
-          <!--<input type="text" class="form-control input-display" readonly="true">-->
-          <div class="display"></div>
-        </div>
-
-      </div>
     </div>
   </div>
 

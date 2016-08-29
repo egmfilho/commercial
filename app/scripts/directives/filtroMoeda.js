@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.directives')
   .directive('filtroMoeda', ['$filter', function($filter) {
     return {
       require: 'ngModel',

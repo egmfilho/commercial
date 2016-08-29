@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.directives')
     .directive('redireciona', ['$location', function($location) {
 
     return function(scope, element, attrs) {

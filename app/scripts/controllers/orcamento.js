@@ -8,12 +8,13 @@ angular.module('commercialApp')
   .controller('OrcamentoCtrl', [
     '$rootScope',
     '$scope',
+    '$timeout',
     'ProviderPessoa',
     'ProviderProduto',
     'ItemPedido',
     'Pedido',
     'Pessoa',
-    function($rootScope, $scope, providerPessoa, providerProduto, ItemPedido, Pedido, Pessoa) {
+    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, ItemPedido, Pedido, Pessoa) {
 
       var self = this;
 
@@ -32,8 +33,8 @@ angular.module('commercialApp')
         $scope.formularios.produtos = false;
         $scope.formularios.pagamentos = false;
 
-        setTimeout(function() {
-          $('#CdVendedor').focus();
+        $timeout(function() {
+          jQuery('#CdVendedor').focus();
         }, 500);
       });
 
@@ -53,9 +54,9 @@ angular.module('commercialApp')
         }
       };
 
-      this.scrollTo = function($event) {
-        var container = $('body'),
-            scrollTo = $('#' + $event.currentTarget.id);
+      $scope.scrollTo = function($event, id) {
+        var container = jQuery('body'),
+            scrollTo = $event ? jQuery('#' + $event.currentTarget.id) : jQuery(id);
 
         container.animate({
           scrollTop: scrollTo.offset().top - 20// - container.offset().top + container.scrollTop()
@@ -69,9 +70,9 @@ angular.module('commercialApp')
         if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) {
           $scope.formularios.vendedor = false;
           $scope.formularios.produtos = true;
-          $scope.$apply();
-          setTimeout(function() {
-            $('#CdProduto').focus();
+          $timeout(function() {
+            $scope.scrollTo(null, '#form-produtos');
+            jQuery('#CdProduto').focus();
           }, 500);
 
           return;
@@ -93,17 +94,6 @@ angular.module('commercialApp')
       this.buscaClientePorCodigo = function(codigo) {
 
         if (!codigo) return;
-
-        //if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
-        //  $scope.formularios.cliente = false;
-        //  $scope.formularios.produtos = true;
-        //  $scope.$apply();
-        //  setTimeout(function() {
-        //    $('#CdProduto').focus();
-        //  }, 500);
-        //
-        //  return;
-        //}
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function(success) {
@@ -133,10 +123,10 @@ angular.module('commercialApp')
         if (!codigo) return;
 
         $rootScope.isLoading = true;
-        providerProduto.obterProdutoPorCodigo(codigo).then(function(data) {
+        providerProduto.obterProdutoPorCodigo(codigo).then(function(success) {
           $rootScope.isLoading = false;
-          $scope.item.setProduto(data);
-          $('#NmProduto').focus();
+          $scope.item.setProduto(success.data);
+          jQuery('#NmProduto').focus();
         }, function(err) {
           $rootScope.isLoading = false;
           console.log(err);
@@ -146,9 +136,9 @@ angular.module('commercialApp')
 
       this.buscaProdutoPorDescricao = function(descricao) {
 
-        return providerProduto.obterProdutosPorDescricao(descricao).then(function(data) {
-          data.push({ NmProduto: 'Mais resultados...', CdProduto: -1});
-          return data;
+        return providerProduto.obterProdutosPorDescricao(descricao).then(function(success) {
+          success.data.push({ NmProduto: 'Mais resultados...', CdProduto: -1});
+          return success.data;
         }, function(err) {
           console.log(err);
           return;
@@ -175,18 +165,26 @@ angular.module('commercialApp')
         if (this.carregandoProdutos) return;
 
         if (!$scope.item.produto.codigo || !$scope.item.produto.nome) {
-          $('#CdProduto').focus();
+          jQuery('#CdProduto').focus();
           return;
         }
 
         this.pedido.addItem($scope.item);
         this.limparProduto();
-        $scope.$apply();
-        $('#CdProduto').focus();
+        jQuery('#CdProduto').focus();
       };
 
       this.avancar = function(id) {
-        $(id).focus().select();
+        jQuery(id).focus().select();
+      };
+
+      this.escapeProdutos = function() {
+        $scope.formularios.produtos = false;
+        $scope.formularios.cliente = true;
+        $timeout(function() {
+          $scope.scrollTo(null, '#form-cliente');
+          jQuery('#CdCliente').focus();
+        }, 500);
       };
 
       this.limpar = function() {
@@ -203,8 +201,8 @@ angular.module('commercialApp')
           $scope.formularios.cliente = false;
           $scope.formularios.pagamentos = false;
 
-          setTimeout(function() {
-            $('CdVendedor').focus();
+          $timeout(function() {
+            jQuery('CdVendedor').focus();
           }, 500);
 
           alert('Selecione um vendedor!');
@@ -218,7 +216,7 @@ angular.module('commercialApp')
           $scope.formularios.cliente = false;
           $scope.formularios.pagamentos = false;
 
-          setTimeout(function() {
+          $timeout(function() {
             $('CdProduto').focus();
           }, 500);
 
@@ -234,7 +232,7 @@ angular.module('commercialApp')
             $scope.formularios.cliente = true;
             $scope.formularios.pagamentos = false;
 
-            setTimeout(function() {
+            $timeout(function() {
               $('CdCliente').focus();
             }, 500);
 

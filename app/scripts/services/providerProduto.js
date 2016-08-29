@@ -5,46 +5,44 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .provider('ProviderProduto', [function() {
+  .provider('ProviderProduto', ['URLS', function(urls) {
 
-    var url = 'http://172.16.4.17/commercial/public/php/order.php?action=:action&:parametro=:valor&limit=:limite',
+    var url = urls.root + 'product.php?action=:action',
         provider = null;
 
       this.$get = ['$resource', function($resource) {
         provider = $resource(url, {}, {
           get: {
-            method: 'GET',
-            headers: '',
+            method: 'POST',
             isArray: false
           },
           query: {
-            method: 'GET',
-            headers: '',
-            isArray: true
+            method: 'POST',
+            isArray: false
           }
         });
 
         return {
-          obterProdutosPorDescricao: function(produto) {
+          obterProdutosPorDescricao: function(descricao) {
             return provider.query({
-              action: 'searchProduct',
-              parametro: 'NmProduto',
-              valor: produto,
-              limite: 10
+              action: 'getList'
+            }, {
+              NmProduto: descricao,
+              Limite: 10
             }).$promise;
           },
           obterProdutoPorCodigo: function(codigo) {
             return provider.get({
-              action: 'getProduct',
-              parametro: 'CdProduto',
-              valor: codigo
+              action: 'get'
+            }, {
+              CdProduto: codigo
             }).$promise;
           },
           obterProdutoPorId: function(id) {
             return provider.get({
-              action: 'getProduct',
-              parametro: 'IdProduto',
-              valor: id
+              action: 'get'
+            }, {
+              IdProduto: id
             }).$promise;
           }
         };
