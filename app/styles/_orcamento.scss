@@ -44,10 +44,15 @@
     color: $cor-principal-clara;
   }
 
+  h5 {
+    color: $cor-principal-clara;
+    margin: 0;
+    margin-top: 5px;
+  }
+
   .head {
     color: white;
     background-color: $cor-principal-clara;
-    cursor: hand;
     cursor: pointer;
 
     h3 {
@@ -58,6 +63,12 @@
       color: white;
     }
 
+    .limpar {
+      font-size: .8em;
+      font-weight: 400;
+      vertical-align: middle;
+    }
+
     .glyphicon-menu-up, .glyphicon-menu-down {
       float: right;
     }
@@ -66,6 +77,32 @@
   .input-group {
     input {
       text-align: right;
+    }
+  }
+
+  .btn-form {
+    width: 100%;
+    font-size: 1.2em;
+    height: 50px;
+    color: $cor-principal-clara;
+  }
+
+  .btn-orcamento {
+    border: none;
+    background-color: $cor-principal-clara;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 2em;
+
+    span {
+      vertical-align: -10%;
+    }
+
+    @extend .sombra;
+
+    &:hover {
+      @extend .highlight;
     }
   }
 }

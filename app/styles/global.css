@@ -39,7 +39,7 @@ body {
   bottom: 0px;
   left: 0px; }
 
-.highlight, .navbar-default .navbar-nav li:hover, .botao-menu:hover {
+.highlight, .navbar-default .navbar-nav li:hover, .botao-menu:hover, #formulario-orcamento .btn-orcamento:hover {
   -webkit-transition: background-color 0.5s ease;
   -moz-transition: background-color 0.5s ease;
   -ms-transition: background-color 0.5s ease;
@@ -49,7 +49,7 @@ body {
   cursor: pointer;
   cursor: hand; }
 
-.sombra, .card, .navbar-default, .botao-menu {
+.sombra, .card, .navbar-default, .botao-menu, #formulario-orcamento .btn-orcamento {
   -webkit-box-shadow: 0px 2px 4px #999;
   -moz-box-shadow: 0px 2px 4px #999;
   box-shadow: 0px 2px 4px #999; }
@@ -242,19 +242,40 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   margin-top: 0;
   margin-bottom: 0;
   color: #6481bb; }
+#formulario-orcamento h5 {
+  color: #6481bb;
+  margin: 0;
+  margin-top: 5px; }
 #formulario-orcamento .head {
   color: white;
   background-color: #6481bb;
-  cursor: hand;
   cursor: pointer; }
   #formulario-orcamento .head h3 {
     margin: 10px; }
   #formulario-orcamento .head a {
     color: white; }
+  #formulario-orcamento .head .limpar {
+    font-size: .8em;
+    font-weight: 400;
+    vertical-align: middle; }
   #formulario-orcamento .head .glyphicon-menu-up, #formulario-orcamento .head .glyphicon-menu-down {
     float: right; }
 #formulario-orcamento .input-group input {
   text-align: right; }
+#formulario-orcamento .btn-form {
+  width: 100%;
+  font-size: 1.2em;
+  height: 50px;
+  color: #6481bb; }
+#formulario-orcamento .btn-orcamento {
+  border: none;
+  background-color: #6481bb;
+  color: white;
+  width: 100%;
+  height: 60px;
+  font-size: 2em; }
+  #formulario-orcamento .btn-orcamento span {
+    vertical-align: -10%; }
 
 #tabela-orcamento thead, #tabela-orcamento tbody, #tabela-orcamento tr, #tabela-orcamento td, #tabela-orcamento th {
   display: block; }

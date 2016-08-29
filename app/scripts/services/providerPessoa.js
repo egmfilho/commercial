@@ -54,6 +54,14 @@ angular.module('commercialApp.services')
             TpPessoa: tipo,
             NmPessoa: nome
           }).$promise;
+        },
+
+        adicionarPessoa: function(tipo, nome, telefone, celular, email) {
+          return provider.save({
+            action: ''
+          }, {
+            NmPessoa: nome
+          }).$promise;
         }
 
       }

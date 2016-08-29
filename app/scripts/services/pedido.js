@@ -26,9 +26,19 @@ angular.module('commercialApp.services')
         this.vendedor = vendedor;
       },
 
+      removeVendedor: function() {
+        this.vendedor = new Pessoa();
+        this.idVendedor = '';
+      },
+
       setCliente: function(cliente) {
         this.idCliente = cliente.id;
         this.cliente = cliente;
+      },
+
+      removeCliente: function() {
+        this.cliente = new Pessoa();
+        this.idCliente = '';
       },
 
       addItem: function(itemPedido) {

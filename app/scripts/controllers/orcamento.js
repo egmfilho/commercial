@@ -120,8 +120,8 @@ angular.module('commercialApp')
 
       this.novoCliente = function() {
         $scope.cliente.novo = true;
-        $scope.apply;
-        console.log('oi', $scope.cliente.novo);
+        $scope.cdCliente = null;
+        this.pedido.cliente = new Pessoa();
       };
 
       this.limparProduto = function() {
@@ -171,10 +171,10 @@ angular.module('commercialApp')
         }
       };
 
-      this.addProduto = function() {
+      this.addItem = function() {
         if (this.carregandoProdutos) return;
 
-        if (!$scope.item.codigo || !$scope.item.nome) {
+        if (!$scope.item.produto.codigo || !$scope.item.produto.nome) {
           $('#CdProduto').focus();
           return;
         }
@@ -187,7 +187,66 @@ angular.module('commercialApp')
 
       this.avancar = function(id) {
         $(id).focus().select();
+      };
+
+      this.limpar = function() {
+        this.pedido = new Pedido();
+        $scope.item = new ItemPedido();
+        $scope.cdCliente = null;
+        $scope.cdVendedor = null;
+      };
+
+      function validar() {
+        if (!self.pedido.idVendedor) {
+          $scope.formularios.vendedor = true;
+          $scope.formularios.produtos = false;
+          $scope.formularios.cliente = false;
+          $scope.formularios.pagamentos = false;
+
+          setTimeout(function() {
+            $('CdVendedor').focus();
+          }, 500);
+
+          alert('Selecione um vendedor!');
+
+          return;
+        }
+
+        if (self.pedido.items.length == 0) {
+          $scope.formularios.vendedor = false;
+          $scope.formularios.produtos = true;
+          $scope.formularios.cliente = false;
+          $scope.formularios.pagamentos = false;
+
+          setTimeout(function() {
+            $('CdProduto').focus();
+          }, 500);
+
+          alert('Orçamento vazio!');
+
+          return;
+        }
+
+        if (self.pedido.cliente.nome) {
+          if (!self.pedido.cliente.telefone && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
+            $scope.formularios.vendedor = false;
+            $scope.formularios.produtos = false;
+            $scope.formularios.cliente = true;
+            $scope.formularios.pagamentos = false;
+
+            setTimeout(function() {
+              $('CdCliente').focus();
+            }, 500);
+
+            alert('Cliente precisa ter ao menos 1 contato!');
+          }
+        }
       }
+
+      this.salvar = function() {
+        validar();
+        console.log(this.pedido);
+      };
 
     }
   ]);
