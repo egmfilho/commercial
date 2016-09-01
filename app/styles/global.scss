@@ -80,6 +80,16 @@ body {
   padding: 10px 30px;
 }
 
+.div-display {
+  background-color: $cor-principal-clara;
+  font-size: 2.1em;
+  color: white;
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+}
+
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
   border: 1px solid $cor-principal-clara;
@@ -121,6 +131,34 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     white-space: nowrap;
   }
 
+  .inactive-editable-cell {
+    span {
+      display: inherit;
+    }
+
+    input {
+      display: none;
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
+  }
+
+  .editable-cell {
+    @extend .inactive-editable-cell;
+
+    &:hover {
+      padding-top: 5px;
+      padding-bottom: 4px;
+      span {
+        display: none;
+      }
+      input {
+        display: inherit;
+      }
+    }
+  }
+
   tr {
     &:nth-child(odd) {
       background-color: white;
@@ -134,6 +172,146 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       background-color: $cor-tabela-highlight;
       cursor: hand;
       cursor: pointer;
+    }
+  }
+}
+
+.tabela-bordered {
+  td {
+    border: 1px solid $cor-principal-clara;
+  }
+}
+
+.tabela-header-fixo {
+  thead, tbody, tr, td, th {
+    display: block;
+  }
+
+  thead {
+    th {
+      float: left;
+    }
+
+    tr {
+      padding-right: 18px;
+    }
+  }
+
+  tbody {
+    height: 225px;
+    overflow-y: scroll;
+
+    tr {
+      min-width: 700px;
+    }
+
+    td {
+      float: left;
+    }
+  }
+
+  tr {
+    &:after {
+      content: ' ';
+      display: block;
+      visibility: hidden;
+      clear: both;
+    }
+  }
+}
+
+.meu-modal {
+
+  .header {
+    background-color: $cor-principal-clara;
+    height: 60px;
+    border-radius: 4px 4px 0 0;
+    color: white;
+    padding: 4px 4px 4px 10px;
+
+    .title {
+      font-size: 2.5em;
+
+      span {
+        vertical-align: -11%;
+      }
+
+      .close {
+        font-size: .9em;
+        margin: 9px;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .body {
+    height: 360px;
+    //max-height: 500px;
+    overflow-y: auto;
+    padding: 15px;
+
+    h4 {
+      color: $cor-principal-clara;
+    }
+
+    div {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    .container {
+      width: 100%;
+    }
+  }
+
+  .footer {
+    border-top: 1px solid #ccc;
+    height: 60px;
+    padding: 10px;
+
+    button {
+      width: 120px;
+      font-size: 1.2em;
+      height: 100%;
+      color: $cor-principal-clara;
+      float: right;
+      margin-left: 10px;
+
+      span {
+        vertical-align: -10%;
+      }
+    }
+  }
+
+}
+
+#tabela-pagamento {
+  th, td {
+    &:nth-child(1), &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+      width: 15%;
+    }
+
+    &:nth-child(2) {
+      width: 30%;
+    }
+
+    &:nth-child(6) {
+      width: 10%;
+    }
+  }
+}
+
+#tabela-buscar-pessoas {
+  th, td {
+    &:nth-child(1) {
+      width: 20%;
+    }
+
+    &:nth-child(2) {
+      width: 80%;
     }
   }
 }

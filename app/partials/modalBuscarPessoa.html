@@ -1,0 +1,57 @@
+<div class="meu-modal">
+
+  <div class="header">
+    <div class="title"><span class="glyphicon glyphicon-user"></span> Buscar Pessoa <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
+  </div>
+
+  <div class="body">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div><h4>Código</h4></div>
+          <div class="input-group">
+            <input type="number" class="form-control" name="cdPessoa" aria-describedby="basic-addon2" ng-model="cdPessoa" press-enter="buscarPorCodigo(cdPessoa)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCodigo(cdPessoa)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div><h4>Nome</h4></div>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="nmPessoa" press-enter="buscarPorNome(nmPessoa)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorNome(nmPessoa)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="tabela tabela-bordered" style="width: 100%" id="tabela-buscar-pessoas">
+            <thead>
+            <tr>
+              <th>Cód</th>
+              <th>Nome</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in pessoas" ng-click="selecionarPessoa(p)">
+              <td>{{p.codigo}}</td>
+              <td>{{p.nome}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+  </div>
+
+</div>

@@ -1,0 +1,87 @@
+<div class="meu-modal">
+
+  <div class="header">
+    <div class="title"><span class="glyphicon glyphicon-credit-card"></span> Pagamento <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
+  </div>
+
+  <div class="body">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div><h4>Código</h4></div>
+          <div class="input-group">
+            <input type="number" class="form-control" ng-model="cdModalidade" aria-describedby="basic-addon2" press-enter="buscarModalidadePorCodigo(cdModalidade)" ng-readonly="restante() <= 0">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarModalidadePorCodigo(cdModalidade)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div><h4>Modalidade</h4></div>
+          <input type="text" readonly="true" class="form-control">
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="tabela" style="width: 100%" id="tabela-pagamento">
+            <thead>
+              <tr>
+                <th>Cód</th>
+                <th>Modalidade</th>
+                <th>Desc %</th>
+                <th>Desc $</th>
+                <th>Valor</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="p in pagamentos track by $index">
+                <td>{{p.modalidade.codigo}}</td>
+                <td>{{p.modalidade.nome}}</td>
+                <td class="inactive-editable-cell"><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span><input filtro-moeda number-only type="text" ng-model="p.descontoPercent"></td>
+                <td class="inactive-editable-cell"><span>{{p.descontoDinheiro | currency: 'R$' }}</span><input filtro-moeda number-only type="text" ng-model="p.descontoDinheiro"></td>
+                <td class="editable-cell"><span>{{p.valor | currency: 'R$ '}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
+                <td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div><h4>Total</h4></div>
+          <div class="div-display">{{pedido.getValorTotalSemDesconto() | currency: 'R$ '}}</div>
+        </div>
+        <div class="col-md-4">
+          <div><h4>Desconto %</h4></div>
+          <div class="div-display">{{(pedido.getDescontoPercentTotal() | currency: '') || '0,00'}}%</div>
+        </div>
+        <div class="col-md-4">
+          <div><h4>Desconto $</h4></div>
+          <div class="div-display">{{pedido.getDescontoDinheiroTotal() | currency: 'R$ '}}</div>
+        </div>
+        <div class="col-md-4">
+          <div><h4>Val. Líquido</h4></div>
+          <div class="div-display">{{pedido.getValorTotalComDesconto() | currency: 'R$ '}}</div>
+        </div>
+        <div class="col-md-4">
+          <div><h4>Pagamentos</h4></div>
+          <div class="div-display">{{totalPagamentos() | currency: 'R$ '}}</div>
+        </div>
+        <div class="col-md-4">
+          <div><h4>Troco</h4></div>
+          <div class="div-display">{{troco() | currency: 'R$ '}}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+    <button class="btn btn-default" ng-click="gravar()"><span class="glyphicon glyphicon-floppy-disk"></span> Gravar</button>
+  </div>
+
+</div>

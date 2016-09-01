@@ -47,7 +47,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPessoaPorNome: function(tipo, nome) {
+        obterPessoasPorNome: function(tipo, nome) {
           return provider.query({
             action: 'getList'
           }, {

@@ -14,7 +14,9 @@ angular.module('commercialApp')
     'ItemPedido',
     'Pedido',
     'Pessoa',
-    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, ItemPedido, Pedido, Pessoa) {
+    'ModalPagamento',
+    'ModalBuscarPessoa',
+    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, ItemPedido, Pedido, Pessoa, modalPagamento, modalBuscarPessoa) {
 
       var self = this;
 
@@ -23,19 +25,44 @@ angular.module('commercialApp')
         angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
       }
 
+      function focarVendedor() {
+        $scope.formularios.vendedor = true;
+        $scope.formularios.cliente = false;
+        $scope.formularios.produtos = false;
+
+        $timeout(function() {
+          jQuery('input[name="CdVendedor"]').focus();
+        }, 500);
+      }
+
+      function focarProdutos() {
+        $scope.formularios.vendedor = false;
+        $scope.formularios.produtos = true;
+        $scope.formularios.cliente = false;
+
+        $timeout(function() {
+          jQuery('input[name="CdProduto"]').focus();
+        }, 500);
+      }
+
+      function focarCliente() {
+        $scope.formularios.vendedor = false;
+        $scope.formularios.produtos = false;
+        $scope.formularios.cliente = true;
+
+        $timeout(function() {
+          jQuery('input[name="CdCliente"]').focus();
+        }, 500);
+      }
+
       $scope.$on('$viewContentLoaded', function() {
         self.pedido = new Pedido();
         $scope.item = new ItemPedido();
         $scope.cliente = { novo: false };
+        $scope.lockCodigo = false;
+        $scope.lockDescricao = false;
 
-        $scope.formularios.vendedor = true;
-        $scope.formularios.cliente = false;
-        $scope.formularios.produtos = false;
-        $scope.formularios.pagamentos = false;
-
-        $timeout(function() {
-          jQuery('#CdVendedor').focus();
-        }, 500);
+        focarVendedor();
       });
 
       $scope.blurCdVendedor = function() {
@@ -54,6 +81,20 @@ angular.module('commercialApp')
         }
       };
 
+      $scope.blurProduto = function() {
+        if ($scope.cdProduto && $scope.item.produto.codigo) {
+          if ($scope.cdProduto != parseInt($scope.item.produto.codigo)) {
+            $scope.cdProduto = parseInt($scope.item.produto.codigo);
+          }
+        }
+
+        if ($scope.nmProduto && $scope.item.produto.nome) {
+          if ($scope.nmProduto != $scope.item.produto.nome) {
+            $scope.nmProduto = $scope.item.produto.nome;
+          }
+        }
+      };
+
       $scope.scrollTo = function($event, id) {
         var container = jQuery('body'),
             scrollTo = $event ? jQuery('#' + $event.currentTarget.id) : jQuery(id);
@@ -64,17 +105,10 @@ angular.module('commercialApp')
       };
 
       this.buscaVendedorPorCodigo = function(codigo) {
-
         if (!codigo) return;
 
         if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) {
-          $scope.formularios.vendedor = false;
-          $scope.formularios.produtos = true;
-          $timeout(function() {
-            $scope.scrollTo(null, '#form-produtos');
-            jQuery('#CdProduto').focus();
-          }, 500);
-
+          focarProdutos();
           return;
         }
 
@@ -88,12 +122,30 @@ angular.module('commercialApp')
             console.log('Vendedor não encontrado!');
           }
         });
+      };
 
+      this.limparVendedor = function($event) {
+        $scope.cdVendedor = '';
+        this.pedido.removeVendedor();
+        $event.stopPropagation();
       };
 
       this.buscaClientePorCodigo = function(codigo) {
+        if (!codigo) {
+          modalBuscarPessoa.show('Cliente', function(result) {
+            if (result) {
+              self.pedido.setCliente(result);
+              $scope.cdCliente = parseInt(result.codigo);
+            }
+          });
 
-        if (!codigo) return;
+          return;
+        }
+
+        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+          this.salvar();
+          return;
+        }
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function(success) {
@@ -105,37 +157,49 @@ angular.module('commercialApp')
             console.log('Cliente não encontrado!');
           }
         });
+      };
 
+      this.limparCliente = function($event) {
+        $scope.cdCliente = '';
+        this.pedido.removeCliente();
+        if ($event) $event.stopPropagation();
+        jQuery('input[name="CdCliente"]').focus();
       };
 
       this.novoCliente = function() {
         $scope.cliente.novo = true;
         $scope.cdCliente = null;
         this.pedido.cliente = new Pessoa();
+        jQuery('input[name="nome-cliente"]').focus();
       };
 
       this.limparProduto = function() {
         $scope.item = new ItemPedido();
+        $scope.lockDescricao = false;
+        $scope.lockCodigo = false;
+        $scope.cdProduto = '';
+        $scope.nmProduto = '';
+        jQuery('input[name="CdProduto"]').focus();
       };
 
       this.buscaProdutoPorCodigo = function(codigo) {
-
         if (!codigo) return;
 
         $rootScope.isLoading = true;
         providerProduto.obterProdutoPorCodigo(codigo).then(function(success) {
+          $scope.lockDescricao = true;
           $rootScope.isLoading = false;
           $scope.item.setProduto(success.data);
-          jQuery('#NmProduto').focus();
+          $scope.cdProduto = parseInt($scope.item.produto.codigo);
+          $scope.nmProduto = $scope.item.produto.nome;
+          jQuery('input[name="quantidade"]').focus();
         }, function(err) {
           $rootScope.isLoading = false;
           console.log(err);
         });
-
       };
 
       this.buscaProdutoPorDescricao = function(descricao) {
-
         return providerProduto.obterProdutosPorDescricao(descricao).then(function(success) {
           success.data.push({ NmProduto: 'Mais resultados...', CdProduto: -1});
           return success.data;
@@ -143,7 +207,6 @@ angular.module('commercialApp')
           console.log(err);
           return;
         });
-
       };
 
       this.selectProduto = function(item) {
@@ -152,6 +215,7 @@ angular.module('commercialApp')
           $scope.item = new ItemPedido();
         } else {
           this.buscaProdutoPorCodigo(item.CdProduto);
+          $scope.lockCodigo = true;
         }
       };
 
@@ -165,26 +229,27 @@ angular.module('commercialApp')
         if (this.carregandoProdutos) return;
 
         if (!$scope.item.produto.codigo || !$scope.item.produto.nome) {
-          jQuery('#CdProduto').focus();
+          jQuery('input[name="CdProduto"]').focus();
           return;
         }
 
         this.pedido.addItem($scope.item);
         this.limparProduto();
-        jQuery('#CdProduto').focus();
+        $scope.lockDescricao = false;
+        $scope.lockCodigo = false;
+        jQuery('input[name="CdProduto"]').focus();
       };
 
-      this.avancar = function(id) {
-        jQuery(id).focus().select();
+      this.avancar = function(name) {
+        jQuery('input[name="' + name + '"]').focus().select();
       };
 
       this.escapeProdutos = function() {
-        $scope.formularios.produtos = false;
-        $scope.formularios.cliente = true;
-        $timeout(function() {
-          $scope.scrollTo(null, '#form-cliente');
-          jQuery('#CdCliente').focus();
-        }, 500);
+        focarCliente();
+      };
+
+      this.escapeVendedor = function() {
+        focarProdutos();
       };
 
       this.limpar = function() {
@@ -192,58 +257,49 @@ angular.module('commercialApp')
         $scope.item = new ItemPedido();
         $scope.cdCliente = null;
         $scope.cdVendedor = null;
+
+        focarVendedor();
       };
 
       function validar() {
         if (!self.pedido.idVendedor) {
-          $scope.formularios.vendedor = true;
-          $scope.formularios.produtos = false;
-          $scope.formularios.cliente = false;
-          $scope.formularios.pagamentos = false;
+          focarVendedor();
 
-          $timeout(function() {
-            jQuery('CdVendedor').focus();
-          }, 500);
+          alert('Vendedor não informado!');
 
-          alert('Selecione um vendedor!');
-
-          return;
+          return false;
         }
 
         if (self.pedido.items.length == 0) {
-          $scope.formularios.vendedor = false;
-          $scope.formularios.produtos = true;
-          $scope.formularios.cliente = false;
-          $scope.formularios.pagamentos = false;
-
-          $timeout(function() {
-            $('CdProduto').focus();
-          }, 500);
+          focarProdutos();
 
           alert('Orçamento vazio!');
 
-          return;
+          return false;
         }
 
-        if (self.pedido.cliente.nome) {
-          if (!self.pedido.cliente.telefone && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
-            $scope.formularios.vendedor = false;
-            $scope.formularios.produtos = false;
-            $scope.formularios.cliente = true;
-            $scope.formularios.pagamentos = false;
+        if (!self.pedido.idCliente && !self.pedido.cliente.nome) {
+          //if (!self.pedido.cliente.telefone && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
+            focarCliente();
 
-            $timeout(function() {
-              $('CdCliente').focus();
-            }, 500);
+            alert('Cliente não informado!');
 
-            alert('Cliente precisa ter ao menos 1 contato!');
-          }
+            return false;
+          //}
         }
+
+        return true;
       }
 
       this.salvar = function() {
-        validar();
-        console.log(this.pedido);
+        //if (validar()) {
+          modalPagamento.show(this.pedido, function(result) {
+            if (result) {
+              alert('Orçamento gravado!');
+              self.limpar();
+            }
+          });
+        //}
       };
 
     }
