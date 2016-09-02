@@ -17,19 +17,19 @@ angular.module('commercialApp.services')
       this.uf = endereco ? endereco.uf : '';
       this.numero = endereco ? endereco.numero : '';
     }
-
-    Endereco.prototype = {
-
-      setCEP: function (cep) {
-        this.cep = cep.IdCep;
-        this.logradouro = cep.Logradouro;
-        this.bairro = cep.Bairro;
-        this.cidade = cep.Cidade;
-        this.ddd = cep.DDD;
-        this.uf = cep.UF;
-      }
-
-    };
+    //
+    //Endereco.prototype = {
+    //
+    //  setCEP: function (cep) {
+    //    this.cep = cep.IdCep;
+    //    this.logradouro = cep.Logradouro;
+    //    this.bairro = cep.Bairro;
+    //    this.cidade = cep.Cidade;
+    //    this.ddd = cep.DDD;
+    //    this.uf = cep.UF;
+    //  }
+    //
+    //};
 
     Endereco.converterEmEntrada = function(e) {
       var endereco = { };

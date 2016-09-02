@@ -65,7 +65,13 @@ body {
   text-align: center;
   width: 100%;
   height: 50px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  padding: 4px; }
+  .div-display input {
+    color: #6481bb;
+    text-align: center;
+    width: 100%;
+    height: 100%; }
 
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
@@ -94,26 +100,28 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     text-align: center;
     overflow: hidden;
     white-space: nowrap; }
-  .tabela .inactive-editable-cell span, #tabela-orcamento .inactive-editable-cell span, .tabela .editable-cell span, #tabela-orcamento .editable-cell span {
-    display: block; }
-  .tabela .inactive-editable-cell input, #tabela-orcamento .inactive-editable-cell input, .tabela .editable-cell input, #tabela-orcamento .editable-cell input {
-    display: none;
-    width: 100%;
-    text-align: center;
-    margin: 0; }
-  .tabela .editable-cell:hover, #tabela-orcamento .editable-cell:hover {
-    padding-top: 5px;
-    padding-bottom: 4px; }
-    .tabela .editable-cell:hover span, #tabela-orcamento .editable-cell:hover span {
-      display: none; }
-    .tabela .editable-cell:hover input, #tabela-orcamento .editable-cell:hover input {
-      display: inherit; }
   .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd) {
     background-color: white; }
   .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even) {
     background-color: white; }
   .tabela tr:hover, #tabela-orcamento tr:hover {
     background-color: #dedede; }
+
+.inactive-editable-elem span, .editable-elem span {
+  display: block; }
+.inactive-editable-elem input, .editable-elem input {
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin: 0; }
+
+.editable-elem:hover {
+  padding-top: 5px;
+  padding-bottom: 4px; }
+  .editable-elem:hover span {
+    display: none; }
+  .editable-elem:hover input {
+    display: inherit; }
 
 .tabela-bordered td {
   border: 1px solid #6481bb; }

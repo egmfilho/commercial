@@ -1,0 +1,63 @@
+<div class="meu-modal">
+
+  <div class="header">
+    <div class="title"><span class="glyphicon glyphicon-envelope"></span> Buscar Endereço <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
+  </div>
+
+  <div class="body">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div><h4>Código</h4></div>
+          <div class="input-group">
+            <input type="number" class="form-control" name="cdEndereco" aria-describedby="basic-addon2" ng-model="cdEndereco" press-enter="buscarPorCEP(cdEndereco)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCEP(cdEndereco)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div><h4>Nome</h4></div>
+          <div class="input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="tabela tabela-bordered" style="width: 100%">
+            <thead>
+            <tr>
+              <th>CEP</th>
+              <th>UF</th>
+              <th>Cidade</th>
+              <th>Bairro</th>
+              <th>Logradouro</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="e in enderecos" ng-click="selecionarEndereco(e)">
+              <td>{{e.cep}}</td>
+              <td>{{e.uf}}</td>
+              <td>{{e.cidade}}</td>
+              <td>{{e.bairro}}</td>
+              <td>{{e.logradouro}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+  </div>
+
+</div>

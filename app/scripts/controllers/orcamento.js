@@ -11,13 +11,15 @@ angular.module('commercialApp')
     '$timeout',
     'ProviderPessoa',
     'ProviderProduto',
-    'ProviderCEP',
+    'ProviderEndereco',
     'ItemPedido',
     'Pedido',
     'Pessoa',
+    'Endereco',
     'ModalPagamento',
     'ModalBuscarPessoa',
-    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, providerCep, ItemPedido, Pedido, Pessoa, modalPagamento, modalBuscarPessoa) {
+    'ModalBuscarEndereco',
+    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, providerEndereco, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco) {
 
       var self = this;
 
@@ -229,7 +231,7 @@ angular.module('commercialApp')
       this.addItem = function() {
         if (this.carregandoProdutos) return;
 
-        if (this.pedido.contem($scope.item) !== -1) {
+        if (this.pedido.contemItem($scope.item) !== -1) {
           alert('Produto já adicionado!');
           return;
         }
@@ -265,6 +267,32 @@ angular.module('commercialApp')
         $scope.cdVendedor = null;
 
         focarVendedor();
+      };
+
+      this.buscarCEP = function() {
+
+        if (!this.pedido.cliente.endereco.cep) return;
+
+        $rootScope.isLoading = true;
+        providerEndereco.obterEnderecosPorCEP(this.pedido.cliente.endereco.cep).then(function(success) {
+          if (success.data.length > 1) {
+            var enderecos = [ ];
+            angular.forEach(success.data, function(item, index) {
+              enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
+            });
+            modalBuscarEndereco.show(enderecos, function(result) {
+              if (result) {
+                self.pedido.cliente.setEndereco(result);
+                $rootScope.isLoading = false;
+              }
+            });
+          } else {
+            self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
+          }
+        }, function(error) {
+          $rootScope.isLoading = false;
+          console.log(error);
+        });
       };
 
       function validar() {

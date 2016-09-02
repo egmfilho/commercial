@@ -28,7 +28,7 @@ angular.module('commercialApp.services')
       var pessoa = { };
 
       pessoa.id = p.Id;
-      pessoa.idLoja = p.LojaId;
+      pessoa.idLoja = p.IdLoja;
       pessoa.codigo = p.Codigo;
       pessoa.nome = p.Nome;
       pessoa.doc = p.Doc;
@@ -41,21 +41,28 @@ angular.module('commercialApp.services')
       pessoa.cadastro = new Date(p.Cadastro);
 
       if (p.Cep) {
-        pessoa.cepId = p.CepId;
+        pessoa.enderecoId = p.IdCep;
         pessoa.endereco = new Endereco(Endereco.converterEmEntrada(p.Cep));
       } else {
-        pessoa.cepId = '';
+        pessoa.enderecoId = '';
         pessoa.endereco = new Endereco();
       }
 
       return pessoa;
     };
 
+    Pessoa.prototype = {
+      setEndereco: function(endereco) {
+        this.enderecoId = endereco.enderecoId;
+        this.endereco = new Endereco(endereco);
+      }
+    };
+
     Pessoa.converterEmSaida = function(pessoa) {
       var p = { };
 
       p.Id = pessoa.id;
-      p.LojaId = pessoa.idLoja;
+      p.IdLoja = pessoa.idLoja;
       p.Codigo = pessoa.codigo;
       p.Nome = pessoa.nome;
       p.Doc = pessoa.doc;
@@ -65,7 +72,7 @@ angular.module('commercialApp.services')
       p.Email = pessoa.email;
       p.Ativo = pessoa.ativo;
       p.Origem = pessoa.origem;
-      p.CepId = pessoa.cepId;
+      p.IdCep = pessoa.enderecoId;
       p.Cadastro = data.converter(pessoa.cadastro);
 
       return p;

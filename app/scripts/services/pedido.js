@@ -17,11 +17,14 @@ angular.module('commercialApp.services')
       this.vendedor = p ? p.vendedor : new Pessoa();
       this.cliente = p ? p.cliente : new Pessoa();
       this.items = p ? p.items : [ ];
+
+      this.descontoPercent = p ? p.descontoPercent : 0;
+      this.descontoDinheiro = p ? p.descontoDinheiro : 0;
     }
 
     Pedido.prototype = {
 
-      contem: function(item) {
+      contemItem: function(item) {
         var result = -1;
 
         angular.forEach(this.items, function(i, index) {
@@ -63,6 +66,16 @@ angular.module('commercialApp.services')
         this.items.splice(this.items.indexOf(itemPedido), 1);
       },
 
+      setDescontoPercent: function(percent) {
+        this.descontoPercent = parseFloat(percent);
+        this.descontoDinheiro = parseFloat(percent) > 0 ? this.getValorTotalSemDesconto() * (parseFloat(percent) / 100) : 0;
+      },
+
+      setDescontoDinheiro: function(dinheiro) {
+        this.descontoDinheiro = parseFloat(dinheiro);
+        this.descontoPercent = (parseFloat(dinheiro) * 100) / this.getValorTotalSemDesconto();
+      },
+
       getDescontoPercentTotal: function() {
         return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
       },
@@ -94,7 +107,7 @@ angular.module('commercialApp.services')
           total += item.getTotalComDesconto();
         });
 
-        return total;
+        return total - this.descontoDinheiro;
       }
 
     };

@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .provider('ProviderCEP', ['URLS', function(urls) {
+  .provider('ProviderEndereco', ['URLS', function(urls) {
 
     var url = urls.root + 'cep.php?action=:action',
       provider = null;
@@ -29,7 +29,7 @@ angular.module('commercialApp.services')
 
       return {
 
-        obterCEPs: function(cep) {
+        obterEnderecosPorCEP: function(cep) {
           return provider.query({
             action: 'getList'
           }, {

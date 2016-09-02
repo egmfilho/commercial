@@ -48,9 +48,9 @@
               <tr ng-repeat="p in pagamentos track by $index">
                 <td>{{p.modalidade.codigo}}</td>
                 <td>{{p.modalidade.nome}}</td>
-                <td class="inactive-editable-cell"><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span><input filtro-moeda number-only type="text" ng-model="p.descontoPercent"></td>
-                <td class="inactive-editable-cell"><span>{{p.descontoDinheiro | currency: 'R$' }}</span><input filtro-moeda number-only type="text" ng-model="p.descontoDinheiro"></td>
-                <td class="editable-cell"><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
+                <td class="inactive-editable-elem"><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span><input filtro-moeda number-only type="text" ng-model="p.descontoPercent"></td>
+                <td class="inactive-editable-elem"><span>{{p.descontoDinheiro | currency: 'R$' }}</span><input filtro-moeda number-only type="text" ng-model="p.descontoDinheiro"></td>
+                <td class="editable-elem"><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
                 <td><a href="" ng-click="removePagamento(p)"><span class="glyphicon glyphicon-trash"></span></a></td>
               </tr>
             </tbody>
@@ -64,11 +64,15 @@
         </div>
         <div class="col-md-4">
           <div><h4>Desconto %</h4></div>
-          <div class="div-display">{{(pedido.getDescontoPercentTotal() | currency: '') || '0,00'}}%</div>
+          <div class="div-display editable-elem"><span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
+            type="text" filtro-moeda number-only ng-model="pedido.descontoPercent" ng-change="pedido.setDescontoPercent(pedido.descontoPercent)">
+          </div>
         </div>
         <div class="col-md-4">
           <div><h4>Desconto $</h4></div>
-          <div class="div-display">{{pedido.getDescontoDinheiroTotal() | currency: 'R$ '}}</div>
+          <div class="div-display editable-elem"><span>{{pedido.descontoDinheiro | currency: 'R$ '}}</span><input
+            type="text" filtro-moeda number-only ng-model="pedido.descontoDinheiro" ng-change="pedido.setDescontoDinheiro(pedido.descontoDinheiro)">
+          </div>
         </div>
         <div class="col-md-4">
           <div><h4>Val. Líquido</h4></div>
