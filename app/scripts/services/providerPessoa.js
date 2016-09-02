@@ -56,12 +56,10 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        adicionarPessoa: function(tipo, nome, telefone, celular, email) {
+        adicionarPessoa: function(pessoa) {
           return provider.save({
-            action: ''
-          }, {
-            NmPessoa: nome
-          }).$promise;
+            action: 'insert'
+          }, pessoa).$promise;
         }
 
       }

@@ -74,6 +74,7 @@ angular.module('commercialApp.services')
       p.Origem = pessoa.origem;
       p.IdCep = pessoa.enderecoId;
       p.Cadastro = data.converter(pessoa.cadastro);
+      p.Cep = Endereco.converterEmSaida(pessoa.endereco);
 
       return p;
     };

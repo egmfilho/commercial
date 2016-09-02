@@ -176,6 +176,19 @@ angular.module('commercialApp')
         jQuery('input[name="nome-cliente"]').focus();
       };
 
+      this.cadastrarCliente = function() {
+        this.pedido.cliente.tipo = 'Cliente';
+        console.log(Pessoa.converterEmSaida(this.pedido.cliente));
+        $rootScope.isLoading = true;
+        providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function(success) {
+          console.log(success.data);
+          $rootScope.isLoading = false;
+        }, function(error) {
+          console.log(error);
+          $rootScope.isLoading = false;
+        });
+      };
+
       this.limparProduto = function() {
         $scope.item = new ItemPedido();
         $scope.lockDescricao = false;
@@ -288,6 +301,7 @@ angular.module('commercialApp')
             });
           } else {
             self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
+            $rootScope.isLoading = false;
           }
         }, function(error) {
           $rootScope.isLoading = false;

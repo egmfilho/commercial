@@ -17,24 +17,11 @@ angular.module('commercialApp.services')
       this.uf = endereco ? endereco.uf : '';
       this.numero = endereco ? endereco.numero : '';
     }
-    //
-    //Endereco.prototype = {
-    //
-    //  setCEP: function (cep) {
-    //    this.cep = cep.IdCep;
-    //    this.logradouro = cep.Logradouro;
-    //    this.bairro = cep.Bairro;
-    //    this.cidade = cep.Cidade;
-    //    this.ddd = cep.DDD;
-    //    this.uf = cep.UF;
-    //  }
-    //
-    //};
 
     Endereco.converterEmEntrada = function(e) {
       var endereco = { };
 
-      endereco.id = e.IdCep;
+      endereco.id = e.IdCep || '';
       endereco.cep = e.CdCep;
       endereco.logradouro = e.Logradouro;
       endereco.bairro = e.Bairro;
@@ -44,6 +31,21 @@ angular.module('commercialApp.services')
       endereco.numero = e.Numero;
 
       return endereco;
+    };
+
+    Endereco.converterEmSaida = function(endereco) {
+      var e = { };
+
+      e.IdCep = endereco.id || null;
+      e.CdCep = endereco.cep || null;
+      e.Logradouro = endereco.logradouro || null;
+      e.Bairro = endereco.bairro || null;
+      e.Cidade = endereco.cidade || null;
+      e.DDD = endereco.ddd || null;
+      e.UF = endereco.uf || null;
+      e.Numero = endereco.numero || null;
+
+      return e;
     };
 
     return Endereco;
