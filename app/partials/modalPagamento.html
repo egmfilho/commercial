@@ -37,13 +37,21 @@
               </tr>
             </thead>
             <tbody>
+              <tr ng-if="pagamentos.length == 0">
+                <td>&nbsp;<td>
+                <td>&nbsp;<td>
+                <td>&nbsp;<td>
+                <td>&nbsp;<td>
+                <td>&nbsp;<td>
+                <td>&nbsp;<td>
+              </tr>
               <tr ng-repeat="p in pagamentos track by $index">
                 <td>{{p.modalidade.codigo}}</td>
                 <td>{{p.modalidade.nome}}</td>
                 <td class="inactive-editable-cell"><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span><input filtro-moeda number-only type="text" ng-model="p.descontoPercent"></td>
                 <td class="inactive-editable-cell"><span>{{p.descontoDinheiro | currency: 'R$' }}</span><input filtro-moeda number-only type="text" ng-model="p.descontoDinheiro"></td>
-                <td class="editable-cell"><span>{{p.valor | currency: 'R$ '}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
-                <td><a href=""><span class="glyphicon glyphicon-trash"></span></a></td>
+                <td class="editable-cell"><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
+                <td><a href="" ng-click="removePagamento(p)"><span class="glyphicon glyphicon-trash"></span></a></td>
               </tr>
             </tbody>
           </table>

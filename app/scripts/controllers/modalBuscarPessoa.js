@@ -37,7 +37,6 @@ angular.module('commercialApp.controllers')
         $rootScope.isLoading = true;
 
         provider.obterPessoasPorNome(tipo, nome).then(function(success) {
-          console.log(success);
           $scope.pessoas = [ ];
           angular.forEach(success.data, function(item, index) {
             $scope.pessoas.push(new Pessoa(Pessoa.converterEmEntrada(item)));
@@ -62,7 +61,13 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.selecionarPessoa = function(pessoa) {
-        $uibModalInstance.close(pessoa);
+        $rootScope.isLoading = true;
+        provider.obterPessoaPorCodigo(tipo, pessoa.codigo).then(function(success) {
+          $rootScope.isLoading = false;
+          $uibModalInstance.close(new Pessoa(Pessoa.converterEmEntrada(success.data)));
+        }, function(error) {
+          console.log(error);
+        });
       };
 
       $scope.cancel = function() {

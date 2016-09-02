@@ -85,7 +85,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input name="percent" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" press-enter="orcamento.avancar('dinheiro')" press-shift-enter="orcamento.escapeProdutos()" readonly="true">
+          <input name="percent" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" press-enter="orcamento.avancar('dinheiro')" press-shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
           <span class="input-group-addon">%</span>
         </div>
       </div>
@@ -93,7 +93,7 @@
         <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input name="dinheiro" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" press-enter="orcamento.addItem()" press-shift-enter="orcamento.escapeProdutos()" readonly="true">
+          <input name="dinheiro" type="text" class="form-control" filtro-moeda number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" press-enter="orcamento.addItem()" press-shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
@@ -187,31 +187,72 @@
       <div class="col-xs-9 col-sm-9">
         <div><h4>Nome <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
         <div>
-          <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('tel-cliente')" press-shift-enter="orcamento.salvar()">
+          <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('cpf')" press-shift-enter="orcamento.salvar()">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>CPF <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
+        <div>
+          <input name="cpf" type="text" class="form-control" ng-model="orcamento.pedido.cliente.doc" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('tel-cliente')">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Telefone <sup>{{cliente.novo ? '2' : ''}}</sup></h4></div>
-        <div>
+        <div class="input-group">
+          <span class="input-group-addon">({{orcamento.pedido.cliente.endereco.ddd || 'xx'}})</span>
           <input name="tel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.telefone" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('cel-cliente')" press-shift-enter="orcamento.salvar()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Celular <sup>{{cliente.novo ? '2' : ''}}</sup></h4></div>
-        <div>
+        <div class="input-group">
+          <span class="input-group-addon">({{orcamento.pedido.cliente.endereco.ddd || 'xx'}})</span>
           <input name="cel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.celular" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('email-cliente')" press-shift-enter="orcamento.salvar()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
         <div><h4>Email <sup>{{cliente.novo ? '2' : ''}}</sup></h4></div>
         <div>
-          <input name="email-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.email" ng-readonly="!cliente.novo" press-shift-enter="orcamento.salvar()">
+          <input name="email-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.email" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('cep')" press-shift-enter="orcamento.salvar()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
-        <div><h4>Alguma coisa</h4></div>
+        <div><h4>CEP <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
+        <div ng-class="cliente.novo ? 'input-group' : ''">
+          <input name="cep" type="text" class="form-control" press-enter="orcamento.avancar('tel-cliente')" ng-readonly="!cliente.novo" ng-model="orcamento.pedido.cliente.endereco.cep">
+          <span class="input-group-btn" ng-hide="!cliente.novo">
+            <button class="btn btn-default" tabindex="-1" ng-click=""><span class="glyphicon glyphicon-search"></span></button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <div><h4>Logradouro</h4></div>
         <div>
-          <input type="text" class="form-control" ng-readonly="!cliente.novo">
+          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.logradouro">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Número</h4></div>
+        <div>
+          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.numero">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Bairro</h4></div>
+        <div>
+          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.bairro">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>Cidade</h4></div>
+        <div>
+          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.cidade">
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <div><h4>UF</h4></div>
+        <div>
+          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.uf">
         </div>
       </div>
 

@@ -109,42 +109,7 @@
 
 #tabela-orcamento {
   @extend .tabela;
-
-  thead, tbody, tr, td, th {
-    display: block;
-  }
-
-  thead {
-    th {
-      float: left;
-    }
-
-    tr {
-      padding-right: 18px;
-    }
-  }
-
-  tbody {
-    height: 225px;
-    overflow-y: scroll;
-
-    tr {
-      min-width: 700px;
-    }
-
-    td {
-      float: left;
-    }
-  }
-
-  tr {
-    &:after {
-      content: ' ';
-      display: block;
-      visibility: hidden;
-      clear: both;
-    }
-  }
+  @extend .tabela-header-fixo;
 
   th, td {
     &:nth-child(1), &:nth-child(3), &:nth-child(4), &:nth-child(5),
@@ -161,8 +126,4 @@
 #controle-tabela-orcamento .row {
   margin-top: 0;
   margin-bottom: 0;
-}
-
-#tabela-pagamento {
-  @extend .tabela;
 }

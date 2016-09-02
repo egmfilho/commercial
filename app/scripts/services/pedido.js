@@ -21,6 +21,20 @@ angular.module('commercialApp.services')
 
     Pedido.prototype = {
 
+      contem: function(item) {
+        var result = -1;
+
+        angular.forEach(this.items, function(i, index) {
+          if (result === -1) {
+            if (parseInt(item.produto.codigo) == parseInt(i.produto.codigo)) {
+              result = index;
+            }
+          }
+        });
+
+        return result;
+      },
+
       setVendedor: function(vendedor) {
         this.idVendedor = vendedor.id;
         this.vendedor = vendedor;

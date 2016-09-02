@@ -11,12 +11,13 @@ angular.module('commercialApp')
     '$timeout',
     'ProviderPessoa',
     'ProviderProduto',
+    'ProviderCEP',
     'ItemPedido',
     'Pedido',
     'Pessoa',
     'ModalPagamento',
     'ModalBuscarPessoa',
-    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, ItemPedido, Pedido, Pessoa, modalPagamento, modalBuscarPessoa) {
+    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, providerCep, ItemPedido, Pedido, Pessoa, modalPagamento, modalBuscarPessoa) {
 
       var self = this;
 
@@ -228,6 +229,11 @@ angular.module('commercialApp')
       this.addItem = function() {
         if (this.carregandoProdutos) return;
 
+        if (this.pedido.contem($scope.item) !== -1) {
+          alert('Produto já adicionado!');
+          return;
+        }
+
         if (!$scope.item.produto.codigo || !$scope.item.produto.nome) {
           jQuery('input[name="CdProduto"]').focus();
           return;
@@ -292,14 +298,14 @@ angular.module('commercialApp')
       }
 
       this.salvar = function() {
-        //if (validar()) {
+        if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
             if (result) {
               alert('Orçamento gravado!');
               self.limpar();
             }
           });
-        //}
+        }
       };
 
     }

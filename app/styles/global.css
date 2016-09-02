@@ -75,65 +75,63 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 .alerta {
   text-align: center; }
 
-.tabela, #tabela-orcamento, #tabela-pagamento {
+.tabela, #tabela-orcamento {
   border: 2px solid #6481bb;
   margin-bottom: 0px;
   background-color: #f2f2f2; }
-  .tabela a, #tabela-orcamento a, #tabela-pagamento a {
+  .tabela a, #tabela-orcamento a {
     color: #6481bb; }
-  .tabela thead, #tabela-orcamento thead, #tabela-pagamento thead {
+  .tabela thead, #tabela-orcamento thead {
     background-color: #6481bb; }
-    .tabela thead tr, #tabela-orcamento thead tr, #tabela-pagamento thead tr {
+    .tabela thead tr, #tabela-orcamento thead tr {
       background-color: #6481bb !important; }
-  .tabela th, #tabela-orcamento th, #tabela-pagamento th {
+  .tabela th, #tabela-orcamento th {
     border-bottom: none;
     background-color: #6481bb;
     color: white;
     text-align: center; }
-  .tabela td, #tabela-orcamento td, #tabela-pagamento td {
+  .tabela td, #tabela-orcamento td {
     text-align: center;
     overflow: hidden;
     white-space: nowrap; }
-  .tabela .inactive-editable-cell span, #tabela-orcamento .inactive-editable-cell span, #tabela-pagamento .inactive-editable-cell span, .tabela .editable-cell span, #tabela-orcamento .editable-cell span, #tabela-pagamento .editable-cell span {
-    display: inherit; }
-  .tabela .inactive-editable-cell input, #tabela-orcamento .inactive-editable-cell input, #tabela-pagamento .inactive-editable-cell input, .tabela .editable-cell input, #tabela-orcamento .editable-cell input, #tabela-pagamento .editable-cell input {
+  .tabela .inactive-editable-cell span, #tabela-orcamento .inactive-editable-cell span, .tabela .editable-cell span, #tabela-orcamento .editable-cell span {
+    display: block; }
+  .tabela .inactive-editable-cell input, #tabela-orcamento .inactive-editable-cell input, .tabela .editable-cell input, #tabela-orcamento .editable-cell input {
     display: none;
     width: 100%;
     text-align: center;
     margin: 0; }
-  .tabela .editable-cell:hover, #tabela-orcamento .editable-cell:hover, #tabela-pagamento .editable-cell:hover {
+  .tabela .editable-cell:hover, #tabela-orcamento .editable-cell:hover {
     padding-top: 5px;
     padding-bottom: 4px; }
-    .tabela .editable-cell:hover span, #tabela-orcamento .editable-cell:hover span, #tabela-pagamento .editable-cell:hover span {
+    .tabela .editable-cell:hover span, #tabela-orcamento .editable-cell:hover span {
       display: none; }
-    .tabela .editable-cell:hover input, #tabela-orcamento .editable-cell:hover input, #tabela-pagamento .editable-cell:hover input {
+    .tabela .editable-cell:hover input, #tabela-orcamento .editable-cell:hover input {
       display: inherit; }
-  .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd), #tabela-pagamento tr:nth-child(odd) {
+  .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd) {
     background-color: white; }
-  .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even), #tabela-pagamento tr:nth-child(even) {
+  .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even) {
     background-color: white; }
-  .tabela tr:hover, #tabela-orcamento tr:hover, #tabela-pagamento tr:hover {
-    background-color: #dedede;
-    cursor: hand;
-    cursor: pointer; }
+  .tabela tr:hover, #tabela-orcamento tr:hover {
+    background-color: #dedede; }
 
 .tabela-bordered td {
   border: 1px solid #6481bb; }
 
-.tabela-header-fixo thead, .tabela-header-fixo tbody, .tabela-header-fixo tr, .tabela-header-fixo td, .tabela-header-fixo th {
+.tabela-header-fixo thead, #tabela-orcamento thead, .tabela-header-fixo tbody, #tabela-orcamento tbody, .tabela-header-fixo tr, #tabela-orcamento tr, .tabela-header-fixo td, #tabela-orcamento td, .tabela-header-fixo th, #tabela-orcamento th {
   display: block; }
-.tabela-header-fixo thead th {
+.tabela-header-fixo thead th, #tabela-orcamento thead th {
   float: left; }
-.tabela-header-fixo thead tr {
+.tabela-header-fixo thead tr, #tabela-orcamento thead tr {
   padding-right: 18px; }
-.tabela-header-fixo tbody {
+.tabela-header-fixo tbody, #tabela-orcamento tbody {
   height: 225px;
   overflow-y: scroll; }
-  .tabela-header-fixo tbody tr {
+  .tabela-header-fixo tbody tr, #tabela-orcamento tbody tr {
     min-width: 700px; }
-  .tabela-header-fixo tbody td {
+  .tabela-header-fixo tbody td, #tabela-orcamento tbody td {
     float: left; }
-.tabela-header-fixo tr:after {
+.tabela-header-fixo tr:after, #tabela-orcamento tr:after {
   content: ' ';
   display: block;
   visibility: hidden;
@@ -179,12 +177,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     .meu-modal .footer button span {
       vertical-align: -10%; }
 
-#tabela-pagamento th:nth-child(1), #tabela-pagamento th:nth-child(3), #tabela-pagamento th:nth-child(4), #tabela-pagamento th:nth-child(5), #tabela-pagamento td:nth-child(1), #tabela-pagamento td:nth-child(3), #tabela-pagamento td:nth-child(4), #tabela-pagamento td:nth-child(5) {
+#tabela-pagamento th:nth-child(1), #tabela-pagamento th:nth-child(3), #tabela-pagamento th:nth-child(4), #tabela-pagamento td:nth-child(1), #tabela-pagamento td:nth-child(3), #tabela-pagamento td:nth-child(4) {
   width: 15%; }
 #tabela-pagamento th:nth-child(2), #tabela-pagamento td:nth-child(2) {
   width: 30%; }
+#tabela-pagamento th:nth-child(5), #tabela-pagamento td:nth-child(5) {
+  width: 20%; }
 #tabela-pagamento th:nth-child(6), #tabela-pagamento td:nth-child(6) {
-  width: 10%; }
+  width: 5%; }
 
 #tabela-buscar-pessoas th:nth-child(1), #tabela-buscar-pessoas td:nth-child(1) {
   width: 20%; }
@@ -374,24 +374,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   #formulario-orcamento .btn-orcamento span {
     vertical-align: -10%; }
 
-#tabela-orcamento thead, #tabela-orcamento tbody, #tabela-orcamento tr, #tabela-orcamento td, #tabela-orcamento th {
-  display: block; }
-#tabela-orcamento thead th {
-  float: left; }
-#tabela-orcamento thead tr {
-  padding-right: 18px; }
-#tabela-orcamento tbody {
-  height: 225px;
-  overflow-y: scroll; }
-  #tabela-orcamento tbody tr {
-    min-width: 700px; }
-  #tabela-orcamento tbody td {
-    float: left; }
-#tabela-orcamento tr:after {
-  content: ' ';
-  display: block;
-  visibility: hidden;
-  clear: both; }
 #tabela-orcamento th:nth-child(1), #tabela-orcamento th:nth-child(3), #tabela-orcamento th:nth-child(4), #tabela-orcamento th:nth-child(5), #tabela-orcamento th:nth-child(6), #tabela-orcamento th:nth-child(7), #tabela-orcamento th:nth-child(8), #tabela-orcamento th:nth-child(9), #tabela-orcamento td:nth-child(1), #tabela-orcamento td:nth-child(3), #tabela-orcamento td:nth-child(4), #tabela-orcamento td:nth-child(5), #tabela-orcamento td:nth-child(6), #tabela-orcamento td:nth-child(7), #tabela-orcamento td:nth-child(8), #tabela-orcamento td:nth-child(9) {
   width: 7.5%; }
 #tabela-orcamento th:nth-child(2), #tabela-orcamento td:nth-child(2) {

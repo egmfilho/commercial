@@ -54,6 +54,10 @@ angular.module('commercialApp.controllers')
         });
       };
 
+      $scope.removePagamento = function(pagamento) {
+        $scope.pagamentos.splice($scope.pagamentos.indexOf(pagamento), 1);
+      };
+
       $scope.cancel = function() {
         $uibModalInstance.dismiss();
       };

@@ -22,7 +22,7 @@ angular.module('commercialApp.services')
 
       setQuantidade: function(quantidade) {
         if (quantidade <= 0) {
-          this.limpar();
+          return;
         }
 
         this.quantidade = quantidade;

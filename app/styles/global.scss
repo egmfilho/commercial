@@ -132,8 +132,9 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   }
 
   .inactive-editable-cell {
+
     span {
-      display: inherit;
+      display: block;
     }
 
     input {
@@ -170,8 +171,8 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 
     &:hover {
       background-color: $cor-tabela-highlight;
-      cursor: hand;
-      cursor: pointer;
+      //cursor: hand;
+      //cursor: pointer;
     }
   }
 }
@@ -290,7 +291,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 
 #tabela-pagamento {
   th, td {
-    &:nth-child(1), &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+    &:nth-child(1), &:nth-child(3), &:nth-child(4) {
       width: 15%;
     }
 
@@ -298,8 +299,12 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       width: 30%;
     }
 
+    &:nth-child(5) {
+      width: 20%;
+    }
+
     &:nth-child(6) {
-      width: 10%;
+      width: 5%;
     }
   }
 }
