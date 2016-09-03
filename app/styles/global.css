@@ -1,6 +1,13 @@
+html {
+  height: 100%; }
+
 body {
   background-color: #ddd;
-  padding-bottom: 100px; }
+  padding-bottom: 60px;
+  position: relative;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; }
 
 #loading {
   position: fixed;
@@ -297,14 +304,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   background-repeat: no-repeat;
   margin: 10px auto;
   background-position: center; }
-
-#menu-home {
-  padding: 30px;
-  -webkit-transform: translateY(25%);
-  -moz-transform: translateY(25%);
-  -ms-transform: translateY(25%);
-  -o-transform: translateY(25%);
-  transform: translateY(25%); }
 
 .botao-menu {
   margin: 14px 0;

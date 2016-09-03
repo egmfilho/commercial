@@ -145,10 +145,10 @@ angular.module('commercialApp')
           return;
         }
 
-        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
-          this.salvar();
-          return;
-        }
+        //if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+        //  this.salvar();
+        //  return;
+        //}
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function(success) {
@@ -177,7 +177,7 @@ angular.module('commercialApp')
       };
 
       this.cadastrarCliente = function() {
-        this.pedido.cliente.tipo = 'Cliente';
+        this.pedido.cliente.tpPessoa = 'Cliente';
         console.log(Pessoa.converterEmSaida(this.pedido.cliente));
         $rootScope.isLoading = true;
         providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function(success) {
@@ -261,8 +261,8 @@ angular.module('commercialApp')
         jQuery('input[name="CdProduto"]').focus();
       };
 
-      this.avancar = function(name) {
-        jQuery('input[name="' + name + '"]').focus().select();
+      this.avancar = function(elem, name) {
+        jQuery(elem + '[name="' + name + '"]').focus().select();
       };
 
       this.escapeProdutos = function() {
@@ -296,13 +296,13 @@ angular.module('commercialApp')
             modalBuscarEndereco.show(enderecos, function(result) {
               if (result) {
                 self.pedido.cliente.setEndereco(result);
-                $rootScope.isLoading = false;
               }
             });
           } else {
             self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
-            $rootScope.isLoading = false;
           }
+          $rootScope.isLoading = false;
+          jQuery('input[name="endNumero"]').focus();
         }, function(error) {
           $rootScope.isLoading = false;
           console.log(error);

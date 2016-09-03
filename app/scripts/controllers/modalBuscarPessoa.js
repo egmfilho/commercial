@@ -30,6 +30,7 @@ angular.module('commercialApp.controllers')
           $rootScope.isLoading = false;
         }, function(error) {
           console.log(error);
+          $rootScope.isLoading = false;
         });
       };
 
@@ -45,6 +46,7 @@ angular.module('commercialApp.controllers')
           $rootScope.isLoading = false;
         }, function(error) {
           console.log(error);
+          $rootScope.isLoading = false;
         });
       };
 

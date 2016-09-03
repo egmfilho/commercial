@@ -12,21 +12,21 @@ angular.module('commercialApp.controllers')
     'ProviderModalidadePagamento',
     'Modalidade',
     'Pagamento',
+    'Pedido',
     'pedido',
-    function($rootScope, $scope, $uibModalInstance, providerModalidade, Modalidade, Pagamento, pedido) {
+    function($rootScope, $scope, $uibModalInstance, providerModalidade, Modalidade, Pagamento, Pedido, pedido) {
 
       var pagamento = null;
 
       $uibModalInstance.opened.then(function() {
         $scope.pedido = pedido;
-        $scope.pagamentos = [];
         $rootScope.isLoading = false;
       });
 
       $scope.totalPagamentos = function() {
         var total = 0;
 
-        angular.forEach($scope.pagamentos, function(item, index) {
+        angular.forEach($scope.pedido.pagamentos, function(item, index) {
           total += item.valor;
         });
 
@@ -48,14 +48,14 @@ angular.module('commercialApp.controllers')
           pagamento = new Pagamento();
           pagamento.setModalidade(Modalidade.converterEmEntrada(success.data));
           pagamento.valor = $scope.restante();
-          $scope.pagamentos.push(pagamento);
+          $scope.pedido.pagamentos.push(pagamento);
         }, function(error) {
           console.log(error);
         });
       };
 
       $scope.removePagamento = function(pagamento) {
-        $scope.pagamentos.splice($scope.pagamentos.indexOf(pagamento), 1);
+        $scope.pedido.pagamentos.splice($scope.pedido.pagamentos.indexOf(pagamento), 1);
       };
 
       $scope.cancel = function() {
@@ -63,6 +63,7 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.gravar = function() {
+        console.log(Pedido.converterEmSaida($scope.pedido));
         $uibModalInstance.close('Gravado!');
       };
 

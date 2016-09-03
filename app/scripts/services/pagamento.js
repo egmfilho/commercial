@@ -40,8 +40,24 @@ angular.module('commercialApp.services')
 
       getDescontoMaximoPercent: function() {
         return this.descontoMaximo;
+      },
+
+      getValorTotalComDesconto: function() {
+        return this.valor;
       }
 
+    };
+
+    Pagamento.converterEmSaida = function(pagamento) {
+      var p = { };
+
+      p.modality_id = pagamento.modalidade.id;
+      p.order_payment_al_discount = pagamento.descontoPercent;
+      p.order_payment_vl_discount = pagamento.descontoDinheiro;
+      p.order_payment_value = pagamento.valor;
+      p.order_payment_value_total = pagamento.getValorTotalComDesconto();
+
+      return p;
     };
 
     return Pagamento;

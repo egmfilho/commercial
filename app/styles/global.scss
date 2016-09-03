@@ -6,9 +6,19 @@ $cor-de-fundo:         #ddd;
 $cor-fundo-tabela:     #f2f2f2;
 $cor-tabela-highlight: #dedede;
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: $cor-de-fundo;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
+
+  position: relative;
+  min-height: 100%;
+  //max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #loading {
