@@ -54,7 +54,7 @@ angular.module('commercialApp.services')
       i.order_item_value = item.produto.preco;
       i.order_item_al_discount = item.descontoPercent;
       i.order_item_vl_discount = item.descontoDinheiro;
-      i.order_item_ammount = item.quantidade;
+      i.order_item_amount = item.quantidade;
       i.order_item_value_total = item.getTotalComDesconto();
       i.product_id = item.produto.id;
 

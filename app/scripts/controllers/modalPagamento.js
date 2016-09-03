@@ -10,11 +10,12 @@ angular.module('commercialApp.controllers')
     '$scope',
     '$uibModalInstance',
     'ProviderModalidadePagamento',
+    'ProviderPedido',
     'Modalidade',
     'Pagamento',
     'Pedido',
     'pedido',
-    function($rootScope, $scope, $uibModalInstance, providerModalidade, Modalidade, Pagamento, Pedido, pedido) {
+    function($rootScope, $scope, $uibModalInstance, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
 
       var pagamento = null;
 
@@ -63,8 +64,20 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.gravar = function() {
+
+        //console.log(JSON.stringify(Pedido.converterEmSaida($scope.pedido)));
+        //return;
+
+        $rootScope.isLoading = true;
         console.log(Pedido.converterEmSaida($scope.pedido));
-        $uibModalInstance.close('Gravado!');
+        providerPedido.adicionarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
+          console.log(success.data);
+          $rootScope.isLoading = false;
+          $uibModalInstance.close('Gravado!');
+        }, function(error) {
+          console.log(error);
+          $rootScope.isLoading = false;
+        });
       };
 
     }

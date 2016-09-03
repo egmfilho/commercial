@@ -176,12 +176,51 @@ angular.module('commercialApp')
         jQuery('input[name="nome-cliente"]').focus();
       };
 
+      function validarCliente() {
+        if (!self.pedido.cliente.nome) {
+          return false;
+        }
+
+        if (self.pedido.cliente.tipo == 'F') {
+          if (!self.pedido.cliente.cpf) {
+            return false;
+          }
+        } else {
+          if (!self.pedido.cliente.cnpj || !self.pedido.cliente.iEstadual) {
+            return false;
+          }
+        }
+
+        if (!self.pedido.cliente.telefone && !self.pedido.cliente.dddCelular && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
+          return false;
+        }
+
+        if (!self.pedido.cliente.endereco.cep && !self.pedido.cliente.endereco.logradouro) {
+          return false;
+        }
+
+        if (!self.pedido.cliente.endereco.numero) {
+          return false;
+        }
+
+        return true;
+      }
+
       this.cadastrarCliente = function() {
+        if (!validarCliente()) {
+          alert('Preencha os campos corretamente!');
+          return;
+        }
+
         this.pedido.cliente.tpPessoa = 'Cliente';
         console.log(Pessoa.converterEmSaida(this.pedido.cliente));
         $rootScope.isLoading = true;
         providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function(success) {
           console.log(success.data);
+          $scope.cliente.novo = false;
+          self.pedido.cliente.id = success.data.IdPessoa;
+          self.pedido.cliente.codigo = success.data.CdPessoa;
+          $scope.cdCliente = self.pedido.cliente.codigo;
           $rootScope.isLoading = false;
         }, function(error) {
           console.log(error);

@@ -201,7 +201,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="number" class="form-control" name="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)" press-shift-enter="orcamento.salvar()" ng-readonly="cliente.novo">
+          <input type="number" class="form-control" name="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)" press-shift-enter="orcamento.salvar()" ng-readonly="cliente.novo" maxlength="6">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(cdCliente)" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-search"></span></button>
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-plus"></span></button>
@@ -211,7 +211,7 @@
       <div class="col-xs-9 col-sm-9">
         <div><h4>Nome <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
         <div>
-          <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('select', 'tipo')" press-shift-enter="orcamento.salvar()">
+          <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('select', 'tipo')" press-shift-enter="orcamento.salvar()" maxlength="60">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
@@ -238,7 +238,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Inscrição Estadual <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
         <div>
-          <input name="iEstadual" type="text" class="form-control" ng-model="orcamento.pedido.cliente.iEstadual" ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'J'" press-enter="orcamento.avancar('input', 'tel-cliente')" press-shift-enter="orcamento.salvar()">
+          <input name="iEstadual" type="text" class="form-control" ng-model="orcamento.pedido.cliente.iEstadual" ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'J'" press-enter="orcamento.avancar('input', 'tel-cliente')" press-shift-enter="orcamento.salvar()" maxlength="20">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">
@@ -261,7 +261,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Email <sup>{{cliente.novo ? '2' : ''}}</sup></h4></div>
         <div>
-          <input name="email-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.email" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('input', 'cep')" press-shift-enter="orcamento.salvar()">
+          <input name="email-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.email" ng-readonly="!cliente.novo" press-enter="orcamento.avancar('input', 'cep')" press-shift-enter="orcamento.salvar()" maxlength="50">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3" style="padding: 0;">
@@ -292,7 +292,7 @@
           <!--NUMERO-->
           <div><h4>&#8470; <sup>{{cliente.novo ? '1' : ''}}</sup></h4></div>
           <div>
-            <input name="endNumero" type="text" class="form-control" ng-readonly="!cliente.novo" ng-model="orcamento.pedido.cliente.endereco.numero">
+            <input name="endNumero" type="text" class="form-control" ng-readonly="!cliente.novo" ng-model="orcamento.pedido.cliente.endereco.numero" maxlength="10">
           </div>
         </div>
       </div>
