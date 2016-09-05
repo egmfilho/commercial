@@ -19,7 +19,8 @@ angular.module('commercialApp')
     'ModalPagamento',
     'ModalBuscarPessoa',
     'ModalBuscarEndereco',
-    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, providerEndereco, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco) {
+    'ValidadorDocumento',
+    function($rootScope, $scope, $timeout, providerPessoa, providerProduto, providerEndereco, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, ValidadorDocumento) {
 
       var self = this;
 
@@ -69,31 +70,75 @@ angular.module('commercialApp')
       });
 
       $scope.blurCdVendedor = function() {
-        if ($scope.cdVendedor && self.pedido.vendedor.codigo) {
-          if ($scope.cdVendedor != parseInt(self.pedido.vendedor.codigo)) {
-            $scope.cdVendedor = parseInt(self.pedido.vendedor.codigo);
+        if (self.pedido.vendedor.codigo) {
+          if ($scope.cdVendedor != self.pedido.vendedor.codigo) {
+            $scope.cdVendedor = self.pedido.vendedor.codigo;
           }
         }
       };
 
       $scope.blurCdCliente = function() {
-        if ($scope.cdCliente && self.pedido.cliente.codigo) {
-          if ($scope.cdCliente != parseInt(self.pedido.cliente.codigo)) {
-            $scope.cdCliente = parseInt(self.pedido.cliente.codigo);
+        if (self.pedido.cliente.codigo) {
+          if ($scope.cdCliente != self.pedido.cliente.codigo) {
+            $scope.cdCliente = self.pedido.cliente.codigo;
           }
         }
       };
 
       $scope.blurProduto = function() {
-        if ($scope.cdProduto && $scope.item.produto.codigo) {
-          if ($scope.cdProduto != parseInt($scope.item.produto.codigo)) {
-            $scope.cdProduto = parseInt($scope.item.produto.codigo);
+        if ($scope.item.produto.codigo) {
+          if ($scope.cdProduto != $scope.item.produto.codigo) {
+            $scope.cdProduto = $scope.item.produto.codigo;
           }
         }
 
-        if ($scope.nmProduto && $scope.item.produto.nome) {
+        if ($scope.item.produto.nome) {
           if ($scope.nmProduto != $scope.item.produto.nome) {
             $scope.nmProduto = $scope.item.produto.nome;
+          }
+        }
+      };
+
+      $scope.blurCdCEP = function() {
+        if (self.pedido.cliente.endereco.cep) {
+          if ($scope.cdCEP != parseInt(self.pedido.cliente.endereco.cep)) {
+            $scope.cdCEP = parseInt(self.pedido.cliente.endereco.cep);
+          }
+        }
+      };
+
+      $scope.onchangeCPF = function() {
+        if (!self.pedido.cliente.cpf) {
+          jQuery('input[name="cpf"]').removeClass('input-error');
+          return;
+        }
+
+        if (self.pedido.cliente.cpf.length == 0) {
+          jQuery('input[name="cpf"]').removeClass('input-error');
+          return;
+        }
+
+        if (!ValidadorDocumento(self.pedido.cliente.cpf)) {
+          if (!jQuery('input[name="cpf"]').is('input-error')) {
+              jQuery('input[name="cpf"]').addClass('input-error');
+          }
+        }
+      };
+
+      $scope.onchangeCNPJ = function() {
+        if (!self.pedido.cliente.cnpj) {
+          jQuery('input[name="cnpj"]').removeClass('input-error');
+          return;
+        }
+
+        if (self.pedido.cliente.cnpj.length == 0) {
+          jQuery('input[name="cnpj"]').removeClass('input-error');
+          return;
+        }
+
+        if (!ValidadorDocumento(self.pedido.cliente.cnpj)) {
+          if (!jQuery('input[name="cnpj"]').is('input-error')) {
+            jQuery('input[name="cnpj"]').addClass('input-error');
           }
         }
       };
@@ -119,6 +164,7 @@ angular.module('commercialApp')
         providerPessoa.obterPessoaPorCodigo('Vendedor', codigo).then(function(success) {
           $rootScope.isLoading = false;
           self.pedido.setVendedor(new Pessoa(Pessoa.converterEmEntrada(success.data)));
+          $scope.cdVendedor = self.pedido.vendedor.codigo;
         }, function(error) {
           $rootScope.isLoading = false;
           if (error.status == 404) {
@@ -138,22 +184,23 @@ angular.module('commercialApp')
           modalBuscarPessoa.show('Cliente', function(result) {
             if (result) {
               self.pedido.setCliente(result);
-              $scope.cdCliente = parseInt(result.codigo);
+              $scope.cdCliente = result.codigo;
             }
           });
 
           return;
         }
 
-        //if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
-        //  this.salvar();
-        //  return;
-        //}
+        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+          this.salvar();
+          return;
+        }
 
         $rootScope.isLoading = true;
         providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function(success) {
           $rootScope.isLoading = false;
           self.pedido.setCliente(new Pessoa(Pessoa.converterEmEntrada(success.data)));
+          $scope.cdCliente = self.pedido.cliente.codigo;
         }, function(error) {
           $rootScope.isLoading = false;
           if (error.status == 404) {
@@ -164,9 +211,14 @@ angular.module('commercialApp')
 
       this.limparCliente = function($event) {
         $scope.cdCliente = '';
+        $scope.cdCEP = '';
         this.pedido.removeCliente();
         if ($event) $event.stopPropagation();
-        jQuery('input[name="CdCliente"]').focus();
+
+        $scope.cliente.novo ? jQuery('input[name="nome-cliente"]').focus() : jQuery('input[name="CdCliente"]').focus();
+
+        jQuery('input[name="cpf"]').removeClass('input-error');
+        jQuery('input[name="cnpj"]').removeClass('input-error');
       };
 
       this.novoCliente = function() {
@@ -184,10 +236,20 @@ angular.module('commercialApp')
         if (self.pedido.cliente.tipo == 'F') {
           if (!self.pedido.cliente.cpf) {
             return false;
+          } else {
+            if (!ValidadorDocumento(self.pedido.cliente.cpf)) {
+              alert('CPF Inválido');
+              return false;
+            }
           }
         } else {
           if (!self.pedido.cliente.cnpj || !self.pedido.cliente.iEstadual) {
             return false;
+          } else {
+            if (!ValidadorDocumento(self.pedido.cliente.cnpj)) {
+              alert('CNPJ Inválido');
+              return false;
+            }
           }
         }
 
@@ -225,6 +287,9 @@ angular.module('commercialApp')
         }, function(error) {
           console.log(error);
           $rootScope.isLoading = false;
+          if (error.data.status.code == 409) {
+            self.pedido.cliente.tipo == 'F' ? alert('CFP já cadastrado!') : alert('CNPJ já cadastrado!');
+          }
         });
       };
 
@@ -245,7 +310,7 @@ angular.module('commercialApp')
           $scope.lockDescricao = true;
           $rootScope.isLoading = false;
           $scope.item.setProduto(success.data);
-          $scope.cdProduto = parseInt($scope.item.produto.codigo);
+          $scope.cdProduto = $scope.item.produto.codigo;
           $scope.nmProduto = $scope.item.produto.nome;
           jQuery('input[name="quantidade"]').focus();
         }, function(err) {
@@ -322,30 +387,40 @@ angular.module('commercialApp')
       };
 
       this.buscarCEP = function() {
-
-        if (!this.pedido.cliente.endereco.cep) return;
-
         $rootScope.isLoading = true;
-        providerEndereco.obterEnderecosPorCEP(this.pedido.cliente.endereco.cep).then(function(success) {
-          if (success.data.length > 1) {
-            var enderecos = [ ];
-            angular.forEach(success.data, function(item, index) {
-              enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
-            });
-            modalBuscarEndereco.show(enderecos, function(result) {
-              if (result) {
-                self.pedido.cliente.setEndereco(result);
-              }
-            });
-          } else {
-            self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
-          }
-          $rootScope.isLoading = false;
-          jQuery('input[name="endNumero"]').focus();
-        }, function(error) {
-          $rootScope.isLoading = false;
-          console.log(error);
-        });
+
+        if (!$scope.cdCEP) {
+          modalBuscarEndereco.show([ ], function(result) {
+            if (result) {
+              self.pedido.cliente.setEndereco(result);
+              $scope.cdCEP = self.pedido.cliente.endereco.cep;
+            }
+          });
+        } else {
+          providerEndereco.obterEnderecosPorCEP($scope.cdCEP).then(function (success) {
+            if (success.data.length > 1) {
+              var enderecos = [];
+              angular.forEach(success.data, function (item, index) {
+                enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
+              });
+              modalBuscarEndereco.show(enderecos, function (result) {
+                if (result) {
+                  self.pedido.cliente.setEndereco(result);
+                  $scope.cdCEP = self.pedido.cliente.endereco.cep;
+                }
+              });
+            } else {
+              self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
+            }
+            $rootScope.isLoading = false;
+            jQuery('input[name="endNumero"]').focus();
+          }, function (error) {
+            $rootScope.isLoading = false;
+            console.log(error);
+          });
+        }
+
+        $rootScope.isLoading = false;
       };
 
       function validar() {
@@ -379,14 +454,14 @@ angular.module('commercialApp')
       }
 
       this.salvar = function() {
-        if (validar()) {
+        //if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
             if (result) {
               alert('Orçamento gravado!');
               self.limpar();
             }
           });
-        }
+        //}
       };
 
     }

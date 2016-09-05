@@ -35,9 +35,18 @@ angular.module('commercialApp.services')
           }, {
             CdCep: cep
           }).$promise;
+        },
+
+        obterEnderecosPorLogradouro: function(logradouro, cidade) {
+          return provider.query({
+            action: 'getList'
+          }, {
+            Logradouro: logradouro,
+            Cidade: cidade
+          }).$promise;
         }
 
-      }
+      };
 
     }];
 

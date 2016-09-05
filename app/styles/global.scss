@@ -116,6 +116,11 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   box-shadow: 0 0 6px $cor-principal-clara;
 }
 
+.input-error {
+  border: 1px solid #bf0000 !important;
+  box-shadow: 0 0 6px #bf0000 !important;
+}
+
 .alerta {
   @extend .center-absolute;
   text-align: center;

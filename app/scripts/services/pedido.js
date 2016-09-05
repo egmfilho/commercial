@@ -156,7 +156,7 @@ angular.module('commercialApp.services')
 
       p.order_value = pedido.getValorTotalSemDesconto();
       p.order_al_discount = pedido.getDescontoPercentTotal();
-      p.order_vl_discount = pedido.getDescontoDinheiroTotal();
+      p.order_vl_discount = pedido.getValorTotalSemDesconto() - pedido.getValorTotalComDesconto();
       p.order_value_total = pedido.getValorTotalComDesconto();
 
       p.order_payments = [ ];

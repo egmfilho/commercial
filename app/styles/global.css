@@ -85,6 +85,10 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   border: 1px solid #6481bb;
   box-shadow: 0 0 6px #6481bb; }
 
+.input-error {
+  border: 1px solid #bf0000 !important;
+  box-shadow: 0 0 6px #bf0000 !important; }
+
 .alerta {
   text-align: center; }
 
