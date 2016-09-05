@@ -70,7 +70,7 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.buscarModalidadePorCodigo = function() {
-        //if ($scope.restante() <= 0) return;
+        if ($scope.restante() <= 0) return;
 
         if (!$scope.cdModalidade) return;
 
@@ -82,8 +82,11 @@ angular.module('commercialApp.controllers')
           $scope.avancar('input', 'nome');
           $rootScope.isLoading = false;
         }, function(error) {
-          console.log(error);
           $rootScope.isLoading = false;
+          if (error.status == 404) {
+            console.log('Modalidade não encontrada!');
+            $rootScope.alerta.show('Modalidade não encontrada!');
+          }
         });
       };
 

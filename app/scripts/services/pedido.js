@@ -8,9 +8,11 @@ angular.module('commercialApp.services')
 
     function Pedido(p) {
       this.id = p ? p.id : '';
+      this.codigo = p ? p.codigo : '';
+      this.idUsuario = p ? p.idUsuario : '';
+      this.idStatus = p ? p.idStatus : '';
       this.idCliente = p ? p.idCliente : '';
       this.idVendedor = p ? p.idVendedor : '';
-      this.status = p ? p.status : '';
       this.dataAtualizacao = p ? p.dataAtualizacao : new Date();
       this.dataPedido = p ? p.dataPedido : new Date();
 
@@ -20,6 +22,8 @@ angular.module('commercialApp.services')
 
       this.descontoPercent = p ? p.descontoPercent : 0;
       this.descontoDinheiro = p ? p.descontoDinheiro : 0;
+      this.valor = p ? p.valor : 0;
+      this.valorComDesconto = p ? p.valorComDesconto : 0;
 
       this.pagamentos = p ? p.pagamentos : [ ];
     }
@@ -129,12 +133,44 @@ angular.module('commercialApp.services')
     Pedido.converterEmEntrada = function(p) {
       var pedido = { };
 
-      pedido.id = p.IdPedido;
-      pedido.idCliente = p.IdCliente;
-      pedido.idVendedor = p.IdVendedor;
-      pedido.status = p.StatusPedido;
-      pedido.dataAtualizacao = new Date(p.DtAtualizacao);
-      pedido.dataPedido = new Date(p.DtPedido);
+      pedido.id = p.order_id;
+      pedido.codigo = p.order_code;
+      pedido.idUsuario = p.order_user_id;
+      pedido.idStatus = p.order_status_id;
+      pedido.idCliente = p.order_client_id;
+      pedido.idVendedor = p.order_seller_id;
+      pedido.descontoPercent = p.order_al_discount;
+      pedido.descontoDinheiro = p.order_vl_discount;
+      pedido.valor = p.order_value;
+      pedido.valorComDesconto = p.order_value_total;
+      pedido.dataAtualizacao = new Date(p.order_update);
+      pedido.dataPedido = new Date(p.order_date);
+
+      if (p.order_seller) {
+        pedido.vendedor = new Pessoa(Pessoa.converterEmEntrada(p.order_seller));
+      } else {
+        pedido.vendedor = new Pessoa();
+      }
+
+      if (p.order_client) {
+        pedido.cliente = new Pessoa(Pessoa.converterEmEntrada(p.order_client));
+      } else {
+        pedido.cliente = new Pessoa();
+      }
+
+      pedido.items = [ ];
+      if (p.order_items) {
+        angular.forEach(p.order_items, function(item, index) {
+          pedido.items.push(new ItemPedido(ItemPedido.converterEmEntrada(item)));
+        });
+      }
+
+      pedido.pagamentos = [ ];
+      if (p.order_payments) {
+        angular.forEach(p.order_payments, function(item, index) {
+          pedido.pagamentos.push(new Pagamento(Pagamento.converterEmEntrada(item)));
+        });
+      }
 
       return pedido;
     };

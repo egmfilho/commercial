@@ -23,12 +23,12 @@ angular.module('commercialApp.services')
         });
 
         return {
-          obterProdutosPorDescricao: function(descricao) {
+          obterProdutosPorDescricao: function(descricao, limite) {
             return provider.query({
               action: 'getList'
             }, {
               NmProduto: descricao,
-              Limite: 10
+              Limite: limite
             }).$promise;
           },
           obterProdutoPorCodigo: function(codigo) {

@@ -1,0 +1,63 @@
+<div class="meu-modal">
+
+  <div class="header">
+    <div class="title"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp; Buscar Orçamento <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
+  </div>
+
+  <div class="body">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div><h4>Código</h4></div>
+          <div class="input-group">
+            <input type="number" class="form-control" name="cdPedido" aria-describedby="basic-addon2" ng-model="cdPedido" press-enter="buscarPorCodigo(cdPedido)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCodigo(cdPedido)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <!--<div><h4>Nome</h4></div>-->
+          <!--<div class="input-group">-->
+            <!--<input type="text" class="form-control" ng-model="nmProduto" press-enter="buscarPorNome(nmProduto)">-->
+            <!--<span class="input-group-btn">-->
+              <!--<button class="btn btn-default" tabindex="-1" ng-click="buscarPorNome(nmProduto)"><span class="glyphicon glyphicon-search"></span></button>-->
+            <!--</span>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="tabela tabela-bordered" style="width: 100%">
+            <thead>
+            <tr>
+              <th>Cód</th>
+              <th>Vendedor</th>
+              <th>Cliente</th>
+              <th>Data</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in pedidos" ng-click="selecionarPedido(p)">
+              <td>{{p.codigo}}</td>
+              <td>{{p.vendedor.nome}}</td>
+              <td>{{p.cliente.nome}}</td>
+              <td>{{p.dataPedido | date: 'dd/MM/yyyy'}}</td>
+              <td>{{p.valorComDesconto | currency: 'R$ '}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+  </div>
+
+</div>

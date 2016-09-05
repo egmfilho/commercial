@@ -24,7 +24,9 @@
       </div>
       <div class="col-xs-3 col-sm-3">
         <h4>Pagamento</h4>
-        <h5 ng-show="orcamento.pedido.pagamentos.length">xxxxxxxx</h5>
+        <h5 ng-show="orcamento.pedido.pagamentos.length">
+          <span ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
+        </h5>
         <h5 ng-hide="orcamento.pedido.pagamentos.length">(Nenhuma forma de pagamento)</h5>
       </div>
     </div>
@@ -69,7 +71,7 @@
       <div class="head">
         <h3>Produtos
           <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; ({{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}})</span>
-          <a href="" class="limpar" title="Limpar campos" ng-click="$event.stopPropagation();"><span class="glyphicon glyphicon-erase"></span></a>
+          <a href="" class="limpar" title="Limpar campos" ng-click="orcamento.limparProdutos($event)"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.produtos" class="glyphicon glyphicon-menu-down"></span></a>
         </h3>
@@ -79,7 +81,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input name="CdProduto" type="text" number-only class="form-control" aria-describedby="basic-addon2" ng-model="cdProduto" ng-blur="blurProduto()" ng-readonly="" press-enter="orcamento.buscaProdutoPorCodigo(cdProduto)" press-shift-enter="orcamento.escapeProdutos()">
+          <input name="CdProduto" type="text" number-only class="form-control" aria-describedby="basic-addon2" ng-model="cdProduto" ng-blur="blurProduto()" ng-readonly="" press-enter="orcamento.buscaProdutoPorCodigo(cdProduto)" press-shift-enter="orcamento.escapeProdutos()" maxlength="6">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaProdutoPorCodigo(cdProduto)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
@@ -93,10 +95,10 @@
                  press-shift-enter="orcamento.escapeProdutos()"
                  uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaProdutoPorDescricao($viewValue)"
                  typeahead-template-url="partials/produtosTypeaheadPopup.html"
-                 typeahead-min-length="3"
+                 typeahead-min-length="typeahead.min_length"
                  typeahead-loading="isLoading"
-                 typeahead-wait-ms="100"
-                 typeahead-on-select="orcamento.selectProduto($item);" required>
+                 typeahead-wait-ms="typeahead.wait"
+                 typeahead-on-select="orcamento.selectProduto($item)" required>
         </div>
       </div>
       <div class="col-xs-4 col-sm-3">
@@ -109,7 +111,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input name="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" press-enter="item.quantidade <= 0 ? orcamento.limparProduto() : orcamento.addItem()" press-shift-enter="orcamento.escapeProdutos()">
+          <input name="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" press-enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" press-shift-enter="orcamento.escapeProdutos()">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </div>
       </div>
@@ -343,7 +345,7 @@
   <br>
   <div class="row">
     <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click=""><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
+      <button class="btn-orcamento" ng-click="teste()"><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
     </div>
     <div class="col-sm-6 col-md-3">
       <!--<button class="btn-orcamento" ng-click=""><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->

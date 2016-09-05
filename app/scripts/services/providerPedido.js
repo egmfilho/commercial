@@ -29,18 +29,45 @@ angular.module('commercialApp.services')
 
       return {
 
-        obterPedidoPorCodigo: function(codigo) {
+        obterPedidoPorCodigo: function(codigo, vendedor, items, produtos, cliente, pagamentos, modalidades) {
           return provider.get({
             action: 'get'
           }, {
-            CdPedido: codigo
+            order_code: codigo,
+            get_order_seller: vendedor,
+            get_order_items: items,
+            get_order_items_product: produtos,
+            get_order_client: cliente,
+            get_order_payments: pagamentos,
+            get_order_payments_modality: modalidades
           }).$promise;
         },
 
-        obterTodos: function() {
+        obterPedidoPorId: function(id, vendedor, items, produtos, cliente, pagamentos, modalidades) {
+          return provider.get({
+            action: 'get'
+          }, {
+            order_id: id,
+            get_order_seller: vendedor,
+            get_order_items: items,
+            get_order_items_product: produtos,
+            get_order_client: cliente,
+            get_order_payments: pagamentos,
+            get_order_payments_modality: modalidades
+          }).$promise;
+        },
+
+        obterTodos: function(vendedor, items, produtos, cliente, pagamentos, modalidades) {
           return provider.query({
             action: 'getList'
-          }, { }).$promise;
+          }, {
+            get_order_seller: vendedor,
+            get_order_items: items,
+            get_order_items_product: produtos,
+            get_order_client: cliente,
+            get_order_payments: pagamentos,
+            get_order_payments_modality: modalidades
+          }).$promise;
         },
 
         adicionarPedido: function(pedido) {

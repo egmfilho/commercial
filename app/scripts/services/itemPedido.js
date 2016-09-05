@@ -8,6 +8,10 @@ angular.module('commercialApp.services')
   .factory('ItemPedido', ['Produto', 'Pessoa', function(Produto, Pessoa) {
 
     function ItemPedido(itemPedido) {
+      this.id = itemPedido ? itemPedido.id : '';
+      this.idPedido = itemPedido ? itemPedido.idPedido : '';
+      this.idProduto = itemPedido ? itemPedido.idProduto : '';
+      this.precoProduto = itemPedido ? itemPedido.precoProduto : '';
       this.descontoPercent = itemPedido ? itemPedido.descontoPercent : 0;
       this.descontoDinheiro = itemPedido ? itemPedido.descontoDinheiro : 0;
       this.quantidade = itemPedido ? itemPedido.quantidade : 1;
@@ -18,6 +22,8 @@ angular.module('commercialApp.services')
 
       setProduto: function(produto) {
         this.produto = new Produto(Produto.converterEmEntrada(produto));
+        this.idProduto = produto.id;
+        this.precoProduto = produto.preco;
       },
 
       setQuantidade: function(quantidade) {
@@ -48,15 +54,35 @@ angular.module('commercialApp.services')
       }
     };
 
+    ItemPedido.converterEmEntrada = function(i) {
+      var item = { };
+
+      item.id = i.order_item_id;
+      item.idPedido = i.order_id;
+      item.idProduto = i.product_id;
+      item.quantidade = i.order_item_amount;
+      item.precoProduto = i.order_item_value;
+      item.descontoPercent = i.order_item_al_discount;
+      item.descontoDinheiro = i.order_item_vl_discount;
+
+      if (i.product) {
+        item.produto = new Produto(Produto.converterEmEntrada(i.product));
+      } else {
+        item.produto = new Produto();
+      }
+
+      return item;
+    };
+
     ItemPedido.converterEmSaida = function(item) {
       var i = { };
 
-      i.order_item_value = item.produto.preco;
+      i.order_item_value = item.precoProduto || item.produto.preco;
       i.order_item_al_discount = item.descontoPercent;
       i.order_item_vl_discount = item.descontoDinheiro;
       i.order_item_amount = item.quantidade;
       i.order_item_value_total = item.getTotalComDesconto();
-      i.product_id = item.produto.id;
+      i.product_id = item.idProduto || item.produto.id;
 
       return i;
     };

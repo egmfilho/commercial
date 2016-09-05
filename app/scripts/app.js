@@ -59,6 +59,31 @@ angular
 
     $rootScope.isLoading = false;
 
+    $rootScope.alerta = {
+      mensagem: '',
+      classe: 'alert-warning',
+      elem: jQuery('.alerta'),
+      hide: null,
+      show: function(mensagem, classe) {
+        if (mensagem) this.mensagem = mensagem;
+        if (classe) this.classe = classe;
+
+        if(this.hide) {
+          clearTimeout(this.hide);
+          this.hide = null;
+        }
+
+        var self = this;
+        this.elem.css('opacity', '0');
+        this.elem.fadeTo('slow', 1, function() {
+          self.hide = setTimeout(function() {
+            self.elem.fadeTo('slow', 0);
+          }, 3000);
+        });
+      }
+    };
+
+
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
       $rootScope.currentPath = $location.path();
 
