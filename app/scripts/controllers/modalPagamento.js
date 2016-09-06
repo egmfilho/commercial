@@ -133,14 +133,26 @@ angular.module('commercialApp.controllers')
         console.log('saida pedido', Pedido.converterEmSaida($scope.pedido));
 
         $rootScope.isLoading = true;
-        providerPedido.adicionarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
-          console.log(success.data);
-          $rootScope.isLoading = false;
-          $uibModalInstance.close('Gravado!');
-        }, function(error) {
-          console.log(error);
-          $rootScope.isLoading = false;
-        });
+
+        if (!$scope.pedido.id && !$scope.pedido.codigo) {
+          providerPedido.adicionarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
+            console.log(success.data);
+            $rootScope.isLoading = false;
+            $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
+          }, function(error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+          });
+        } else {
+          providerPedido.editarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
+            console.log(success.data);
+            $rootScope.isLoading = false;
+            $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
+          }, function(error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+          });
+        }
       };
 
     }

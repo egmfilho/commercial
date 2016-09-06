@@ -506,7 +506,7 @@ angular.module('commercialApp')
         if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
             if (result) {
-              alert('Orçamento gravado!');
+              alert('Orçamento código ' + result.codigo + ' salvo!');
               self.limpar();
             }
           });

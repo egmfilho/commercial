@@ -74,6 +74,12 @@ angular.module('commercialApp.services')
           return provider.save({
             action: 'insert'
           }, pedido).$promise;
+        },
+
+        editarPedido: function(pedido) {
+          return provider.save({
+            action: 'edit'
+          }, pedido).$promise;
         }
 
       };
