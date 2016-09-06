@@ -23,7 +23,10 @@
         </div>
         <div class="col-md-3">
           <div><h4>Valor</h4></div>
-          <input type="text" name="valor" ng-model="valor" filtro-moeda number-only ng-blur="blurValor()" class="form-control" press-enter="addModalidade()" ng-readonly="restante() <= 0">
+          <div class="input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" name="valor" ng-model="pagamento.valor" filtro-moeda number-only class="form-control" press-enter="addModalidade()" ng-readonly="restante() <= 0">
+          </div>
         </div>
       </div>
       <br>

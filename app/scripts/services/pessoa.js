@@ -99,7 +99,7 @@ angular.module('commercialApp.services')
       p.Doc = pessoa.tipo == 'F' ? pessoa.cpf : pessoa.cnpj;
       p.IEstadual = pessoa.iEstadual;
       p.Telefone = pessoa.telefone;
-      p.Celular = pessoa.dddCelular + pessoa.celular;
+      p.Celular = pessoa.celular.length > 0 ? pessoa.dddCelular + pessoa.celular : '';
       p.Email = pessoa.email;
       p.Ativo = pessoa.ativo;
       p.Origem = pessoa.origem;

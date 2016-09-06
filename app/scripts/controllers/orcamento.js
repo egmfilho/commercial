@@ -48,6 +48,7 @@ angular.module('commercialApp')
         $scope.formularios.cliente = false;
 
         $timeout(function() {
+          $scope.scrollTo(null, '#form-produtos');
           jQuery('input[name="CdProduto"]').focus();
         }, 500);
       }
@@ -58,6 +59,7 @@ angular.module('commercialApp')
         $scope.formularios.cliente = true;
 
         $timeout(function() {
+          $scope.scrollTo(null, '#form-cliente');
           jQuery('input[name="CdCliente"]').focus();
         }, 500);
       }
@@ -160,10 +162,10 @@ angular.module('commercialApp')
         });
       };
 
-      this.buscaVendedorPorCodigo = function(codigo) {
+      this.buscaVendedorPorCodigo = function(codigo, teclado) {
         if (!codigo) return;
 
-        if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) {
+        if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo) && teclado) {
           focarProdutos();
           return;
         }
@@ -188,7 +190,7 @@ angular.module('commercialApp')
         $event.stopPropagation();
       };
 
-      this.buscaClientePorCodigo = function(codigo) {
+      this.buscaClientePorCodigo = function(codigo, teclado) {
         if (!codigo) {
           modalBuscarPessoa.show('Cliente', function(result) {
             if (result) {
@@ -200,7 +202,7 @@ angular.module('commercialApp')
           return;
         }
 
-        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo) && teclado) {
           this.salvar();
           return;
         }
@@ -501,16 +503,18 @@ angular.module('commercialApp')
 
       $scope.teste = function() {
         modalBuscarPedido.show(null, function(result) {
-          self.limpar();
-          $scope.formularios.vendedor = false;
-          $scope.formularios.produtos = false;
-          $scope.formularios.cliente = false;
-          $scope.lockCodigo = false;
-          $scope.lockDescricao = false;
-          $scope.cdVendedor = result.vendedor.codigo;
-          $scope.cdCliente = result.cliente.codigo;
-          $scope.cdCEP = result.cliente.endereco.cep;
-          self.pedido = result;
+          if (result) {
+            self.limpar();
+            $scope.formularios.vendedor = false;
+            $scope.formularios.produtos = false;
+            $scope.formularios.cliente = false;
+            $scope.lockCodigo = false;
+            $scope.lockDescricao = false;
+            $scope.cdVendedor = result.vendedor.codigo;
+            $scope.cdCliente = result.cliente.codigo;
+            $scope.cdCEP = result.cliente.endereco.cep;
+            self.pedido = result;
+          }
         });
       };
 

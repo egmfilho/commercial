@@ -17,13 +17,16 @@ angular.module('commercialApp.controllers')
     'pedido',
     function($rootScope, $scope, $uibModalInstance, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
 
+      var lookup_valor = 0;
+
       $uibModalInstance.opened.then(function() {
         $scope.pedido = pedido;
         $scope.modalidade = new Modalidade();
         $scope.pagamento = new Pagamento();
+        $scope.pagamento.valor = $scope.restante();
         $scope.cdModalidade = '';
         $scope.nmModalidade = '';
-        $scope.valor = $scope.restante();
+        lookup_valor = $scope.restante();
         $rootScope.isLoading = false;
       });
 
@@ -32,7 +35,6 @@ angular.module('commercialApp.controllers')
         $scope.modalidade = new Modalidade();
         $scope.cdModalidade = '';
         $scope.nmModalidade = '';
-        $scope.valor = $scope.restante();
 
         $scope.avancar('input', 'codigo');
       }
@@ -53,10 +55,6 @@ angular.module('commercialApp.controllers')
         }
       };
 
-      $scope.blurValor = function() {
-        $scope.valor = $scope.restante();
-      };
-
       $scope.totalPagamentos = function() {
         var total = 0;
 
@@ -72,7 +70,14 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.restante = function() {
-        return Math.round((pedido.getValorTotalComDesconto() - $scope.totalPagamentos()) * 100) / 100;
+        var restante = Math.round((pedido.getValorTotalComDesconto() - $scope.totalPagamentos()) * 100) / 100;
+
+        if (lookup_valor != restante) {
+          lookup_valor = restante;
+          $scope.pagamento.valor = restante;
+        }
+
+        return restante;
       };
 
       $scope.buscarModalidadePorCodigo = function() {
@@ -99,7 +104,6 @@ angular.module('commercialApp.controllers')
       $scope.addModalidade = function() {
         if ($scope.cdModalidade == $scope.modalidade.codigo) {
           $scope.pagamento.setModalidade(new Modalidade($scope.modalidade));
-          $scope.pagamento.valor = $scope.valor;
           $scope.pedido.pagamentos.push($scope.pagamento);
           limpar();
         } else {
@@ -109,7 +113,6 @@ angular.module('commercialApp.controllers')
 
       $scope.removePagamento = function(pagamento) {
         $scope.pedido.pagamentos.splice($scope.pedido.pagamentos.indexOf(pagamento), 1);
-        $scope.valor = $scope.restante();
       };
 
       $scope.avancar = function(elem, name) {

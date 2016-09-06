@@ -4,7 +4,11 @@
   <div class="row card">
     <div class="col-md-12">
       <div class="head" style="text-align: center">
-        <h3><span class="glyphicon glyphicon-shopping-cart"></span> Novo Orçamento</h3>
+        <h3><span class="glyphicon glyphicon-shopping-cart"></span>
+          {{orcamento.pedido.codigo ? ('Orçamento código ' + orcamento.pedido.codigo) : ''}}
+          {{orcamento.pedido.codigo ? ('criado em ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}
+          {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
+        </h3>
       </div>
     </div>
     <div class="col-md-12">
@@ -49,7 +53,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" number-only name="CdVendedor" class="form-control" aria-describedby="basic-addon2" ng-model="cdVendedor" ng-blur="blurCdVendedor()" press-enter="orcamento.buscaVendedorPorCodigo(cdVendedor)" press-shift-enter="orcamento.escapeVendedor()">
+          <input type="text" number-only name="CdVendedor" class="form-control" aria-describedby="basic-addon2" ng-model="cdVendedor" ng-blur="blurCdVendedor()" press-enter="orcamento.buscaVendedorPorCodigo(cdVendedor, true)" press-shift-enter="orcamento.escapeVendedor()">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo(cdVendedor)"><span class="glyphicon glyphicon-search"></span></button>
           </span>
@@ -210,7 +214,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Código</h4></div>
         <div class="input-group">
-          <input type="text" number-only class="form-control" name="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente)" press-shift-enter="orcamento.salvar()" ng-readonly="cliente.novo" maxlength="6">
+          <input type="text" number-only class="form-control" name="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" press-enter="orcamento.buscaClientePorCodigo(cdCliente, true)" press-shift-enter="orcamento.salvar()" ng-readonly="cliente.novo" maxlength="6">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo(cdCliente)" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-search"></span></button>
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-plus"></span></button>

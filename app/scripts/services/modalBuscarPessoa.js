@@ -13,7 +13,7 @@ angular.module('commercialApp.services')
           animation: true,
           templateUrl: 'partials/modalBuscarPessoa.html',
           controller: 'ModalBuscarPessoaCtrl',
-          size: 'md',
+          size: 'lg',
           resolve: {
             tipo: function() {
               return tipo;
