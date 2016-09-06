@@ -72,7 +72,9 @@ body {
   opacity: 0;
   -webkit-box-shadow: 0px 2px 10px #444;
   -moz-box-shadow: 0px 2px 10px #444;
-  box-shadow: 0px 2px 10px #444; }
+  box-shadow: 0px 2px 10px #444;
+  display: none;
+  pointer-events: none; }
 
 .div-display {
   background-color: #6481bb;

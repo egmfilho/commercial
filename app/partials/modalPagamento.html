@@ -8,7 +8,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div><h4>Código</h4></div>
           <div class="input-group">
             <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()" number-only aria-describedby="basic-addon2" press-enter="buscarModalidadePorCodigo()" ng-readonly="troco() >= 0">
@@ -17,9 +17,13 @@
             </span>
           </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div><h4>Modalidade</h4></div>
-          <input type="text" name="nome" ng-model="nmModalidade" ng-blur="blurNome()" class="form-control" press-enter="addModalidade()" ng-readonly="troco() >= 0">
+          <input type="text" name="nome" ng-model="nmModalidade" ng-blur="blurNome()" readonly="true" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <div><h4>Valor</h4></div>
+          <input type="text" name="valor" ng-model="valor" filtro-moeda number-only ng-blur="blurNome()" class="form-control" press-enter="addModalidade()" ng-readonly="troco() >= 0">
         </div>
       </div>
       <br>

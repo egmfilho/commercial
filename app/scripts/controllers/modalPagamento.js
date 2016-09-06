@@ -23,6 +23,7 @@ angular.module('commercialApp.controllers')
         $scope.pagamento = new Pagamento();
         $scope.cdModalidade = '';
         $scope.nmModalidade = '';
+        $scope.valor = $scope.restante();
         $rootScope.isLoading = false;
       });
 
@@ -31,6 +32,7 @@ angular.module('commercialApp.controllers')
         $scope.modalidade = new Modalidade();
         $scope.cdModalidade = '';
         $scope.nmModalidade = '';
+        $scope.valor = $scope.restante();
 
         $scope.avancar('input', 'codigo');
       }
@@ -79,7 +81,7 @@ angular.module('commercialApp.controllers')
           $scope.modalidade = new Modalidade(Modalidade.converterEmEntrada(success.data));
           $scope.cdModalidade = $scope.modalidade.codigo;
           $scope.nmModalidade = $scope.modalidade.nome;
-          $scope.avancar('input', 'nome');
+          $scope.avancar('input', 'valor');
           $rootScope.isLoading = false;
         }, function(error) {
           $rootScope.isLoading = false;
@@ -93,7 +95,7 @@ angular.module('commercialApp.controllers')
       $scope.addModalidade = function() {
         if ($scope.cdModalidade == $scope.modalidade.codigo) {
           $scope.pagamento.setModalidade(new Modalidade($scope.modalidade));
-          $scope.pagamento.valor = $scope.restante();
+          $scope.pagamento.valor = $scope.valor;
           $scope.pedido.pagamentos.push($scope.pagamento);
           limpar();
         } else {

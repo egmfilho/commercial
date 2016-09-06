@@ -75,9 +75,10 @@ angular
 
         var self = this;
         this.elem.css('opacity', '0');
+        this.elem.css('display', 'inline');
         this.elem.fadeTo('slow', 1, function() {
           self.hide = setTimeout(function() {
-            self.elem.fadeTo('slow', 0);
+            self.elem.fadeTo('slow', 0, function() { self.elem.css('display', 'none'); });
           }, 3000);
         });
       }

@@ -485,14 +485,14 @@ angular.module('commercialApp')
       }
 
       this.salvar = function() {
-        if (validar()) {
+        //if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
             if (result) {
               alert('Orçamento gravado!');
               self.limpar();
             }
           });
-        }
+        //}
       };
 
       $scope.teste = function() {
