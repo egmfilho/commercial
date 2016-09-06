@@ -263,7 +263,7 @@ angular.module('commercialApp')
           }
         }
 
-        if (!self.pedido.cliente.telefone && !self.pedido.cliente.dddCelular && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
+        if (!self.pedido.cliente.telefone && (!self.pedido.cliente.dddCelular || !self.pedido.cliente.celular) && !self.pedido.cliente.email) {
           return false;
         }
 
@@ -285,14 +285,13 @@ angular.module('commercialApp')
         }
 
         this.pedido.cliente.tpPessoa = 'Cliente';
-        console.log(Pessoa.converterEmSaida(this.pedido.cliente));
         $rootScope.isLoading = true;
+        console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
         providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function(success) {
-          console.log(success.data);
-          $scope.cliente.novo = false;
-          self.pedido.cliente.id = success.data.IdPessoa;
+          self.pedido.setIdCliente(success.data.IdPessoa);
           self.pedido.cliente.codigo = success.data.CdPessoa;
           $scope.cdCliente = self.pedido.cliente.codigo;
+          $scope.cliente.novo = false;
           $rootScope.isLoading = false;
         }, function(error) {
           console.log(error);
@@ -326,6 +325,11 @@ angular.module('commercialApp')
 
         $rootScope.isLoading = true;
         providerProduto.obterProdutoPorCodigo(codigo).then(function(success) {
+          if (!success.data.Ativo) {
+            $rootScope.isLoading = false;
+            alert('Produto inativo!');
+            return;
+          }
           $scope.lockDescricao = true;
           $rootScope.isLoading = false;
           $scope.item.setProduto(success.data);
@@ -485,18 +489,27 @@ angular.module('commercialApp')
       }
 
       this.salvar = function() {
-        //if (validar()) {
+        if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
             if (result) {
               alert('Orçamento gravado!');
               self.limpar();
             }
           });
-        //}
+        }
       };
 
       $scope.teste = function() {
         modalBuscarPedido.show(null, function(result) {
+          self.limpar();
+          $scope.formularios.vendedor = false;
+          $scope.formularios.produtos = false;
+          $scope.formularios.cliente = false;
+          $scope.lockCodigo = false;
+          $scope.lockDescricao = false;
+          $scope.cdVendedor = result.vendedor.codigo;
+          $scope.cdCliente = result.cliente.codigo;
+          $scope.cdCEP = result.cliente.endereco.cep;
           self.pedido = result;
         });
       };

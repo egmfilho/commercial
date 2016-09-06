@@ -59,6 +59,11 @@ angular.module('commercialApp.services')
         this.cliente = cliente;
       },
 
+      setIdCliente: function(id) {
+        this.idCliente = id;
+        this.cliente.id = id;
+      },
+
       removeCliente: function() {
         this.cliente = new Pessoa();
         this.idCliente = '';
@@ -103,7 +108,7 @@ angular.module('commercialApp.services')
           total += item.getTotalSemDesconto();
         });
 
-        return total;
+        return Math.round(total * 100) / 100;
       },
 
       getValorTotalComDesconto: function() {
@@ -113,7 +118,7 @@ angular.module('commercialApp.services')
           total += item.getTotalComDesconto();
         });
 
-        return total - this.descontoDinheiro;
+        return Math.round((total - this.descontoDinheiro) * 100) / 100;
       },
 
       addPagamento: function(pagamento) {
@@ -139,10 +144,10 @@ angular.module('commercialApp.services')
       pedido.idStatus = p.order_status_id;
       pedido.idCliente = p.order_client_id;
       pedido.idVendedor = p.order_seller_id;
-      pedido.descontoPercent = p.order_al_discount;
-      pedido.descontoDinheiro = p.order_vl_discount;
-      pedido.valor = p.order_value;
-      pedido.valorComDesconto = p.order_value_total;
+      pedido.descontoPercent = parseFloat(p.order_al_discount);
+      pedido.descontoDinheiro = parseFloat(p.order_vl_discount);
+      pedido.valor = parseFloat(p.order_value);
+      pedido.valorComDesconto = parseFloat(p.order_value_total);
       pedido.dataAtualizacao = new Date(p.order_update);
       pedido.dataPedido = new Date(p.order_date);
 
@@ -179,9 +184,9 @@ angular.module('commercialApp.services')
       var p = { };
 
       p.order_id = pedido.id;
-      p.order_client_id = pedido.idCliente;
+      p.order_client_id = pedido.idCliente.length ? pedido.cliente.id : pedido.idCliente;
       //p.Cliente = Pessoa.converterEmSaida(pedido.cliente);
-      p.order_seller_id = pedido.idVendedor;
+      p.order_seller_id = pedido.idVendedor.length ? pedido.vendedor.id : pedido.idVendedor;
       //p.Vendedor = Pessoa.converterEmSaida(pedido.vendedor);
       p.order_status_id = pedido.status;
 

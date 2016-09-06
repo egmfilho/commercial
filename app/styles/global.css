@@ -84,7 +84,8 @@ body {
   width: 100%;
   height: 50px;
   border-radius: 5px;
-  padding: 4px; }
+  padding: 4px;
+  text-shadow: -1px -1px 0 #6481bb, 1px -1px 0 #6481bb, -1px 1px 0 #6481bb, 1px 1px 0 #6481bb; }
   .div-display input {
     color: #6481bb;
     text-align: center;
@@ -147,6 +148,9 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 
 .tabela-bordered td {
   border: 1px solid #6481bb; }
+
+.tabela-selecionavel td {
+  cursor: pointer; }
 
 .tabela-header-fixo thead, #tabela-orcamento thead, .tabela-header-fixo tbody, #tabela-orcamento tbody, .tabela-header-fixo tr, #tabela-orcamento tr, .tabela-header-fixo td, #tabela-orcamento td, .tabela-header-fixo th, #tabela-orcamento th {
   display: block; }

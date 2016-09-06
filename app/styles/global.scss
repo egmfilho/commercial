@@ -112,6 +112,12 @@ body {
   border-radius: 5px;
   padding: 4px;
 
+  text-shadow:
+    -1px -1px 0 $cor-principal-clara,
+    1px -1px 0 $cor-principal-clara,
+    -1px 1px 0 $cor-principal-clara,
+    1px 1px 0 $cor-principal-clara;
+
   input {
     //border: none;
     //background-color: $cor-principal-clara;
@@ -219,6 +225,12 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 .tabela-bordered {
   td {
     border: 1px solid $cor-principal-clara;
+  }
+}
+
+.tabela-selecionavel {
+  td {
+    cursor: pointer;
   }
 }
 

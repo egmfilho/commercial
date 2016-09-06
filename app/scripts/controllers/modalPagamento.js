@@ -53,6 +53,10 @@ angular.module('commercialApp.controllers')
         }
       };
 
+      $scope.blurValor = function() {
+        $scope.valor = $scope.restante();
+      };
+
       $scope.totalPagamentos = function() {
         var total = 0;
 
@@ -68,7 +72,7 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.restante = function() {
-        return pedido.getValorTotalComDesconto() - $scope.totalPagamentos();
+        return Math.round((pedido.getValorTotalComDesconto() - $scope.totalPagamentos()) * 100) / 100;
       };
 
       $scope.buscarModalidadePorCodigo = function() {
@@ -105,6 +109,7 @@ angular.module('commercialApp.controllers')
 
       $scope.removePagamento = function(pagamento) {
         $scope.pedido.pagamentos.splice($scope.pedido.pagamentos.indexOf(pagamento), 1);
+        $scope.valor = $scope.restante();
       };
 
       $scope.avancar = function(elem, name) {
@@ -122,8 +127,9 @@ angular.module('commercialApp.controllers')
           return;
         }
 
+        console.log('saida pedido', Pedido.converterEmSaida($scope.pedido));
+
         $rootScope.isLoading = true;
-        console.log(Pedido.converterEmSaida($scope.pedido));
         providerPedido.adicionarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
           console.log(success.data);
           $rootScope.isLoading = false;

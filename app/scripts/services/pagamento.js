@@ -67,9 +67,9 @@ angular.module('commercialApp.services')
       }
 
 
-      pagamento.descontoPercent = p.order_payment_al_discount;
-      pagamento.descontoDinheiro = p.order_payment_vl_discount;
-      pagamento.valor = p.order_payment_value_total;
+      pagamento.descontoPercent = parseFloat(p.order_payment_al_discount);
+      pagamento.descontoDinheiro = parseFloat(p.order_payment_vl_discount);
+      pagamento.valor = parseFloat(p.order_payment_value_total);
 
       pagamento.dataPagamento = new Date(p.order_payment_date);
       pagamento.dataAtualizacao = new Date(p.order_payment_update);

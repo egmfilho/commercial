@@ -60,10 +60,10 @@ angular.module('commercialApp.services')
       item.id = i.order_item_id;
       item.idPedido = i.order_id;
       item.idProduto = i.product_id;
-      item.quantidade = i.order_item_amount;
-      item.precoProduto = i.order_item_value;
-      item.descontoPercent = i.order_item_al_discount;
-      item.descontoDinheiro = i.order_item_vl_discount;
+      item.quantidade = parseFloat(i.order_item_amount);
+      item.precoProduto = parseFloat(i.order_item_value);
+      item.descontoPercent = parseFloat(i.order_item_al_discount);
+      item.descontoDinheiro = parseFloat(i.order_item_vl_discount);
 
       if (i.product) {
         item.produto = new Produto(Produto.converterEmEntrada(i.product));

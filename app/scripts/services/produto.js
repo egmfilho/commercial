@@ -15,7 +15,7 @@ angular.module('commercialApp.services')
       this.referencia = produto ? produto.referencia : '';
       this.codBarras = produto ? produto.codBarras : '';
       this.qtdEstoque = produto ? produto.qtdEstoque : '';
-      this.preco = produto ? produto.preco : '';
+      this.preco = produto ? produto.preco : 0;
       this.unidade = produto ? produto.unidade : '';
       this.ativo = produto ? produto.ativo : '';
     }
@@ -30,7 +30,7 @@ angular.module('commercialApp.services')
       produto.referencia = p.Ref;
       produto.codBarras = p.EAN;
       produto.qtdEstoque = p.QtEstoque;
-      produto.preco = p.VlPreco;
+      produto.preco = parseFloat(p.VlPreco);
       produto.unidade = p.Unidade;
       produto.ativo = p.Ativo;
       produto.dataPreco = p.DataPreco;

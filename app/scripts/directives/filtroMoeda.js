@@ -12,7 +12,7 @@ angular.module('commercialApp.directives')
         ngModelController.$parsers.push(function(data) {
           // converte o dado no formato da view para o formato do model
           if (data) {
-            return parseFloat(data.toString().replace(',', '.'));
+            return parseFloat(data.toString().replace('.', '').replace(',', '.'));
           }
 
           return parseFloat(data);
@@ -22,7 +22,8 @@ angular.module('commercialApp.directives')
           // converte o dado no formato do model para o formato da view
 
           if (data != null) {
-            return $filter('number')(data, 2).replace('.', ',');
+            //return $filter('number')(data, 2).replace('.', ',');
+            return $filter('currency')(data, '');
           }
 
           return data;

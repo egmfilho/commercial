@@ -13,7 +13,7 @@ angular.module('commercialApp.services')
           animation: true,
           templateUrl: 'partials/modalPagamento.html',
           controller: 'ModalPagamentoCtrl',
-          size: 'md',
+          size: 'lg',
           resolve: {
             pedido: function() {
               return pedido;
