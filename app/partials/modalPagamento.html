@@ -45,12 +45,12 @@
             </thead>
             <tbody>
               <tr ng-if="pedido.pagamentos.length == 0">
-                <td>&nbsp;<td>
-                <td>&nbsp;<td>
-                <td>&nbsp;<td>
-                <td>&nbsp;<td>
-                <td>&nbsp;<td>
-                <td>&nbsp;<td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
               </tr>
               <tr ng-repeat="p in pedido.pagamentos track by $index">
                 <td>{{p.modalidade.codigo}}</td>

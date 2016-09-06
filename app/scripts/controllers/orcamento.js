@@ -39,7 +39,7 @@ angular.module('commercialApp')
 
         $timeout(function() {
           jQuery('input[name="CdVendedor"]').focus();
-        }, 500);
+        }, 350);
       }
 
       function focarProdutos() {
@@ -50,7 +50,7 @@ angular.module('commercialApp')
         $timeout(function() {
           $scope.scrollTo(null, '#form-produtos');
           jQuery('input[name="CdProduto"]').focus();
-        }, 500);
+        }, 350);
       }
 
       function focarCliente() {
@@ -61,7 +61,7 @@ angular.module('commercialApp')
         $timeout(function() {
           $scope.scrollTo(null, '#form-cliente');
           jQuery('input[name="CdCliente"]').focus();
-        }, 500);
+        }, 350);
       }
 
       $scope.$on('$viewContentLoaded', function() {
@@ -185,9 +185,11 @@ angular.module('commercialApp')
       };
 
       this.limparVendedor = function($event) {
-        $scope.cdVendedor = '';
-        this.pedido.removeVendedor();
-        $event.stopPropagation();
+        if (confirm('Limpar campos do Vendedor?')) {
+          $scope.cdVendedor = '';
+          this.pedido.removeVendedor();
+        }
+        if ($event) $event.stopPropagation();
       };
 
       this.buscaClientePorCodigo = function(codigo, teclado) {
@@ -222,15 +224,17 @@ angular.module('commercialApp')
       };
 
       this.limparCliente = function($event) {
-        $scope.cdCliente = '';
-        $scope.cdCEP = '';
-        this.pedido.removeCliente();
+        if (confirm('Limpar campos do cliente?')) {
+          $scope.cdCliente = '';
+          $scope.cdCEP = '';
+          this.pedido.removeCliente();
+
+          $scope.cliente.novo ? jQuery('input[name="nome-cliente"]').focus() : jQuery('input[name="CdCliente"]').focus();
+
+          jQuery('input[name="cpf"]').removeClass('input-error');
+          jQuery('input[name="cnpj"]').removeClass('input-error');
+        }
         if ($event) $event.stopPropagation();
-
-        $scope.cliente.novo ? jQuery('input[name="nome-cliente"]').focus() : jQuery('input[name="CdCliente"]').focus();
-
-        jQuery('input[name="cpf"]').removeClass('input-error');
-        jQuery('input[name="cnpj"]').removeClass('input-error');
       };
 
       this.novoCliente = function() {
@@ -411,13 +415,21 @@ angular.module('commercialApp')
         focarProdutos();
       };
 
-      this.limpar = function() {
-        this.pedido = new Pedido();
-        $scope.item = new ItemPedido();
-        $scope.cdCliente = null;
-        $scope.cdVendedor = null;
+      this.limpar = function(perguntar) {
+        var resposta = true;
 
-        focarVendedor();
+        if (perguntar) {
+          resposta = confirm('Deseja limpar todos os campos?');
+        }
+
+        if (resposta) {
+          this.pedido = new Pedido();
+          $scope.item = new ItemPedido();
+          $scope.cdCliente = null;
+          $scope.cdVendedor = null;
+
+          focarVendedor();
+        }
       };
 
       this.buscarCEP = function() {
