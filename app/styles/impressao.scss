@@ -1,0 +1,179 @@
+//$cor-principal-clara: #6481bb;
+$cor-principal-clara: #000;
+$font-size: 12px;
+
+#impressao {
+  padding: 20px;
+  height: 800px;
+  min-height: 800px;
+
+  .cabecalho {
+    height: 120px;
+
+    .logo {
+      width: 240px;
+      height: 80px;
+      float: left;
+
+      > img {
+        width: 100%;
+        height: auto;
+      }
+
+      //background-image: url('../images/carrapeta.jpg') !important;
+      //background-position: center !important;;
+      //background-repeat: no-repeat !important;;
+      //background-size: contain !important;;
+    }
+
+    .orcamento-identificacao {
+      float: right;
+      margin: 0;
+    }
+
+    .data {
+      float: right;
+      margin: 20px 0;
+      font-size: $font-size;
+
+      h5 {
+        display: inline;
+        font-weight: 800;
+        font-size: $font-size;
+      }
+    }
+  }
+
+  .info {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    padding: 20px 0;
+
+    table {
+      width: 100%;
+      td {
+        //border: 1px solid red;
+        vertical-align: top;
+      }
+    }
+
+    .dado {
+      font-size: $font-size;
+      h5 {
+        font-weight: 800;
+        display: inline;
+        margin: 0;
+        font-size: $font-size;
+      }
+    }
+  }
+  .tabela {
+    border: 2px solid $cor-principal-clara;
+    width: 100%;
+    //font-size: 0.9em;
+    margin: 15px 0;
+    //page-break-inside: auto;
+
+    a {
+      color: $cor-principal-clara;
+    }
+
+    thead {
+      //background-color: $cor-principal-clara;
+
+      tr {
+        //background-color: $cor-principal-clara !important;
+      }
+    }
+
+    th {
+      padding: 5px;
+      //border-bottom: none;
+      border: 1px solid $cor-principal-clara;
+      //background-color: $cor-principal-clara;
+      //color: white;
+      text-align: center;
+      font-size: $font-size;
+    }
+
+    td {
+      padding: 5px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      border: 1px solid $cor-principal-clara;
+      font-size: $font-size;
+    }
+
+    tr {
+      //page-break-inside: auto;
+      //page-break-after: always;
+      &:nth-child(odd) {
+        background-color: white;
+      }
+
+      &:nth-child(even) {
+        background-color: white;
+      }
+    }
+  }
+
+  .assinatura {
+    //width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100px;
+
+    > div {
+      margin: 0 auto;
+      border-bottom: 1px solid black;
+      width: 350px;
+      padding-bottom: 40px;
+      text-align: center;
+    }
+  }
+
+  .rodape {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .teste {
+    color: red !important;
+    page-break-after: always !important;
+  }
+
+}
+
+@media print {
+  #impressao {
+    .tabela {
+      thead {
+        //background-color: $cor-principal-clara !important;
+        //color: white !important;
+        tr {
+          //background-color: $cor-principal-clara !important;;
+          //color: white !important;
+        }
+      }
+      th {
+        //background-color: $cor-principal-clara !important;
+        //color: white !important;
+      }
+    }
+
+    .teste {
+      display: block;
+      page-break-inside: auto;
+      page-break-after: always;
+    }
+  }
+}
+

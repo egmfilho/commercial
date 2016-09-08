@@ -29,6 +29,8 @@ angular.module('commercialApp')
 
       var self = this;
 
+      $scope.hoje = new Date();
+
       // retira o padding-right que compensa o scroll se o SO for um MacOS
       if (navigator.platform === 'MacIntel') {
         angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
@@ -525,7 +527,17 @@ angular.module('commercialApp')
           $timeout(function() {
             $rootScope.isLoading = false;
             janela.document.open();
-            janela.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/impressao.css" /></head><body onload="window.print()">' + template[0].innerHTML + '</body></html>');
+            janela.document.write('' +
+              '<html>' +
+                '<head>' +
+                  '<link rel="stylesheet" type="text/css" href="styles/impressao.css" />' +
+                  '<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />' +
+                '</head>' +
+                '<body onload="window.print()">' +
+                //'<body>' +
+                  template[0].innerHTML +
+                '</body>' +
+              '</html>');
             janela.document.close();
           }, 300);
         }, function(error) {

@@ -1,7 +1,122 @@
 <div>
-  <h1>Orçamento boladão</h1>
-  <h3>Vendedor</h3>
-  <h4>{{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}}</h4>
-  <h3>Cliente</h3>
-  <h4>{{orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}}</h4>
+  <div id="impressao">
+
+    <div class="cabecalho">
+      <div class="logo"><img src="../images/carrapeta.jpg" alt=""></div>
+      <!--<div class="logo"></div>-->
+      <br>
+      <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
+      <br>
+      <span class="data"><h5>Data da impressão: </h5>{{hoje | date: 'longDate'}}</span>
+    </div>
+
+    <br>
+    <div class="info">
+      <table>
+        <tr>
+          <td>
+            <span class="dado"><h5>Cliente: </h5>{{orcamento.pedido.cliente.nome}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>CPF/CNPJ: </h5>{{orcamento.pedido.cliente.cpf || orcamento.pedido.cliente.cnpj}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>Insc. Est.: </h5>{{orcamento.pedido.cliente.iEstadual}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dado"><h5>Endereço: </h5>{{orcamento.pedido.cliente.endereco.logradouro}} {{orcamento.pedido.cliente.endereco.numero}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>Endereço: </h5>{{orcamento.pedido.cliente.endereco.bairro}}, {{orcamento.pedido.cliente.endereco.cidade}} - {{orcamento.pedido.cliente.endereco.uf}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>CEP: </h5>{{orcamento.pedido.cliente.endereco.cep}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dado"><h5>Telefone: </h5>{{orcamento.pedido.cliente.endereco.ddd}} {{orcamento.pedido.cliente.telefone}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>Celular: </h5>{{orcamento.pedido.cliente.celular}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>email: </h5>{{orcamento.pedido.cliente.email}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="dado"><h5>Vendedor: </h5>{{orcamento.pedido.vendedor.codigo}} {{orcamento.pedido.vendedor.nome}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>Loja: </h5></span>
+          </td>
+          <td>
+            <span class="dado"><h5>Data da emissão: </h5>{{orcamento.pedido.dataPedido | date: 'dd/MM/yyyy'}}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <table class="tabela">
+              <thead>
+              <th>CÓDIGO</th>
+              <th>DESCRIÇÃO</th>
+              <th>UND</th>
+              <th>QTD</th>
+              <th>PREÇO</th>
+              <th>TOTAL</th>
+              </thead>
+              <tbody>
+              <tr ng-repeat="i in orcamento.pedido.items track by $index" ng-class="($index + 1) % 20 === 0 ? 'teste' : ''">
+                <td>{{i.produto.codigo}}</td>
+                <td>{{i.produto.nome}}</td>
+                <td>{{i.produto.unidade}}</td>
+                <td>{{i.quantidade}}</td>
+                <td>{{i.produto.preco  | currency: 'R$ '}}</td>
+                <td>{{(i.quantidade * i.produto.preco) | currency: 'R$ '}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <span class="dado"><h5>Total de itens: </h5>{{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'ITENS' : 'ITEM'}}</span>
+          </td>
+          <td>
+            <span class="dado"><h5>Valor Total: </h5>{{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}}</span><br>
+            <span class="dado"><h5>Desconto Total: </h5>{{orcamento.pedido.descontoDinheiro | currency: 'R$ '}}</span><br>
+            <span class="dado"><h5>Valor Líquido: </h5>{{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</span><br>
+          </td>
+          <td>
+            <span class="dado"><h5>Pagamento:</h5>
+              <span ng-repeat="p in orcamento.pedido.pagamentos"><br>{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}</span>
+            </span>
+            <br>
+            <span class="dado"><h5>Total:</h5>
+              <br>{{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}
+            </span>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </div>
+
+    <br>
+    <br>
+    <div class="assinatura">
+      <div>
+        <h5>Atenciosamente</h5>
+      </div>
+    </div>
+
+    <div class="rodape">
+      <span>A Carrapeta 68 Mat Hidráulico Ltda - Avenida Lucio Meira, 68 - Várzea - Teresópolis - RJ 25953-003 - email: vendas@carrapeta.com</span>
+    </div>
+
+  </div>
 </div>
