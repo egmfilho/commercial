@@ -349,18 +349,19 @@
   <br>
   <div class="row">
     <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click="teste()"><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
+      <button class="btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
     </div>
     <div class="col-sm-6 col-md-3">
-      <!--<button class="btn-orcamento" ng-click=""><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click="orcamento.salvar()"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+      <!--<button class="btn-orcamento" ng-click=""><span class="glyphicon glyphicon-save"></span> Arquivar</button>-->
     </div>
     <div class="col-sm-6 col-md-3">
       <button class="btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
     </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="mostrarOpcoes()"><span class="glyphicon glyphicon-share"></span> Opções</button>
+    </div>
   </div>
 
+  <div ng-include="'partials/opcoesOrcamento.html'" class="opcoes"></div>
 
 </div>

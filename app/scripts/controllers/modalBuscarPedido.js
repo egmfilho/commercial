@@ -74,6 +74,7 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.selecionarPedido = function(pedido) {
+        $rootScope.isLoading = true;
         provider.obterPedidoPorCodigo(pedido.codigo, true, true, true, true, true, true).then(function(success) {
           $rootScope.isLoading = false;
           $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));

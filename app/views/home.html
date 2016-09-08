@@ -1,14 +1,14 @@
-<div id="menu-home" class="" layout="row" layout-align="center center">
+<div id="menu-home" class="">
 
-    <div class="row">
-      <div class="col-sm-6 col-md-4" ng-repeat="botao in botoes">
-        <div class="botao-menu highlight" redireciona="{{botao.url}}">
-          <div class="centerX centerY">
-            <span class="glyphicon" ng-class="botao.icone"></span>
-            <p>{{botao.nome}}</p>
-          </div>
+  <div class="row remove-padding">
+    <div class="col-sm-6 col-md-4" ng-repeat="botao in botoes">
+      <div class="botao-menu highlight" redireciona="{{botao.url}}">
+        <div class="centerX centerY">
+          <span class="glyphicon" ng-class="botao.icone"></span>
+          <p>{{botao.nome}}</p>
         </div>
       </div>
     </div>
+  </div>
 
 </div>

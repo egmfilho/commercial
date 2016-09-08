@@ -1,10 +1,12 @@
-$cor-principal:        #3b5998; //rgb(0, 167, 156);
-$cor-principal-clara:  #6481bb;
-$cor-highlight:        #29487d; //rgb(0, 196, 193);
-$cor-active:           rgb(0, 130, 120);
-$cor-de-fundo:         #ddd;
-$cor-fundo-tabela:     #f2f2f2;
-$cor-tabela-highlight: #dedede;
+$cor-principal:            #3b5998; //rgb(0, 167, 156);
+$cor-principal-clara:      #6481bb;
+$cor-highlight:            #29487d; //rgb(0, 196, 193);
+$cor-active:               rgb(0, 130, 120);
+$cor-de-fundo:             #ddd;
+$cor-fundo-tabela:         #f2f2f2;
+$cor-tabela-highlight:     #dedede;
+$cor-sombra:               rgba(50, 50, 50, .35);
+$fundo-preto-transparente: rgba(0, 0, 0, 0.6);
 
 html {
   height: 100%;
@@ -29,7 +31,7 @@ body {
   right: 0;
   z-index: 100000;
   //background-image: url('../images/ring-alt.gif');
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: $fundo-preto-transparente;
   //background-repeat: no-repeat;
   //background-position: center;
 
@@ -59,14 +61,6 @@ body {
   margin: 0 auto;
 }
 
-.center-absolute {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-}
-
 .highlight {
   -webkit-transition: background-color 0.5s ease;
   -moz-transition: background-color 0.5s ease;
@@ -77,10 +71,18 @@ body {
   cursor: pointer;
 }
 
+.ease-opacity {
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -ms-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+}
+
 .sombra {
-  -webkit-box-shadow: 0px 2px 4px #999;
-  -moz-box-shadow: 0px 2px 4px #999;
-  box-shadow: 0px 2px 4px #999;
+  -webkit-box-shadow: 0 2px 4px $cor-sombra;
+  -moz-box-shadow: 0 2px 4px $cor-sombra;
+  box-shadow: 0 2px 4px $cor-sombra;
 }
 
 .card {
@@ -91,6 +93,10 @@ body {
 
 .alerta {
   position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  text-align: center;
   height: 50px;
   margin: 10px;
   z-index: 100000;
@@ -100,6 +106,76 @@ body {
   box-shadow: 0px 2px 10px #444;
   display: none;
   pointer-events: none;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for vh unit */
+  min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+  /* Make it a flex container */
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  /* Align the bootstrap's container vertically */
+  -webkit-box-align : center;
+  -webkit-align-items : center;
+  -moz-box-align : center;
+  -ms-flex-align : center;
+  align-items : center;
+
+  /* In legacy web browsers such as Firefox 9
+     we need to specify the width of the flex container */
+  width: 100%;
+
+  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+     hence the bootstrap's container won't be aligned to the center anymore.
+
+     Therefore, we should use the following declarations to get it centered again */
+  -webkit-box-pack : center;
+  -moz-box-pack : center;
+  -ms-flex-pack : center;
+  -webkit-justify-content : center;
+  justify-content : center;
+}
+
+.opcoes {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $fundo-preto-transparente;
+  z-index: 101;
+  opacity: 0;
+  display: none;
+
+  .container {
+    width: 100%;
+  }
+
+  .remove-padding {
+    > div {
+      padding: 8px;
+    }
+  }
+}
+
+.remove-padding {
+  padding: 0;
 }
 
 .div-display {
@@ -137,11 +213,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 .input-error {
   border: 1px solid #bf0000 !important;
   box-shadow: 0 0 6px #bf0000 !important;
-}
-
-.alerta {
-  @extend .center-absolute;
-  text-align: center;
 }
 
 .tabela {
