@@ -1,3 +1,28 @@
+$print-font-size: 11px;
+
+@media print {
+  .impressao {
+    display: inline;
+
+    .tabela {
+      border: 1px solid black !important;
+      td, th {
+        border: 1px solid black !important;
+      }
+    }
+  }
+
+  #formulario-orcamento, #loading, div[name='header'], .alerta, div[name='footer'] {
+    display: none;
+  }
+}
+
+@media screen {
+  .impressao {
+    display: none;
+  }
+}
+
 .form-control:focus {
   //box-shadow: none;
   //border: none;
@@ -126,4 +151,144 @@
 #controle-tabela-orcamento .row {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.impressao {
+  padding: 20px;
+  height: 800px;
+  min-height: 800px;
+  font-family: sans-serif;
+
+  .cabecalho {
+    height: 120px;
+
+    .logo {
+      width: 240px;
+      height: 80px;
+      float: left;
+
+      > img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .orcamento-identificacao {
+      float: right;
+      margin: 0;
+    }
+
+    .data {
+      float: right;
+      margin: 20px 0;
+      font-size: $print-font-size;
+
+      h5 {
+        display: inline;
+        font-weight: 800;
+        font-size: $print-font-size;
+      }
+    }
+  }
+
+  .info {
+    width: 100%;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+    padding: 10px 0;
+
+    table {
+      td {
+        vertical-align: top;
+        font-size: $print-font-size;
+
+        h5 {
+          font-weight: 800;
+          display: inline;
+          margin: 0;
+          font-size: $print-font-size;
+        }
+      }
+    }
+
+    .dados {
+      width: 100%;
+    }
+
+    .totais {
+      margin-left: auto;
+      td {
+        padding: 0 40px;
+      }
+    }
+  }
+
+  .tabela {
+    border: 1px solid $cor-principal;
+    width: 100%;
+    min-width: 100%;
+    margin: 15px 0 15px 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    th {
+      padding: 5px;
+      text-align: center;
+      font-size: $print-font-size;
+      border: 1px solid $cor-principal;
+    }
+
+    td {
+      padding: 5px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: $print-font-size;
+      border: 1px solid $cor-principal;
+      margin: 0;
+    }
+
+    th, td {
+      &:nth-child(1), &:nth-child(5), &:nth-child(6) {
+        width: 80px;
+        min-width: 80px;
+      }
+
+      &:nth-child(3), &:nth-child(4) {
+        width: 40px;
+        min-width: 40px;
+      }
+    }
+  }
+
+  .assinatura {
+    width: 100%;
+
+    > div {
+      margin: 0 auto;
+      border-bottom: 1px solid black;
+      width: 350px;
+      padding-bottom: 30px;
+      text-align: center;
+    }
+  }
+
+  .rodape {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .quebra {
+    page-break-after: always;
+  }
+
+  .margem {
+    //margin-top: 250px;
+  }
 }

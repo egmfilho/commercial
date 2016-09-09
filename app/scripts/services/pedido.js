@@ -26,6 +26,8 @@ angular.module('commercialApp.services')
       this.valorComDesconto = p ? p.valorComDesconto : 0;
 
       this.pagamentos = p ? p.pagamentos : [ ];
+
+      this.blocos = this.formataritemsParaImpressao();
     }
 
     Pedido.prototype = {
@@ -71,10 +73,12 @@ angular.module('commercialApp.services')
 
       addItem: function(itemPedido) {
         this.items.push(new ItemPedido(itemPedido));
+        this.blocos = this.formataritemsParaImpressao();
       },
 
       removerItem: function(itemPedido) {
         this.items.splice(this.items.indexOf(itemPedido), 1);
+        this.blocos = this.formataritemsParaImpressao();
       },
 
       setDescontoPercent: function(percent) {
@@ -131,6 +135,26 @@ angular.module('commercialApp.services')
 
       getPagamentos: function() {
         return this.pagamentos;
+      },
+
+      formataritemsParaImpressao: function () {
+        var blocos = [ ],
+            temp = [ ],
+            i = 0;
+
+        for (i = 0; i < this.items.length; i++) {
+          temp.push(this.items[i]);
+
+          if ((i + 1) % 20 === 0) {
+            blocos.push(temp);
+            temp = [ ];
+          }
+        }
+        if (temp.length > 0) {
+          blocos.push(temp);
+        }
+
+        return blocos;
       }
 
     };

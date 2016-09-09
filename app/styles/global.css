@@ -421,6 +421,19 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   -moz-box-shadow: 0 12px 14px rgba(50, 50, 50, 0.35);
   box-shadow: 0 12px 14px rgba(50, 50, 50, 0.35); }
 
+@media print {
+  .impressao {
+    display: inline; }
+    .impressao .tabela, .impressao #tabela-orcamento {
+      border: 1px solid black !important; }
+      .impressao .tabela td, .impressao #tabela-orcamento td, .impressao .tabela th, .impressao #tabela-orcamento th {
+        border: 1px solid black !important; }
+
+  #formulario-orcamento, #loading, div[name='header'], .alerta, div[name='footer'] {
+    display: none; } }
+@media screen {
+  .impressao {
+    display: none; } }
 .dropdown-menu {
   min-width: 200px;
   width: 97.5%; }
@@ -487,6 +500,95 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 #controle-tabela-orcamento .row {
   margin-top: 0;
   margin-bottom: 0; }
+
+.impressao {
+  padding: 20px;
+  height: 800px;
+  min-height: 800px;
+  font-family: sans-serif; }
+  .impressao .cabecalho {
+    height: 120px; }
+    .impressao .cabecalho .logo {
+      width: 240px;
+      height: 80px;
+      float: left; }
+      .impressao .cabecalho .logo > img {
+        width: 100%;
+        height: auto; }
+    .impressao .cabecalho .orcamento-identificacao {
+      float: right;
+      margin: 0; }
+    .impressao .cabecalho .data {
+      float: right;
+      margin: 20px 0;
+      font-size: 11px; }
+      .impressao .cabecalho .data h5 {
+        display: inline;
+        font-weight: 800;
+        font-size: 11px; }
+  .impressao .info {
+    width: 100%;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px 0; }
+    .impressao .info table td {
+      vertical-align: top;
+      font-size: 11px; }
+      .impressao .info table td h5 {
+        font-weight: 800;
+        display: inline;
+        margin: 0;
+        font-size: 11px; }
+    .impressao .info .dados {
+      width: 100%; }
+    .impressao .info .totais {
+      margin-left: auto; }
+      .impressao .info .totais td {
+        padding: 0 40px; }
+  .impressao .tabela, .impressao #tabela-orcamento {
+    border: 1px solid #3b5998;
+    width: 100%;
+    min-width: 100%;
+    margin: 15px 0 15px 0;
+    border-spacing: 0;
+    border-collapse: collapse; }
+    .impressao .tabela th, .impressao #tabela-orcamento th {
+      padding: 5px;
+      text-align: center;
+      font-size: 11px;
+      border: 1px solid #3b5998; }
+    .impressao .tabela td, .impressao #tabela-orcamento td {
+      padding: 5px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 11px;
+      border: 1px solid #3b5998;
+      margin: 0; }
+    .impressao .tabela th:nth-child(1), .impressao #tabela-orcamento th:nth-child(1), .impressao .tabela th:nth-child(5), .impressao #tabela-orcamento th:nth-child(5), .impressao .tabela th:nth-child(6), .impressao #tabela-orcamento th:nth-child(6), .impressao .tabela td:nth-child(1), .impressao #tabela-orcamento td:nth-child(1), .impressao .tabela td:nth-child(5), .impressao #tabela-orcamento td:nth-child(5), .impressao .tabela td:nth-child(6), .impressao #tabela-orcamento td:nth-child(6) {
+      width: 80px;
+      min-width: 80px; }
+    .impressao .tabela th:nth-child(3), .impressao #tabela-orcamento th:nth-child(3), .impressao .tabela th:nth-child(4), .impressao #tabela-orcamento th:nth-child(4), .impressao .tabela td:nth-child(3), .impressao #tabela-orcamento td:nth-child(3), .impressao .tabela td:nth-child(4), .impressao #tabela-orcamento td:nth-child(4) {
+      width: 40px;
+      min-width: 40px; }
+  .impressao .assinatura {
+    width: 100%; }
+    .impressao .assinatura > div {
+      margin: 0 auto;
+      border-bottom: 1px solid black;
+      width: 350px;
+      padding-bottom: 30px;
+      text-align: center; }
+  .impressao .rodape {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 20px;
+    font-size: 10px; }
+  .impressao .quebra {
+    page-break-after: always; }
 
 @-webkit-keyframes uil-default-anim {
   0% {

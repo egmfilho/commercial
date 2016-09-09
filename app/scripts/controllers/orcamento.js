@@ -9,7 +9,7 @@ angular.module('commercialApp')
     '$rootScope',
     '$scope',
     '$timeout',
-    '$http',
+    '$templateCache',
     '$compile',
     'ProviderPessoa',
     'ProviderProduto',
@@ -25,7 +25,7 @@ angular.module('commercialApp')
     'ModalBuscarProduto',
     'ModalBuscarPedido',
     'ValidadorDocumento',
-    function($rootScope, $scope, $timeout, $http, $compile, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
+    function($rootScope, $scope, $timeout, $templateCache, $compile, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
 
       var self = this;
 
@@ -519,31 +519,7 @@ angular.module('commercialApp')
       };
 
       this.imprimir = function() {
-        var janela = window.open('', '_blank', 'width=640,height=480,top=100,left=100'),
-            template = null;
-        $rootScope.isLoading = true;
-        $http.get('partials/formularioPedido.html').then(function(response) {
-          template = $compile(response.data)($scope);
-          $timeout(function() {
-            $rootScope.isLoading = false;
-            janela.document.open();
-            janela.document.write('' +
-              '<html>' +
-                '<head>' +
-                  '<link rel="stylesheet" type="text/css" href="styles/impressao.css" />' +
-                  '<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />' +
-                '</head>' +
-                '<body onload="window.print()">' +
-                //'<body>' +
-                  template[0].innerHTML +
-                '</body>' +
-              '</html>');
-            janela.document.close();
-          }, 300);
-        }, function(error) {
-          $rootScope.isLoading = false;
-          console.log(error);
-        });
+        window.print();
       };
 
       $scope.mostrarOpcoes = function() {

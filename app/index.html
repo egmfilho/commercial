@@ -26,7 +26,7 @@
 
     <div id="loading" ng-show="isLoading" ng-include="'partials/loading.html'"></div>
 
-    <div ng-include="'partials/header.html'" ng-hide="currentPath === '/login'"></div>
+    <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login'"></div>
 
     <div class="container">
       <div ng-view=""></div>
@@ -36,7 +36,7 @@
       {{alerta.mensagem}}
     </div>
 
-    <div ng-include="'partials/footer.html'"></div>
+    <div name="footer" ng-include="'partials/footer.html'"></div>
 
 
     <!-- build:js(.) scripts/vendor.js -->
