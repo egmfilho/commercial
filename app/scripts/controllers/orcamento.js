@@ -167,7 +167,16 @@ angular.module('commercialApp')
       };
 
       this.buscaVendedorPorCodigo = function(codigo, teclado) {
-        if (!codigo) return;
+        if (!codigo) {
+          modalBuscarPessoa.show('Vendedor', function(result) {
+            if (result) {
+              self.pedido.setVendedor(result);
+              $scope.cdVendedor = result.codigo;
+            }
+          });
+
+          return;
+        }
 
         if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo) && teclado) {
           focarProdutos();
@@ -223,6 +232,12 @@ angular.module('commercialApp')
           if (error.status == 404) {
             console.log('Cliente não encontrado!');
             $rootScope.alerta.show('Cliente não encontrado!');
+            modalBuscarPessoa.show('Cliente', function(result) {
+              if (result) {
+                self.pedido.setCliente(result);
+                $scope.cdCliente = result.codigo;
+              }
+            });
           }
         });
       };
@@ -250,6 +265,7 @@ angular.module('commercialApp')
 
       function validarCliente() {
         if (!self.pedido.cliente.nome) {
+          $rootScope.alerta.show('Preencha todos os campos obrigatórios', 'alert-danger');
           return false;
         }
 
@@ -258,7 +274,7 @@ angular.module('commercialApp')
             return false;
           } else {
             if (!ValidadorDocumento(self.pedido.cliente.cpf)) {
-              alert('CPF Inválido');
+              $rootScope.alerta.show('CPF Inválido', 'alert-danger');
               return false;
             }
           }
@@ -267,21 +283,24 @@ angular.module('commercialApp')
             return false;
           } else {
             if (!ValidadorDocumento(self.pedido.cliente.cnpj)) {
-              alert('CNPJ Inválido');
+              $rootScope.alerta.show('CNPJ Inválido', 'alert-danger');
               return false;
             }
           }
         }
 
         if (!self.pedido.cliente.telefone && (!self.pedido.cliente.dddCelular || !self.pedido.cliente.celular) && !self.pedido.cliente.email) {
+          $rootScope.alerta.show('Necessário pelo menos 1 forma de contato', 'alert-danger');
           return false;
         }
 
         if (!self.pedido.cliente.endereco.cep && !self.pedido.cliente.endereco.logradouro) {
+          $rootScope.alerta.show('Preencha todos os campos obrigatórios', 'alert-danger');
           return false;
         }
 
         if (!self.pedido.cliente.endereco.numero) {
+          $rootScope.alerta.show('Preencha todos os campos obrigatórios', 'alert-danger');
           return false;
         }
 
@@ -290,7 +309,6 @@ angular.module('commercialApp')
 
       this.cadastrarCliente = function() {
         if (!validarCliente()) {
-          alert('Preencha os campos corretamente!');
           return;
         }
 
@@ -423,7 +441,7 @@ angular.module('commercialApp')
         var resposta = true;
 
         if (perguntar) {
-          resposta = confirm('Deseja limpar todos os campos?');
+          resposta = confirm('Descartar alterações?');
         }
 
         if (resposta) {
@@ -431,7 +449,7 @@ angular.module('commercialApp')
           $scope.item = new ItemPedido();
           $scope.cdCliente = null;
           $scope.cdVendedor = null;
-
+          $scope.ocultarOpcoes();
           focarVendedor();
         }
       };
@@ -480,7 +498,7 @@ angular.module('commercialApp')
         if (!self.pedido.idVendedor) {
           focarVendedor();
 
-          alert('Vendedor não informado!');
+          $rootScope.alerta.show('Vendedor não informado', 'alert-danger');
 
           return false;
         }
@@ -488,7 +506,7 @@ angular.module('commercialApp')
         if (self.pedido.items.length == 0) {
           focarProdutos();
 
-          alert('Orçamento vazio!');
+          $rootScope.alerta.show('Orçamento vazio', 'alert-danger');
 
           return false;
         }
@@ -497,7 +515,7 @@ angular.module('commercialApp')
           //if (!self.pedido.cliente.telefone && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
             focarCliente();
 
-            alert('Cliente não informado!');
+          $rootScope.alerta.show('Cliente não informado', 'alert-danger');
 
             return false;
           //}
@@ -506,20 +524,78 @@ angular.module('commercialApp')
         return true;
       }
 
-      this.salvar = function() {
-        $scope.ocultarOpcoes();
+      this.pagamento = function() {
         if (validar()) {
           modalPagamento.show(this.pedido, function(result) {
-            if (result) {
-              alert('Orçamento código ' + result.codigo + ' salvo!');
-              self.limpar();
-            }
+
           });
         }
       };
 
+
+      this.salvar = function() {
+        $scope.ocultarOpcoes();
+
+        if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
+          this.pagamento();
+          return;
+        }
+
+        if (confirm('Salvar orçamento?')) {
+          console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
+
+          $rootScope.isLoading = true;
+
+          if (!this.pedido.id && !this.pedido.codigo) {
+            providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function(success) {
+              $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
+              self.limpar();
+              $rootScope.isLoading = false;
+            }, function(error) {
+              console.log(error);
+              $rootScope.isLoading = false;
+            });
+          } else {
+            providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function(success) {
+              $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
+              self.limpar();
+              $rootScope.isLoading = false;
+            }, function(error) {
+              console.log(error);
+              $rootScope.isLoading = false;
+            });
+          }
+        }
+      };
+
       this.imprimir = function() {
+        if (!this.pedido.items.length) {
+          $scope.alerta.show('O orçamento está vazio!');
+          return;
+        }
+
         window.print();
+      };
+
+      this.enviar = function () {
+        alert('Em breve!');
+      };
+
+      this.excluir = function() {
+        if (!this.pedido.id && !this.pedido.codigo) {
+          this.limpar(true);
+          return;
+        }
+
+        if (confirm('Deseja excluir o orçamento?')) {
+          providerPedido.excluirPedido(self.pedido).then(function(success) {
+            self.limpar();
+            alert('Orçamento excluído!');
+          }, function(error) {
+            console.log(error);
+            alert('Não foi possível excluir o orçamento.');
+          });
+        }
       };
 
       $scope.mostrarOpcoes = function() {

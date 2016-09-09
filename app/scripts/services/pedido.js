@@ -91,11 +91,18 @@ angular.module('commercialApp.services')
         this.descontoPercent = (parseFloat(this.descontoDinheiro) * 100) / this.getValorTotalSemDesconto();
       },
 
-      getDescontoPercentTotal: function() {
-        return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
+      getDescontoPercentItens: function() {
+        //return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
+        var total = 0;
+
+        angular.forEach(this.items, function(item, index) {
+          total += item.descontoPercent;
+        });
+
+        return total;
       },
 
-      getDescontoDinheiroTotal: function() {
+      getDescontoDinheiroItens: function() {
         var total = 0;
 
         angular.forEach(this.items, function(item, index) {
@@ -137,6 +144,16 @@ angular.module('commercialApp.services')
         return this.pagamentos;
       },
 
+      getTotalPagamentos: function() {
+        var total = 0;
+
+        angular.forEach(this.pagamentos, function(item, index) {
+          total += item.valor;
+        });
+
+        return total;
+      },
+
       formataritemsParaImpressao: function () {
         var blocos = [ ],
             temp = [ ],
@@ -155,6 +172,10 @@ angular.module('commercialApp.services')
         }
 
         return blocos;
+      },
+
+      troco: function() {
+        return this.getTotalPagamentos() - this.getValorTotalComDesconto();
       }
 
     };
@@ -220,8 +241,8 @@ angular.module('commercialApp.services')
       });
 
       p.order_value = pedido.getValorTotalSemDesconto();
-      p.order_al_discount = pedido.getDescontoPercentTotal();
-      p.order_vl_discount = pedido.getValorTotalSemDesconto() - pedido.getValorTotalComDesconto();
+      p.order_al_discount = pedido.descontoPercent;
+      p.order_vl_discount = pedido.descontoDinheiro;
       p.order_value_total = pedido.getValorTotalComDesconto();
 
       p.order_payments = [ ];

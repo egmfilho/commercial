@@ -243,6 +243,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     text-align: center;
     overflow: hidden;
     white-space: nowrap;
+    padding: 5px;
   }
 
   tr {
@@ -262,8 +263,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   }
 }
 
-.inactive-editable-elem {
-
+.editable-elem {
   span {
     display: block;
   }
@@ -271,18 +271,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   input {
     display: none;
     width: 100%;
+    height: auto;
     text-align: center;
-    margin: 0;
+    outline: none;
+    border: 1px solid $cor-principal-clara;
   }
-}
-
-.editable-elem {
-  @extend .inactive-editable-elem;
 
   &:hover {
-    padding-top: 5px;
-    padding-bottom: 4px;
-
+    padding: 2px;
     span {
       display: none;
     }
@@ -293,9 +289,27 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   }
 }
 
+.inactive-editable-elem {
+  @extend .editable-elem;
+
+  &:hover {
+    //padding-top: 5px;
+    //padding-bottom: 5px;
+    span {
+      display: inline;
+    }
+
+    input {
+      display: none;
+    }
+  }
+}
+
 .tabela-bordered {
-  td {
+  td, th {
     border: 1px solid $cor-principal-clara;
+    border-spacing: 0;
+    border-collapse: collapse;
   }
 }
 
@@ -341,6 +355,10 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       clear: both;
     }
   }
+}
+
+.modal {
+  margin-top: 100px;
 }
 
 .meu-modal {

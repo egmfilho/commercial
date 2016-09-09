@@ -31,6 +31,7 @@ angular.module('commercialApp.controllers')
         }, function(error) {
           console.log(error);
           $rootScope.isLoading = false;
+          $rootScope.alerta.show('Nenhuma pessoa encontrada');
         });
       };
 
@@ -47,6 +48,7 @@ angular.module('commercialApp.controllers')
         }, function(error) {
           console.log(error);
           $rootScope.isLoading = false;
+          $rootScope.alerta.show('Nenhuma pessoa encontrada');
         });
       };
 

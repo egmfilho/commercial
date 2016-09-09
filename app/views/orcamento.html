@@ -3,12 +3,13 @@
   <!--TITULO-->
   <div class="row card">
     <div class="col-md-12">
-      <div class="head" style="text-align: center">
+      <div class="main-head" style="text-align: center">
         <h3><span class="glyphicon glyphicon-shopping-cart"></span>
           {{orcamento.pedido.codigo ? ('Orçamento código ' + orcamento.pedido.codigo) : ''}}
           {{orcamento.pedido.codigo ? ('criado em ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
         </h3>
+        <a href="" style="float: right; margin-top: -36px;font-size: 1.5em;margin-right: 10px" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span></a>
       </div>
     </div>
     <div class="col-md-12">
@@ -74,7 +75,7 @@
     <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; scrollTo($event);">
       <div class="head">
         <h3>Produtos
-          <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; ({{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}})</span>
+          <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; ({{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}})</span>
           <a href="" class="limpar" title="Limpar campos" ng-click="orcamento.limparProdutos($event)"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.produtos" class="glyphicon glyphicon-menu-down"></span></a>
@@ -183,15 +184,15 @@
       <div class="col-md-8">
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Desconto %</h4></div>
-          <div class="div-display">{{(orcamento.pedido.getDescontoPercentTotal() | currency : "")  || "0,00"}}%</div>
+          <div class="div-display">{{(orcamento.pedido.getDescontoPercentItens() | currency : "")  || "0,00"}}%</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Desconto R$</h4></div>
-          <div class="div-display">{{orcamento.pedido.getDescontoDinheiroTotal() | currency : "R$ "}}</div>
+          <div class="div-display">{{orcamento.pedido.getDescontoDinheiroItens() | currency : "R$ "}}</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4">
           <div><h4>Total do pedido</h4></div>
-          <div class="div-display">{{orcamento.pedido.getValorTotalComDesconto() | currency : "R$ "}}</div>
+          <div class="div-display">{{orcamento.pedido.getValorTotalSemDesconto() | currency : "R$ "}}</div>
         </div>
       </div>
     </div>
@@ -352,13 +353,13 @@
       <button class="btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
     </div>
     <div class="col-sm-6 col-md-3">
-      <!--<button class="btn-orcamento" ng-click=""><span class="glyphicon glyphicon-save"></span> Arquivar</button>-->
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
+      <!--<button class="btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-erase"></span> Limpar</button>-->
     </div>
     <div class="col-sm-6 col-md-3">
       <button class="btn-orcamento" ng-click="mostrarOpcoes()"><span class="glyphicon glyphicon-share"></span> Opções</button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="orcamento.pagamento()"><span class="glyphicon glyphicon-credit-card"></span> Pagamento</button>
     </div>
   </div>
 

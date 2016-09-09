@@ -99,6 +99,12 @@ $print-font-size: 11px;
     }
   }
 
+  .main-head {
+    @extend .head;
+
+    cursor: default;
+  }
+
   .input-group {
     input {
       text-align: right;
@@ -229,8 +235,6 @@ $print-font-size: 11px;
     width: 100%;
     min-width: 100%;
     margin: 15px 0 15px 0;
-    border-spacing: 0;
-    border-collapse: collapse;
 
     th {
       padding: 5px;

@@ -102,6 +102,11 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.addModalidade = function() {
+        if ($scope.pagamento.valor <= 0) {
+          $rootScope.alerta.show('Valor inválido');
+          return;
+        }
+
         if ($scope.cdModalidade == $scope.modalidade.codigo) {
           $scope.pagamento.setModalidade(new Modalidade($scope.modalidade));
           $scope.pedido.pagamentos.push($scope.pagamento);
@@ -124,35 +129,12 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.gravar = function() {
+        //if (!$scope.pedido.pagamentos.length || $scope.troco() != 0) {
+        //  $rootScope.alerta.show('Reveja os valores', 'alert-warning');
+        //  return;
+        //}
 
-        if (!$scope.pedido.pagamentos.length || $scope.troco() < 0) {
-          alert('Finalize o pagamento!');
-          return;
-        }
-
-        console.log('saida pedido', Pedido.converterEmSaida($scope.pedido));
-
-        $rootScope.isLoading = true;
-
-        if (!$scope.pedido.id && !$scope.pedido.codigo) {
-          providerPedido.adicionarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
-            console.log(success.data);
-            $rootScope.isLoading = false;
-            $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
-          }, function(error) {
-            console.log(error);
-            $rootScope.isLoading = false;
-          });
-        } else {
-          providerPedido.editarPedido(Pedido.converterEmSaida($scope.pedido)).then(function(success) {
-            console.log(success.data);
-            $rootScope.isLoading = false;
-            $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
-          }, function(error) {
-            console.log(error);
-            $rootScope.isLoading = false;
-          });
-        }
+        $uibModalInstance.close(true);
       };
 
     }

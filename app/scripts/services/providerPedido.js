@@ -80,6 +80,14 @@ angular.module('commercialApp.services')
           return provider.save({
             action: 'edit'
           }, pedido).$promise;
+        },
+
+        excluirPedido: function(pedido) {
+          return provider.save({
+            action: 'del'
+          }, {
+            order_id: pedido.id
+          }).$promise;
         }
 
       };

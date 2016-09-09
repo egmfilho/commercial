@@ -3,6 +3,16 @@
     <div class="row">
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 remove-padding">
+        <div class="col-md-12">
+          <div class="botao-menu-barra highlight" ng-click="orcamento.limpar(true)">
+            <div class="centerX centerY">
+              <p><span class="glyphicon glyphicon-pencil"></span> Novo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 remove-padding">
         <div class="col-xs-6">
           <div class="botao-menu highlight" ng-click="orcamento.salvar()">
             <div class="centerX centerY">
@@ -19,11 +29,19 @@
             </div>
           </div>
         </div>
+        <!--<div class="col-xs-6">-->
+          <!--<div class="botao-menu highlight" ng-click="orcamento.salvar()">-->
+            <!--<div class="centerX centerY">-->
+              <!--<span class="glyphicon glyphicon-credit-card"></span>-->
+              <!--<p>Pagamento</p>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
 
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 remove-padding">
         <div class="col-xs-6">
-          <div class="botao-menu highlight">
+          <div class="botao-menu highlight" ng-click="orcamento.enviar()">
             <div class="centerX centerY">
               <span class="glyphicon glyphicon-envelope"></span>
               <p>Enviar</p>
@@ -31,10 +49,8 @@
           </div>
         </div>
         <div class="col-xs-6">
-          <div class="botao-menu highlight">
+          <div class="botao-menu highlight" ng-click="orcamento.excluir()">
             <div class="centerX centerY">
-              <!--<span class="glyphicon glyphicon-paperclip"></span>-->
-              <!--<p>Parecer</p>-->
               <span class="glyphicon glyphicon-trash"></span>
               <p>Excluir</p>
             </div>

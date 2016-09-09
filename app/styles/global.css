@@ -182,7 +182,8 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   .tabela td, #tabela-orcamento td {
     text-align: center;
     overflow: hidden;
-    white-space: nowrap; }
+    white-space: nowrap;
+    padding: 5px; }
   .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd) {
     background-color: white; }
   .tabela tr:nth-child(even), #tabela-orcamento tr:nth-child(even) {
@@ -190,24 +191,31 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   .tabela tr:hover, #tabela-orcamento tr:hover {
     background-color: #dedede; }
 
-.inactive-editable-elem span, .editable-elem span {
+.editable-elem span, .inactive-editable-elem span {
   display: block; }
-.inactive-editable-elem input, .editable-elem input {
+.editable-elem input, .inactive-editable-elem input {
   display: none;
   width: 100%;
+  height: auto;
   text-align: center;
-  margin: 0; }
-
-.editable-elem:hover {
-  padding-top: 5px;
-  padding-bottom: 4px; }
-  .editable-elem:hover span {
+  outline: none;
+  border: 1px solid #6481bb; }
+.editable-elem:hover, .inactive-editable-elem:hover {
+  padding: 2px; }
+  .editable-elem:hover span, .inactive-editable-elem:hover span {
     display: none; }
-  .editable-elem:hover input {
+  .editable-elem:hover input, .inactive-editable-elem:hover input {
     display: inherit; }
 
-.tabela-bordered td {
-  border: 1px solid #6481bb; }
+.inactive-editable-elem:hover span {
+  display: inline; }
+.inactive-editable-elem:hover input {
+  display: none; }
+
+.tabela-bordered td, .tabela-bordered th {
+  border: 1px solid #6481bb;
+  border-spacing: 0;
+  border-collapse: collapse; }
 
 .tabela-selecionavel td {
   cursor: pointer; }
@@ -230,6 +238,9 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   display: block;
   visibility: hidden;
   clear: both; }
+
+.modal {
+  margin-top: 100px; }
 
 .meu-modal .header {
   background-color: #6481bb;
@@ -461,20 +472,22 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   color: #6481bb;
   margin: 0;
   margin-top: 5px; }
-#formulario-orcamento .head {
+#formulario-orcamento .head, #formulario-orcamento .main-head {
   color: white;
   background-color: #6481bb;
   cursor: pointer; }
-  #formulario-orcamento .head h3 {
+  #formulario-orcamento .head h3, #formulario-orcamento .main-head h3 {
     margin: 10px; }
-  #formulario-orcamento .head a {
+  #formulario-orcamento .head a, #formulario-orcamento .main-head a {
     color: white; }
-  #formulario-orcamento .head .limpar {
+  #formulario-orcamento .head .limpar, #formulario-orcamento .main-head .limpar {
     font-size: .8em;
     font-weight: 400;
     vertical-align: middle; }
-  #formulario-orcamento .head .glyphicon-menu-up, #formulario-orcamento .head .glyphicon-menu-down {
+  #formulario-orcamento .head .glyphicon-menu-up, #formulario-orcamento .main-head .glyphicon-menu-up, #formulario-orcamento .head .glyphicon-menu-down, #formulario-orcamento .main-head .glyphicon-menu-down {
     float: right; }
+#formulario-orcamento .main-head {
+  cursor: default; }
 #formulario-orcamento .input-group input {
   text-align: right; }
 #formulario-orcamento .btn-form {
@@ -549,9 +562,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     border: 1px solid #3b5998;
     width: 100%;
     min-width: 100%;
-    margin: 15px 0 15px 0;
-    border-spacing: 0;
-    border-collapse: collapse; }
+    margin: 15px 0 15px 0; }
     .impressao .tabela th, .impressao #tabela-orcamento th {
       padding: 5px;
       text-align: center;
