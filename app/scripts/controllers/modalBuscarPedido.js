@@ -11,8 +11,9 @@ angular.module('commercialApp.controllers')
     '$uibModalInstance',
     'ProviderPedido',
     'Pedido',
+    'DataSaida',
     'key',
-    function($rootScope, $scope, $uibModalInstance, provider, Pedido, key) {
+    function($rootScope, $scope, $uibModalInstance, provider, Pedido, DataSaida, key) {
 
       $uibModalInstance.opened.then(function() {
         $scope.pedidos = [ ];
@@ -29,11 +30,13 @@ angular.module('commercialApp.controllers')
         //}
       });
 
-      $scope.buscarPorCodigo = function(codigo) {
-        if (!$scope.cdPedido) {
-          $scope.obterTodos();
+      $scope.buscarPorCodigoPedido = function(codigo) {
+        if (!codigo) {
+          //$scope.obterTodos();
           return;
         }
+
+        console.log('buscar por codigo de pedido: ' + codigo);
 
         $rootScope.isLoading = true;
 
@@ -48,6 +51,55 @@ angular.module('commercialApp.controllers')
             console.log('Orçamento não encontrado!');
             $rootScope.alerta.show('Orçamento não encontrado!');
           }
+        });
+      };
+
+      $scope.buscarPorCodigoVendedor = function(codigo) {
+        if (!codigo) return;
+
+        console.log('buscar por codigo de vendedor: ' + codigo);
+      };
+
+      $scope.buscarPorNomeVendedor = function(nome) {
+        if (!nome) return;
+
+        console.log('buscar por nome de vendedor: ' + nome);
+      };
+
+      $scope.buscarPorCodigoCliente = function(codigo) {
+        if (!codigo) return;
+
+        console.log('buscar por codigo de cliente: ' + codigo);
+      };
+
+      $scope.buscarPorNomeCliente = function(nome) {
+        if (!nome) return;
+
+        console.log('buscar por nome de cliente: ' + nome);
+      };
+
+      function parseDate(date) {
+        var parts = date.split('/');
+
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      }
+
+      $scope.buscarPorData = function(inicial, final) {
+        if (!inicial && !final) return;
+
+        var init = inicial ? DataSaida.converter(parseDate(inicial)) : null,
+            end = final ? DataSaida.converter(parseDate(final)) : null;
+
+        $rootScope.isLoading = true;
+        provider.obterPedidoPorData(init, end, true, false, false, true).then(function(success) {
+          $scope.pedidos = [ ];
+          angular.forEach(success.data, function(item, index) {
+            $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
+          });
+          $rootScope.isLoading = false;
+        }, function(error) {
+          console.log(error);
+          $rootScope.isLoading = false;
         });
       };
 

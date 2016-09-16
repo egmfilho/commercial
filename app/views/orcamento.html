@@ -1,6 +1,23 @@
 <div id="formulario-orcamento">
 
+  <div class="row">
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+
+    </div>
+    <div class="col-sm-6 col-md-3">
+
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <!--<button class="btn-orcamento" ng-click="mostrarOpcoes()"><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->
+      <button class="btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Recuperar</button>
+    </div>
+  </div>
+
   <!--TITULO-->
+  <br>
   <div class="row card">
     <div class="col-md-12">
       <div class="main-head" style="text-align: center">
@@ -12,29 +29,7 @@
         <a href="" style="float: right; margin-top: -36px;font-size: 1.5em;margin-right: 10px" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span></a>
       </div>
     </div>
-    <div class="col-md-12">
-      <div class="col-xs-3 col-sm-3">
-        <h4>Vendedor</h4>
-        <h5 ng-show="orcamento.pedido.vendedor.codigo">{{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}}</h5>
-        <h5 ng-hide="orcamento.pedido.vendedor.codigo">(Nenhum vendedor)</h5>
-      </div>
-      <div class="col-xs-3 col-sm-3">
-        <h4>Produtos</h4>
-        <h5>{{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</h5>
-      </div>
-      <div class="col-xs-3 col-sm-3">
-        <h4>Cliente</h4>
-        <h5 ng-show="orcamento.pedido.cliente.codigo">{{orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}}</h5>
-        <h5 ng-hide="orcamento.pedido.cliente.codigo">(Nenhum cliente)</h5>
-      </div>
-      <div class="col-xs-3 col-sm-3">
-        <h4>Pagamento</h4>
-        <h5 ng-show="orcamento.pedido.pagamentos.length">
-          <span ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
-        </h5>
-        <h5 ng-hide="orcamento.pedido.pagamentos.length">(Nenhuma forma de pagamento)</h5>
-      </div>
-    </div>
+    <!--<div class="col-sm-12 col-md-12"><br></div>-->
   </div>
 
   <!--VENDEDOR-->
@@ -348,23 +343,49 @@
   </div>
 
   <br>
-  <div class="row">
-    <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Lista</button>
+  <div class="row card">
+    <div class="col-md-12">
+      <div class="col-xs-3 col-sm-3">
+        <h4>Vendedor</h4>
+        <h5 ng-show="orcamento.pedido.vendedor.codigo">{{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}}</h5>
+        <h5 ng-hide="orcamento.pedido.vendedor.codigo">(Nenhum vendedor)</h5>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <h4>Produtos</h4>
+        <h5>{{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</h5>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <h4>Cliente</h4>
+        <h5 ng-show="orcamento.pedido.cliente.codigo">{{orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}}</h5>
+        <h5 ng-hide="orcamento.pedido.cliente.codigo">(Nenhum cliente)</h5>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <h4>Pagamento</h4>
+        <h5 ng-show="orcamento.pedido.pagamentos.length">
+          <span ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
+        </h5>
+        <h5 ng-hide="orcamento.pedido.pagamentos.length">(Nenhuma forma de pagamento)</h5>
+      </div>
     </div>
-    <div class="col-sm-6 col-md-3">
-      <!--<button class="btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-erase"></span> Limpar</button>-->
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <button class="btn-orcamento" ng-click="mostrarOpcoes()"><span class="glyphicon glyphicon-share"></span> Opções</button>
-    </div>
+    <!--<div class="col-sm-12 col-md-12"><br></div>-->
+    <!--<div class="row">-->
     <div class="col-sm-6 col-md-3">
       <button class="btn-orcamento" ng-click="orcamento.pagamento()"><span class="glyphicon glyphicon-credit-card"></span> Pagamento</button>
     </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span> Email</button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn-orcamento" ng-click="orcamento.salvar()"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
+    </div>
+    <!--</div>-->
   </div>
 
-  <div ng-include="'partials/opcoesOrcamento.html'" class="opcoes"></div>
+  <!--<div ng-include="'partials/opcoesOrcamento.html'" class="opcoes"></div>-->
 
 </div>
 
-<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'"></div>
+<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'" ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo"></div>

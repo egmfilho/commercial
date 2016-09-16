@@ -8,24 +8,76 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
-          <div><h4>Código</h4></div>
+        <div class="col-md-3">
+          <h4>Filtro</h4>
+          <select class="form-control" ng-init="opt='pedido'" ng-model="opt">
+            <option value="pedido">Pedido (código)</option>
+            <option value="vendedor">Vendedor (código ou nome)</option>
+            <option value="cliente">Cliente (código ou nome)</option>
+            <option value="data">Data (inicial / final)</option>
+          </select>
+        </div>
+
+        <div class="col-md-3" ng-show="opt == 'pedido'">
+          <h4>Código</h4>
+          <input type="number" class="form-control" name="cdPedido" aria-describedby="basic-addon2" ng-model="cdPedido" press-enter="buscarPorCodigoPedido(cdPedido)">
+        </div>
+        <div class="col-md-3" ng-show="opt == 'pedido'">
+          <h4>&nbsp;</h4>
+          <button class="btn btn-default"  ng-click="buscarPorCodigoPedido(cdPedido)"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+        </div>
+
+        <div class="col-md-3" ng-show="opt == 'vendedor'">
+          <h4>Código</h4>
           <div class="input-group">
-            <input type="number" class="form-control" name="cdPedido" aria-describedby="basic-addon2" ng-model="cdPedido" press-enter="buscarPorCodigo(cdPedido)">
+            <input type="number" class="form-control" name="cdVendedor" aria-describedby="basic-addon2" ng-model="cdVendedor" press-enter="buscarPorCodigoVendedor(cdVendedor)">
             <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCodigo(cdPedido)"><span class="glyphicon glyphicon-search"></span></button>
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCodigoVendedor(cdVendedor)"><span class="glyphicon glyphicon-search"></span></button>
             </span>
           </div>
         </div>
-        <div class="col-md-8">
-          <!--<div><h4>Nome</h4></div>-->
-          <!--<div class="input-group">-->
-            <!--<input type="text" class="form-control" ng-model="nmProduto" press-enter="buscarPorNome(nmProduto)">-->
-            <!--<span class="input-group-btn">-->
-              <!--<button class="btn btn-default" tabindex="-1" ng-click="buscarPorNome(nmProduto)"><span class="glyphicon glyphicon-search"></span></button>-->
-            <!--</span>-->
-          <!--</div>-->
+        <div class="col-md-6" ng-show="opt == 'vendedor'">
+          <h4>Nome</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" name="nmVendedor" aria-describedby="basic-addon2" ng-model="nmVendedor" press-enter="buscarPorNomeVendedor(nmVendedor)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorNomeVendedor(nmVendedor)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
         </div>
+
+        <div class="col-md-3" ng-show="opt == 'cliente'">
+          <h4>Código</h4>
+          <div class="input-group">
+            <input type="number" class="form-control" name="cdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" press-enter="buscarPorCodigoCliente(cdCliente)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCodigoCliente(cdCliente)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6" ng-show="opt == 'cliente'">
+          <h4>Nome</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" name="nmCliente" aria-describedby="basic-addon2" ng-model="nmCliente" press-enter="buscarPorNomeCliente(nmCliente)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarPorNomeCliente(nmCliente)"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3" ng-show="opt == 'data'">
+          <h4>Inicial</h4>
+          <input type="text" class="form-control" name="dtInicial" aria-describedby="basic-addon2" ng-model="dtInicial" press-enter="" ui-mask="99/99/9999" model-view-value="true">
+        </div>
+        <div class="col-md-3" ng-show="opt == 'data'">
+          <h4>Final</h4>
+          <input type="text" class="form-control" name="dtFinal" aria-describedby="basic-addon2" ng-model="dtFinal" press-enter="" ui-mask="99/99/9999" model-view-value="true">
+        </div>
+        <div class="col-md-3" ng-show="opt == 'data'">
+          <h4>&nbsp;</h4>
+          <button class="btn btn-default" ng-click="buscarPorData(dtInicial, dtFinal)"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+        </div>
+
       </div>
       <br>
       <div class="row">

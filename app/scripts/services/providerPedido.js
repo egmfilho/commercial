@@ -57,6 +57,37 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
+        obterPedidoPorVendedor: function(codigo, nome) {
+          return provider.query({
+            action: 'getList'
+          }, {
+
+          }).$promise;
+        },
+
+        obterPedidoPorCliente: function(codigo, nome) {
+          return provider.query({
+            action: 'getList'
+          }, {
+
+          }).$promise;
+        },
+
+        obterPedidoPorData: function(inicial, final, vendedor, items, produtos, cliente, pagamentos, modalidades) {
+          return provider.query({
+            action: 'getList'
+          }, {
+            order_date_start: inicial,
+            order_date_end: final,
+            get_order_seller: vendedor,
+            get_order_items: items,
+            get_order_items_product: produtos,
+            get_order_client: cliente,
+            get_order_payments: pagamentos,
+            get_order_payments_modality: modalidades
+          }).$promise;
+        },
+
         obterTodos: function(vendedor, items, produtos, cliente, pagamentos, modalidades) {
           return provider.query({
             action: 'getList'
