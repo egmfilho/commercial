@@ -569,8 +569,8 @@ angular.module('commercialApp')
       };
 
       this.imprimir = function() {
-        if (!this.pedido.items.length) {
-          $scope.alerta.show('O orçamento está vazio!');
+        if (!this.pedido.items.length || !this.pedido.id) {
+          $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
           return;
         }
 

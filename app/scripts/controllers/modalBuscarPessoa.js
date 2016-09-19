@@ -15,6 +15,7 @@ angular.module('commercialApp.controllers')
     function($rootScope, $scope, $uibModalInstance, provider, Pessoa, tipo) {
 
       $uibModalInstance.opened.then(function() {
+        $scope.vazio = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         $scope.pessoas = [ ];
         setTimeout(function() {
           jQuery('input[name="cdPessoa"]').focus();

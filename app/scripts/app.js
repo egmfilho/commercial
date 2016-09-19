@@ -55,6 +55,9 @@ angular
         redirectTo: '/'
       });
   })
+  .run(['ArrayPrototype', function(ArrayPrototype) {
+    ArrayPrototype.contains();
+  }])
   .run(['$rootScope', '$location', function($rootScope, $location) {
 
     $rootScope.isLoading = false;

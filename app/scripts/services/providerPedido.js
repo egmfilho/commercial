@@ -57,7 +57,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidoPorVendedor: function(codigo, nome) {
+        obterPedidosPorVendedor: function(codigo, nome) {
           return provider.query({
             action: 'getList'
           }, {
@@ -65,7 +65,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidoPorCliente: function(codigo, nome) {
+        obterPedidosPorCliente: function(codigo, nome) {
           return provider.query({
             action: 'getList'
           }, {
@@ -73,7 +73,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidoPorData: function(inicial, final, vendedor, items, produtos, cliente, pagamentos, modalidades) {
+        obterPedidosPorData: function(inicial, final, vendedor, items, produtos, cliente, pagamentos, modalidades) {
           return provider.query({
             action: 'getList'
           }, {
@@ -85,6 +85,23 @@ angular.module('commercialApp.services')
             get_order_client: cliente,
             get_order_payments: pagamentos,
             get_order_payments_modality: modalidades
+          }).$promise;
+        },
+
+        obterPedidosComFiltros: function(id_vendedor, id_cliente, data_inicial, data_final, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades) {
+          return provider.query({
+            action: 'getList'
+          }, {
+            order_seller_id: id_vendedor,
+            order_client_id: id_cliente,
+            order_date_start: data_inicial,
+            order_date_end: data_final,
+            get_order_seller: get_vendedor,
+            get_order_client: get_cliente,
+            get_order_items: get_items,
+            get_order_items_product: get_produtos,
+            get_order_payments: get_pagamentos,
+            get_order_payments_modality: get_modalidades
           }).$promise;
         },
 
