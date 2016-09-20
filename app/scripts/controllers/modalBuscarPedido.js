@@ -19,6 +19,7 @@ angular.module('commercialApp.controllers')
     function($rootScope, $scope, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, key) {
 
       $uibModalInstance.opened.then(function() {
+        $scope.vazio = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         $scope.vendedor = new Pessoa();
         $scope.cliente = new Pessoa();
         $scope.dtInicial = $filter('date')(new Date(), 'dd/MM/yyyy');
@@ -164,12 +165,14 @@ angular.module('commercialApp.controllers')
       $scope.obterTodos = function() {
         $rootScope.isLoading = true;
 
-        provider.obterTodos(true, null, null, true, null, null).then(function(success) {
+        var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
+          end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
+
+        provider.obterPedidosComFiltros(null, null, init, end, true, true).then(function(success) {
           $scope.pedidos = [ ];
           angular.forEach(success.data, function(item, index) {
             $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
           });
-          ordenarPorCodigo();
           $rootScope.isLoading = false;
         }, function(error) {
           console.log(error);

@@ -166,7 +166,7 @@ angular.module('commercialApp')
         });
       };
 
-      this.buscaVendedorPorCodigo = function(codigo, teclado) {
+      this.buscaVendedorPorCodigo = function(codigo) {
         if (!codigo) {
           modalBuscarPessoa.show('Vendedor', function(result) {
             if (result) {
@@ -178,7 +178,7 @@ angular.module('commercialApp')
           return;
         }
 
-        if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo) && teclado) {
+        if (parseInt(codigo) == parseInt(this.pedido.vendedor.codigo)) {
           focarProdutos();
           return;
         }
@@ -205,7 +205,7 @@ angular.module('commercialApp')
         if ($event) $event.stopPropagation();
       };
 
-      this.buscaClientePorCodigo = function(codigo, teclado) {
+      this.buscaClientePorCodigo = function(codigo) {
         if (!codigo) {
           modalBuscarPessoa.show('Cliente', function(result) {
             if (result) {
@@ -217,8 +217,8 @@ angular.module('commercialApp')
           return;
         }
 
-        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo) && teclado) {
-          this.salvar();
+        if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
+          //this.salvar();
           return;
         }
 
@@ -242,8 +242,8 @@ angular.module('commercialApp')
         });
       };
 
-      this.limparCliente = function($event) {
-        if (confirm('Limpar campos do cliente?')) {
+      this.limparCliente = function($event, perguntar) {
+        if (perguntar && confirm('Limpar campos do cliente?')) {
           $scope.cdCliente = '';
           $scope.cdCEP = '';
           this.pedido.removeCliente();
@@ -330,7 +330,17 @@ angular.module('commercialApp')
         });
       };
 
+      this.cancelarCadastroCliente = function() {
+        $scope.cliente.novo = false;
+        this.limparCliente();
+      };
+
       this.limparProdutos = function($event) {
+        if (!this.pedido.items.length) {
+          if ($event) $event.stopPropagation();
+          return;
+        }
+
         if (confirm('Deseja remover todos os produtos?')) {
           this.limparProdutoTemp();
           this.pedido.items = [ ];
@@ -349,7 +359,10 @@ angular.module('commercialApp')
       };
 
       this.buscaProdutoPorCodigo = function(codigo) {
-        if (!codigo) return;
+        if (!codigo || !codigo.length) {
+          jQuery('input[name="NmProduto"]').focus();
+          return;
+        }
 
         $rootScope.isLoading = true;
         providerProduto.obterProdutoPorCodigo(codigo).then(function(success) {
@@ -385,14 +398,18 @@ angular.module('commercialApp')
         });
       };
 
+      this.pesquisarProdutoNoModal = function() {
+        modalBuscarProduto.show($scope.typeahead.search, function(result) {
+          if (result) {
+            self.buscaProdutoPorCodigo(result.codigo);
+          }
+        });
+        this.limparProdutoTemp();
+      };
+
       this.selectProduto = function(item) {
         if (item.CdProduto === -1) {
-          modalBuscarProduto.show($scope.typeahead.search, function(result) {
-            if (result) {
-              self.buscaProdutoPorCodigo(result.codigo);
-            }
-          });
-          this.limparProdutoTemp();
+          this.pesquisarProdutoNoModal();
         } else {
           this.buscaProdutoPorCodigo(item.CdProduto);
           $scope.lockCodigo = true;
@@ -449,15 +466,14 @@ angular.module('commercialApp')
           $scope.item = new ItemPedido();
           $scope.cdCliente = null;
           $scope.cdVendedor = null;
-          $scope.ocultarOpcoes();
           focarVendedor();
         }
       };
 
-      this.buscarCEP = function() {
+      this.buscarCEP = function(forceModal) {
         $rootScope.isLoading = true;
 
-        if (!$scope.cdCEP) {
+        if (!$scope.cdCEP || forceModal) {
           modalBuscarEndereco.show([ ], function(result) {
             if (result) {
               self.pedido.cliente.setEndereco(result);
@@ -471,6 +487,7 @@ angular.module('commercialApp')
               angular.forEach(success.data, function (item, index) {
                 enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
               });
+              $rootScope.isLoading = false;
               modalBuscarEndereco.show(enderecos, function (result) {
                 if (result) {
                   self.pedido.cliente.setEndereco(result);
@@ -479,8 +496,8 @@ angular.module('commercialApp')
               });
             } else {
               self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
+              $rootScope.isLoading = false;
             }
-            $rootScope.isLoading = false;
             jQuery('input[name="endNumero"]').focus();
           }, function (error) {
             $rootScope.isLoading = false;
@@ -534,8 +551,6 @@ angular.module('commercialApp')
 
 
       this.salvar = function() {
-        $scope.ocultarOpcoes();
-
         if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
           this.pagamento();
           return;
@@ -548,9 +563,12 @@ angular.module('commercialApp')
 
           if (!this.pedido.id && !this.pedido.codigo) {
             providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function(success) {
-              $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
-              self.limpar();
+              var result = new Pedido(Pedido.converterEmEntrada(success.data));
+              self.pedido.id = result.id;
+              self.pedido.codigo = result.codigo;
+              $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
               $rootScope.isLoading = false;
+              $scope.mostrarOpcoes();
             }, function(error) {
               console.log(error);
               $rootScope.isLoading = false;
@@ -558,8 +576,8 @@ angular.module('commercialApp')
           } else {
             providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function(success) {
               $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
-              self.limpar();
               $rootScope.isLoading = false;
+              $scope.mostrarOpcoes();
             }, function(error) {
               console.log(error);
               $rootScope.isLoading = false;
@@ -603,6 +621,7 @@ angular.module('commercialApp')
       };
 
       $scope.ocultarOpcoes = function() {
+        self.limpar();
         jQuery('.opcoes').fadeTo('fast', 0, function() {
           jQuery(this).css('display', 'none');
         });

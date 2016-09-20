@@ -11,7 +11,7 @@
         <div class="col-md-3">
           <div><h4>Código</h4></div>
           <div class="input-group">
-            <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()" number-only aria-describedby="basic-addon2" press-enter="buscarModalidadePorCodigo()" ng-readonly="restante() <= 0">
+            <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()" number-only aria-describedby="basic-addon2" key-shortcuts enter="buscarModalidadePorCodigo()" ng-readonly="restante() <= 0">
             <span class="input-group-btn">
               <button class="btn btn-default" tabindex="-1" ng-click="buscarModalidadePorCodigo()"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -25,7 +25,7 @@
           <div><h4>Valor</h4></div>
           <div class="input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" name="valor" ng-model="pagamento.valor" filtro-moeda number-only class="form-control" press-enter="addModalidade()" ng-readonly="restante() <= 0">
+            <input type="text" name="valor" ng-model="pagamento.valor" filtro-moeda number-only class="form-control" key-shortcuts enter="addModalidade()" ng-readonly="restante() <= 0">
           </div>
         </div>
       </div>

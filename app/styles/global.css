@@ -156,6 +156,9 @@ input.form-control {
     width: 100%;
     height: 100%; }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #6481bb; }
+
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
   border: 1px solid #6481bb;
@@ -259,8 +262,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   height: 460px;
   overflow-y: auto;
   padding: 15px; }
-  .meu-modal .body h4 {
-    color: #6481bb; }
   .meu-modal .body .container {
     width: 100%; }
 .meu-modal .footer {
@@ -518,7 +519,8 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   background-color: #6481bb;
   cursor: pointer; }
   #formulario-orcamento .head h3, #formulario-orcamento .main-head h3 {
-    margin: 10px; }
+    margin: 10px;
+    color: white; }
   #formulario-orcamento .head a, #formulario-orcamento .main-head a {
     color: white; }
   #formulario-orcamento .head .limpar, #formulario-orcamento .main-head .limpar {
@@ -641,6 +643,54 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     font-size: 10px; }
   .impressao .quebra {
     page-break-after: always; }
+
+.opcoes {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 101;
+  opacity: 0;
+  display: none; }
+  .opcoes .container {
+    width: 400px;
+    height: 400px;
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 0 !important; }
+    .opcoes .container .header {
+      background-color: #6481bb;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      margin: 0;
+      height: 60px;
+      color: white;
+      font-size: 1.8em;
+      padding: 10px !important; }
+      .opcoes .container .header .close {
+        float: right;
+        font-size: 1.5em; }
+    .opcoes .container .body {
+      background-color: white;
+      height: 280px;
+      padding: 20px !important;
+      text-align: center; }
+    .opcoes .container .footer {
+      background-color: white;
+      height: 60px;
+      border-top: 1px solid #ccc;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 10px !important; }
+      .opcoes .container .footer button {
+        float: right; }
+  .opcoes .remove-padding > div {
+    padding: 8px; }
 
 @-webkit-keyframes uil-default-anim {
   0% {

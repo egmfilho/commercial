@@ -5,9 +5,13 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('ShiftEnterMap', ['KEY_CODES', function(keys) {
+  .factory('KeyBuffer', ['KEY_CODES', function(keys) {
 
     var map = { };
+
+    map[keys.F1] = false;
+    map[keys.F5] = false;
+
     map[keys.SHIFT] = false;
     map[keys.ENTER] = false;
 

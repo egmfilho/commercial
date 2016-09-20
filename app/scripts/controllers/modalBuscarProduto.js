@@ -15,6 +15,7 @@ angular.module('commercialApp.controllers')
     function($rootScope, $scope, $uibModalInstance, provider, Produto, key) {
 
       $uibModalInstance.opened.then(function() {
+        $scope.vazio = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
         $scope.produtos = [ ];
 
         if (key) {

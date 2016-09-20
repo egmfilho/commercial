@@ -11,7 +11,7 @@
         <div class="col-md-3">
           <div><h4>CEP</h4></div>
           <div class="input-group">
-            <input type="text" class="form-control" name="cdEndereco" aria-describedby="basic-addon2" ng-model="cdEndereco" ui-mask="99999-999" press-enter="buscarPorCEP(cdEndereco)">
+            <input type="text" class="form-control" name="cdEndereco" aria-describedby="basic-addon2" ng-model="cdEndereco" ui-mask="99999-999" key-shortcuts enter="buscarPorCEP(cdEndereco)">
             <span class="input-group-btn">
               <button class="btn btn-default" tabindex="-1" ng-click="buscarPorCEP(cdEndereco)"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -20,9 +20,9 @@
         <div class="col-md-9">
           <div><h4>Logradouro</h4></div>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="logradouro" press-enter="avancar()" placeholder="Ex. Rua Francisco Sá">
+            <input type="text" class="form-control" ng-model="logradouro" key-shortcuts enter="avancar()" placeholder="Ex. Rua Francisco Sá">
             <span class="input-group-addon">em</span>
-            <input type="text" name="cidade" class="form-control" ng-model="cidade" press-enter="buscarPorLogradouro(logradouro, cidade)" placeholder="Ex. Rio de Janeiro">
+            <input type="text" name="cidade" class="form-control" ng-model="cidade" key-shortcuts enter="buscarPorLogradouro(logradouro, cidade)" placeholder="Ex. Rio de Janeiro">
             <span class="input-group-btn">
               <button class="btn btn-default" ng-click="buscarPorLogradouro(logradouro)" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -43,6 +43,13 @@
             </tr>
             </thead>
             <tbody>
+            <tr ng-if="!enderecos.length" ng-repeat="v in vazio">
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
             <tr ng-repeat="e in enderecos" ng-click="selecionarEndereco(e)">
               <td>{{e.cep}}</td>
               <td>{{e.uf}}</td>

@@ -40,6 +40,11 @@
             </tr>
             </thead>
             <tbody>
+            <tr ng-if="!produtos.length" ng-repeat="v in vazio">
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
             <tr ng-repeat="p in produtos" ng-click="selecionarProduto(p)">
               <td>{{p.codigo}}</td>
               <td>{{p.referencia}}</td>

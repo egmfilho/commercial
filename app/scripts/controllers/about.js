@@ -14,4 +14,9 @@ angular.module('commercialApp')
       'AngularJS',
       'Karma'
     ];
+
+    this.teste = function(msg) {
+      console.log(msg);
+    };
+
   });

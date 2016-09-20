@@ -82,6 +82,7 @@ $print-font-size: 11px;
 
     h3 {
       margin: 10px;
+      color: white;
     }
 
     a {
@@ -294,5 +295,72 @@ $print-font-size: 11px;
 
   .margem {
     //margin-top: 250px;
+  }
+}
+
+.opcoes {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $fundo-preto-transparente;
+  z-index: 101;
+  opacity: 0;
+  display: none;
+
+  .container {
+    width: 400px;
+    height: 400px;
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 0 !important;
+
+    .header {
+      background-color: $cor-principal-clara;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      margin: 0;
+      height: 60px;
+      color: white;
+      font-size: 1.8em;
+      //text-align: center;
+      padding: 10px !important;
+      //text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+
+      .close {
+        float: right;
+        font-size: 1.5em;
+      }
+    }
+
+    .body {
+      background-color: white;
+      height: 280px;
+      padding: 20px !important;
+      text-align: center;
+    }
+
+    .footer {
+      background-color: white;
+      height: 60px;
+      border-top: 1px solid #ccc;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 10px !important;
+
+      button {
+        float: right;
+      }
+    }
+  }
+
+  .remove-padding {
+    > div {
+      padding: 8px;
+    }
   }
 }
