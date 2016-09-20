@@ -9,13 +9,14 @@ angular.module('commercialApp.controllers')
     '$rootScope',
     '$scope',
     '$uibModalInstance',
+    '$timeout',
     'ProviderModalidadePagamento',
     'ProviderPedido',
     'Modalidade',
     'Pagamento',
     'Pedido',
     'pedido',
-    function($rootScope, $scope, $uibModalInstance, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
+    function($rootScope, $scope, $uibModalInstance, $timeout, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
 
       var lookup_valor = 0;
 
@@ -28,6 +29,10 @@ angular.module('commercialApp.controllers')
         $scope.nmModalidade = '';
         lookup_valor = $scope.restante();
         $rootScope.isLoading = false;
+
+        $timeout(function () {
+          jQuery('input[name="codigo"]').focus();
+        }, 350);
       });
 
       function limpar() {
@@ -134,7 +139,7 @@ angular.module('commercialApp.controllers')
         //  return;
         //}
 
-        $uibModalInstance.close(true);
+        $uibModalInstance.close($scope.restante() == 0);
       };
 
     }

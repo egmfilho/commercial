@@ -11,7 +11,7 @@
         <div class="col-md-3">
           <div><h4>Código</h4></div>
           <div class="input-group">
-            <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()" number-only aria-describedby="basic-addon2" key-shortcuts enter="buscarModalidadePorCodigo()" ng-readonly="restante() <= 0">
+            <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()" number-only aria-describedby="basic-addon2" key-shortcuts enter="buscarModalidadePorCodigo()" ng-readonly="restante() <= 0" shift-enter="gravar()">
             <span class="input-group-btn">
               <button class="btn btn-default" tabindex="-1" ng-click="buscarModalidadePorCodigo()"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -25,7 +25,7 @@
           <div><h4>Valor</h4></div>
           <div class="input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" name="valor" ng-model="pagamento.valor" filtro-moeda number-only class="form-control" key-shortcuts enter="addModalidade()" ng-readonly="restante() <= 0">
+            <input type="text" name="valor" ng-model="pagamento.valor" filtro-moeda number-only class="form-control" key-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0">
           </div>
         </div>
       </div>
@@ -55,9 +55,9 @@
               <tr ng-repeat="p in pedido.pagamentos track by $index">
                 <td>{{p.modalidade.codigo}}</td>
                 <td>{{p.modalidade.nome}}</td>
-                <td class="inactive-editable-elem"><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span><input filtro-moeda number-only type="text" ng-model="p.descontoPercent"></td>
-                <td class="inactive-editable-elem"><span>{{p.descontoDinheiro | currency: 'R$' }}</span><input filtro-moeda number-only type="text" ng-model="p.descontoDinheiro"></td>
-                <td class="editable-elem"><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
+                <td><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span></td>
+                <td><span>{{p.descontoDinheiro | currency: 'R$' }}</span></td>
+                <td class="editable-elem" editable-elem><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
                 <td><a href="" ng-click="removePagamento(p)"><span class="glyphicon glyphicon-trash"></span></a></td>
               </tr>
             </tbody>
@@ -71,13 +71,13 @@
         </div>
         <div class="col-md-4">
           <div><h4>Desconto %</h4></div>
-          <div class="div-display editable-elem"><span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
+          <div class="div-display editable-elem" editable-elem><span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
             type="text" filtro-moeda number-only ng-model="pedido.descontoPercent" ng-change="pedido.setDescontoPercent(pedido.descontoPercent)">
           </div>
         </div>
         <div class="col-md-4">
           <div><h4>Desconto $</h4></div>
-          <div class="div-display editable-elem"><span>{{pedido.descontoDinheiro | currency: 'R$ '}}</span><input
+          <div class="div-display editable-elem" editable-elem><span>{{pedido.descontoDinheiro | currency: 'R$ '}}</span><input
             type="text" filtro-moeda number-only ng-model="pedido.descontoDinheiro" ng-change="pedido.setDescontoDinheiro(pedido.descontoDinheiro)">
           </div>
         </div>

@@ -19,4 +19,8 @@ angular.module('commercialApp')
       console.log(msg);
     };
 
+    this.click = function(obj) {
+      console.log(obj);
+    };
+
   });

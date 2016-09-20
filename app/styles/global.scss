@@ -208,6 +208,13 @@ input.form-control{
   }
 }
 
+.div-display.editable-elem {
+  &:hover {
+    color: $cor-principal-clara !important;
+    text-shadow: none;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: $cor-principal-clara;
 }
@@ -224,8 +231,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 }
 
 .tabela {
-  border: 2px solid $cor-principal-clara;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background-color: $cor-fundo-tabela;
 
   a {
@@ -250,7 +256,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   td {
     text-align: center;
     overflow: hidden;
-    white-space: nowrap;
+    //white-space: nowrap;
     padding: 5px;
   }
 
@@ -265,8 +271,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 
     &:hover {
       background-color: $cor-tabela-highlight;
-      //cursor: hand;
-      //cursor: pointer;
     }
   }
 }
@@ -286,14 +290,22 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   }
 
   &:hover {
-    padding: 2px;
+    cursor: pointer;
     span {
-      display: none;
+      border: 1px dashed $cor-principal-clara;
+      background-color: rgba(255, 255, 255, .8);
     }
+  }
+}
 
-    input {
-      display: inherit;
-    }
+.editable-elem.ativo {
+  padding: 2px;
+  span {
+    display: none;
+  }
+
+  input {
+    display: inherit;
   }
 }
 
@@ -313,7 +325,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   }
 }
 
+.tabela-esticada {
+  width: 100%;
+  max-width: 100%;
+}
+
 .tabela-bordered {
+  border: 2px solid $cor-principal-clara;
+
   td, th {
     border: 1px solid $cor-principal-clara;
     border-spacing: 0;
@@ -555,6 +574,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 }
 
 @import 'header';
+@import 'footer';
 @import 'login';
 @import 'home';
 @import 'orcamento';

@@ -46,6 +46,15 @@ angular.module('commercialApp.directives')
                 });
               }
               break;
+
+            case keys.ESCAPE:
+              if (!buffer[event.keyCode]) {
+                buffer[event.keyCode] = true;
+                scope.$apply(function() {
+                  scope.$eval(scope.escape);
+                });
+              }
+              break;
           }
 
           event.preventDefault();
@@ -61,12 +70,13 @@ angular.module('commercialApp.directives')
     }
 
     return {
-      restrict: 'A',
+      restrict: 'AE',
       scope: {
         enter: '&',
         shiftEnter: '&',
         f1: '&',
-        f5: '&'
+        f5: '&',
+        escape: '&'
       },
       link: link
     }

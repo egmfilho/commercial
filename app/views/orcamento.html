@@ -110,7 +110,7 @@
       <div class="col-xs-3 col-sm-3">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input name="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" key-shortcuts enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" shift-enter="orcamento.escapeProdutos()">
+          <input name="quantidade" type="text" class="form-control" filtro-moeda number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" key-shortcuts enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </div>
       </div>
@@ -158,10 +158,10 @@
               <td>{{i.produto.codigo}}</td>
               <td>{{i.produto.nome | limitTo : 50 }}</td>
               <td>{{i.produto.unidade}}</td>
-              <td class="editable-elem"><span>{{i.quantidade | currency : ""}}</span><input filtro-moeda number-only type="text" ng-model="i.quantidade"></td>
+              <td class="editable-elem" editable-elem><span>{{i.quantidade | currency : ""}}</span><input filtro-moeda number-only type="text" ng-model="i.quantidade"></td>
               <td>{{i.produto.preco | currency}}</td>
-              <td class="inactive-editable-elem"><span>{{i.descontoPercent | currency : ""}}%</span><input type="text" filtro-moeda number-only ng-model="i.descontoPercent" ng-change="i.setDescontoPercent(i.descontoPercent)"></td>
-              <td class="inactive-editable-elem"><span>{{i.descontoDinheiro | currency : "R$ "}}</span><input type="text" filtro-moeda number-only ng-model="i.descontoDinheiro" ng-change="i.setDescontoDinheiro(i.descontoDinheiro)"></td>
+              <td><span>{{i.descontoPercent | currency : ""}}%</span></td>
+              <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span></td>
               <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
               <td>
                 <a tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
@@ -199,7 +199,7 @@
       <div class="head">
         <h3>Cliente
           <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome"> &raquo; ({{cliente.novo ? 'Novo Cliente' : orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}})</span>
-          <a href="" class="limpar" title="Limpar campos" ng-click="orcamento.limparCliente($event, true)"><span class="glyphicon glyphicon-erase"></span></a>
+          <a href="" class="limpar" title="Limpar campos" ng-click="orcamento.limparCliente($event)"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.cliente" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.cliente" class="glyphicon glyphicon-menu-down"></span></a>
         </h3>
@@ -334,7 +334,7 @@
       <div class="col-xs-3 col-sm-3" uib-collapse="!cliente.novo">
         <h4>&nbsp;</h4>
         <div>
-          <button class="btn btn-default btn-form" ng-click="cliente.novo = false; orcamento.limparCliente()">Cancelar</button>
+          <button class="btn btn-default btn-form" ng-click="cliente.novo = false; orcamento.limparCliente(null, true)">Cancelar</button>
         </div>
       </div>
 

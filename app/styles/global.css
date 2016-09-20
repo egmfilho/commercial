@@ -156,6 +156,10 @@ input.form-control {
     width: 100%;
     height: 100%; }
 
+.div-display.editable-elem:hover, .div-display.inactive-editable-elem:hover {
+  color: #6481bb !important;
+  text-shadow: none; }
+
 h1, h2, h3, h4, h5, h6 {
   color: #6481bb; }
 
@@ -169,8 +173,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   box-shadow: 0 0 6px #bf0000 !important; }
 
 .tabela, #tabela-orcamento {
-  border: 2px solid #6481bb;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background-color: #f2f2f2; }
   .tabela a, #tabela-orcamento a {
     color: #6481bb; }
@@ -186,7 +189,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   .tabela td, #tabela-orcamento td {
     text-align: center;
     overflow: hidden;
-    white-space: nowrap;
     padding: 5px; }
   .tabela tr:nth-child(odd), #tabela-orcamento tr:nth-child(odd) {
     background-color: white; }
@@ -205,10 +207,16 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   outline: none;
   border: 1px solid #6481bb; }
 .editable-elem:hover, .inactive-editable-elem:hover {
-  padding: 2px; }
+  cursor: pointer; }
   .editable-elem:hover span, .inactive-editable-elem:hover span {
+    border: 1px dashed #6481bb;
+    background-color: rgba(255, 255, 255, 0.8); }
+
+.editable-elem.ativo, .ativo.inactive-editable-elem {
+  padding: 2px; }
+  .editable-elem.ativo span, .ativo.inactive-editable-elem span {
     display: none; }
-  .editable-elem:hover input, .inactive-editable-elem:hover input {
+  .editable-elem.ativo input, .ativo.inactive-editable-elem input {
     display: inherit; }
 
 .inactive-editable-elem:hover span {
@@ -216,10 +224,16 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 .inactive-editable-elem:hover input {
   display: none; }
 
-.tabela-bordered td, .tabela-bordered th {
-  border: 1px solid #6481bb;
-  border-spacing: 0;
-  border-collapse: collapse; }
+.tabela-esticada {
+  width: 100%;
+  max-width: 100%; }
+
+.tabela-bordered {
+  border: 2px solid #6481bb; }
+  .tabela-bordered td, .tabela-bordered th {
+    border: 1px solid #6481bb;
+    border-spacing: 0;
+    border-collapse: collapse; }
 
 .tabela-selecionavel td {
   cursor: pointer; }
@@ -376,6 +390,19 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       height: 100%;
       border-top: 1px dashed white;
       border-bottom: 1px dashed white; }
+
+.footer .agencia {
+  color: white;
+  font-size: .8em;
+  opacity: .8;
+  float: right;
+  margin: 20px; }
+  .footer .agencia a {
+    text-decoration: none;
+    font-weight: bold;
+    color: white; }
+    .footer .agencia a:hover, .footer .agencia a:visited {
+      color: white; }
 
 #login {
   text-align: center;
@@ -548,10 +575,20 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   #formulario-orcamento .btn-orcamento span {
     vertical-align: -10%; }
 
-#tabela-orcamento th:nth-child(1), #tabela-orcamento th:nth-child(3), #tabela-orcamento th:nth-child(4), #tabela-orcamento th:nth-child(5), #tabela-orcamento th:nth-child(6), #tabela-orcamento th:nth-child(7), #tabela-orcamento th:nth-child(8), #tabela-orcamento th:nth-child(9), #tabela-orcamento td:nth-child(1), #tabela-orcamento td:nth-child(3), #tabela-orcamento td:nth-child(4), #tabela-orcamento td:nth-child(5), #tabela-orcamento td:nth-child(6), #tabela-orcamento td:nth-child(7), #tabela-orcamento td:nth-child(8), #tabela-orcamento td:nth-child(9) {
-  width: 7.5%; }
-#tabela-orcamento th:nth-child(2), #tabela-orcamento td:nth-child(2) {
-  width: 40%; }
+#tabela-orcamento {
+  border: 2px solid #6481bb; }
+  #tabela-orcamento th, #tabela-orcamento td {
+    white-space: nowrap; }
+    #tabela-orcamento th:nth-child(1), #tabela-orcamento th:nth-child(5), #tabela-orcamento th:nth-child(6), #tabela-orcamento th:nth-child(7), #tabela-orcamento th:nth-child(8), #tabela-orcamento td:nth-child(1), #tabela-orcamento td:nth-child(5), #tabela-orcamento td:nth-child(6), #tabela-orcamento td:nth-child(7), #tabela-orcamento td:nth-child(8) {
+      width: 9%; }
+    #tabela-orcamento th:nth-child(3), #tabela-orcamento td:nth-child(3) {
+      width: 5.5%; }
+    #tabela-orcamento th:nth-child(4), #tabela-orcamento td:nth-child(4) {
+      width: 6.5%; }
+    #tabela-orcamento th:nth-child(9), #tabela-orcamento td:nth-child(9) {
+      width: 3%; }
+    #tabela-orcamento th:nth-child(2), #tabela-orcamento td:nth-child(2) {
+      width: 40%; }
 
 #controle-tabela-orcamento .row {
   margin-top: 0;

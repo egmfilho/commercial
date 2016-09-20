@@ -1,10 +1,10 @@
 <div class="impressao">
   <div class="cabecalho">
-    <div class="logo"><img src="../images/carrapeta.jpg" alt=""></div>
+    <div class="logo"><img src="images/carrapeta.jpg" alt=""></div>
     <br>
     <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
     <br>
-    <span class="data"><h5>Data da impressão: </h5>{{hoje | date: 'longDate'}}</span>
+    <span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'medium'}}</span>
   </div>
   <br>
   <div class="info">
@@ -36,7 +36,7 @@
     <div ng-repeat="bloco in orcamento.pedido.blocos track by $index">
       <p ng-class="$index > 0 ? 'quebra' : ''"></p>
       <div class="cabecalho" ng-if="$index > 0 ? 'margem' : ''">
-        <div class="logo"><img src="../images/carrapeta.jpg" alt=""></div>
+        <div class="logo"><img src="./images/carrapeta.jpg" alt=""></div>
         <br>
         <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
         <br>
@@ -88,6 +88,6 @@
     </div>
   </div>
   <div class="rodape">
-    <span>A Carrapeta 68 Mat Hidráulico Ltda - Avenida Lucio Meira, 68 - Várzea - Teresópolis - RJ 25953-003 - email: vendas@carrapeta.com</span>
+    <span>A Carrapeta 68 Mat Hidráulico Ltda - Avenida Lucio Meira, 68 - Várzea - Teresópolis - RJ 25953-003 - email: vendas@carrapeta.com<br>Futura Agência - Commercial ver. 0.7.1 2016</span>
   </div>
 </div>
