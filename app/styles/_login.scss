@@ -1,76 +1,69 @@
 #login {
-  //$y: 20%;
   text-align: center;
-  color: #777;
-  //-webkit-transform: translateY($y);
-  //-moz-transform: translateY($y);
-  //-ms-transform: translateY($y);
-  //-o-transform: translateY($y);
-  //transform: translateY($y);
-  margin: auto;
-}
 
-#form-login {
+  .form-login {
+    width: 340px;
+    height: 340px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    position: relative;
+    padding: 20px;
 
-  width: 340px;
-  height: 320px;
-  text-align: center;
-  margin: auto;
-  display: block;
-  position: relative;
+    .logo-login {
+      background-image: url('../images/logo_nome.png');
+      width: 100%;
+      height: 70px;
+      background-size: 70%;
+      background-repeat: no-repeat;
+      //margin-bottom: 10px;
+      background-position: center;
+    }
 
-  input {
-    width: 100%;
-    height: 50px;
-    font-size: 1.4em;
-    padding: 10px;
-    z-index: 1;
+    input {
+      width: 100%;
+      height: 50px;
+      font-size: 1.4em;
+      padding: 10px;
+      z-index: 1;
+    }
+
+    input[name='usuario'] {
+      border: 1px solid #ccc;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      margin-top: 30px;
+    }
+
+    input[name='senha'] {
+      z-index: 1;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-width: 0;
+    }
+
+    input[name='usuario'], input[name='senha'] {
+      &:focus, &:active {
+        border: 1px solid $cor-principal;
+        z-index: 100 !important;
+      }
+    }
+
+    button {
+      width: 100%;
+      margin-top: 40px;
+      font-size: 1.4em;
+      height: 50px;
+    }
   }
-
-}
-
-#usuario {
-  border: 1px solid #ccc;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin-top: 30px;
-}
-
-#senha {
-  z-index: 1;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-width: 0px;
-}
-
-#usuario:focus, #senha:focus {
-  border: 1px solid $cor-principal;
-  z-index: 100;
-}
-
-#btn-login {
-  width: 100%;
-  margin-top: 10px;
-  font-size: 1.4em;
-  height: 50px;
-}
-
-#logo-login {
-  background-image: url('../images/logo_nome.png');
-  width: 100%;
-  height: 50px;
-  background-size: 15%;
-  background-repeat: no-repeat;
-  margin: 10px auto;
-  background-position: center;
 }

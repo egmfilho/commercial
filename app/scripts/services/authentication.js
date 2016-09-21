@@ -4,13 +4,14 @@
 
 'use strict';
 
-angular.module('commercialApp')
-  .factory('AuthenticationService.services', [
+angular.module('commercialApp.services')
+  .factory('AuthenticationService', [
+    '$rootScope',
     '$http',
-    '$httpParamSerializerJQLike',
     '$cookies',
+    'Usuario',
     'URLS',
-    function($http, $httpParamSerializerJQLike, $cookies, URLS) {
+    function($rootScope, $http, $cookies, Usuario, URLS) {
 
       var service = {};
 
@@ -23,18 +24,24 @@ angular.module('commercialApp')
 
         $http({
           method: 'POST',
-          url: URLS.login,
-          data: $httpParamSerializerJQLike({ user: username, pass: password }),
+          url: URLS.root + 'login.php',
+          data: { user: username, pass: password },
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        }).success(function(response) {
-          SetCredentials({
-            user_id: response.data.user_id,
-            token: response.data.user_session_id,
-            username: response.data.user_user,
-            name: response.data.user_name,
-            mail: response.data.user_mail
-          });
-          callback(response);
+        }).success(function(res) {
+
+          console.log(res.data);
+
+          switch (res.status.code) {
+            case 404:
+                  //$rootScope.alerta.show('Usuário não encontrado!');
+                  break;
+            case 200:
+                  SetCredentials(new Usuario(Usuario.converterEmEntrada(res.data)));
+                  callback(res);
+                  break;
+            default:
+                  break;
+          }
         });
 
       }
@@ -49,9 +56,8 @@ angular.module('commercialApp')
 
         $http({
           method: 'POST',
-          url: URLS.logout,
-          data: $httpParamSerializerJQLike({ token: token }),
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          url: URLS.root + 'logout.php',
+          data: { token: token }
         }).success(function(response) {
           ClearCredentials();
           callback(response);
@@ -62,8 +68,9 @@ angular.module('commercialApp')
         var expiration = new Date();
         expiration.setDate(expiration.getDate() + 1);
         //expiration.setSeconds(expiration.getSeconds() + 10);
+        //$cookies.putObject('currentUser', data, { 'expires': expiration });
 
-        $cookies.putObject('currentUser', data, { 'expires': expiration });
+        $cookies.putObject('currentUser', data, { });
       }
 
       function ClearCredentials() {

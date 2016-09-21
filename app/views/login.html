@@ -1,15 +1,15 @@
-<alerta titulo="Aviso!" mensagem="{{login.erro}}" uib-collapse="{{login.erro}}"></alerta>
-<div class="center-absolute">
-    <div id="login">
-        <div id="logo-login"></div>
-        <br>
-        <h4>Digite seu nome de usuário e senha</h4>
-        <br>
-        <div id="form-login" class="card">
-            <h1><span class="glyphicon glyphicon-user"></span></h1>
-            <input type="text" id="usuario" placeholder="Usuário" ng-model="username">
-            <input type="password" id="senha" placeholder="Senha" ng-model="password">
-            <button id="btn-login" class="btn btn-default" ng-click="login.login()" >Login</button>
-        </div>
+<div class="vertical-center">
+  <div id="login">
+    <!--<div class="logo-login"></div>-->
+    <!--<br>-->
+    <!--<h4>Digite seu nome de usuário e senha</h4>-->
+    <!--<br>-->
+    <div class="card form-login">
+      <div class="logo-login"></div>
+      <!--<h1><span class="glyphicon glyphicon-user"></span></h1>-->
+      <input type="text" name="usuario" placeholder="Usuário" ng-model="username">
+      <input type="password" name="senha" placeholder="Senha" ng-model="password">
+      <button class="btn btn-default" ng-click="login.login(username, password)">Login</button>
     </div>
+  </div>
 </div>

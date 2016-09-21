@@ -36,6 +36,10 @@ angular
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
+      .when('/logout', {
+        template: '<h3>Logging out...</h3>',
+        controller: 'LogoutCtrl'
+      })
       .when('/clientes', {
         templateUrl: 'views/cliente.html',
         controller: 'ClienteCtrl',
@@ -64,8 +68,6 @@ angular
     };
 
     $rootScope.versao = '0.7.2';
-  }])
-  .run(['$rootScope', '$location', function($rootScope, $location) {
 
     $rootScope.isLoading = false;
 
@@ -93,16 +95,19 @@ angular
         });
       }
     };
-
+  }])
+  .run(['$rootScope', '$location', '$cookies', '$uibModalStack', function($rootScope, $location, $cookies, $uibModalStack) {
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      $uibModalStack.dismissAll();
       $rootScope.currentPath = $location.path();
 
-      //if ($rootScope.globals === null || $rootScope.globals.currentUser === null) {
-      //  if (next.templateUrl !== 'views/login.html') {
-          //$location.path('/login');
-        //}
-      //}
+      // Bloqueia acesso de usuarios nao logados
+      if ($cookies.getObject('currentUser') == null || $cookies.getObject('currentUser').sessao == null) {
+        if (next.templateUrl !== 'views/login.html') {
+          $location.path('/login');
+        }
+      }
     });
 
   }]);

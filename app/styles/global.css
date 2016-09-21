@@ -166,7 +166,8 @@ h1, h2, h3, h4, h5, h6 {
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
   outline: none;
   border: 1px solid #6481bb;
-  box-shadow: 0 0 6px #6481bb; }
+  box-shadow: 0 0 6px #6481bb;
+  position: relative; }
 
 .input-error {
   border: 1px solid #bf0000 !important;
@@ -406,64 +407,56 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       color: white; }
 
 #login {
-  text-align: center;
-  color: #777;
-  margin: auto; }
-
-#form-login {
-  width: 340px;
-  height: 320px;
-  text-align: center;
-  margin: auto;
-  display: block;
-  position: relative; }
-  #form-login input {
-    width: 100%;
-    height: 50px;
-    font-size: 1.4em;
-    padding: 10px;
-    z-index: 1; }
-
-#usuario {
-  border: 1px solid #ccc;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin-top: 30px; }
-
-#senha {
-  z-index: 1;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-width: 0px; }
-
-#usuario:focus, #senha:focus {
-  border: 1px solid #3b5998;
-  z-index: 100; }
-
-#btn-login {
-  width: 100%;
-  margin-top: 10px;
-  font-size: 1.4em;
-  height: 50px; }
-
-#logo-login {
-  background-image: url("../images/logo_nome.png");
-  width: 100%;
-  height: 50px;
-  background-size: 15%;
-  background-repeat: no-repeat;
-  margin: 10px auto;
-  background-position: center; }
+  text-align: center; }
+  #login .form-login {
+    width: 340px;
+    height: 340px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    position: relative;
+    padding: 20px; }
+    #login .form-login .logo-login {
+      background-image: url("../images/logo_nome.png");
+      width: 100%;
+      height: 70px;
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position: center; }
+    #login .form-login input {
+      width: 100%;
+      height: 50px;
+      font-size: 1.4em;
+      padding: 10px;
+      z-index: 1; }
+    #login .form-login input[name='usuario'] {
+      border: 1px solid #ccc;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      margin-top: 30px; }
+    #login .form-login input[name='senha'] {
+      z-index: 1;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      -webkit-border-bottom-right-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -moz-border-radius-bottomleft: 5px;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-width: 0; }
+    #login .form-login input[name='usuario']:focus, #login .form-login input[name='usuario']:active, #login .form-login input[name='senha']:focus, #login .form-login input[name='senha']:active {
+      border: 1px solid #3b5998;
+      z-index: 100 !important; }
+    #login .form-login button {
+      width: 100%;
+      margin-top: 40px;
+      font-size: 1.4em;
+      height: 50px; }
 
 #menu-home .remove-padding > div {
   padding: 8px; }

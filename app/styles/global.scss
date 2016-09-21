@@ -223,6 +223,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   outline: none;
   border: 1px solid $cor-principal-clara;
   box-shadow: 0 0 6px $cor-principal-clara;
+  position: relative;
 }
 
 .input-error {
