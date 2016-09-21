@@ -55,8 +55,13 @@ angular
         redirectTo: '/'
       });
   })
-  .run(['ArrayPrototype', function(ArrayPrototype) {
+  .run(['$rootScope', 'ArrayPrototype', function($rootScope, ArrayPrototype) {
     ArrayPrototype.contains();
+
+    // para ser usado no ng-repeat
+    $rootScope.getNumber = function(num) {
+      return new Array(num);
+    };
   }])
   .run(['$rootScope', '$location', function($rootScope, $location) {
 

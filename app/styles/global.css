@@ -504,13 +504,21 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 @media print {
   .impressao {
     display: inline; }
+    .impressao .espacador {
+      min-height: 26px !important;
+      max-height: 26px !important;
+      height: 26px !important; }
     .impressao .tabela, .impressao #tabela-orcamento {
       border: 1px solid black !important; }
       .impressao .tabela td, .impressao #tabela-orcamento td, .impressao .tabela th, .impressao #tabela-orcamento th {
+        background-color: white !important;
         border: 1px solid black !important; }
 
   #formulario-orcamento, #loading, div[name='header'], .alerta, div[name='footer'] {
-    display: none; } }
+    display: none; }
+
+  div.alerta {
+    visibility: hidden !important; } }
 @media screen {
   .impressao {
     display: none; } }

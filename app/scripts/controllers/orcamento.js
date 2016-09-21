@@ -27,7 +27,7 @@ angular.module('commercialApp')
     'ValidadorDocumento',
     function($rootScope, $scope, $timeout, $templateCache, $compile, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
 
-      var self = this;
+      var self = this, backup = new Pedido();
 
       $scope.getHoje = function() {
         return new Date();
@@ -587,7 +587,7 @@ angular.module('commercialApp')
               var result = new Pedido(Pedido.converterEmEntrada(success.data));
               self.pedido.id = result.id;
               self.pedido.codigo = result.codigo;
-              //$rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
+              $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
               $rootScope.isLoading = false;
               $scope.mostrarOpcoes();
             }, function (error) {
@@ -596,7 +596,7 @@ angular.module('commercialApp')
             });
           } else {
             providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-              //$rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
+              $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
               $rootScope.isLoading = false;
               $scope.mostrarOpcoes();
             }, function (error) {
@@ -608,7 +608,7 @@ angular.module('commercialApp')
       };
 
       this.imprimir = function () {
-        if (!this.pedido.items.length || !this.pedido.id) {
+        if (!this.pedido.items.length || !this.pedido.id || !backup.compare(this.pedido)) {
           $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
           return;
         }
@@ -660,7 +660,8 @@ angular.module('commercialApp')
             $scope.cdVendedor = result.vendedor.codigo;
             $scope.cdCliente = result.cliente.codigo;
             $scope.cdCEP = result.cliente.endereco.cep;
-            self.pedido = result;
+            self.pedido = new Pedido(result);
+            backup = new Pedido(result);
           }
         });
       };

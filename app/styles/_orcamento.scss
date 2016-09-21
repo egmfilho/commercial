@@ -4,9 +4,17 @@ $print-font-size: 11px;
   .impressao {
     display: inline;
 
+    .espacador {
+      min-height: 26px !important;
+      max-height: 26px !important;
+      height: 26px !important;
+      //background-color: red !important;
+    }
+
     .tabela {
       border: 1px solid black !important;
       td, th {
+        background-color: white !important;
         border: 1px solid black !important;
       }
     }
@@ -14,6 +22,10 @@ $print-font-size: 11px;
 
   #formulario-orcamento, #loading, div[name='header'], .alerta, div[name='footer'] {
     display: none;
+  }
+
+  div.alerta {
+    visibility: hidden !important;
   }
 }
 

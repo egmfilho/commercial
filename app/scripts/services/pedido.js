@@ -1,12 +1,47 @@
 /**
  * Created by egmfilho on 15/07/16.
  */
+
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pedido', ['ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function(ItemPedido, Pessoa, Pagamento, dataSaida) {
+  .factory('Pedido', ['$filter', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function($filter, ItemPedido, Pessoa, Pagamento, dataSaida) {
+
+    function compare(pedido) {
+      var i;
+
+      if (this.idStatus != pedido.idStatus) return false;
+      if (this.idCliente != pedido.idCliente) return false;
+      if (this.idVendedor != pedido.idVendedor) return false;
+
+      if (this.items.length != pedido.items.length) return false;
+
+      if (this.valor != pedido.valor) return false;
+      if (this.valorComDesconto != pedido.valorComDesconto) return false;
+
+      if (this.pagamentos.length != pedido.pagamentos.length) return false;
+
+      for (i = 0; i < this.items.length; i++) {
+        if (this.items[i].idProduto != pedido.items[i].idProduto) return false;
+        if (this.items[i].quantidade != pedido.items[i].quantidade) return false;
+        if (this.items[i].precoProduto != pedido.items[i].precoProduto) return false;
+        if (this.items[i].descontoPercent != pedido.items[i].descontoPercent) return false;
+        if (this.items[i].descontoDinheiro != pedido.items[i].descontoDinheiro) return false;
+      }
+
+      for (i = 0; i < this.pagamentos.length; i++) {
+        if (this.pagamentos[i].idModalidade != pedido.pagamentos[i].idModalidade) return false;
+        if (this.pagamentos[i].descontoPercent != pedido.pagamentos[i].descontoPercent) return false;
+        if (this.pagamentos[i].descontoDinheiro != pedido.pagamentos[i].descontoDinheiro) return false;
+        if (this.pagamentos[i].valor != pedido.pagamentos[i].valor) return false;
+      }
+
+      return true;
+    }
 
     function Pedido(p) {
+      var self = this;
+
       this.id = p ? p.id : '';
       this.codigo = p ? p.codigo : '';
       this.idUsuario = p ? p.idUsuario : '';
@@ -18,14 +53,26 @@ angular.module('commercialApp.services')
 
       this.vendedor = p ? p.vendedor : new Pessoa();
       this.cliente = p ? p.cliente : new Pessoa();
-      this.items = p ? p.items : [ ];
+      this.items = [ ];
+
+      if (p) {
+        angular.forEach(p.items, function(item, index) {
+          self.items.push(new ItemPedido(item));
+        });
+      }
 
       this.descontoPercent = p ? p.descontoPercent : 0;
       this.descontoDinheiro = p ? p.descontoDinheiro : 0;
       this.valor = p ? p.valor : 0;
       this.valorComDesconto = p ? p.valorComDesconto : 0;
 
-      this.pagamentos = p ? p.pagamentos : [ ];
+      this.pagamentos = [ ];
+
+      if (p) {
+        angular.forEach(p.pagamentos, function(item, index) {
+          self.pagamentos.push(new Pagamento(item));
+        });
+      }
 
       this.blocos = this.formataritemsParaImpressao();
     }
@@ -155,14 +202,20 @@ angular.module('commercialApp.services')
       },
 
       formataritemsParaImpressao: function () {
-        var blocos = [ ],
+        var items = $filter('orderBy')(this.items, 'produto.codigo'),
+            blocos = [ ],
             temp = [ ],
             i = 0;
 
-        for (i = 0; i < this.items.length; i++) {
-          temp.push(this.items[i]);
+        //for (i = 0; i < 100; i++) {
+        //  items.push(new ItemPedido());
+        //}
 
-          if ((i + 1) % 20 === 0) {
+        for (i = 0; i < items.length; i++) {
+          temp.push(items[i]);
+
+          //if ((i + 1) % (i < 17 ? 17 : 24) === 0) {
+          if ((items.length === i + 1) || (temp.length === 23 && i === 22) || (i > 23 && temp.length === 30)) {
             blocos.push(temp);
             temp = [ ];
           }
@@ -176,7 +229,9 @@ angular.module('commercialApp.services')
 
       troco: function() {
         return this.getTotalPagamentos() - this.getValorTotalComDesconto();
-      }
+      },
+
+      compare: compare
 
     };
 
