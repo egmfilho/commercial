@@ -387,4 +387,6 @@
 
 </div>
 
-<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'" ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo"></div>
+<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'" ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo || !backup.compare(orcamento.pedido)"></div>
+<h1 class="impressao aviso" ng-show="!orcamento.pedido.id || !orcamento.pedido.codigo || !backup.compare(orcamento.pedido)"><span class="glyphicon glyphicon-alert"></span> Impressão indisponível</h1>
+

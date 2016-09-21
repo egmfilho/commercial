@@ -27,7 +27,9 @@ angular.module('commercialApp')
     'ValidadorDocumento',
     function($rootScope, $scope, $timeout, $templateCache, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
 
-      var self = this, backup = null;
+      var self = this;
+
+      $scope.backup = null;
 
       $scope.getHoje = function() {
         return new Date();
@@ -578,7 +580,7 @@ angular.module('commercialApp')
 
 
       this.salvar = function () {
-        if (backup.compare(this.pedido)) {
+        if ($scope.backup.compare(this.pedido)) {
           $rootScope.alerta.show('Nenhuma alteração!');
           return;
         }
@@ -597,7 +599,7 @@ angular.module('commercialApp')
           if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
             providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
               var result = new Pedido(Pedido.converterEmEntrada(success.data));
-              backup = null;
+              $scope.backup = null;
               self.pedido.id = result.id;
               self.pedido.codigo = result.codigo;
               $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
@@ -609,7 +611,7 @@ angular.module('commercialApp')
             });
           } else { // salvar editado
             providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-              backup = null;
+              $scope.backup = null;
               $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
               $rootScope.isLoading = false;
               $scope.mostrarOpcoes();
@@ -627,7 +629,7 @@ angular.module('commercialApp')
           return;
         }
 
-        if (backup && !backup.compare(this.pedido)) {
+        if ($scope.backup && !$scope.backup.compare(this.pedido)) {
           $scope.alerta.show('As alterações precisam ser salvas!');
           return;
         }
@@ -680,7 +682,7 @@ angular.module('commercialApp')
             $scope.cdCliente = result.cliente.codigo;
             $scope.cdCEP = result.cliente.endereco.cep;
             self.pedido = new Pedido(result);
-            backup = new Pedido(result);
+            $scope.backup = new Pedido(result);
           }
         });
       };
