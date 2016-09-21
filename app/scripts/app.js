@@ -62,6 +62,8 @@ angular
     $rootScope.getNumber = function(num) {
       return new Array(num);
     };
+
+    $rootScope.versao = '0.7.2';
   }])
   .run(['$rootScope', '$location', function($rootScope, $location) {
 
@@ -74,7 +76,7 @@ angular
       hide: null,
       show: function(mensagem, classe) {
         if (mensagem) this.mensagem = mensagem;
-        if (classe) this.classe = classe;
+        this.classe = classe || 'alert-warning';
 
         if(this.hide) {
           clearTimeout(this.hide);

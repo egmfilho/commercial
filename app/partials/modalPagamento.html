@@ -57,7 +57,7 @@
                 <td>{{p.modalidade.nome}}</td>
                 <td><span>{{(p.descontoPercent | currency: '') || '0,00'}}%</span></td>
                 <td><span>{{p.descontoDinheiro | currency: 'R$' }}</span></td>
-                <td class="editable-elem" editable-elem><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor"></span></td>
+                <td class="editable-elem" editable-elem><span>{{p.valor | currency: 'R$'}}</span><input filtro-moeda number-only type="text" ng-model="p.valor" ng-blur="p.valor <= 0.01 ? p.valor = 0.01 : false"></span></td>
                 <td><a href="" ng-click="removePagamento(p)"><span class="glyphicon glyphicon-trash"></span></a></td>
               </tr>
             </tbody>
@@ -72,13 +72,13 @@
         <div class="col-md-4">
           <div><h4>Desconto %</h4></div>
           <div class="div-display editable-elem" editable-elem><span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
-            type="text" filtro-moeda number-only ng-model="pedido.descontoPercent" ng-change="pedido.setDescontoPercent(pedido.descontoPercent)">
+            type="text" filtro-moeda number-only ng-model="pedido.descontoPercent" ng-change="pedido.setDescontoPercent(pedido.descontoPercent)" ng-blur="pedido.descontoPercent < 0 ? pedido.descontoPercent = 0 : false">
           </div>
         </div>
         <div class="col-md-4">
           <div><h4>Desconto $</h4></div>
           <div class="div-display editable-elem" editable-elem><span>{{pedido.descontoDinheiro | currency: 'R$ '}}</span><input
-            type="text" filtro-moeda number-only ng-model="pedido.descontoDinheiro" ng-change="pedido.setDescontoDinheiro(pedido.descontoDinheiro)">
+            type="text" filtro-moeda number-only ng-model="pedido.descontoDinheiro" ng-change="pedido.setDescontoDinheiro(pedido.descontoDinheiro)" ng-blur="pedido.descontoDinheiro < 0 ? pedido.descontoDinheiro = 0 : false">
           </div>
         </div>
         <div class="col-md-4">
@@ -100,7 +100,7 @@
 
   <div class="footer">
     <!--<button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>-->
-    <button class="btn btn-default" ng-click="gravar()"><span class="glyphicon glyphicon-ok"></span> Ok</button>
+    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-ok"></span> Ok</button>
   </div>
 
 </div>

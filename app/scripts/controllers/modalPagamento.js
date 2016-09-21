@@ -35,6 +35,12 @@ angular.module('commercialApp.controllers')
         }, 350);
       });
 
+      $scope.blurLimitarNumero = function(obj, min) {
+        if (obj <= (min || 0)) {
+          obj = min || 0;
+        }
+      };
+
       function limpar() {
         $scope.pagamento = new Pagamento();
         $scope.modalidade = new Modalidade();
@@ -139,7 +145,7 @@ angular.module('commercialApp.controllers')
         //  return;
         //}
 
-        $uibModalInstance.close($scope.restante() == 0);
+        $uibModalInstance.close(true);
       };
 
     }

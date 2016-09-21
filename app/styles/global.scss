@@ -285,12 +285,13 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     width: 100%;
     height: auto;
     text-align: center;
-    outline: none;
     border: 1px solid $cor-principal-clara;
+    padding: 0px !important;
   }
 
   &:hover {
     cursor: pointer;
+    padding: 4px !important;
     span {
       border: 1px dashed $cor-principal-clara;
       background-color: rgba(255, 255, 255, .8);
@@ -299,7 +300,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 }
 
 .editable-elem.ativo {
-  padding: 2px;
+  padding: 4px !important;
   span {
     display: none;
   }

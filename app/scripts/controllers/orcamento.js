@@ -10,7 +10,7 @@ angular.module('commercialApp')
     '$scope',
     '$timeout',
     '$templateCache',
-    '$compile',
+    '$uibModalStack',
     'ProviderPessoa',
     'ProviderProduto',
     'ProviderEndereco',
@@ -25,9 +25,9 @@ angular.module('commercialApp')
     'ModalBuscarProduto',
     'ModalBuscarPedido',
     'ValidadorDocumento',
-    function($rootScope, $scope, $timeout, $templateCache, $compile, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
+    function($rootScope, $scope, $timeout, $templateCache, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
 
-      var self = this, backup = new Pedido();
+      var self = this, backup = null;
 
       $scope.getHoje = function() {
         return new Date();
@@ -71,6 +71,7 @@ angular.module('commercialApp')
       }
 
       $scope.$on('$viewContentLoaded', function () {
+        console.log('oi orcamento');
         self.pedido = new Pedido();
         $scope.item = new ItemPedido();
         $scope.cliente = {novo: false};
@@ -84,12 +85,17 @@ angular.module('commercialApp')
 
         focarVendedor();
 
-        jQuery('#formulario-orcamento').bind('keyup', function (event) {
+        jQuery('body').bind('keyup', function (event) {
           if (event.keyCode === 116) {
             self.salvar();
             event.preventDefault();
           }
         });
+      });
+
+      $scope.$on("$destroy", function(){
+        console.log('tchau orcamento');
+        jQuery('body').unbind('keyup');
       });
 
       $scope.blurCdVendedor = function () {
@@ -560,10 +566,10 @@ angular.module('commercialApp')
         return true;
       }
 
-      this.pagamento = function (salvarDepois) {
+      this.pagamento = function () {
         if (validar()) {
           modalPagamento.show(this.pedido, function (result) {
-            if (salvarDepois && result) {
+            if (result && self.pedido.troco() == 0) {
               self.salvar();
             }
           });
@@ -572,19 +578,26 @@ angular.module('commercialApp')
 
 
       this.salvar = function () {
+        if (backup.compare(this.pedido)) {
+          $rootScope.alerta.show('Nenhuma alteração!');
+          return;
+        }
+
         if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
-          this.pagamento(true);
+          this.pagamento();
           return;
         }
 
         if (confirm('Salvar orçamento?')) {
           console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
+          $uibModalStack.dismissAll();
 
           $rootScope.isLoading = true;
 
-          if (!this.pedido.id && !this.pedido.codigo) {
+          if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
             providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
               var result = new Pedido(Pedido.converterEmEntrada(success.data));
+              backup = null;
               self.pedido.id = result.id;
               self.pedido.codigo = result.codigo;
               $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
@@ -594,8 +607,9 @@ angular.module('commercialApp')
               console.log(error);
               $rootScope.isLoading = false;
             });
-          } else {
+          } else { // salvar editado
             providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+              backup = null;
               $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
               $rootScope.isLoading = false;
               $scope.mostrarOpcoes();
@@ -608,8 +622,13 @@ angular.module('commercialApp')
       };
 
       this.imprimir = function () {
-        if (!this.pedido.items.length || !this.pedido.id || !backup.compare(this.pedido)) {
+        if (!this.pedido.items.length || !this.pedido.id) {
           $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+          return;
+        }
+
+        if (backup && !backup.compare(this.pedido)) {
+          $scope.alerta.show('As alterações precisam ser salvas!');
           return;
         }
 

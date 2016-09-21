@@ -27,6 +27,7 @@ angular.module('commercialApp.services')
         if (this.items[i].precoProduto != pedido.items[i].precoProduto) return false;
         if (this.items[i].descontoPercent != pedido.items[i].descontoPercent) return false;
         if (this.items[i].descontoDinheiro != pedido.items[i].descontoDinheiro) return false;
+        //if (this.items[i].produto != pedido.items[i].produto) return false;
       }
 
       for (i = 0; i < this.pagamentos.length; i++) {
@@ -129,12 +130,16 @@ angular.module('commercialApp.services')
       },
 
       setDescontoPercent: function(percent) {
+        percent > 10 ? percent = 10 : false;
+
         this.descontoPercent = parseFloat(Math.round(percent * 100) / 100);
-        this.descontoDinheiro = parseFloat(this.descontoPercent) > 0 ? this.getValorTotalSemDesconto() * (parseFloat(percent) / 100) : 0;
+        this.descontoDinheiro = parseFloat(this.descontoPercent) > 0 ? Math.floor(this.getValorTotalSemDesconto() * (parseFloat(percent) / 100) * 100) / 100 : 0;
       },
 
       setDescontoDinheiro: function(dinheiro) {
-        this.descontoDinheiro = parseFloat(Math.round(dinheiro * 100) / 100);
+        this.getValorTotalSemDesconto() * 0.1 < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * 0.1 : false;
+
+        this.descontoDinheiro = parseFloat(Math.floor(dinheiro * 100) / 100);
         this.descontoPercent = (parseFloat(this.descontoDinheiro) * 100) / this.getValorTotalSemDesconto();
       },
 
@@ -228,7 +233,7 @@ angular.module('commercialApp.services')
       },
 
       troco: function() {
-        return this.getTotalPagamentos() - this.getValorTotalComDesconto();
+        return Math.floor((this.getTotalPagamentos() - this.getValorTotalComDesconto()) * 100) / 100;
       },
 
       compare: compare

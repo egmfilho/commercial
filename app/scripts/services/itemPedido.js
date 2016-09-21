@@ -15,7 +15,7 @@ angular.module('commercialApp.services')
       this.descontoPercent = itemPedido ? itemPedido.descontoPercent : 0;
       this.descontoDinheiro = itemPedido ? itemPedido.descontoDinheiro : 0;
       this.quantidade = itemPedido ? itemPedido.quantidade : 1;
-      this.produto = itemPedido ? itemPedido.produto : new Produto();
+      this.produto = itemPedido ? new Produto(itemPedido.produto) : new Produto();
     }
 
     ItemPedido.prototype = {
