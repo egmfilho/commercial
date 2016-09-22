@@ -57,8 +57,8 @@ angular.module('commercialApp.services')
       }
 
       function SetCredentials(data) {
-        var expiration = new Date();
-        expiration.setDate(expiration.getDate() + 1);
+        //var expiration = new Date();
+        //expiration.setDate(expiration.getDate() + 1);
         //expiration.setSeconds(expiration.getSeconds() + 10);
         //$cookies.putObject('currentUser', data, { 'expires': expiration });
 

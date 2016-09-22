@@ -104,13 +104,12 @@ angular
       $rootScope.currentPath = $location.path();
 
       // Bloqueia acesso de usuarios nao logados
-      //if ($cookies.getObject('currentUser') == null || $cookies.getObject('currentUser').sessao == null) {
-      console.log($cookies.get('PHPSESSID'));
-      if (!$cookies.get('PHPSESSID') || $cookies.getObject('currentUser') == null || $cookies.get('PHPSESSID') != $cookies.getObject('currentUser').sessao) {
-        if (next.templateUrl !== 'views/login.html') {
-          $location.path('/login');
-        }
-      }
+      //console.log($cookies.get('PHPSESSID'));
+      //if (!$cookies.get('PHPSESSID') || $cookies.getObject('currentUser') == null || $cookies.get('PHPSESSID') != $cookies.getObject('currentUser').sessao) {
+      //  if (next.templateUrl !== 'views/login.html') {
+      //    $location.path('/login');
+      //  }
+      //}
     });
 
   }]);

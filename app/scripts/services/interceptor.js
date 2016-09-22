@@ -21,6 +21,8 @@ angular.module('commercialApp.services')
           //  req.headers['x-session-token'] = $cookies.getObject('currentUser').token;
           //}
 
+          //req.headers['x-session-token'] = 'lucilei';
+
           req.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
           req.data = $httpParamSerializerJQLike(req.data);
