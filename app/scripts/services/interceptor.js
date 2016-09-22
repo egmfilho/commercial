@@ -17,9 +17,9 @@ angular.module('commercialApp.services')
 
         'request': function(req) {
 
-          if ($cookies.get('currentUser')) {
-            req.headers['x-session-token'] = $cookies.getObject('currentUser').token;
-          }
+          //if ($cookies.get('currentUser')) {
+          //  req.headers['x-session-token'] = $cookies.getObject('currentUser').token;
+          //}
 
           req.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 

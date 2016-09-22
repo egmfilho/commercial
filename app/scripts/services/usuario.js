@@ -21,7 +21,7 @@ angular.module('commercialApp.services')
 
       usuario.id = user.user_id;
       usuario.perfilId = user.user_profile_id;
-      usuario.sessao = user.user_session_id;
+      usuario.sessao = user.user_current_session_id;
       usuario.ativo = user.user_active == 'Y';
       usuario.nome = user.user_name;
       usuario.email = user.user_mail;

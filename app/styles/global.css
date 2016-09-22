@@ -3,11 +3,13 @@ html {
 
 body {
   background-color: #ddd;
-  padding-bottom: 60px;
   position: relative;
   min-height: 100%;
   overflow-x: hidden;
   overflow-y: auto; }
+
+body.padding-bottom {
+  padding-bottom: 80px; }
 
 #loading {
   position: fixed;

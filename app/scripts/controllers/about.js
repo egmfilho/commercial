@@ -8,7 +8,7 @@
  * Controller of the yoApp
  */
 angular.module('commercialApp')
-  .controller('AboutCtrl', function () {
+  .controller('AboutCtrl', ['$cookies', function ($cookies) {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -23,4 +23,4 @@ angular.module('commercialApp')
       console.log(obj);
     };
 
-  });
+  }]);

@@ -6,12 +6,11 @@
 
 angular.module('commercialApp.services')
   .factory('AuthenticationService', [
-    '$rootScope',
     '$http',
     '$cookies',
     'Usuario',
     'URLS',
-    function($rootScope, $http, $cookies, Usuario, URLS) {
+    function($http, $cookies, Usuario, URLS) {
 
       var service = {};
 
@@ -28,20 +27,13 @@ angular.module('commercialApp.services')
           data: { user: username, pass: password },
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).success(function(res) {
-
-          console.log(res.data);
-
-          switch (res.status.code) {
-            case 404:
-                  //$rootScope.alerta.show('Usuário não encontrado!');
-                  break;
-            case 200:
-                  SetCredentials(new Usuario(Usuario.converterEmEntrada(res.data)));
-                  callback(res);
-                  break;
-            default:
-                  break;
+          if (res.status.code == 200) {
+            console.log(res.data);
+            SetCredentials(new Usuario(Usuario.converterEmEntrada(res.data)));
           }
+          callback(res);
+        }).error(function(res) {
+          callback(res);
         });
 
       }
@@ -71,6 +63,7 @@ angular.module('commercialApp.services')
         //$cookies.putObject('currentUser', data, { 'expires': expiration });
 
         $cookies.putObject('currentUser', data, { });
+        console.log($cookies.getObject('currentUser'));
       }
 
       function ClearCredentials() {

@@ -30,7 +30,7 @@ angular.module('commercialApp.controllers')
         lookup_valor = $scope.restante();
         $rootScope.isLoading = false;
 
-        $timeout(function () {
+        $timeout(function() {
           jQuery('input[name="codigo"]').focus();
         }, 350);
       });

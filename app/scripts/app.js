@@ -23,6 +23,7 @@ angular
   ])
   .config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('SessionInjector');
+    //$httpProvider.defaults.withCredentials = true;
   }])
   .config(function ($routeProvider) {
     $routeProvider
@@ -103,7 +104,9 @@ angular
       $rootScope.currentPath = $location.path();
 
       // Bloqueia acesso de usuarios nao logados
-      if ($cookies.getObject('currentUser') == null || $cookies.getObject('currentUser').sessao == null) {
+      //if ($cookies.getObject('currentUser') == null || $cookies.getObject('currentUser').sessao == null) {
+      console.log($cookies.get('PHPSESSID'));
+      if (!$cookies.get('PHPSESSID') || $cookies.getObject('currentUser') == null || $cookies.get('PHPSESSID') != $cookies.getObject('currentUser').sessao) {
         if (next.templateUrl !== 'views/login.html') {
           $location.path('/login');
         }

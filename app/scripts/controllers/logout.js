@@ -7,9 +7,10 @@
 angular.module('commercialApp.controllers')
   .controller('LogoutCtrl', ['$location', 'AuthenticationService', function($location, authentication) {
 
-    authentication.logout(function(response) {
-      console.log('logout');
-      $location.path('/login');
+    authentication.logout(function(res) {
+      if(res) {
+        $location.path('/login');
+      }
     });
 
   }]);

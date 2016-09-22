@@ -73,7 +73,6 @@ angular.module('commercialApp')
       }
 
       $scope.$on('$viewContentLoaded', function () {
-        console.log('oi orcamento');
         self.pedido = new Pedido();
         $scope.item = new ItemPedido();
         $scope.cliente = {novo: false};
@@ -88,6 +87,7 @@ angular.module('commercialApp')
         focarVendedor();
 
         jQuery('body').bind('keyup', function (event) {
+          // TECLA F5
           if (event.keyCode === 116) {
             self.salvar();
             event.preventDefault();
@@ -96,7 +96,6 @@ angular.module('commercialApp')
       });
 
       $scope.$on("$destroy", function(){
-        console.log('tchau orcamento');
         jQuery('body').unbind('keyup');
       });
 
