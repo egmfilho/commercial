@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pedido', ['$filter', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function($filter, ItemPedido, Pessoa, Pagamento, dataSaida) {
+  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function($filter, $cookies, ItemPedido, Pessoa, Pagamento, dataSaida) {
 
     function compare(pedido) {
       var i;
@@ -130,14 +130,16 @@ angular.module('commercialApp.services')
       },
 
       setDescontoPercent: function(percent) {
-        percent > 10 ? percent = 10 : false;
+        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
+        percent > userDesc ? percent = userDesc : false;
 
         this.descontoPercent = parseFloat(Math.round(percent * 100) / 100);
         this.descontoDinheiro = parseFloat(this.descontoPercent) > 0 ? Math.floor(this.getValorTotalSemDesconto() * (parseFloat(percent) / 100) * 100) / 100 : 0;
       },
 
       setDescontoDinheiro: function(dinheiro) {
-        this.getValorTotalSemDesconto() * 0.1 < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * 0.1 : false;
+        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
+        this.getValorTotalSemDesconto() * (userDesc/100) < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * (userDesc/100) : false;
 
         this.descontoDinheiro = parseFloat(Math.floor(dinheiro * 100) / 100);
         this.descontoPercent = (parseFloat(this.descontoDinheiro) * 100) / this.getValorTotalSemDesconto();

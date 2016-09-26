@@ -42,9 +42,9 @@ angular
         controller: 'LogoutCtrl'
       })
       .when('/clientes', {
-        templateUrl: 'views/cliente.html',
-        controller: 'ClienteCtrl',
-        controllerAs: 'cliente'
+        templateUrl: 'views/clientes.html',
+        controller: 'ClientesCtrl',
+        controllerAs: 'clientes'
       })
       .when('/orcamento', {
         templateUrl: 'views/orcamento.html',
@@ -104,12 +104,21 @@ angular
       $rootScope.currentPath = $location.path();
 
       // Bloqueia acesso de usuarios nao logados
-      //console.log($cookies.get('PHPSESSID'));
-      //if (!$cookies.get('PHPSESSID') || $cookies.getObject('currentUser') == null || $cookies.get('PHPSESSID') != $cookies.getObject('currentUser').sessao) {
-      //  if (next.templateUrl !== 'views/login.html') {
-      //    $location.path('/login');
-      //  }
-      //}
+      if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
+        if (next.templateUrl !== 'views/login.html') {
+          $location.path('/login');
+        }
+        return;
+      }
+
+      // Bloqueia acessos pelas permissoes
+      var user = JSON.parse(window.atob($cookies.get('currentUser')));
+      if (user.perfil.permissoes[next.controllerAs]) {
+        if (!user.perfil.permissoes[next.controllerAs].acessar) {
+          $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+          $location.path('/home');
+        }
+      }
     });
 
   }]);

@@ -39,17 +39,9 @@ angular.module('commercialApp.services')
       }
 
       function Logout(callback) {
-
-        var token = '';
-
-        if ($cookies.get('currentUser')) {
-          token = $cookies.get('currentUser').token;
-        }
-
         $http({
           method: 'POST',
           url: URLS.root + 'logout.php',
-          data: { token: token }
         }).success(function(response) {
           ClearCredentials();
           callback(response);
@@ -62,8 +54,7 @@ angular.module('commercialApp.services')
         //expiration.setSeconds(expiration.getSeconds() + 10);
         //$cookies.putObject('currentUser', data, { 'expires': expiration });
 
-        $cookies.putObject('currentUser', data, { });
-        console.log($cookies.getObject('currentUser'));
+        $cookies.put('currentUser', window.btoa(JSON.stringify(data)), { });
       }
 
       function ClearCredentials() {
