@@ -5,11 +5,11 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('ModalBuscarEndereco', ['$uibModal', function($uibModal) {
+  .factory('ModalBuscarEndereco', ['$q', '$uibModal', function($q, $uibModal) {
 
     return {
-      show: function(enderecos, callback) {
-        $uibModal.open({
+      show: function(enderecos) {
+        return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalBuscarEndereco.html',
           controller: 'ModalBuscarEnderecoCtrl',
@@ -19,11 +19,7 @@ angular.module('commercialApp.services')
               return enderecos;
             }
           }
-        }).result.then(function(result) {
-            callback(result);
-          }, function() {
-            callback(null);
-          });
+        }).result;
       }
     };
 

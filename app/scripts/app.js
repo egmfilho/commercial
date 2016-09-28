@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('commercialApp.constants', [ ]);
-angular.module('commercialApp.filters', [ ]);
-angular.module('commercialApp.services', [ ]);
-angular.module('commercialApp.directives', [ ]);
-angular.module('commercialApp.controllers', [ ]);
+angular.module('commercialApp.constants', []);
+angular.module('commercialApp.filters', []);
+angular.module('commercialApp.services', []);
+angular.module('commercialApp.directives', []);
+angular.module('commercialApp.controllers', []);
 angular
   .module('commercialApp', [
     'commercialApp.constants',
@@ -18,10 +18,11 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'egmfilho.keys',
     'ui.bootstrap',
     'ui.mask'
   ])
-  .config(['$httpProvider', function($httpProvider) {
+  .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInjector');
     //$httpProvider.defaults.withCredentials = true;
   }])
@@ -60,15 +61,15 @@ angular
         redirectTo: '/'
       });
   })
-  .run(['$rootScope', 'ArrayPrototype', function($rootScope, ArrayPrototype) {
+  .run(['$rootScope', 'ArrayPrototype', function ($rootScope, ArrayPrototype) {
     ArrayPrototype.contains();
 
     // para ser usado no ng-repeat
-    $rootScope.getNumber = function(num) {
+    $rootScope.getNumber = function (num) {
       return new Array(num);
     };
 
-    $rootScope.versao = '0.7.2';
+    $rootScope.versao = '0.7.4';
 
     $rootScope.isLoading = false;
 
@@ -77,11 +78,11 @@ angular
       classe: 'alert-warning',
       elem: jQuery('.alerta'),
       hide: null,
-      show: function(mensagem, classe) {
+      show: function (mensagem, classe) {
         if (mensagem) this.mensagem = mensagem;
         this.classe = classe || 'alert-warning';
 
-        if(this.hide) {
+        if (this.hide) {
           clearTimeout(this.hide);
           this.hide = null;
         }
@@ -89,17 +90,19 @@ angular
         var self = this;
         this.elem.css('opacity', '0');
         this.elem.css('display', 'inline');
-        this.elem.fadeTo('slow', 1, function() {
-          self.hide = setTimeout(function() {
-            self.elem.fadeTo('slow', 0, function() { self.elem.css('display', 'none'); });
+        this.elem.fadeTo('slow', 1, function () {
+          self.hide = setTimeout(function () {
+            self.elem.fadeTo('slow', 0, function () {
+              self.elem.css('display', 'none');
+            });
           }, 3000);
         });
       }
     };
   }])
-  .run(['$rootScope', '$location', '$cookies', '$uibModalStack', function($rootScope, $location, $cookies, $uibModalStack) {
+  .run(['$rootScope', '$location', '$cookies', '$uibModalStack', function ($rootScope, $location, $cookies, $uibModalStack) {
 
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
       $uibModalStack.dismissAll();
       $rootScope.currentPath = $location.path();
 

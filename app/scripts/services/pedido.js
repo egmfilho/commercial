@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function($filter, $cookies, ItemPedido, Pessoa, Pagamento, dataSaida) {
+  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function ($filter, $cookies, ItemPedido, Pessoa, Pagamento, dataSaida) {
 
     function compare(pedido) {
       var i;
@@ -54,10 +54,10 @@ angular.module('commercialApp.services')
 
       this.vendedor = p ? p.vendedor : new Pessoa();
       this.cliente = p ? p.cliente : new Pessoa();
-      this.items = [ ];
+      this.items = [];
 
       if (p) {
-        angular.forEach(p.items, function(item, index) {
+        angular.forEach(p.items, function (item, index) {
           self.items.push(new ItemPedido(item));
         });
       }
@@ -67,10 +67,10 @@ angular.module('commercialApp.services')
       this.valor = p ? p.valor : 0;
       this.valorComDesconto = p ? p.valorComDesconto : 0;
 
-      this.pagamentos = [ ];
+      this.pagamentos = [];
 
       if (p) {
-        angular.forEach(p.pagamentos, function(item, index) {
+        angular.forEach(p.pagamentos, function (item, index) {
           self.pagamentos.push(new Pagamento(item));
         });
       }
@@ -80,10 +80,10 @@ angular.module('commercialApp.services')
 
     Pedido.prototype = {
 
-      contemItem: function(item) {
+      contemItem: function (item) {
         var result = -1;
 
-        angular.forEach(this.items, function(i, index) {
+        angular.forEach(this.items, function (i, index) {
           if (result === -1) {
             if (parseInt(item.produto.codigo) == parseInt(i.produto.codigo)) {
               result = index;
@@ -94,42 +94,42 @@ angular.module('commercialApp.services')
         return result;
       },
 
-      setVendedor: function(vendedor) {
+      setVendedor: function (vendedor) {
         this.idVendedor = vendedor.id;
         this.vendedor = vendedor;
       },
 
-      removeVendedor: function() {
+      removeVendedor: function () {
         this.vendedor = new Pessoa();
         this.idVendedor = '';
       },
 
-      setCliente: function(cliente) {
+      setCliente: function (cliente) {
         this.idCliente = cliente.id;
         this.cliente = cliente;
       },
 
-      setIdCliente: function(id) {
+      setIdCliente: function (id) {
         this.idCliente = id;
         this.cliente.id = id;
       },
 
-      removeCliente: function() {
+      removeCliente: function () {
         this.cliente = new Pessoa();
         this.idCliente = '';
       },
 
-      addItem: function(itemPedido) {
+      addItem: function (itemPedido) {
         this.items.push(new ItemPedido(itemPedido));
         this.blocos = this.formataritemsParaImpressao();
       },
 
-      removerItem: function(itemPedido) {
+      removerItem: function (itemPedido) {
         this.items.splice(this.items.indexOf(itemPedido), 1);
         this.blocos = this.formataritemsParaImpressao();
       },
 
-      setDescontoPercent: function(percent) {
+      setDescontoPercent: function (percent) {
         var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
         percent > userDesc ? percent = userDesc : false;
 
@@ -137,71 +137,72 @@ angular.module('commercialApp.services')
         this.descontoDinheiro = parseFloat(this.descontoPercent) > 0 ? Math.floor(this.getValorTotalSemDesconto() * (parseFloat(percent) / 100) * 100) / 100 : 0;
       },
 
-      setDescontoDinheiro: function(dinheiro) {
+      setDescontoDinheiro: function (dinheiro) {
+        dinheiro < 0 || !dinheiro ? dinheiro = 0 : false;
         var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
-        this.getValorTotalSemDesconto() * (userDesc/100) < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * (userDesc/100) : false;
+        this.getValorTotalSemDesconto() * (userDesc / 100) < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * (userDesc / 100) : false;
 
         this.descontoDinheiro = parseFloat(Math.floor(dinheiro * 100) / 100);
         this.descontoPercent = (parseFloat(this.descontoDinheiro) * 100) / this.getValorTotalSemDesconto();
       },
 
-      getDescontoPercentItens: function() {
+      getDescontoPercentItens: function () {
         //return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
         var total = 0;
 
-        angular.forEach(this.items, function(item, index) {
+        angular.forEach(this.items, function (item, index) {
           total += item.descontoPercent;
         });
 
         return total;
       },
 
-      getDescontoDinheiroItens: function() {
+      getDescontoDinheiroItens: function () {
         var total = 0;
 
-        angular.forEach(this.items, function(item, index) {
+        angular.forEach(this.items, function (item, index) {
           total += item.descontoDinheiro;
         });
 
         return total;
       },
 
-      getValorTotalSemDesconto: function() {
+      getValorTotalSemDesconto: function () {
         var total = 0;
 
-        angular.forEach(this.items, function(item, index) {
+        angular.forEach(this.items, function (item, index) {
           total += item.getTotalSemDesconto();
         });
 
         return Math.round(total * 100) / 100;
       },
 
-      getValorTotalComDesconto: function() {
+      getValorTotalComDesconto: function () {
         var total = 0;
 
-        angular.forEach(this.items, function(item, index) {
+        angular.forEach(this.items, function (item, index) {
           total += item.getTotalComDesconto();
         });
 
         return Math.round((total - this.descontoDinheiro) * 100) / 100;
       },
 
-      addPagamento: function(pagamento) {
+      addPagamento: function (pagamento) {
         this.pagamentos.push(pagamento);
       },
 
-      removerPagamento: function(pagamento) {
+      removerPagamento: function (pagamento) {
         this.pagamentos.splice($scope.pagamentos.indexOf(pagamento), 1);
       },
 
-      getPagamentos: function() {
+      getPagamentos: function () {
         return this.pagamentos;
       },
 
-      getTotalPagamentos: function() {
+      getTotalPagamentos: function () {
         var total = 0;
 
-        angular.forEach(this.pagamentos, function(item, index) {
+        angular.forEach(this.pagamentos, function (item, index) {
           total += item.valor;
         });
 
@@ -210,9 +211,9 @@ angular.module('commercialApp.services')
 
       formataritemsParaImpressao: function () {
         var items = $filter('orderBy')(this.items, 'produto.codigo'),
-            blocos = [ ],
-            temp = [ ],
-            i = 0;
+          blocos = [],
+          temp = [],
+          i = 0;
 
         //for (i = 0; i < 100; i++) {
         //  items.push(new ItemPedido());
@@ -224,7 +225,7 @@ angular.module('commercialApp.services')
           //if ((i + 1) % (i < 17 ? 17 : 24) === 0) {
           if ((items.length === i + 1) || (temp.length === 23 && i === 22) || (i > 23 && temp.length === 30)) {
             blocos.push(temp);
-            temp = [ ];
+            temp = [];
           }
         }
         if (temp.length > 0) {
@@ -234,7 +235,7 @@ angular.module('commercialApp.services')
         return blocos;
       },
 
-      troco: function() {
+      troco: function () {
         return Math.floor((this.getTotalPagamentos() - this.getValorTotalComDesconto()) * 100) / 100;
       },
 
@@ -242,8 +243,8 @@ angular.module('commercialApp.services')
 
     };
 
-    Pedido.converterEmEntrada = function(p) {
-      var pedido = { };
+    Pedido.converterEmEntrada = function (p) {
+      var pedido = {};
 
       pedido.id = p.order_id;
       pedido.codigo = p.order_code;
@@ -270,16 +271,16 @@ angular.module('commercialApp.services')
         pedido.cliente = new Pessoa();
       }
 
-      pedido.items = [ ];
+      pedido.items = [];
       if (p.order_items) {
-        angular.forEach(p.order_items, function(item, index) {
+        angular.forEach(p.order_items, function (item, index) {
           pedido.items.push(new ItemPedido(ItemPedido.converterEmEntrada(item)));
         });
       }
 
-      pedido.pagamentos = [ ];
+      pedido.pagamentos = [];
       if (p.order_payments) {
-        angular.forEach(p.order_payments, function(item, index) {
+        angular.forEach(p.order_payments, function (item, index) {
           pedido.pagamentos.push(new Pagamento(Pagamento.converterEmEntrada(item)));
         });
       }
@@ -287,8 +288,8 @@ angular.module('commercialApp.services')
       return pedido;
     };
 
-    Pedido.converterEmSaida = function(pedido) {
-      var p = { };
+    Pedido.converterEmSaida = function (pedido) {
+      var p = {};
 
       p.order_id = pedido.id;
       p.order_client_id = pedido.idCliente.length ? pedido.cliente.id : pedido.idCliente;
@@ -297,8 +298,8 @@ angular.module('commercialApp.services')
       //p.Vendedor = Pessoa.converterEmSaida(pedido.vendedor);
       p.order_status_id = pedido.status;
 
-      p.order_items = [ ];
-      angular.forEach(pedido.items, function(item, index) {
+      p.order_items = [];
+      angular.forEach(pedido.items, function (item, index) {
         p.order_items.push(ItemPedido.converterEmSaida(item));
       });
 
@@ -307,8 +308,8 @@ angular.module('commercialApp.services')
       p.order_vl_discount = pedido.descontoDinheiro;
       p.order_value_total = pedido.getValorTotalComDesconto();
 
-      p.order_payments = [ ];
-      angular.forEach(pedido.pagamentos, function(item, index) {
+      p.order_payments = [];
+      angular.forEach(pedido.pagamentos, function (item, index) {
         p.order_payments.push(Pagamento.converterEmSaida(item));
       });
 

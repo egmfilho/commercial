@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pagamento', ['Modalidade', function(Modalidade) {
+  .factory('Pagamento', ['Modalidade', function (Modalidade) {
 
     function Pagamento(pagamento) {
       this.id = pagamento ? pagamento.id : '';
@@ -21,13 +21,13 @@ angular.module('commercialApp.services')
 
     Pagamento.prototype = {
 
-      setModalidade: function(modalidade) {
+      setModalidade: function (modalidade) {
         if (!modalidade) return;
 
         this.modalidade = new Modalidade(modalidade);
       },
 
-      setDescontoPercent: function(percent) {
+      setDescontoPercent: function (percent) {
         //if (percent < 0) return;
         //
         //if (percent > this.modalidade.desconto) {
@@ -39,22 +39,22 @@ angular.module('commercialApp.services')
         //this.descontoDinheiro = parseFloat(percent) > 0 ? this.getTotalSemDesconto() * (parseFloat(percent) / 100) : 0;
       },
 
-      setDescontoDinheiro: function(dinheiro) {
+      setDescontoDinheiro: function (dinheiro) {
         //this.descontoDinheiro = parseFloat(dinheiro);
       },
 
-      getDescontoMaximoPercent: function() {
+      getDescontoMaximoPercent: function () {
         return this.descontoMaximo;
       },
 
-      getValorTotalComDesconto: function() {
+      getValorTotalComDesconto: function () {
         return this.valor;
       }
 
     };
 
-    Pagamento.converterEmEntrada = function(p) {
-      var pagamento =  { };
+    Pagamento.converterEmEntrada = function (p) {
+      var pagamento = {};
 
       pagamento.id = p.order_payment_id;
       pagamento.idPedido = p.order_id;
@@ -77,8 +77,8 @@ angular.module('commercialApp.services')
       return pagamento;
     };
 
-    Pagamento.converterEmSaida = function(pagamento) {
-      var p = { };
+    Pagamento.converterEmSaida = function (pagamento) {
+      var p = {};
 
       p.modality_id = pagamento.modalidade.id;
       p.order_payment_al_discount = pagamento.descontoPercent;

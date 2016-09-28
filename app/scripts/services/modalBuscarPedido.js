@@ -5,29 +5,21 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('ModalBuscarPedido', ['$uibModal', function($uibModal) {
+  .factory('ModalBuscarPedido', ['$q', '$uibModal', function ($q, $uibModal) {
 
     return {
-      show: function(key, callback) {
-        $uibModal.open({
+      show: function (key) {
+        return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalBuscarPedido.html',
           controller: 'ModalBuscarPedidoCtrl',
           size: 'lg',
           resolve: {
-            key: function() {
+            key: function () {
               return key;
             }
           }
-        }).result.then(function(result) {
-            if (callback) {
-              callback(result);
-            }
-          }, function() {
-            if (callback) {
-              callback(null);
-            }
-          });
+        }).result;
       }
     };
 
