@@ -35,6 +35,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-mask/dist/mask.js',
       'bower_components/egmfilho-keys-shortcuts/src/keys.js',
       'bower_components/egmfilho-input-filters/src/filters.js',
+      'bower_components/angular-ui-clock/dist/angular-clock.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

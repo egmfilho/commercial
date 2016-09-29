@@ -1,4 +1,5 @@
 $cor-principal:            #3b5998; //rgb(0, 167, 156);
+$cor-principal-leve:       #5c78ab;
 $cor-principal-clara:      #6481bb;
 $cor-highlight:            #29487d; //rgb(0, 196, 193);
 $cor-active:               rgb(0, 130, 120);
@@ -7,6 +8,7 @@ $cor-fundo-tabela:         #f2f2f2;
 $cor-tabela-highlight:     #dedede;
 $cor-sombra:               rgba(50, 50, 50, .35);
 $fundo-preto-transparente: rgba(0, 0, 0, 0.6);
+$cor-preto-leve:           #444;
 
 html {
   height: 100%;
@@ -22,10 +24,8 @@ body {
 }
 
 body.padding-bottom {
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
-
-::-webkit-scrollbar
 
 #loading {
   position: fixed;
@@ -92,7 +92,7 @@ body.padding-bottom {
 .card {
   @extend .sombra;
   background-color: white;
-  padding: 10px 30px;
+  padding: 10px;
 }
 
 .alerta {
@@ -182,8 +182,49 @@ input.form-control{
   padding-right: 6px;
 }
 
-.botao-esticado {
+.btn-toggle.botao-esticado {
   width: 100%;
+
+  .btn {
+    background-color: $cor-principal-clara;
+    color: white;
+    width: 50%;
+    border-color: $cor-principal-leve;
+
+    &:active, &:hover, &:focus {
+      background-color: $cor-principal-leve;
+    }
+  }
+
+  .active {
+    background-color: $cor-principal;
+
+    &:hover {
+      background-color: $cor-highlight;
+    }
+  }
+}
+
+.btn.botao-esticado {
+  width: 100%;
+}
+
+.botao-invertido {
+  color: white !important;
+  background-color: $cor-principal;
+  border-color: $cor-principal-clara;
+
+  &:hover, &:active, &:focus {
+    color: white !important;
+    background-color: $cor-highlight;
+    border-color: $cor-principal;
+  }
+}
+
+.botao-invertido.btn-default:active {
+  color: white !important;
+  background-color: $cor-principal-clara;
+  border-color: $cor-principal;
 }
 
 .div-display {
@@ -223,7 +264,7 @@ h1, h2, h3, h4, h5, h6 {
   color: $cor-principal-clara;
 }
 
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus {
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:focus, .btn:active:focus, .form-control:focus {
   outline: none;
   border: 1px solid $cor-principal-clara;
   box-shadow: 0 0 6px $cor-principal-clara;
@@ -263,6 +304,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
     overflow: hidden;
     //white-space: nowrap;
     padding: 5px;
+    color: $cor-preto-leve;
   }
 
   tr {
@@ -582,8 +624,10 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
 @import 'header';
 @import 'footer';
 @import 'login';
+@import 'signup';
 @import 'home';
 @import 'orcamento';
+@import 'configuracoes';
 @import 'loading';
 
 

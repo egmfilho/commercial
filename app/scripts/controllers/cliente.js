@@ -4,9 +4,9 @@
 
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.controllers')
   .controller('ClienteCtrl', ['$scope', '$http', function($scope, $http) {
 
-    alert('Teste');
+    console.log('Teste');
 
   }]);

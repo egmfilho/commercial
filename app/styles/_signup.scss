@@ -1,0 +1,50 @@
+.signup {
+
+  .titulo {
+    text-align: center;
+    margin: 40px;
+
+    h1 {
+      color: $cor-principal;
+      font-weight: 400;
+    }
+  }
+
+  .nome {
+    width: 100%;
+    height: 80px;
+    margin: 40px 0;
+    background-image: url('../images/logo_nome_grande.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .descricao {
+    text-align: center;
+    margin: 40px 0;
+    padding: 0 20px;
+
+    h4 {
+      color: $cor-principal;
+    }
+  }
+
+  .logo {
+    width: 100%;
+    height: 220px;
+    background-image: url('../images/logo_icone.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .login-link {
+    text-align: center;
+    margin-top: 30px;
+  }
+}

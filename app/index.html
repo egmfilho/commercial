@@ -13,6 +13,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-clock/dist/angular-clock.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -26,11 +27,12 @@
 
     <div id="loading" ng-show="isLoading" ng-include="'partials/loading.html'"></div>
 
-    <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login'"></div>
+    <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login' || currentPath === '/signup'"></div>
+    <div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>
 
-    <div class="container">
+    <!--<div class="container">-->
       <div ng-view=""></div>
-    </div>
+    <!--</div>-->
 
     <div class="alert alerta" ng-class="alerta.classe" role="alert">
       {{alerta.mensagem}}
@@ -56,6 +58,7 @@
     <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
     <script src="bower_components/egmfilho-keys-shortcuts/src/keys.js"></script>
     <script src="bower_components/egmfilho-input-filters/src/filters.js"></script>
+    <script src="bower_components/angular-ui-clock/dist/angular-clock.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -77,6 +80,8 @@
         <script src="scripts/services/providerModalidadePagamento.js"></script>
         <script src="scripts/services/providerEndereco.js"></script>
         <script src="scripts/services/providerPedido.js"></script>
+        <script src="scripts/services/providerUsuario.js"></script>
+        <script src="scripts/services/providerPerfilUsuario.js"></script>
         <script src="scripts/services/pessoa.js"></script>
         <script src="scripts/services/dataSaida.js"></script>
         <script src="scripts/services/produto.js"></script>
@@ -104,6 +109,7 @@
         <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/orcamento.js"></script>
         <script src="scripts/controllers/cliente.js"></script>
+        <script src="scripts/controllers/configuracoes.js"></script>
         <script src="scripts/controllers/modalPagamento.js"></script>
         <script src="scripts/controllers/modalBuscarPessoa.js"></script>
         <script src="scripts/controllers/modalBuscarEndereco.js"></script>

@@ -1,0 +1,55 @@
+<div class="configuracoes">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1 controle" ng-init="controle='dashboard'">
+        <div class="botao" ng-click="controle='dashboard'" ng-class="{ 'ativo': controle === 'dashboard'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-dashboard"></span>
+            Dashboard
+          </p>
+        </div>
+        <div class="botao" ng-click="controle='usuarios'" ng-class="{ 'ativo': controle === 'usuarios'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-user"></span>
+            Usuários
+          </p>
+        </div>
+        <div class="botao" ng-click="controle='perfis'" ng-class="{ 'ativo': controle === 'perfis'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-tag"></span>
+            Perfis
+          </p>
+        </div>
+        <div class="botao" ng-click="controle='sobre'" ng-class="{ 'ativo': controle === 'sobre'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            Sobre
+          </p>
+        </div>
+      </div>
+
+
+      <div class="col-md-9 dashboard">
+
+        <div ng-include="'partials/dashboard/usuarios.html'" ng-if="controle==='usuarios'"></div>
+        <div ng-include="'partials/dashboard/sobre.html'" ng-if="controle==='sobre'"></div>
+
+
+
+      </div>
+
+      <div class="col-md-2 logs">
+        <div class="col-md-12 log">
+          <div class="card" style="width: 100%">
+            <ds-widget-clock></ds-widget-clock>
+          </div>
+        </div>
+        <div class="col-md-12 log" ng-repeat="n in getNumber(15) track by $index">
+          <div class="card">
+            <h5>Log</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

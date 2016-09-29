@@ -1,3 +1,10 @@
+div[name="footer"] {
+  .navbar {
+    height: 60px !important;
+    box-shadow: 0 -2px 4px $cor-sombra;
+  }
+}
+
 .footer {
   .agencia {
     color: white;

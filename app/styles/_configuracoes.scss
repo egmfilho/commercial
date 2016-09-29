@@ -1,0 +1,119 @@
+.configuracoes {
+  .container {
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+
+    .row {
+      margin: 0;
+    }
+  }
+
+  .controle {
+    height: 100%;
+    background-color: $cor-highlight;
+    padding: 100px 0 0 0;
+    margin: 0;
+    @extend .sombra;
+
+    .botao {
+      text-align: center;
+      height: 100px;
+      background-color: $cor-principal;
+      padding: 0;
+      color: white;
+      font-size: 1.0em;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, .2);
+
+      &:last-child {
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+        box-shadow: 0 2px 2px $cor-sombra;
+      }
+
+      span {
+        display: block;
+        font-size: 2em;
+        margin: 10px;
+      }
+
+      &:hover {
+        @extend .highlight;
+      }
+    }
+
+    .ativo {
+      background-color: $cor-highlight;
+    }
+  }
+
+  .dashboard {
+    max-height: calc(100% - 160px - 60px);
+    height: calc(100% - 160px - 60px);
+    overflow-y: auto;
+    padding: 20px;
+
+    > div > div {
+      padding: 10px;
+    }
+
+    .card {
+      .header {
+        background-color: $cor-principal-clara;
+        padding: 10px;
+
+        h3 {
+          color: white;
+          margin: 0;
+        }
+      }
+
+      .botao-principal {
+        font-size: 1.25em;
+        padding: 10px;
+      }
+
+      .logo {
+        width: 100%;
+        height: 200px;
+        background-image: url('../images/logo_icone.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 180px;
+      }
+
+      .comando {
+        display: block;
+        line-height: 30px;
+        color: $cor-preto-leve;
+
+        .label-primary {
+          background-color: $cor-principal-clara;
+          font-family: arial, sans-serif;
+          font-weight: 200;
+        }
+      }
+
+      .versao {
+        text-align: center;
+      }
+    }
+  }
+
+  .logs {
+    overflow-y: auto;
+    margin: 0;
+    padding: 0 5px;
+
+    .widget-clock {
+      color: $cor-principal-leve;
+      .second, .second-counterweight {
+        stroke: $cor-principal-leve;
+      }
+    }
+
+    .log {
+      padding: 5px;
+    }
+  }
+}
