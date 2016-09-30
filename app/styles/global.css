@@ -44,7 +44,7 @@ body.padding-bottom {
   width: 100%;
   margin: 0 auto; }
 
-.highlight, .navbar-default .navbar-nav li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
+.highlight, .navbar-default .navbar-nav > li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
   -webkit-transition: background-color 0.5s ease;
   -moz-transition: background-color 0.5s ease;
   -ms-transition: background-color 0.5s ease;
@@ -314,6 +314,8 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   padding: 15px; }
   .meu-modal .body .container {
     width: 100%; }
+.meu-modal .body.sm {
+  height: 340px; }
 .meu-modal .footer {
   border-top: 1px solid #ccc;
   height: 60px;
@@ -408,19 +410,19 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   -moz-border-radius: 0px;
   border-radius: 0px;
   font-size: 1.2em; }
-  .navbar-default .navbar-nav {
-    float: none;
-    text-align: center; }
-    .navbar-default .navbar-nav li {
-      display: inline-block;
-      float: none; }
-      .navbar-default .navbar-nav li a {
-        color: white; }
-        .navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:focus {
-          color: white; }
-    .navbar-default .navbar-nav .active a:hover {
-      background-color: #008278;
+  .navbar-default .navbar-nav > li a {
+    color: white; }
+    .navbar-default .navbar-nav > li a:hover, .navbar-default .navbar-nav > li a:focus {
       color: white; }
+  .navbar-default .navbar-nav > .open > a {
+    color: white;
+    background-color: #29487d; }
+    .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:active {
+      color: white;
+      background-color: #29487d; }
+  .navbar-default .navbar-nav .active a:hover {
+    background-color: #008278;
+    color: white; }
   .navbar-default .navbar-fixed-bottom {
     color: white;
     height: 70px;
@@ -430,6 +432,30 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
       height: 100%;
       border-top: 1px dashed white;
       border-bottom: 1px dashed white; }
+  .navbar-default .navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0; }
+    .navbar-default .navbar-login .perfil {
+      font-size: 1.2em;
+      border: 2px solid #6481bb;
+      border-radius: 4px;
+      color: #6481bb;
+      padding: 6px; }
+  .navbar-default .navbar-login-session {
+    padding: 10px;
+    padding-bottom: 0;
+    padding-top: 0; }
+  .navbar-default .navbar-footer {
+    background-color: #DDD; }
+  .navbar-default .navbar-footer-content {
+    padding: 15px 15px 15px 15px; }
+  .navbar-default .dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+    width: 308px; }
+  .navbar-default .icon-size {
+    font-size: 87px; }
 
 .header-alternativo {
   position: fixed;
@@ -487,6 +513,13 @@ div[name="footer"] .navbar {
       height: 70px;
       background-size: 70%;
       background-repeat: no-repeat;
+      background-position: center; }
+    #login .form-login .login-icon {
+      background-image: url("../images/login_icone.png");
+      width: 100%;
+      height: 64px;
+      background-repeat: no-repeat;
+      margin-bottom: 10px;
       background-position: center; }
     #login .form-login .glyphicon {
       color: #3b5998;
@@ -880,6 +913,8 @@ div[name="footer"] .navbar {
       margin: 10px; }
   .configuracoes .controle .ativo {
     background-color: #29487d; }
+.configuracoes .dashboard.fill {
+  min-height: 100%; }
 .configuracoes .dashboard {
   max-height: calc(100% - 160px - 60px);
   height: calc(100% - 160px - 60px);
@@ -887,15 +922,14 @@ div[name="footer"] .navbar {
   padding: 20px; }
   .configuracoes .dashboard > div > div {
     padding: 10px; }
+  .configuracoes .dashboard .fill {
+    min-height: 100%; }
   .configuracoes .dashboard .card .header {
     background-color: #6481bb;
     padding: 10px; }
     .configuracoes .dashboard .card .header h3 {
       color: white;
       margin: 0; }
-  .configuracoes .dashboard .card .botao-principal {
-    font-size: 1.25em;
-    padding: 10px; }
   .configuracoes .dashboard .card .logo {
     width: 100%;
     height: 200px;

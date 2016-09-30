@@ -22,26 +22,81 @@ angular.module('commercialApp.controllers')
         self.perfis = perfis;
       });
 
-      $scope.excluir = function () {
-        $rootScope.isLoading = true;
-        provider.excluir(self.usuario.id).then(function (success) {
-          $rootScope.isLoading = false;
-          $uibModalInstance.close('Usuário excluído!');
-        }, function (error) {
-          console.log(error);
-          $rootScope.isLoading = false;
-        });
-      };
+      function validarCadastro() {
+        if (!self.usuario.nome) {
+          $rootScope.alerta.show('Preencha o nome do usuário!');
+          return false;
+        }
 
-      $scope.atualizar = function () {
+        if (!self.usuario.usuario) {
+          $rootScope.alerta.show('Preencha o nome de usuário!');
+          return false;
+        }
+
+        if (!self.usuario.id) {
+          if (!self.usuario.senha || !self.senhaCheck) {
+            $rootScope.alerta.show('Preencha a senha do usuário!');
+            return false;
+          }
+
+          if (self.usuario.senha !== self.senhaCheck) {
+            $rootScope.alerta.show('As senhas não conferem!');
+            return false;
+          }
+        }
+
+        if (!self.usuario.perfilId) {
+          $rootScope.alerta.show('Selecione um perfil!');
+          return false;
+        }
+
+        return true;
+      }
+
+      //$scope.excluir = function () {
+      //  $rootScope.isLoading = true;
+      //  provider.excluir(self.usuario.id).then(function (success) {
+      //    $rootScope.isLoading = false;
+      //    $uibModalInstance.close('Usuário excluído!');
+      //  }, function (error) {
+      //    console.log(error);
+      //    $rootScope.isLoading = false;
+      //  });
+      //};
+
+      $scope.salvar = function () {
         $rootScope.isLoading = true;
-        provider.editar(self.usuario).then(function (success) {
-          $rootScope.isLoading = false;
-          $uibModalInstance.close('Usuário "' + self.usuario.usuario + '" editado!');
-        }, function (error) {
-          console.log(error);
-          $rootScope.isLoading = false;
-        });
+        console.log(Usuario.converterEmSaida(self.usuario));
+
+        if (!validarCadastro()) {
+          return;
+        }
+
+        if (self.usuario.id) {
+          provider.editar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Usuário "' + self.usuario.usuario + '" editado!', 'alert-success');
+            $uibModalInstance.close(true);
+          }, function (error) {
+            console.log(error);
+            if (error.status === 420) {
+              $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
+            }
+            $rootScope.isLoading = false;
+          });
+        } else {
+          provider.adicionar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Usuário registrado com sucesso!', 'alert-success');
+            $uibModalInstance.close(true);
+          }, function (error) {
+            console.log(error);
+            if (error.status === 420) {
+              $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
+            }
+            $rootScope.isLoading = false;
+          });
+        }
       };
 
       $scope.cancel = function () {

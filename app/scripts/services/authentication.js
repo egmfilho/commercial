@@ -6,11 +6,12 @@
 
 angular.module('commercialApp.services')
   .factory('AuthenticationService', [
+    '$rootScope',
     '$http',
     '$cookies',
     'Usuario',
     'URLS',
-    function($http, $cookies, Usuario, URLS) {
+    function($rootScope, $http, $cookies, Usuario, URLS) {
 
       var service = {};
 
@@ -54,6 +55,12 @@ angular.module('commercialApp.services')
         //expiration.setSeconds(expiration.getSeconds() + 10);
         //$cookies.putObject('currentUser', data, { 'expires': expiration });
 
+        $rootScope.currentUser = {
+          nome: data.nome,
+          usuario: data.usuario,
+          email: data.email,
+          perfil: data.perfil.nome
+        };
         $cookies.put('currentUser', window.btoa(JSON.stringify(data)), { });
       }
 

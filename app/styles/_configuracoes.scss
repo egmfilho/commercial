@@ -47,6 +47,10 @@
     }
   }
 
+  .dashboard.fill {
+    min-height: 100%;
+  }
+
   .dashboard {
     max-height: calc(100% - 160px - 60px);
     height: calc(100% - 160px - 60px);
@@ -55,6 +59,10 @@
 
     > div > div {
       padding: 10px;
+    }
+
+    .fill {
+      min-height: 100%;
     }
 
     .card {
@@ -66,11 +74,6 @@
           color: white;
           margin: 0;
         }
-      }
-
-      .botao-principal {
-        font-size: 1.25em;
-        padding: 10px;
       }
 
       .logo {

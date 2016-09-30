@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-md-1 controle" ng-init="controle='usuarios'">
         <!--<div class="botao" ng-click="controle='dashboard'" ng-class="{ 'ativo': controle === 'dashboard'}">-->
-          <!--<p class="centerX centerY">-->
-            <!--<span class="glyphicon glyphicon-dashboard"></span>-->
-            <!--Dashboard-->
-          <!--</p>-->
+        <!--<p class="centerX centerY">-->
+        <!--<span class="glyphicon glyphicon-dashboard"></span>-->
+        <!--Dashboard-->
+        <!--</p>-->
         <!--</div>-->
         <div class="botao" ng-click="controle='usuarios'" ng-class="{ 'ativo': controle === 'usuarios'}">
           <p class="centerX centerY">
@@ -29,26 +29,80 @@
       </div>
 
 
-      <div class="col-md-9 dashboard">
+      <div class="col-md-10 dashboard fill">
 
-        <div ng-include="'partials/dashboard/usuarios.html'" ng-if="controle==='usuarios'"></div>
+        <!--<div name="usuarios" ng-include="'partials/dashboard/usuarios.html'" ng-if="controle==='usuarios'"></div>-->
         <div ng-include="'partials/dashboard/sobre.html'" ng-if="controle==='sobre'"></div>
 
-
+        <div class="container card fill" ng-if="controle==='usuarios'">
+          <div class="col-md-12">
+            <div class="header">
+              <h3>Usuários</h3>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default botao-esticado" ng-click="configuracoes.atualizar()"><span
+              class="glyphicon glyphicon-refresh"></span> Atualizar
+            </button>
+          </div>
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default botao-esticado" ng-click="configuracoes.adicionarUsuario()"><span
+              class="glyphicon glyphicon-plus"></span> Novo Usuário
+            </button>
+          </div>
+          <div class="col-md-12">
+            <table class="tabela tabela-bordered tabela-esticada" ng-init="len = 15">
+              <thead>
+              <tr>
+                <th>Perfil</th>
+                <th>Nome</th>
+                <th>Usuário</th>
+                <th>Email</th>
+                <th>Último Acesso</th>
+                <th>&nbsp;</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="usuario in configuracoes.usuarios">
+                <td>{{usuario.perfil.nome}}</td>
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.usuario}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.ultimoAcesso | date}}</td>
+                <td><a href="" ng-click="configuracoes.editarUsuario(usuario)"><span
+                  class="glyphicon glyphicon-pencil"></span></a></td>
+              </tr>
+              <tr ng-if="configuracoes.usuarios.length < len"
+                  ng-repeat="n in getNumber(len - configuracoes.usuarios.length < 0 ? 0 : len - configuracoes.usuarios.length) track by $index">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
       </div>
 
-      <div class="col-md-2 logs">
-        <div class="col-md-12 log">
-          <div class="card" style="width: 100%">
-            <ds-widget-clock></ds-widget-clock>
-          </div>
-        </div>
-        <div class="col-md-12 log" ng-repeat="n in getNumber(15) track by $index">
-          <div class="card">
-            <h5>Log</h5>
-          </div>
-        </div>
+      <div class="col-md-1 logs">
+        <!--<div class="col-md-12 log">-->
+          <!--<div class="card" style="width: 100%">-->
+            <!--<ds-widget-clock></ds-widget-clock>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-12 log" ng-repeat="n in getNumber(15) track by $index">-->
+          <!--<div class="card">-->
+            <!--<h5>Log</h5>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
   </div>

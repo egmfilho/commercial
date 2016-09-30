@@ -8,10 +8,10 @@ angular.module('commercialApp.controllers')
 
         switch (res.status.code) {
           case 401:
-            $rootScope.alerta.show('Usuário não autorizado!');
+            $rootScope.alerta.show('Usuário não autorizado!', 'alert-danger');
             break;
           case 404:
-            $rootScope.alerta.show('Usuário ou senhas inválidos!');
+            $rootScope.alerta.show('Usuário ou senha inválidos!', 'alert-danger');
             break;
           case 200:
             $rootScope.alerta.show('Login efetuado!', 'alert-success');

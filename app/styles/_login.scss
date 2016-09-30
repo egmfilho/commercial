@@ -31,6 +31,15 @@
       background-position: center;
     }
 
+    .login-icon {
+      background-image: url('../images/login_icone.png');
+      width: 100%;
+      height: 64px;
+      background-repeat: no-repeat;
+      margin-bottom: 10px;
+      background-position: center;
+    }
+
     .glyphicon {
       color: $cor-principal;
       //background-color: $cor-principal;

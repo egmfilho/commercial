@@ -24,12 +24,12 @@
   @extend .sombra;
 
   .navbar-nav {
-    float: none;
-    text-align: center;
+    //float: none;
+    //text-align: center;
 
-    li {
-      display: inline-block;
-      float: none;
+    > li {
+      //display: inline-block;
+      //float: none;
 
       a {
         color: white;
@@ -39,7 +39,19 @@
       }
     }
 
-    li:hover {
+    > .open {
+      > a {
+        color: white;
+        background-color: $cor-highlight;
+
+        &:hover, &:focus, &:active {
+          color: white;
+          background-color: $cor-highlight;
+        }
+      }
+    }
+
+    > li:hover {
       @extend .highlight;
     }
 
@@ -64,6 +76,45 @@
       border-top: 1px dashed white;
       border-bottom: 1px dashed white;
     }
+  }
+
+  .navbar-login
+  {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0;
+
+    .perfil {
+      font-size: 1.2em;
+      border: 2px solid $cor-principal-clara;
+      border-radius: 4px;
+      color: $cor-principal-clara;
+      padding: 6px;
+    }
+  }
+
+  .navbar-login-session
+  {
+    padding: 10px;
+    padding-bottom: 0;
+    padding-top: 0;
+
+  }
+  .navbar-footer
+  {
+    background-color:#DDD;
+  }
+
+  .navbar-footer-content { padding:15px 15px 15px 15px; }
+  .dropdown-menu {
+    padding: 0;
+    overflow: hidden;
+    width: 308px;
+  }
+
+  .icon-size
+  {
+    font-size: 87px;
   }
 }
 

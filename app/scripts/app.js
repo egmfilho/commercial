@@ -79,7 +79,7 @@ angular
       return new Array(num);
     };
 
-    $rootScope.versao = '0.7.5';
+    $rootScope.versao = '0.7.6';
 
     $rootScope.isLoading = false;
 
@@ -117,21 +117,21 @@ angular
       $rootScope.currentPath = $location.path();
 
       // Bloqueia acesso de usuarios nao logados
-      //if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-      //  if (next.templateUrl !== 'views/login.html') {
-      //    $location.path('/login');
-      //  }
-      //  return;
-      //}
+      if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
+        if (next.templateUrl !== 'views/login.html') {
+          $location.path('/login');
+        }
+        return;
+      }
 
       // Bloqueia acessos pelas permissoes
-      //var user = JSON.parse(window.atob($cookies.get('currentUser')));
-      //if (user.perfil.permissoes[next.controllerAs]) {
-      //  if (!user.perfil.permissoes[next.controllerAs].acessar) {
-      //    $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
-      //    $location.path('/home');
-      //  }
-      //}
+      var user = JSON.parse(window.atob($cookies.get('currentUser')));
+      if (user.perfil.permissoes[next.controllerAs]) {
+        if (!user.perfil.permissoes[next.controllerAs].acessar) {
+          $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+          $location.path('/home');
+        }
+      }
     });
 
   }]);

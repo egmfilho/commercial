@@ -35,13 +35,13 @@ angular.module('commercialApp.controllers')
 
     function getPerfis() {
       $rootScope.isLoading = true;
-      providerPerfil.obterTodos().then(function(success) {
+      providerPerfil.obterTodos().then(function (success) {
         self.perfis = [];
-        angular.forEach(success.data, function(item, index) {
+        angular.forEach(success.data, function (item, index) {
           self.perfis.push(new PerfilUsuario(PerfilUsuario.converterEmEntrada(item)));
         });
         $rootScope.isLoading = false;
-      }, function(error) {
+      }, function (error) {
         console.log(error);
         $rootScope.isLoading = false;
       });
@@ -76,16 +76,20 @@ angular.module('commercialApp.controllers')
       return true;
     }
 
+    this.atualizar = function () {
+      getUsuarios();
+    };
+
     this.cadastrar = function () {
       console.log(Usuario.converterEmSaida(self.novoUsuario));
 
       if (validarCadastro()) {
         $rootScope.isLoading = true;
-        providerUsuario.adicionar(Usuario.converterEmSaida(self.novoUsuario)).then(function(success) {
+        providerUsuario.adicionar(Usuario.converterEmSaida(self.novoUsuario)).then(function (success) {
           $rootScope.isLoading = false;
           getUsuarios();
           $rootScope.alerta.show('Usuário cadastrado', 'alert-success');
-        }, function(error) {
+        }, function (error) {
           console.log(error);
           $rootScope.alerta.show('Não foi possível cadastrar o usuário', 'alert-danger');
           $rootScope.isLoading = false;
@@ -93,9 +97,15 @@ angular.module('commercialApp.controllers')
       }
     };
 
-    this.editarUsuario = function(usuario) {
-      ModalUsuario.show(usuario, self.perfis).then(function(success) {
-        $rootScope.alerta.show(success, 'alert-success');
+    this.editarUsuario = function (usuario) {
+      ModalUsuario.show(usuario, self.perfis).then(function (success) {
+        getUsuarios();
+      });
+    };
+
+    this.adicionarUsuario = function () {
+      ModalUsuario.show(new Usuario(), self.perfis).then(function (success) {
+        getUsuarios();
       });
     };
 
