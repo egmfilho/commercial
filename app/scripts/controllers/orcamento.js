@@ -685,6 +685,7 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
   $scope.lista = function () {
     modalBuscarPedido.show().then(function (result) {
       if (result) {
+        console.log(result);
         self.limpar();
         $scope.formularios.vendedor = false;
         $scope.formularios.produtos = false;

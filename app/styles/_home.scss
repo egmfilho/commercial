@@ -1,4 +1,8 @@
 #menu-home {
+  display: table-cell;
+  padding: 0 10%;
+  vertical-align: middle;
+
   .remove-padding {
     > div {
       padding: 8px;

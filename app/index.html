@@ -31,7 +31,7 @@
     <div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>
 
     <!--<div class="container">-->
-      <div ng-view=""></div>
+      <div name="view-principal" ng-view=""></div>
     <!--</div>-->
 
     <div class="alert alerta" ng-class="alerta.classe" role="alert">
@@ -91,6 +91,7 @@
         <script src="scripts/services/modalPagamento.js"></script>
         <script src="scripts/services/modalBuscarPessoa.js"></script>
         <script src="scripts/services/modalBuscarEndereco.js"></script>
+        <script src="scripts/services/modalUsuario.js"></script>
         <script src="scripts/services/modalidade.js"></script>
         <script src="scripts/services/pagamento.js"></script>
         <script src="scripts/services/endereco.js"></script>
@@ -115,6 +116,7 @@
         <script src="scripts/controllers/modalBuscarEndereco.js"></script>
         <script src="scripts/controllers/modalBuscarProduto.js"></script>
         <script src="scripts/controllers/modalBuscarPedido.js"></script>
+        <script src="scripts/controllers/modalUsuario.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>

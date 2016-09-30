@@ -4,13 +4,13 @@
     <div class="col-md-12 header">
       <h3>Usuários</h3>
     </div>
-    <div class="col-md-offset-9 col-md-3">
-      <h4>Filtrar por</h4>
-      <select class="form-control"></select>
-      <br>
-    </div>
-    <div class="col-md-12" style="overflow-y: auto; max-height: 300px">
-      <table class="tabela tabela-bordered tabela-esticada">
+    <!--<div class="col-md-offset-9 col-md-3">-->
+      <!--<h4>Filtrar por</h4>-->
+      <!--<select class="form-control"></select>-->
+      <!--<br>-->
+    <!--</div>-->
+    <div class="col-md-12" style="overflow-y: auto; max-height: 300px; margin-top: 20px">
+      <table class="tabela tabela-bordered tabela-esticada" ng-init="len = 10">
         <thead>
         <tr>
           <th>Perfil</th>
@@ -28,10 +28,10 @@
           <td>{{usuario.usuario}}</td>
           <td>{{usuario.email}}</td>
           <td>{{usuario.ultimoAcesso | date}}</td>
-          <td><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href="" ng-click="configuracoes.editarUsuario(usuario)"><span class="glyphicon glyphicon-pencil"></span></a></td>
         </tr>
-        <tr ng-if="configuracoes.usuarios.length < 10"
-            ng-repeat="n in getNumber(10 - configuracoes.usuarios.length < 10 ? configuracoes.usuarios.length : 10) track by $index">
+        <tr ng-if="configuracoes.usuarios.length < len"
+            ng-repeat="n in getNumber(len - configuracoes.usuarios.length < 0 ? 0 : len - configuracoes.usuarios.length) track by $index">
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>

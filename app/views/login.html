@@ -1,16 +1,17 @@
 <div class="container">
   <div class="vertical-center">
     <div id="login">
-      <!--<div class="logo-login"></div>-->
-      <!--<br>-->
-      <!--<h4>Digite seu nome de usuário e senha</h4>-->
-      <!--<br>-->
+      <div class="frase">
+        <h1>Bem vindo!</h1>
+        <h2>Efetue o login para acessar o Commercial.</h2>
+      </div>
       <div class="card form-login">
-        <div class="logo-login"></div>
-        <!--<h1><span class="glyphicon glyphicon-user"></span></h1>-->
+        <!--<div class="logo-login"></div>-->
+        <span class="glyphicon glyphicon-lock"></span>
+        <!--<h3>Login</h3>-->
         <input type="text" name="usuario" placeholder="Usuário" ng-model="username" keys-shortcuts enter="login.avancar()">
         <input type="password" name="senha" placeholder="Senha" ng-model="password" keys-shortcuts enter="login.login(username, password)">
-        <button class="btn btn-default" ng-click="login.login(username, password)">Login</button>
+        <button class="btn btn-default botao-invertido" ng-click="login.login(username, password)">Login</button>
       </div>
     </div>
   </div>

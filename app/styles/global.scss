@@ -21,6 +21,11 @@ body {
   //max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+
+  > div[name="view-principal"] {
+    display: table;
+    width: 100%;
+  }
 }
 
 body.padding-bottom {

@@ -5,12 +5,12 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .provider('ProviderUsuario', ['URLS', function(urls) {
+  .provider('ProviderUsuario', ['URLS', function (urls) {
 
     var url = urls.root + 'user.php?action=:action',
-        provider = null;
+      provider = null;
 
-    this.$get = ['$resource', function($resource) {
+    this.$get = ['$resource', function ($resource) {
       provider = $resource(url, {}, {
         get: {
           method: 'POST'
@@ -22,7 +22,7 @@ angular.module('commercialApp.services')
       });
 
       return {
-        obterTodos: function(getPerfil, getAcessos, getSessao) {
+        obterTodos: function (getPerfil, getAcessos, getSessao) {
           return provider.query({
             action: 'getList'
           }, {
@@ -32,16 +32,24 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        editar: function(user) {
+        editar: function (user) {
           return provider.save({
             action: 'edit'
           }, user).$promise;
         },
 
-        adicionar: function(user) {
+        adicionar: function (user) {
           return provider.save({
             action: 'insert'
           }, user).$promise;
+        },
+
+        excluir: function (id) {
+          return provider.save({
+            action: 'del'
+          }, {
+            user_id: id
+          }).$promise;
         }
       };
 

@@ -55,7 +55,7 @@ angular.module('commercialApp.services')
       user.user_profile_id = usuario.perfilId;
       user.user_active = usuario.ativo;
       user.user_user = usuario.usuario;
-      user.user_pass = usuario.senha;
+      user.user_pass = usuario.senha.length ? usuario.senha : null;
       user.user_name = usuario.nome;
       user.user_mail = usuario.email.length ? usuario.email : null;
 

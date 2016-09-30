@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.controllers')
-  .controller('ConfiguracoesCtrl', ['$rootScope', '$scope', 'ProviderUsuario', 'Usuario', 'ProviderPerfilUsuario', 'PerfilUsuario', function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario) {
+  .controller('ConfiguracoesCtrl', ['$rootScope', '$scope', 'ProviderUsuario', 'Usuario', 'ProviderPerfilUsuario', 'PerfilUsuario', 'ModalUsuario', function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario) {
 
     var self = this,
       height = jQuery(window).height() - 160 - 60;
@@ -91,6 +91,12 @@ angular.module('commercialApp.controllers')
           $rootScope.isLoading = false;
         });
       }
+    };
+
+    this.editarUsuario = function(usuario) {
+      ModalUsuario.show(usuario, self.perfis).then(function(success) {
+        $rootScope.alerta.show(success, 'alert-success');
+      });
     };
 
     this.limparCadastro = function () {

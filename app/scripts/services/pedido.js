@@ -18,6 +18,8 @@ angular.module('commercialApp.services')
 
       if (this.valor != pedido.valor) return false;
       if (this.valorComDesconto != pedido.valorComDesconto) return false;
+      if (this.descontoPercent != pedido.descontoPercent) return false;
+      if (this.descontoDinheiro != pedido.descontoDinheiro) return false;
 
       if (this.pagamentos.length != pedido.pagamentos.length) return false;
 

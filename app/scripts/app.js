@@ -19,6 +19,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'egmfilho.keys',
+    'egmfilho.inputFilters',
     'ui.bootstrap',
     'ui.mask',
     'ds.clock'
@@ -34,9 +35,9 @@ angular
         controller: 'HomeCtrl',
         controllerAs: 'home'
       })
-      .when('/signup', {
-        templateUrl: 'views/signup.html'
-      })
+      //.when('/signup', {
+      //  templateUrl: 'views/signup.html'
+      //})
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
