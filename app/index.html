@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="styles/global.css">
     <!-- endbuild -->
   </head>
-  <body ng-class="{ 'padding-bottom': currentPath !== '/login' }" ng-app="commercialApp">
+  <body class="padding-bottom" ng-class="{ 'padding-top': currentPath === '/login' }" ng-app="commercialApp">
     <!--[if lte IE 8]>
       <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua experiência.</p>
     <![endif]-->
@@ -82,6 +82,7 @@
         <script src="scripts/services/providerPedido.js"></script>
         <script src="scripts/services/providerUsuario.js"></script>
         <script src="scripts/services/providerPerfilUsuario.js"></script>
+        <script src="scripts/services/providerConfig.js"></script>
         <script src="scripts/services/pessoa.js"></script>
         <script src="scripts/services/dataSaida.js"></script>
         <script src="scripts/services/produto.js"></script>

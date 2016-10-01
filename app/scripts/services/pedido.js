@@ -132,7 +132,7 @@ angular.module('commercialApp.services')
       },
 
       setDescontoPercent: function (percent) {
-        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
+        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes['order']['max_al_discount'] : 0;
         percent > userDesc ? percent = userDesc : false;
 
         this.descontoPercent = parseFloat(Math.round(percent * 100) / 100);
@@ -141,7 +141,7 @@ angular.module('commercialApp.services')
 
       setDescontoDinheiro: function (dinheiro) {
         dinheiro < 0 || !dinheiro ? dinheiro = 0 : false;
-        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes.orcamento.maxDescontoPercent : 10;
+        var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes['order']['max_al_discount'] : 0;
         this.getValorTotalSemDesconto() * (userDesc / 100) < dinheiro ? dinheiro = this.getValorTotalSemDesconto() * (userDesc / 100) : false;
 
         this.descontoDinheiro = parseFloat(Math.floor(dinheiro * 100) / 100);

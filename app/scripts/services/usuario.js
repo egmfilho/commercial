@@ -58,7 +58,9 @@ angular.module('commercialApp.services')
       user.user_user = usuario.usuario;
       user.user_pass = usuario.senha;
       user.user_name = usuario.nome;
-      user.user_mail = usuario.email.length ? usuario.email : null;
+      user.user_mail = usuario.email;
+
+      user.user_profile_access = PerfilUsuario.converterEmSaida(usuario.perfil).user_profile_access;
 
       return user;
     };

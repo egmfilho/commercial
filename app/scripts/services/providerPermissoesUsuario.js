@@ -1,11 +1,11 @@
 /**
- * Created by egmfilho on 29/09/16.
+ * Created by egmfilho on 01/10/16.
  */
 
 'use strict';
 
 angular.module('commercialApp.services')
-  .provider('ProviderUsuario', ['URLS', function (urls) {
+  .provider('ProviderPermissoesUsuario', ['URLS', function (urls) {
 
     var url = urls.root + 'user.php?action=:action',
       provider = null;
@@ -26,17 +26,6 @@ angular.module('commercialApp.services')
           return provider.query({
             action: 'getList'
           }, {
-            get_user_profile: getPerfil,
-            get_user_profile_access: getAcessos,
-            get_user_session: getSessao
-          }).$promise;
-        },
-
-        obterPorId: function (id, getPerfil, getAcessos, getSessao) {
-          return provider.get({
-            action: 'get'
-          }, {
-            user_id: id,
             get_user_profile: getPerfil,
             get_user_profile_access: getAcessos,
             get_user_session: getSessao

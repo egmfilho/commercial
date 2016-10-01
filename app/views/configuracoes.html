@@ -29,7 +29,7 @@
       </div>
 
 
-      <div class="col-md-10 dashboard fill">
+      <div class="col-md-offset-1 col-md-9 dashboard fill">
 
         <!--<div name="usuarios" ng-include="'partials/dashboard/usuarios.html'" ng-if="controle==='usuarios'"></div>-->
         <div ng-include="'partials/dashboard/sobre.html'" ng-if="controle==='sobre'"></div>
@@ -90,9 +90,18 @@
           </div>
         </div>
 
+        <div class="container card fill" ng-if="controle==='perfis'">
+          <div class="col-md-12">
+            <div class="header">
+              <h3>Perfis</h3>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
-      <div class="col-md-1 logs">
+      <!--<div class="col-md-1 logs">-->
         <!--<div class="col-md-12 log">-->
           <!--<div class="card" style="width: 100%">-->
             <!--<ds-widget-clock></ds-widget-clock>-->
@@ -103,7 +112,7 @@
             <!--<h5>Log</h5>-->
           <!--</div>-->
         <!--</div>-->
-      </div>
+      <!--</div>-->
     </div>
   </div>
 </div>

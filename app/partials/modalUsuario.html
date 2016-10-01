@@ -6,45 +6,77 @@
   </div>
 
   <div class="body sm condensar-rows">
-    <div class="col-md-12">
-      <h4>Nome</h4>
-      <input type="text" class="form-control" ng-model="modal.usuario.nome">
-    </div>
-    <!--<div class="col-md-6">-->
-    <!--<h4>&nbsp;</h4>-->
-    <!--<input type="text" class="form-control" placeholder="Sobrenome">-->
-    <!--</div>-->
-    <div class="col-md-6">
-      <h4>Email</h4>
-      <input type="text" class="form-control" ng-model="modal.usuario.email">
-    </div>
-    <div class="col-md-6">
-      <h4>Nome de usuário</h4>
-      <input type="text" class="form-control" ng-model="modal.usuario.usuario">
-    </div>
-    <div class="col-md-6">
-      <h4>Nova senha</h4>
-      <input type="password" class="form-control" ng-model="modal.usuario.senha">
-    </div>
-    <div class="col-md-6">
-      <h4>Confirme a senha</h4>
-      <input type="password" class="form-control" ng-model="modal.senhaCheck">
-    </div>
-    <div class="col-md-6">
-      <h4>Perfil</h4>
-      <select class="form-control" ng-model="modal.usuario.perfilId"
-              ng-options="perfil.id as perfil.nome for perfil in modal.perfis">
-        <option value="" disabled>Selecione um perfil</option>
-      </select>
-    </div>
-    <div class="col-md-6">
-      <div><h4>Ativo</h4></div>
-      <div class="btn-group btn-toggle botao-esticado">
-        <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="true"><span
-          class="glyphicon glyphicon-eye-open"></span> Sim</label>
-        <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="false"><span
-          class="glyphicon glyphicon-eye-close"></span> Não</label>
+
+    <ul class="hidden-xs nav nav-tabs nav-justified" ng-init="opt = 'info'">
+      <li role="presentation" ng-class="opt === 'info' ? 'active' : ''"><a href="" class="sombra-texto" ng-click="opt = 'info'">Informações</a></li>
+      <li role="presentation" ng-class="opt === 'permissoes' ? 'active' : ''"><a href="" class="sombra-texto" ng-click="opt = 'permissoes'">Permissões</a></li>
+    </ul>
+
+    <div class="container" style="padding: 10px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 5px 5px">
+      <div ng-show="opt === 'info'">
+        <div class="col-md-12">
+          <h4>Nome</h4>
+          <input type="text" class="form-control" ng-model="modal.usuario.nome">
+        </div>
+        <!--<div class="col-md-6">-->
+        <!--<h4>&nbsp;</h4>-->
+        <!--<input type="text" class="form-control" placeholder="Sobrenome">-->
+        <!--</div>-->
+        <div class="col-md-6">
+          <h4>Email</h4>
+          <input type="text" class="form-control" ng-model="modal.usuario.email">
+        </div>
+        <div class="col-md-6">
+          <h4>Nome de usuário</h4>
+          <input type="text" class="form-control" ng-model="modal.usuario.usuario">
+        </div>
+        <div class="col-md-6">
+          <h4>Nova senha</h4>
+          <input type="password" class="form-control" ng-model="modal.usuario.senha">
+        </div>
+        <div class="col-md-6">
+          <h4>Confirme a senha</h4>
+          <input type="password" class="form-control" ng-model="modal.senhaCheck">
+        </div>
+        <div class="col-md-6">
+          <h4>Perfil</h4>
+          <select class="form-control" ng-model="modal.usuario.perfilId"
+                  ng-options="perfil.id as perfil.nome for perfil in modal.perfis">
+            <option value="" disabled>Selecione um perfil</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div><h4>Ativo</h4></div>
+          <div class="btn-group btn-toggle botao-esticado">
+            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="true"><span
+              class="glyphicon glyphicon-eye-open"></span> Sim</label>
+            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="false"><span
+              class="glyphicon glyphicon-eye-close"></span> Não</label>
+          </div>
+        </div>
       </div>
+
+      <div ng-show="opt === 'permissoes'">
+        <uib-accordion close-others="true">
+          <div class="col-md-12" style="max-height: 100%; overflow-y: scroll">
+            <div uib-accordion-group class="panel-primary" heading="{{modulo.nome}}" ng-repeat="modulo in modal.usuario.perfil.permissoes track by $index">
+              <div ng-repeat="(key, value) in modulo.permissoes">
+                <div class="col-md-6" ng-if="value.tipo === 'percent'">
+                  <label>{{value.nome}}</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" currency symbol="" number-only ng-model="value.valor">
+                    <span class="input-group-addon">%</span>
+                  </div>
+                </div>
+                <div class="col-md-6" ng-if="value.tipo === 'bool'">
+                  <label><input type="checkbox" ng-model="value.valor"> {{value.nome}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-accordion>
+      </div>
+
     </div>
 
   </div>

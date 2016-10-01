@@ -28,6 +28,14 @@ angular.module('commercialApp.services')
       return perfil;
     };
 
+    PerfilUsuario.converterEmSaida = function(perfil) {
+      var profile = { };
+
+      profile.user_profile_access = PermissoesUsuario.converterEmSaida(perfil.permissoes);
+
+      return profile;
+    };
+
     return PerfilUsuario;
 
   }]);

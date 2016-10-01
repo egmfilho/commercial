@@ -13,13 +13,17 @@ angular.module('commercialApp.controllers')
     'Usuario',
     'usuario',
     'perfis',
-    function ($rootScope, $scope, $uibModalInstance, provider, Usuario, usuario, perfis) {
+    'permissoes',
+    function ($rootScope, $scope, $uibModalInstance, provider, Usuario, usuario, perfis, permissoes) {
 
       var self = this;
 
       $uibModalInstance.opened.then(function () {
         self.usuario = new Usuario(usuario);
         self.perfis = perfis;
+        if (!self.usuario.perfil.permissoes) {
+          self.usuario.perfil.permissoes = permissoes;
+        }
       });
 
       function validarCadastro() {

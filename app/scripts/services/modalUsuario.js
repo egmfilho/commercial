@@ -8,7 +8,7 @@ angular.module('commercialApp.services')
   .factory('ModalUsuario', ['$uibModal', function ($uibModal) {
 
     return {
-      show: function (usuario, perfis) {
+      show: function (usuario, perfis, permissoes) {
         return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalUsuario.html',
@@ -21,6 +21,9 @@ angular.module('commercialApp.services')
             },
             perfis: function () {
               return perfis;
+            },
+            permissoes: function () {
+              return permissoes;
             }
           }
         }).result;

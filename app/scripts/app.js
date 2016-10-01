@@ -31,6 +31,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
+        modulo: 'home',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',
         controllerAs: 'home'
@@ -39,25 +40,30 @@ angular
       //  templateUrl: 'views/signup.html'
       //})
       .when('/login', {
+        modulo: 'login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
       .when('/logout', {
+        modulo: 'logout',
         template: '<h3>Logging out...</h3>',
         controller: 'LogoutCtrl'
       })
       .when('/clientes', {
+        modulo: 'client',
         templateUrl: 'views/clientes.html',
         controller: 'ClientesCtrl',
         controllerAs: 'clientes'
       })
       .when('/orcamento', {
+        modulo: 'order',
         templateUrl: 'views/orcamento.html',
         controller: 'OrcamentoCtrl',
         controllerAs: 'orcamento'
       })
       .when('/configuracoes', {
+        modulo: 'config',
         templateUrl: 'views/configuracoes.html',
         controller: 'ConfiguracoesCtrl',
         controllerAs: 'configuracoes'
@@ -117,21 +123,21 @@ angular
       $rootScope.currentPath = $location.path();
 
       // Bloqueia acesso de usuarios nao logados
-      if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-        if (next.templateUrl !== 'views/login.html') {
-          $location.path('/login');
-        }
-        return;
-      }
+      //if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
+      //  if (next.templateUrl !== 'views/login.html') {
+      //    $location.path('/login');
+      //  }
+      //  return;
+      //}
 
       // Bloqueia acessos pelas permissoes
-      var user = JSON.parse(window.atob($cookies.get('currentUser')));
-      if (user.perfil.permissoes[next.controllerAs]) {
-        if (!user.perfil.permissoes[next.controllerAs].acessar) {
-          $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
-          $location.path('/home');
-        }
-      }
+      //var user = JSON.parse(window.atob($cookies.get('currentUser')));
+      //if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
+      //  if (!user.perfil.permissoes[next.modulo].access) {
+      //    $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+      //    $location.path('/home');
+      //  }
+      //}
     });
 
   }]);

@@ -85,7 +85,7 @@
           <div><h4>Desconto %</h4></div>
           <div class="div-display editable-elem" editable-elem>
             <span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
-            type="text" currency number-only ng-model="pedido.descontoPercent"
+            type="text" currency symbol="" number-only ng-model="pedido.descontoPercent"
             ng-change="pedido.setDescontoPercent(pedido.descontoPercent)"
             ng-blur="pedido.descontoPercent < 0 ? pedido.descontoPercent = 0 : false">
           </div>
