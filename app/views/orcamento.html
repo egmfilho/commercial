@@ -303,11 +303,11 @@
       <div class="col-xs-3 col-sm-3">
         <div class="col-sm-4">
           <div><h4>DDD </h4></div>
-          <input name="ddd-cel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.dddCelular" ui-mask="(99)" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cel-cliente')" shift-enter="orcamento.salvar()">
+          <input name="ddd-cel-cliente" type="text" class="form-control text-right" ng-model="orcamento.pedido.cliente.dddCelular" ui-mask="(99)" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cel-cliente')" shift-enter="orcamento.salvar()">
         </div>
         <div class="col-sm-8">
           <div><h4>Celular <sup>{{cliente.novo ? '2' : ''}}</sup></h4></div>
-          <input name="cel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.celular" ui-mask="99999-9999" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'email-cliente')" shift-enter="orcamento.salvar()">
+          <input name="cel-cliente" type="text" class="form-control text-right" ng-model="orcamento.pedido.cliente.celular" ui-mask="99999-9999" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'email-cliente')" shift-enter="orcamento.salvar()">
         </div>
       </div>
       <div class="col-xs-3 col-sm-3">

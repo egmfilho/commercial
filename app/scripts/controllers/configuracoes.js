@@ -13,9 +13,10 @@ angular.module('commercialApp.controllers')
     'ProviderPerfilUsuario',
     'PerfilUsuario',
     'ModalUsuario',
+    'ModalPerfil',
     'ProviderConfig',
     'PermissoesUsuario',
-    function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, providerConfig, PermissoesUsuario) {
+    function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario) {
 
       var self = this,
         height = jQuery(window).height() - 160 - 60;
@@ -98,7 +99,7 @@ angular.module('commercialApp.controllers')
         return true;
       }
 
-      this.atualizar = function () {
+      this.atualizarUsuarios = function () {
         getUsuarios();
       };
 
@@ -120,6 +121,10 @@ angular.module('commercialApp.controllers')
       };
 
       this.editarUsuario = function (usuario) {
+        if (!self.perfis) {
+          getPerfis();
+        }
+
         $rootScope.isLoading = true;
         providerUsuario.obterPorId(usuario.id, true, true).then(function (success) {
           $rootScope.isLoading = false;
@@ -133,14 +138,31 @@ angular.module('commercialApp.controllers')
       };
 
       this.adicionarUsuario = function () {
+        if (!self.perfis) {
+          getPerfis();
+        }
+
+        if (!self.permissoes) {
+          getPermissoes();
+        }
+
         ModalUsuario.show(new Usuario(), self.perfis, self.permissoes).then(function (success) {
           getUsuarios();
         });
       };
 
-      this.limparCadastro = function () {
-        self.usuario = new Usuario();
-        self.senhaCheck = '';
+      this.atualizarPerfis = function () {
+        getUsuarios();
+      };
+
+      this.editarPerfil = function (perfil) {
+        ModalPerfil.show(new PerfilUsuario(), self.permissoes).then(function (success) {
+          self.atualizarPerfis();
+        });
+      };
+
+      this.adicionarPerfil = function() {
+
       };
 
     }]);

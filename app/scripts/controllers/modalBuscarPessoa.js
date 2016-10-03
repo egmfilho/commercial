@@ -12,41 +12,40 @@ angular.module('commercialApp.controllers')
     'ProviderPessoa',
     'Pessoa',
     'tipo',
-    function($rootScope, $scope, $uibModalInstance, provider, Pessoa, tipo) {
+    function ($rootScope, $scope, $uibModalInstance, provider, Pessoa, tipo) {
 
-      $uibModalInstance.opened.then(function() {
-        $scope.vazio = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        $scope.pessoas = [ ];
-        setTimeout(function() {
+      $uibModalInstance.opened.then(function () {
+        $scope.pessoas = [];
+        setTimeout(function () {
           jQuery('input[name="cdPessoa"]').focus();
         }, 300);
       });
 
-      $scope.buscarPorCodigo = function(codigo) {
+      $scope.buscarPorCodigo = function (codigo) {
         $rootScope.isLoading = true;
 
-        provider.obterPessoaPorCodigo(tipo, codigo).then(function(success) {
-          $scope.pessoas = [ ];
+        provider.obterPessoaPorCodigo(tipo, codigo).then(function (success) {
+          $scope.pessoas = [];
           $scope.pessoas.push(new Pessoa(Pessoa.converterEmEntrada(success.data)));
           $rootScope.isLoading = false;
-        }, function(error) {
+        }, function (error) {
           console.log(error);
           $rootScope.isLoading = false;
           $rootScope.alerta.show('Nenhuma pessoa encontrada');
         });
       };
 
-      $scope.buscarPorNome = function(nome) {
+      $scope.buscarPorNome = function (nome) {
         $rootScope.isLoading = true;
 
-        provider.obterPessoasPorNome(tipo, nome).then(function(success) {
-          $scope.pessoas = [ ];
-          angular.forEach(success.data, function(item, index) {
+        provider.obterPessoasPorNome(tipo, nome).then(function (success) {
+          $scope.pessoas = [];
+          angular.forEach(success.data, function (item, index) {
             $scope.pessoas.push(new Pessoa(Pessoa.converterEmEntrada(item)));
           });
           ordenarPorCodigo();
           $rootScope.isLoading = false;
-        }, function(error) {
+        }, function (error) {
           console.log(error);
           $rootScope.isLoading = false;
           $rootScope.alerta.show('Nenhuma pessoa encontrada');
@@ -54,28 +53,28 @@ angular.module('commercialApp.controllers')
       };
 
       function ordenarPorNome() {
-        $scope.pessoas = $scope.pessoas.sort(function(a, b) {
+        $scope.pessoas = $scope.pessoas.sort(function (a, b) {
           return a.nome - b.nome;
         });
       }
 
       function ordenarPorCodigo() {
-        $scope.pessoas = $scope.pessoas.sort(function(a, b) {
+        $scope.pessoas = $scope.pessoas.sort(function (a, b) {
           return a.codigo - b.codigo;
         });
       }
 
-      $scope.selecionarPessoa = function(pessoa) {
+      $scope.selecionarPessoa = function (pessoa) {
         $rootScope.isLoading = true;
-        provider.obterPessoaPorCodigo(tipo, pessoa.codigo).then(function(success) {
+        provider.obterPessoaPorCodigo(tipo, pessoa.codigo).then(function (success) {
           $rootScope.isLoading = false;
           $uibModalInstance.close(new Pessoa(Pessoa.converterEmEntrada(success.data)));
-        }, function(error) {
+        }, function (error) {
           console.log(error);
         });
       };
 
-      $scope.cancel = function() {
+      $scope.cancel = function () {
         $uibModalInstance.dismiss();
       };
     }

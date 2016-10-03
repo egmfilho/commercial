@@ -20,7 +20,7 @@ angular.module('commercialApp.controllers')
 
       $uibModalInstance.opened.then(function () {
         self.usuario = new Usuario(usuario);
-        self.perfis = perfis;
+        self.perfis = perfis; // para usar no select
         if (!self.usuario.perfil.permissoes) {
           self.usuario.perfil.permissoes = permissoes;
         }

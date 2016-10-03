@@ -4,7 +4,7 @@
     <div class="title"><span class="glyphicon glyphicon-user"></span> Buscar Pessoa <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
   </div>
 
-  <div class="body">
+  <div class="body md">
 
     <div class="container condensar-rows">
       <div class="row">
@@ -37,19 +37,23 @@
               <th>Nome</th>
             </tr>
             </thead>
-            <tbody>
-            <tr ng-if="!pessoas.length" ng-repeat="n in vazio">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr ng-repeat="p in pessoas" ng-click="selecionarPessoa(p)">
-              <td>{{p.codigo}}</td>
-              <td>{{p.nome}}</td>
-            </tr>
+            <tbody ng-init="max = 10">
+              <tr ng-repeat="p in pessoas" ng-click="selecionarPessoa(p)">
+                <td>{{p.codigo}}</td>
+                <td>{{p.nome}}</td>
+              </tr>
+              <tr ng-if="pessoas.length < max" ng-repeat="n in getNumber(pessoas.length < max ? max - pessoas.length : 0) track by $index">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
+
+    <div class="paginas">
+      <ul uib-pagination total-items="600" ng-model="bigCurrentPage" max-size="15" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
 
   </div>

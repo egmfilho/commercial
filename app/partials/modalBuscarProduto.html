@@ -5,7 +5,7 @@
       class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
   </div>
 
-  <div class="body">
+  <div class="body md">
 
     <div class="container condensar-rows">
       <div class="row">
@@ -45,22 +45,26 @@
               <!--<th>Qtd</th>-->
             </tr>
             </thead>
-            <tbody>
-            <tr ng-if="!produtos.length" ng-repeat="v in vazio">
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr ng-repeat="p in produtos" ng-click="selecionarProduto(p)">
-              <td>{{p.codigo}}</td>
-              <td>{{p.referencia}}</td>
-              <td>{{p.nome}}</td>
-              <!--<td>{{p.qtdEstoque}}</td>-->
-            </tr>
+            <tbody ng-init="max = 10">
+              <tr ng-repeat="p in produtos" ng-click="selecionarProduto(p)">
+                <td>{{p.codigo}}</td>
+                <td>{{p.referencia}}</td>
+                <td>{{p.nome}}</td>
+                <!--<td>{{p.qtdEstoque}}</td>-->
+              </tr>
+              <tr ng-if="produtos.length < max" ng-repeat="n in getNumber(produtos.length < max ? max - produtos.length : 0) track by $index">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
+
+    <div class="paginas">
+      <ul uib-pagination total-items="600" ng-model="bigCurrentPage" max-size="15" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
 
   </div>

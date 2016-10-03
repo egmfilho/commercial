@@ -15,7 +15,6 @@ angular.module('commercialApp.controllers')
     function($rootScope, $scope, $uibModalInstance, provider, Endereco, enderecos) {
 
       $uibModalInstance.opened.then(function() {
-        $scope.vazio = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         $scope.enderecos = enderecos || [ ];
         $rootScope.isLoading = false;
         setTimeout(function() {

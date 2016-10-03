@@ -22,23 +22,23 @@ angular.module('commercialApp.services')
 
       function Login(username, password, callback) {
 
-        var fakeRes = JSON.parse('{"status":{"code":200,"message":"Ok."},"data":{"user_id":"1003","user_profile_id":"1001","user_session_id":null,"user_active":"Y","user_user":"eduardo","user_name":"Eduardo Miranda","user_mail":"eduardo@futuraagencia.com.br","user_login":"2016-10-01 11:43:40","user_update":null,"user_date":"2016-09-22 12:09:34","user_current_session_id":"2q3098rvq7912n139cqcnk0f36","user_session":{"user_session_value":"2q3098rvq7912n139cqcnk0f36","user_session_date":"2016-10-01 11:46:11"},"user_profile":{"user_profile_id":"1001","user_profile_name":"Administrador","user_profile_update":null,"user_profile_date":"2016-06-20 11:46:20","user_profile_access":{"order":{"access":{"value":"Y","data_type":"bool"},"max_al_discount":{"value":"50","data_type":"float"}},"report":{"access":{"value":"Y","data_type":"bool"}},"follow_up":{"access":{"value":"Y","data_type":"bool"}},"product":{"access":{"value":"Y","data_type":"bool"}},"client":{"access":{"value":"Y","data_type":"bool"}},"config":{"access":{"value":"N","data_type":"bool"}}}}}}');
-        SetCredentials(new Usuario((Usuario.converterEmEntrada(fakeRes.data))));
-        callback(fakeRes);
+        //var fakeRes = JSON.parse('{"status":{"code":200,"message":"Ok."},"data":{"user_id":"1003","user_profile_id":"1001","user_session_id":null,"user_active":"Y","user_user":"eduardo","user_name":"Eduardo Miranda","user_mail":"eduardo@futuraagencia.com.br","user_login":"2016-10-01 11:46:11","user_update":null,"user_date":"2016-09-22 12:09:34","user_current_session_id":"8andhoftb06p952qkguvcjjqn7","user_session":{"user_session_value":"8andhoftb06p952qkguvcjjqn7","user_session_date":"2016-10-03 09:07:37"},"user_profile":{"user_profile_id":"1001","user_profile_name":"Administrador","user_profile_update":null,"user_profile_date":"2016-06-20 11:46:20","user_profile_access":{"order":{"name":"Or\u00e7amento","access":{"name":"Acesso","value":"Y","data_type":"bool"},"max_al_discount":{"name":"Al\u00edquota m\u00e1xima de desconto","value":"50","data_type":"percent"}},"report":{"name":"Relat\u00f3rios","access":{"name":"Acesso","value":"Y","data_type":"bool"}},"follow_up":{"name":"Follow Up","access":{"name":"Acesso","value":"Y","data_type":"bool"}},"product":{"name":"Produtos","access":{"name":"Acesso","value":"Y","data_type":"bool"}},"client":{"name":"Clientes","access":{"name":"Acesso","value":"Y","data_type":"bool"}},"config":{"name":"Configura\u00e7\u00f5es","access":{"name":"Acesso","value":"Y","data_type":"bool"}}}}}}');
+        //SetCredentials(new Usuario((Usuario.converterEmEntrada(fakeRes.data))));
+        //callback(fakeRes);
 
-        //$http({
-        //  method: 'POST',
-        //  url: URLS.root + 'login.php',
-        //  data: { user: username, pass: password },
-        //  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        //}).success(function(res) {
-        //  if (res.status.code == 200) {
-        //    SetCredentials(new Usuario(Usuario.converterEmEntrada(res.data)));
-        //  }
-        //  callback(res);
-        //}).error(function(res) {
-        //  callback(res);
-        //});
+        $http({
+          method: 'POST',
+          url: URLS.root + 'login.php',
+          data: { user: username, pass: password },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).success(function(res) {
+          if (res.status.code == 200) {
+            SetCredentials(new Usuario(Usuario.converterEmEntrada(res.data)));
+          }
+          callback(res);
+        }).error(function(res) {
+          callback(res);
+        });
 
       }
 
