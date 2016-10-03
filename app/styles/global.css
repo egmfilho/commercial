@@ -308,7 +308,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   .meu-modal .body .container {
     width: 100%; }
 .meu-modal .body.sm {
-  height: 380px; }
+  height: 330px; }
 .meu-modal .body.md {
   height: 540px; }
 .meu-modal .body.lg {
@@ -993,6 +993,8 @@ div[name="footer"] .navbar {
       background-color: #6481bb;
       font-family: arial, sans-serif;
       font-weight: 200; }
+  .configuracoes .dashboard .card .atalhos {
+    padding-left: 20px; }
   .configuracoes .dashboard .card .versao {
     text-align: center; }
 .configuracoes .logs {

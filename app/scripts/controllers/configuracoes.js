@@ -19,7 +19,21 @@ angular.module('commercialApp.controllers')
     function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario) {
 
       var self = this,
-        height = jQuery(window).height() - 160 - 60;
+        header = 160,
+        footer = 60,
+        height = jQuery(window).height() - header - footer;
+
+      self.usuariosPagination = {
+        current: 1,
+        max: 15,
+        total: 0
+      };
+
+      self.perfisPagination = {
+        current: 1,
+        max: 15,
+        total: 0
+      };
 
       jQuery('.controle').css('height', height + 'px');
       jQuery('.dashboard').css('height', height + 'px');
@@ -35,6 +49,7 @@ angular.module('commercialApp.controllers')
       function getUsuarios() {
         $rootScope.isLoading = true;
         providerUsuario.obterTodos(true).then(function (success) {
+          self.usuariosPagination.total = success.data.length;
           self.usuarios = [];
           angular.forEach(success.data, function (item, index) {
             self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
@@ -48,6 +63,7 @@ angular.module('commercialApp.controllers')
       function getPerfis() {
         $rootScope.isLoading = true;
         providerPerfil.obterTodos().then(function (success) {
+          self.perfisPagination.total = success.data.length;
           self.perfis = [];
           angular.forEach(success.data, function (item, index) {
             self.perfis.push(new PerfilUsuario(PerfilUsuario.converterEmEntrada(item)));
@@ -156,13 +172,26 @@ angular.module('commercialApp.controllers')
       };
 
       this.editarPerfil = function (perfil) {
-        ModalPerfil.show(new PerfilUsuario(), self.permissoes).then(function (success) {
-          self.atualizarPerfis();
+        $rootScope.isLoading = true;
+        providerPerfil.obterPorId(perfil.id, true).then(function(success) {
+          $rootScope.isLoading = false;
+          ModalPerfil.show(new PerfilUsuario(PerfilUsuario.converterEmEntrada(success.data))).then(function (success) {
+            self.atualizarPerfis();
+          });
+        }, function(error) {
+          console.log(error);
+          $rootScope.isLoading = false;
         });
       };
 
       this.adicionarPerfil = function() {
+        if (!self.permissoes) {
+          getPermissoes();
+        }
 
+        ModalPerfil.show(new PerfilUsuario(), self.permissoes).then(function (success) {
+          self.atualizarPerfis();
+        });
       };
 
     }]);

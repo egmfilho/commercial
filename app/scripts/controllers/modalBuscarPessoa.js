@@ -14,6 +14,12 @@ angular.module('commercialApp.controllers')
     'tipo',
     function ($rootScope, $scope, $uibModalInstance, provider, Pessoa, tipo) {
 
+      $scope.pagination = {
+        current: 1,
+        max: 10,
+        total: 0
+      };
+
       $uibModalInstance.opened.then(function () {
         $scope.pessoas = [];
         setTimeout(function () {
@@ -39,6 +45,7 @@ angular.module('commercialApp.controllers')
         $rootScope.isLoading = true;
 
         provider.obterPessoasPorNome(tipo, nome).then(function (success) {
+          $scope.pagination.total = success.data.length;
           $scope.pessoas = [];
           angular.forEach(success.data, function (item, index) {
             $scope.pessoas.push(new Pessoa(Pessoa.converterEmEntrada(item)));

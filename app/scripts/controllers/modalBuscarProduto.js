@@ -14,6 +14,12 @@ angular.module('commercialApp.controllers')
     'key',
     function($rootScope, $scope, $uibModalInstance, provider, Produto, key) {
 
+      $scope.pagination = {
+        current: 1,
+        max: 10,
+        total: 0
+      };
+
       $uibModalInstance.opened.then(function() {
         $scope.produtos = [ ];
 
@@ -44,6 +50,7 @@ angular.module('commercialApp.controllers')
         $rootScope.isLoading = true;
 
         provider.obterProdutosPorDescricao(nome).then(function(success) {
+          $scope.pagination.total = success.data.length;
           $scope.produtos = [ ];
           angular.forEach(success.data, function(item, index) {
             $scope.produtos.push(new Produto(Produto.converterEmEntrada(item)));

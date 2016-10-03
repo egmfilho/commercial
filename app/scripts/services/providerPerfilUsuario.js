@@ -22,17 +22,29 @@ angular.module('commercialApp.services')
       });
 
       return {
-        obterTodos: function () {
+        obterPorId: function(id, getAcessos) {
           return provider.query({
-            action: 'getList'
-          }, {}).$promise;
+            action: 'get'
+          }, {
+            user_profile_id: id,
+            get_user_profile_access: getAcessos
+          }).$promise;
         },
 
-        obterPorNome: function (nome) {
+        obterTodos: function (getAcessos) {
           return provider.query({
             action: 'getList'
           }, {
-            user_profile_name: nome
+            get_user_profile_access: getAcessos
+          }).$promise;
+        },
+
+        obterPorNome: function (nome, getAcessos) {
+          return provider.query({
+            action: 'getList'
+          }, {
+            user_profile_name: nome,
+            get_user_profile_access: getAcessos
           }).$promise;
         },
 

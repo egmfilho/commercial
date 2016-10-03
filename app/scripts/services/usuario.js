@@ -38,7 +38,7 @@ angular.module('commercialApp.services')
       usuario.nome = user.user_name;
       usuario.usuario = user.user_user;
       usuario.email = user.user_mail;
-      usuario.ultimoAcesso = new Date(user.user_login);
+      usuario.ultimoAcesso = user.user_login ? new Date(user.user_login) : null;
 
       if (user.user_profile) {
         usuario.perfil = new PerfilUsuario(PerfilUsuario.converterEmEntrada(user.user_profile));
@@ -60,7 +60,7 @@ angular.module('commercialApp.services')
       user.user_name = usuario.nome;
       user.user_mail = usuario.email;
 
-      user.user_profile_access = PerfilUsuario.converterEmSaida(usuario.perfil).user_profile_access;
+      //user.user_profile_access = PerfilUsuario.converterEmSaida(usuario.perfil).user_profile_access;
 
       return user;
     };

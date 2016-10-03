@@ -5,22 +5,22 @@
       class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
   </div>
 
-  <div class="body sm condensar-rows">
+  <div class="body sm condensar-rows" ng-init="opt = 'info'">
 
-    <ul class="nav nav-tabs nav-justified" ng-init="opt = 'info'">
-      <li role="presentation" ng-class="opt === 'info' ? 'active' : ''">
-        <a href="" class="sombra-texto" ng-click="opt = 'info'">
-          Informações
-        </a>
-      </li>
-      <li role="presentation" ng-class="opt === 'permissoes' ? 'active' : ''">
-        <a href="" class="sombra-texto" ng-click="opt = 'permissoes'">
-          Permissões
-        </a>
-      </li>
-    </ul>
+    <!--<ul class="nav nav-tabs nav-justified">-->
+      <!--<li role="presentation" ng-class="opt === 'info' ? 'active' : ''">-->
+        <!--<a href="" class="sombra-texto" ng-click="opt = 'info'">-->
+          <!--Informações-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li role="presentation" ng-class="opt === 'permissoes' ? 'active' : ''">-->
+        <!--<a href="" class="sombra-texto" ng-click="opt = 'permissoes'">-->
+          <!--Permissões-->
+        <!--</a>-->
+      <!--</li>-->
+    <!--</ul>-->
 
-    <div class="container corpo-tabs">
+    <!--<div class="container corpo-tabs">-->
       <div ng-show="opt === 'info'">
         <div class="col-md-12">
           <h4>Nome</h4>
@@ -63,30 +63,30 @@
         </div>
       </div>
 
-      <div ng-show="opt === 'permissoes'">
-        <uib-accordion close-others="false">
-          <div class="col-md-12">
-            <div uib-accordion-group class="panel-default" heading="{{modulo.nome}}"
-                 ng-repeat="modulo in modal.usuario.perfil.permissoes track by $index">
-              <div ng-repeat="(key, value) in modulo.permissoes">
-                <div class="col-md-6" ng-if="value.tipo === 'percent'">
-                  <label>{{value.nome}}</label>
+      <!--<div ng-show="opt === 'permissoes'">-->
+        <!--<uib-accordion close-others="false">-->
+          <!--<div class="col-md-12">-->
+            <!--<div uib-accordion-group class="panel-default" heading="{{modulo.nome}}"-->
+                 <!--ng-repeat="modulo in modal.usuario.perfil.permissoes track by $index">-->
+              <!--<div ng-repeat="(key, value) in modulo.permissoes">-->
+                <!--<div class="col-md-6" ng-if="value.tipo === 'percent'">-->
+                  <!--<label>{{value.nome}}</label>-->
 
-                  <div class="input-group">
-                    <input type="text" class="form-control text-right" currency symbol="" number-only ng-model="value.valor">
-                    <span class="input-group-addon">%</span>
-                  </div>
-                </div>
-                <div class="col-md-6" ng-if="value.tipo === 'bool'">
-                  <label><input type="checkbox" ng-model="value.valor"> {{value.nome}}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </uib-accordion>
-      </div>
+                  <!--<div class="input-group">-->
+                    <!--<input type="text" class="form-control text-right" currency symbol="" number-only ng-model="value.valor">-->
+                    <!--<span class="input-group-addon">%</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-6" ng-if="value.tipo === 'bool'">-->
+                  <!--<label><input type="checkbox" ng-model="value.valor"> {{value.nome}}</label>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</uib-accordion>-->
+      <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
   </div>
 

@@ -1,6 +1,6 @@
 <div class="banner"></div>
 
-<div class="navbar navbar-default">
+<div class="navbar navbar-default" ng-controller="HeaderCtrl as header">
   <div class="container">
     <div class="navbar-header">
 
@@ -26,7 +26,7 @@
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-user"></span>
-            <strong>{{currentUser.usuario}}</strong>
+            <strong>{{header.getCurrentUser().usuario}}</strong>
             <span class="glyphicon glyphicon-chevron-down"></span>
           </a>
           <ul class="dropdown-menu">
@@ -39,9 +39,9 @@
                     </p>
                   </div>
                   <div class="col-lg-8">
-                    <p class="text-left"><strong>{{currentUser.nome}}</strong></p>
-                    <p class="text-left small">{{currentUser.email}}</p>
-                    <p class="text-center perfil">{{currentUser.perfil}}</p>
+                    <p class="text-left"><strong>{{header.getCurrentUser().nome}}</strong></p>
+                    <p class="text-left small">{{header.getCurrentUser().email}}</p>
+                    <p class="text-center perfil">{{header.getCurrentUser().perfil}}</p>
                     <!--<p class="text-left">-->
                       <!--<a href="" class="btn btn-default botao-invertido botao-esticado btn-sm">Perfil</a>-->
                     <!--</p>-->

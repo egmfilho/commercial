@@ -69,13 +69,13 @@ angular.module('commercialApp.controllers')
       //};
 
       $scope.salvar = function () {
-        $rootScope.isLoading = true;
-        console.log(Usuario.converterEmSaida(self.usuario));
-
         if (!validarCadastro()) {
           return;
         }
 
+        console.log(Usuario.converterEmSaida(self.usuario));
+
+        $rootScope.isLoading = true;
         if (self.usuario.id) {
           provider.editar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
             $rootScope.isLoading = false;
@@ -83,10 +83,10 @@ angular.module('commercialApp.controllers')
             $uibModalInstance.close(true);
           }, function (error) {
             console.log(error);
+            $rootScope.isLoading = false;
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
             }
-            $rootScope.isLoading = false;
           });
         } else {
           provider.adicionar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
@@ -95,10 +95,10 @@ angular.module('commercialApp.controllers')
             $uibModalInstance.close(true);
           }, function (error) {
             console.log(error);
+            $rootScope.isLoading = false;
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
             }
-            $rootScope.isLoading = false;
           });
         }
       };

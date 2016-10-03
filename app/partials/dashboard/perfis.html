@@ -32,12 +32,12 @@
     <tr ng-repeat="perfil in configuracoes.perfis">
       <td>{{perfil.nome}}</td>
       <td>{{perfil.dataCadastro | date}}</td>
-      <td>{{perfil.ultimaAtualizacao | date}}</td>
+      <td>{{perfil.dataUpdate | date}}</td>
       <td><a href="" ng-click="configuracoes.editarPerfil(perfil)"><span
         class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
-    <tr ng-if="configuracoes.usuarios.length < len"
-        ng-repeat="n in getNumber(len - configuracoes.perfis.length < 0 ? 0 : len - configuracoes.perfis.length) track by $index">
+    <tr ng-if="configuracoes.usuarios.length < configuracoes.perfisPagination.max"
+        ng-repeat="n in getNumber(configuracoes.perfisPagination.max - configuracoes.perfis.length < 0 ? 0 : configuracoes.perfisPagination.max - configuracoes.perfis.length) track by $index">
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
@@ -46,7 +46,7 @@
     </tbody>
   </table>
   <div class="paginas">
-    <ul uib-pagination total-items="600" ng-model="bigCurrentPage" max-size="15" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+    <ul uib-pagination total-items="configuracoes.perfisPagination.total" ng-model="configuracoes.perfisPagination.current" max-size="configuracoes.perfisPagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
   </div>
 </div>
 <!--FIM PERFIS-->

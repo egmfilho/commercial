@@ -42,7 +42,7 @@
               <th>Logradouro</th>
             </tr>
             </thead>
-            <tbody ng-init="max = 10">
+            <tbody>
               <tr ng-repeat="e in enderecos" ng-click="selecionarEndereco(e)">
                 <td>{{e.cep}}</td>
                 <td>{{e.uf}}</td>
@@ -50,7 +50,7 @@
                 <td>{{e.bairro}}</td>
                 <td>{{e.logradouro}}</td>
               </tr>
-              <tr ng-if="enderecos.length < max" ng-repeat="n in getNumber(enderecos.length < max ? max - enderecos.length : 0)">
+              <tr ng-if="enderecos.length < pagination.max" ng-repeat="n in getNumber(enderecos.length < pagination.max ? pagination.max - enderecos.length : 0)">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="paginas">
-      <ul uib-pagination total-items="600" ng-model="bigCurrentPage" max-size="15" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+      <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
 
   </div>

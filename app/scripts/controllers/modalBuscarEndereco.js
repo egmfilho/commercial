@@ -14,6 +14,12 @@ angular.module('commercialApp.controllers')
     'enderecos',
     function($rootScope, $scope, $uibModalInstance, provider, Endereco, enderecos) {
 
+      $scope.pagination = {
+        current: 1,
+        max: 10,
+        total: 0
+      };
+
       $uibModalInstance.opened.then(function() {
         $scope.enderecos = enderecos || [ ];
         $rootScope.isLoading = false;
@@ -35,6 +41,7 @@ angular.module('commercialApp.controllers')
 
         $rootScope.isLoading = true;
         provider.obterEnderecosPorCEP(cep).then(function (success) {
+          $scope.pagination.total = success.data.length;
           $scope.enderecos = [ ];
           angular.forEach(success.data, function (item, index) {
             $scope.enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
