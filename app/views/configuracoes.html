@@ -1,7 +1,23 @@
 <div class="configuracoes">
   <div class="container">
-    <div class="row">
-      <div class="col-md-1 controle" ng-init="controle='usuarios'">
+    <div class="row" ng-init="controle='usuarios'">
+
+      <div class="col-xs-12 visible-xs-inline">
+        <br>
+        <div class="dropdown" ng-init="label='Usuários'">
+          <button class="btn btn-default botao-esticado dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{label}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="" ng-click="controle = 'usuarios'; label = 'Usuários'"><span class="glyphicon glyphicon-ok" ng-show="controle==='usuarios'"></span>&nbsp; Usuários</a></li>
+            <li><a href="" ng-click="controle = 'perfis'; label = 'Perfis'"><span class="glyphicon glyphicon-ok" ng-show="controle==='perfis'"></span>&nbsp; Perfis</a></li>
+            <li><a href="" ng-click="controle = 'sobre'; label = 'Sobre'"><span class="glyphicon glyphicon-ok" ng-show="controle==='sobre'"></span>&nbsp; Sobre</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-1 hidden-xs hidden-sm controle">
         <!--<div class="botao" ng-click="controle='dashboard'" ng-class="{ 'ativo': controle === 'dashboard'}">-->
         <!--<p class="centerX centerY">-->
         <!--<span class="glyphicon glyphicon-dashboard"></span>-->
@@ -37,7 +53,7 @@
 
       </div>
 
-      <!--<div class="col-md-1 logs">-->
+      <!--<div class="hidden-xs col-md-1 logs">-->
         <!--<div class="col-md-12 log">-->
           <!--<div class="card" style="width: 100%">-->
             <!--<ds-widget-clock></ds-widget-clock>-->

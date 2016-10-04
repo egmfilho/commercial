@@ -15,8 +15,11 @@ body.padding-top {
   padding-top: 160px; }
 
 body.padding-bottom {
-  padding-bottom: 60px; }
+  padding-bottom: 0; }
 
+@media (min-width: 768px) {
+  body.padding-bottom {
+    padding-bottom: 60px; } }
 #loading {
   position: fixed;
   top: 0;
@@ -195,6 +198,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   box-shadow: 0 0 6px #6481bb;
   position: relative; }
 
+input[type='checkbox']:focus {
+  outline: none;
+  border: none;
+  box-shadow: none; }
+
+span:focus, a:focus {
+  outline: none; }
+
 .input-error {
   border: 1px solid #bf0000 !important;
   box-shadow: 0 0 6px #bf0000 !important; }
@@ -286,6 +297,42 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   visibility: hidden;
   clear: both; }
 
+@media (max-width: 767px) {
+  .tabela, #tabela-orcamento {
+    background-color: transparent; }
+    .tabela thead, #tabela-orcamento thead {
+      display: none; }
+    .tabela tr, #tabela-orcamento tr {
+      margin-bottom: 10px;
+      display: block;
+      padding: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc; }
+      .tabela tr:hover, #tabela-orcamento tr:hover {
+        background-color: transparent; }
+    .tabela td, #tabela-orcamento td {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      display: block;
+      text-align: right; }
+      .tabela td button, #tabela-orcamento td button {
+        margin-top: 5px;
+        margin-left: 10px;
+        min-width: 100px; }
+      .tabela td:before, #tabela-orcamento td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase; }
+      .tabela td:last-child, #tabela-orcamento td:last-child {
+        border-bottom: none; }
+
+  .tabela-bordered {
+    border: none; }
+    .tabela-bordered tr {
+      border: 1px solid #6481bb; }
+    .tabela-bordered td, .tabela-bordered th {
+      color: #6481bb; } }
 .meu-modal .header {
   background-color: #6481bb;
   height: 60px;
@@ -923,6 +970,12 @@ div[name="footer"] .navbar {
   .opcoes .remove-padding > div {
     padding: 8px; }
 
+.configuracoes .dropdown .dropdown-toggle {
+  font-size: 1.5em; }
+.configuracoes .dropdown .dropdown-menu {
+  width: 100%;
+  top: 40px;
+  font-size: 1.5em; }
 .configuracoes .container {
   margin: 0;
   padding: 0;

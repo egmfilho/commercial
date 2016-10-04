@@ -31,7 +31,7 @@
           <div class="input-group">
             <span class="input-group-addon">R$</span>
             <input type="text" name="valor" ng-model="pagamento.valor" currency symbol="" number-only class="form-control"
-                   keys-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0">
+                   keys-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           </div>
         </div>
       </div>

@@ -1,4 +1,16 @@
 .configuracoes {
+  .dropdown {
+    .dropdown-toggle {
+      font-size: 1.5em;
+    }
+
+    .dropdown-menu {
+      width: 100%;
+      top: 40px;
+      font-size: 1.5em;
+    }
+  }
+
   .container {
     margin: 0;
     padding: 0;

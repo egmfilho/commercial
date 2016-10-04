@@ -22,7 +22,7 @@ angular.module('commercialApp.services')
       });
 
       return {
-        obterPorId: function(id, getAcessos) {
+        obterPorId: function (id, getAcessos) {
           return provider.query({
             action: 'get'
           }, {
@@ -58,6 +58,14 @@ angular.module('commercialApp.services')
           return provider.save({
             action: 'insert'
           }, perfil).$promise;
+        },
+
+        excluir: function (id) {
+          return provider.save({
+            action: 'del'
+          }, {
+            user_profile_id: id
+          }).$promise;
         }
       };
 

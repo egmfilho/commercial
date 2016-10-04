@@ -19,9 +19,11 @@ angular.module('commercialApp.controllers')
     function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario) {
 
       var self = this,
-        header = 160,
+        width = parseInt(jQuery(window).width()),
+        banner = 100,
+        header = 60,
         footer = 60,
-        height = jQuery(window).height() - header - footer;
+        height = jQuery(window).height() - banner - header - footer;
 
       self.usuariosPagination = {
         current: 1,
@@ -35,9 +37,14 @@ angular.module('commercialApp.controllers')
         total: 0
       };
 
-      jQuery('.controle').css('height', height + 'px');
-      jQuery('.dashboard').css('height', height + 'px');
-      jQuery('.logs').css('height', height + 'px');
+      if (width >= 768) {
+        jQuery('.controle').css('height', height + 'px');
+        jQuery('.dashboard').css('height', height + 'px');
+        jQuery('.logs').css('height', height + 'px');
+      } else {
+        self.usuariosPagination.max = 10;
+        self.perfisPagination.max = 10;
+      }
 
       $scope.$on('$viewContentLoaded', function () {
         self.novoUsuario = new Usuario();
@@ -173,18 +180,18 @@ angular.module('commercialApp.controllers')
 
       this.editarPerfil = function (perfil) {
         $rootScope.isLoading = true;
-        providerPerfil.obterPorId(perfil.id, true).then(function(success) {
+        providerPerfil.obterPorId(perfil.id, true).then(function (success) {
           $rootScope.isLoading = false;
           ModalPerfil.show(new PerfilUsuario(PerfilUsuario.converterEmEntrada(success.data))).then(function (success) {
             self.atualizarPerfis();
           });
-        }, function(error) {
+        }, function (error) {
           console.log(error);
           $rootScope.isLoading = false;
         });
       };
 
-      this.adicionarPerfil = function() {
+      this.adicionarPerfil = function () {
         if (!self.permissoes) {
           getPermissoes();
         }
@@ -193,5 +200,21 @@ angular.module('commercialApp.controllers')
           self.atualizarPerfis();
         });
       };
+
+      this.excluirPerfil = function (perfil) {
+        if (!confirm('Excluir perfil?')) {
+          return;
+        }
+
+        $rootScope.isLoading = true;
+        providerPerfil.excluir(perfil.id).then(function (success) {
+          $rootScope.isLoading = false;
+          $rootScope.alerta.show('Perfil excluído!', 'alert-success');
+          self.getPerfis();
+        }, function (error) {
+          console.log(error);
+          $rootScope.isLoading = false;
+        });
+      }
 
     }]);

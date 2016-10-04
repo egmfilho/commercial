@@ -28,5 +28,8 @@ angular.module('commercialApp')
       prototipo();
     };
 
+    $('.teste-absolute').click(function(event) {
+      console.log('click');
+    });
 
   }]);
