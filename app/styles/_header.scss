@@ -93,6 +93,22 @@
     }
   }
 
+  @media (max-width: 767px) {
+    .navbar-login {
+      width: 100%;
+    }
+  }
+
+  .navbar-right {
+    .dropdown-menu {
+      background-color: white;
+
+      &:focus, &:active {
+        background-color: white;
+      }
+    }
+  }
+
   .navbar-login-session
   {
     padding: 10px;

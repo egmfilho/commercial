@@ -126,23 +126,6 @@ angular.module('commercialApp.controllers')
         getUsuarios();
       };
 
-      this.cadastrar = function () {
-        console.log(Usuario.converterEmSaida(self.novoUsuario));
-
-        if (validarCadastro()) {
-          $rootScope.isLoading = true;
-          providerUsuario.adicionar(Usuario.converterEmSaida(self.novoUsuario)).then(function (success) {
-            $rootScope.isLoading = false;
-            getUsuarios();
-            $rootScope.alerta.show('Usuário cadastrado', 'alert-success');
-          }, function (error) {
-            console.log(error);
-            $rootScope.alerta.show('Não foi possível cadastrar o usuário', 'alert-danger');
-            $rootScope.isLoading = false;
-          });
-        }
-      };
-
       this.editarUsuario = function (usuario) {
         if (!self.perfis) {
           getPerfis();
@@ -152,7 +135,7 @@ angular.module('commercialApp.controllers')
         providerUsuario.obterPorId(usuario.id, true, true).then(function (success) {
           $rootScope.isLoading = false;
           ModalUsuario.show(new Usuario(Usuario.converterEmEntrada(success.data)), self.perfis).then(function (success) {
-            getUsuarios();
+            self.atualizarUsuarios();
           });
         }, function (error) {
           console.log(error);
@@ -170,12 +153,12 @@ angular.module('commercialApp.controllers')
         }
 
         ModalUsuario.show(new Usuario(), self.perfis, self.permissoes).then(function (success) {
-          getUsuarios();
+          self.atualizarUsuarios();
         });
       };
 
       this.atualizarPerfis = function () {
-        getUsuarios();
+        getPerfis();
       };
 
       this.editarPerfil = function (perfil) {
@@ -209,6 +192,7 @@ angular.module('commercialApp.controllers')
         $rootScope.isLoading = true;
         providerPerfil.excluir(perfil.id).then(function (success) {
           $rootScope.isLoading = false;
+          self.atualizarPerfis();
           $rootScope.alerta.show('Perfil excluído!', 'alert-success');
           self.getPerfis();
         }, function (error) {

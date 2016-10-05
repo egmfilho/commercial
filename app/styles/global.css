@@ -526,6 +526,13 @@ span:focus, a:focus {
       border-radius: 4px;
       color: #6481bb;
       padding: 6px; }
+  @media (max-width: 767px) {
+    .navbar-default .navbar-login {
+      width: 100%; } }
+  .navbar-default .navbar-right .dropdown-menu {
+    background-color: white; }
+    .navbar-default .navbar-right .dropdown-menu:focus, .navbar-default .navbar-right .dropdown-menu:active {
+      background-color: white; }
   .navbar-default .navbar-login-session {
     padding: 10px;
     padding-bottom: 0;
