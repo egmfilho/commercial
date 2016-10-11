@@ -47,7 +47,7 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.$on('$viewContentLoaded', function () {
-        self.novoUsuario = new Usuario();
+        // self.novoUsuario = new Usuario();
         getUsuarios();
         getPerfis();
         getPermissoes();

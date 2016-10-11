@@ -25,6 +25,10 @@ body {
   > div[name="view-principal"] {
     display: table;
     width: 100%;
+
+    @media (max-width: 767px) {
+      padding-top: 50px;
+    }
   }
 }
 
@@ -190,6 +194,15 @@ body.padding-bottom {
 
   &:hover, &:focus {
     color: $cor-principal-clara;
+  }
+}
+
+.btn.btn-primary {
+  background-color: $cor-principal-clara;
+  border-color: $cor-principal;
+
+  &:hover, &:focus {
+    background-color: $cor-principal;
   }
 }
 
@@ -458,7 +471,7 @@ span:focus, a:focus {
   }
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .tabela {
     background-color: transparent;
 
@@ -556,6 +569,10 @@ span:focus, a:focus {
     .container {
       width: 100%;
     }
+  }
+
+  .body.xs {
+    height: 120px;
   }
 
   .body.sm {

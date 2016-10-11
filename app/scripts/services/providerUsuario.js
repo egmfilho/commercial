@@ -61,6 +61,15 @@ angular.module('commercialApp.services')
           }, {
             user_id: id
           }).$promise;
+        },
+
+        novaSenha: function(id, senha) {
+          return provider.save({
+            action: 'new_pass'
+          }, {
+            user_id: id,
+            user_pass: senha
+          }).$promise;
         }
       };
 

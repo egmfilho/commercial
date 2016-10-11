@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('ModalBuscarEndereco', ['$q', '$uibModal', function($q, $uibModal) {
+  .factory('ModalBuscarEndereco', ['$uibModal', function($uibModal) {
 
     return {
       show: function(enderecos) {

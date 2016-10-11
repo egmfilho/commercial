@@ -35,15 +35,22 @@ angular.module('commercialApp.controllers')
         if (!self.usuario.usuario) {
           $rootScope.alerta.show('Preencha o nome de usuário!');
           return false;
+        } else if (self.usuario.usuario.length < 6) {
+          $rootScope.alerta.show('Usuário precisa ter no mínimo 6 caracteres!');
+          return false;
+        } else if (/[^0-9^a-z^A-Z^_]/g.test(self.usuario.usuario)) {
+          $rootScope.alerta.show('Caracteres inválidos no nome de usuário!');
+          return false;
         }
 
         if (!self.usuario.id) {
           if (!self.usuario.senha || !self.senhaCheck) {
             $rootScope.alerta.show('Preencha a senha do usuário!');
             return false;
-          }
-
-          if (self.usuario.senha !== self.senhaCheck) {
+          } else if(self.usuario.senha.length < 6) {
+            $rootScope.alerta.show('Senha precisa ter no mínimo 6 caracteres!');
+            return false;
+          } else if (self.usuario.senha !== self.senhaCheck) {
             $rootScope.alerta.show('As senhas não conferem!');
             return false;
           }

@@ -30,7 +30,7 @@
           <div><h4>Valor</h4></div>
           <div class="input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" name="valor" ng-model="pagamento.valor" currency symbol="" number-only class="form-control"
+            <input type="text" name="valor" ng-model="pagamento.valor" currency symbol="''" number-only class="form-control"
                    keys-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           </div>
         </div>
@@ -85,7 +85,7 @@
           <div><h4>Desconto %</h4></div>
           <div class="div-display editable-elem" editable-elem>
             <span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
-            type="text" currency symbol="" number-only ng-model="pedido.descontoPercent"
+            type="text" currency symbol="''" number-only ng-model="pedido.descontoPercent"
             ng-change="pedido.setDescontoPercent(pedido.descontoPercent)"
             ng-blur="pedido.descontoPercent < 0 ? pedido.descontoPercent = 0 : false">
           </div>
@@ -94,7 +94,7 @@
           <div><h4>Desconto $</h4></div>
           <div class="div-display editable-elem" editable-elem>
             <span>{{pedido.descontoDinheiro | currency: 'R$ '}}</span><input
-            type="text" currency symbol="" number-only ng-model="pedido.descontoDinheiro"
+            type="text" currency symbol="''" number-only ng-model="pedido.descontoDinheiro"
             ng-change="pedido.setDescontoDinheiro(pedido.descontoDinheiro)"
             ng-blur="pedido.descontoDinheiro < 0 ? pedido.descontoDinheiro = 0 : false">
           </div>

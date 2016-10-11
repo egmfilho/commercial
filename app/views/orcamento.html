@@ -112,14 +112,14 @@
       <div class="col-xs-4 col-xs-pull-4 col-sm-3 col-sm-pull-0">
         <div><h4>Quantidade</h4></div>
         <div class="input-group">
-          <input name="quantidade" type="text" class="form-control" currency symbol="" number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts prevent-default="true" enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
+          <input name="quantidade" type="text" class="form-control" currency symbol="''" number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts prevent-default="true" enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </div>
       </div>
       <div class="hidden-xs col-sm-3">
         <div><h4>Desconto %</h4></div>
         <div class="input-group">
-          <input name="percent" type="text" class="form-control" currency number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+          <input name="percent" type="text" class="form-control" currency symbol="''" number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
           <span class="input-group-addon">%</span>
         </div>
       </div>
@@ -127,7 +127,7 @@
         <div><h4>Desconto R$</h4></div>
         <div class="input-group">
           <span class="input-group-addon">R$</span>
-          <input name="dinheiro" type="text" class="form-control" currency number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" keys-shortcuts prevent-default="true" enter="orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+          <input name="dinheiro" type="text" class="form-control" currency symbol="''" number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" keys-shortcuts prevent-default="true" enter="orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
         </div>
       </div>
       <div class="col-xs-4 col-sm-3">

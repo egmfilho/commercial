@@ -1,70 +1,105 @@
 <div class="banner hidden-xs"></div>
 
-<div class="navbar navbar-default" ng-controller="HeaderCtrl as header">
-  <div class="container">
-    <div class="navbar-header">
+<span ng-controller="HeaderCtrl as header">
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
 
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#menu-collapse"
-              aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#menu-collapse"
+                aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
-    </div>
+      </div>
 
-    <div class="collapse navbar-collapse" id="menu-collapse">
-      <ul class="nav navbar-nav" tabindex="-1">
-        <li><a ng-href="#/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-        <li><a ng-href="#/orcamento"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
-        <li><a ng-href="#/"><span class="glyphicon glyphicon-user"></span> Clientes</a></li>
-        <!--<li><a ng-href="#/"><span class="glyphicon glyphicon-refresh"></span> Atualização</a></li>-->
-        <li><a ng-href="#/configuracoes"><span class="glyphicon glyphicon-cog"></span> Configurações</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-user"></span>
-            <strong>{{header.getCurrentUser().usuario}}</strong>
-            <span class="glyphicon glyphicon-chevron-down"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <div class="navbar-login">
-                <div class="row">
-                  <div class="col-lg-4 hidden-xs">
-                    <p class="text-center">
-                      <span class="glyphicon glyphicon-user icon-size"></span>
-                    </p>
-                  </div>
-                  <div class="col-xs-8 col-xs-offset-2 col-lg-8">
-                    <p class="text-left"><strong>{{header.getCurrentUser().nome}}</strong></p>
-                    <p class="text-left small">{{header.getCurrentUser().email}}</p>
-                    <p class="text-center perfil">{{header.getCurrentUser().perfil}}</p>
-                    <!--<p class="text-left">-->
-                      <!--<a href="" class="btn btn-default botao-invertido botao-esticado btn-sm">Perfil</a>-->
-                    <!--</p>-->
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="divider navbar-login-session-bg"></li>
-            <li class="navbar-login-session-bg">
-              <div class="navbar-login navbar-login-session">
-                <div class="row">
-                  <div class="col-xs-8 col-xs-offset-2 col-lg-12">
-                    <p>
-                      <a href="#/logout" class="btn btn-danger btn-block">Logout</a>
-                    </p>
+      <div class="collapse navbar-collapse" id="menu-collapse">
+        <ul class="nav navbar-nav" tabindex="-1">
+          <li><a ng-href="#/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li><a ng-href="#/orcamento"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
+          <li><a ng-href="#/"><span class="glyphicon glyphicon-user"></span> Clientes</a></li>
+          <!--<li><a ng-href="#/"><span class="glyphicon glyphicon-refresh"></span> Atualização</a></li>-->
+          <li><a ng-href="#/configuracoes"><span class="glyphicon glyphicon-cog"></span> Configurações</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-user"></span>
+              <strong>{{header.getCurrentUser().usuario}}</strong>
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <div class="navbar-login">
+                  <div class="row">
+                    <div class="col-lg-4 hidden-xs">
+                      <p class="text-center">
+                        <span class="glyphicon glyphicon-user icon-size"></span>
+                      </p>
+                    </div>
+                    <div class="col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-0">
+                      <p class="text-left"><strong>{{header.getCurrentUser().nome}}</strong></p>
+                      <p class="text-left small">{{header.getCurrentUser().email}}</p>
+                      <p class="text-center perfil">{{header.getCurrentUser().perfil}}</p>
+                      <!--<p class="text-left">-->
+                        <!--<a href="" class="btn btn-default botao-invertido botao-esticado btn-sm">Perfil</a>-->
+                      <!--</p>-->
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+              <li class="divider navbar-login-session-bg"></li>
+              <li class="navbar-login-session-bg">
+                <div class="navbar-login navbar-login-session">
+                  <div class="row">
+                    <div class="col-xs-8 col-xs-offset-2 col-lg-12 col-lg-offset-0">
+                      <p>
+                        <a href="" ng-click="header.abrirModalSenha()" class="btn btn-primary btn-block">Redefinir Senha</a>
+                      </p>
+                    </div>
+                    <div class="col-xs-8 col-xs-offset-2 col-lg-12 col-lg-offset-0">
+                      <p>
+                        <a href="#/logout" class="btn btn-danger btn-block">Logout</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
     </div>
 
   </div>
-</div>
+
+  <!--MODAL NOVA SENHA-->
+  <div class="modal meu-modal fade" id="modalSenha" tabindex="-1" role="dialog" aria-labelledby="modalSenha">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="header">
+          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Nova senha <span
+            class="glyphicon glyphicon-remove close" ng-click="header.cancelarModalSenha()"></span></div>
+        </div>
+        <div class="body xs condensar-rows">
+          <div class="col-md-6">
+            <h4>Nova senha</h4>
+            <input type="password" class="form-control" ng-model="header.novaSenha">
+          </div>
+          <div class="col-md-6">
+            <h4>Confirmar senha</h4>
+            <input type="password" class="form-control" ng-model="header.novaSenhaConfirm">
+          </div>
+        </div>
+        <div class="footer">
+          <button type="button" class="btn btn-default" ng-click="header.cancelarModalSenha()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+          <button type="button" class="btn btn-default" ng-click="header.trocarSenha()"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIM MODAL-->
+</span>
