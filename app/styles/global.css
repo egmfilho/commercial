@@ -77,6 +77,21 @@ body.padding-bottom {
 .card {
   background-color: white;
   padding: 10px; }
+  .card .head, .card #formulario-orcamento .main-head, #formulario-orcamento .card .main-head {
+    color: white;
+    background-color: #6481bb;
+    cursor: pointer; }
+    .card .head h3, .card #formulario-orcamento .main-head h3, #formulario-orcamento .card .main-head h3 {
+      margin: 10px;
+      color: white; }
+    .card .head a, .card #formulario-orcamento .main-head a, #formulario-orcamento .card .main-head a {
+      color: white; }
+    .card .head .limpar, .card #formulario-orcamento .main-head .limpar, #formulario-orcamento .card .main-head .limpar {
+      font-size: .8em;
+      font-weight: 400;
+      vertical-align: middle; }
+    .card .head .glyphicon-menu-up, .card #formulario-orcamento .main-head .glyphicon-menu-up, #formulario-orcamento .card .main-head .glyphicon-menu-up, .card .head .glyphicon-menu-down, .card #formulario-orcamento .main-head .glyphicon-menu-down, #formulario-orcamento .card .main-head .glyphicon-menu-down {
+      float: right; }
 
 .alerta {
   position: fixed;
@@ -123,7 +138,15 @@ body.padding-bottom {
   justify-content: center; }
 
 .remove-padding {
-  padding: 0; }
+  padding: 0 !important; }
+
+.remove-padding-vertical {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important; }
+
+.remove-padding-horizontal {
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
 
 .condensar-rows .col-xs-1, .condensar-rows .col-sm-1, .condensar-rows .col-md-1, .condensar-rows .col-lg-1, .condensar-rows .col-xs-2, .condensar-rows .col-sm-2, .condensar-rows .col-md-2, .condensar-rows .col-lg-2, .condensar-rows .col-xs-3, .condensar-rows .col-sm-3, .condensar-rows .col-md-3, .condensar-rows .col-lg-3, .condensar-rows .col-xs-4, .condensar-rows .col-sm-4, .condensar-rows .col-md-4, .condensar-rows .col-lg-4, .condensar-rows .col-xs-5, .condensar-rows .col-sm-5, .condensar-rows .col-md-5, .condensar-rows .col-lg-5, .condensar-rows .col-xs-6, .condensar-rows .col-sm-6, .condensar-rows .col-md-6, .condensar-rows .col-lg-6, .condensar-rows .col-xs-7, .condensar-rows .col-sm-7, .condensar-rows .col-md-7, .condensar-rows .col-lg-7, .condensar-rows .col-xs-8, .condensar-rows .col-sm-8, .condensar-rows .col-md-8, .condensar-rows .col-lg-8, .condensar-rows .col-xs-9, .condensar-rows .col-sm-9, .condensar-rows .col-md-9, .condensar-rows .col-lg-9, .condensar-rows .col-xs-10, .condensar-rows .col-sm-10, .condensar-rows .col-md-10, .condensar-rows .col-lg-10, .condensar-rows .col-xs-11, .condensar-rows .col-sm-11, .condensar-rows .col-md-11, .condensar-rows .col-lg-11, .condensar-rows .col-xs-12, .condensar-rows .col-sm-12, .condensar-rows .col-md-12, .condensar-rows .col-lg-12 {
   padding-left: 4px;
@@ -131,6 +154,9 @@ body.padding-bottom {
   .condensar-rows .col-xs-1 > div, .condensar-rows .col-sm-1 > div, .condensar-rows .col-md-1 > div, .condensar-rows .col-lg-1 > div, .condensar-rows .col-xs-2 > div, .condensar-rows .col-sm-2 > div, .condensar-rows .col-md-2 > div, .condensar-rows .col-lg-2 > div, .condensar-rows .col-xs-3 > div, .condensar-rows .col-sm-3 > div, .condensar-rows .col-md-3 > div, .condensar-rows .col-lg-3 > div, .condensar-rows .col-xs-4 > div, .condensar-rows .col-sm-4 > div, .condensar-rows .col-md-4 > div, .condensar-rows .col-lg-4 > div, .condensar-rows .col-xs-5 > div, .condensar-rows .col-sm-5 > div, .condensar-rows .col-md-5 > div, .condensar-rows .col-lg-5 > div, .condensar-rows .col-xs-6 > div, .condensar-rows .col-sm-6 > div, .condensar-rows .col-md-6 > div, .condensar-rows .col-lg-6 > div, .condensar-rows .col-xs-7 > div, .condensar-rows .col-sm-7 > div, .condensar-rows .col-md-7 > div, .condensar-rows .col-lg-7 > div, .condensar-rows .col-xs-8 > div, .condensar-rows .col-sm-8 > div, .condensar-rows .col-md-8 > div, .condensar-rows .col-lg-8 > div, .condensar-rows .col-xs-9 > div, .condensar-rows .col-sm-9 > div, .condensar-rows .col-md-9 > div, .condensar-rows .col-lg-9 > div, .condensar-rows .col-xs-10 > div, .condensar-rows .col-sm-10 > div, .condensar-rows .col-md-10 > div, .condensar-rows .col-lg-10 > div, .condensar-rows .col-xs-11 > div, .condensar-rows .col-sm-11 > div, .condensar-rows .col-md-11 > div, .condensar-rows .col-lg-11 > div, .condensar-rows .col-xs-12 > div, .condensar-rows .col-sm-12 > div, .condensar-rows .col-md-12 > div, .condensar-rows .col-lg-12 > div {
     padding-left: 0 !important;
     padding-right: 0 !important; }
+
+.apontavel:hover {
+  cursor: pointer; }
 
 .btn.btn-default {
   color: #6481bb; }
@@ -206,6 +232,10 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, .btn:fo
   border: 1px solid #6481bb;
   box-shadow: 0 0 6px #6481bb;
   position: relative; }
+
+textarea {
+  resize: none;
+  overflow-y: scroll; }
 
 input[type='checkbox']:focus {
   outline: none;
@@ -817,21 +847,6 @@ div[name="footer"] .navbar {
     color: #6481bb;
     margin: 0;
     margin-top: 5px; }
-  #formulario-orcamento .head, #formulario-orcamento .main-head {
-    color: white;
-    background-color: #6481bb;
-    cursor: pointer; }
-    #formulario-orcamento .head h3, #formulario-orcamento .main-head h3 {
-      margin: 10px;
-      color: white; }
-    #formulario-orcamento .head a, #formulario-orcamento .main-head a {
-      color: white; }
-    #formulario-orcamento .head .limpar, #formulario-orcamento .main-head .limpar {
-      font-size: .8em;
-      font-weight: 400;
-      vertical-align: middle; }
-    #formulario-orcamento .head .glyphicon-menu-up, #formulario-orcamento .main-head .glyphicon-menu-up, #formulario-orcamento .head .glyphicon-menu-down, #formulario-orcamento .main-head .glyphicon-menu-down {
-      float: right; }
   #formulario-orcamento .main-head {
     cursor: default; }
   #formulario-orcamento .input-group input {
@@ -1004,6 +1019,16 @@ div[name="footer"] .navbar {
   .opcoes .remove-padding > div {
     padding: 8px; }
 
+.follow-up {
+  margin-top: 40px;
+  margin-bottom: 40px; }
+  .follow-up .card, .follow-up .card > div, .follow-up .card .head, .follow-up .card #formulario-orcamento .main-head, #formulario-orcamento .follow-up .card .main-head {
+    padding: 4px; }
+  .follow-up .collapse.in {
+    display: inline-block; }
+  .follow-up .campo-duplo > div:last-child {
+    padding-left: 8px !important; }
+
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }
 .configuracoes .dropdown .dropdown-menu {
@@ -1023,7 +1048,7 @@ div[name="footer"] .navbar {
   margin: 0; }
   .configuracoes .controle .botao {
     text-align: center;
-    height: 100px;
+    height: 80px;
     background-color: #3b5998;
     padding: 0;
     color: white;

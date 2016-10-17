@@ -22,7 +22,7 @@
   </head>
   <body class="padding-bottom" ng-class="{ 'padding-top': currentPath === '/login' }" ng-app="commercialApp">
     <!--[if lte IE 8]>
-      <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua experiência.</p>
+      <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhor experiência.</p>
     <![endif]-->
 
     <div id="loading" ng-show="isLoading" ng-include="'partials/loading.html'"></div>
@@ -83,6 +83,8 @@
         <script src="scripts/services/providerUsuario.js"></script>
         <script src="scripts/services/providerPerfilUsuario.js"></script>
         <script src="scripts/services/providerConfig.js"></script>
+        <script src="scripts/services/providerAtendimento.js"></script>
+        <script src="scripts/services/providerParecer.js"></script>
         <script src="scripts/services/pessoa.js"></script>
         <script src="scripts/services/dataSaida.js"></script>
         <script src="scripts/services/produto.js"></script>
@@ -96,6 +98,7 @@
         <script src="scripts/services/modalPerfil.js"></script>
         <script src="scripts/services/modalBuscarProduto.js"></script>
         <script src="scripts/services/modalBuscarPedido.js"></script>
+        <script src="scripts/services/modalAtendimento.js"></script>
         <script src="scripts/services/modalidade.js"></script>
         <script src="scripts/services/pagamento.js"></script>
         <script src="scripts/services/endereco.js"></script>
@@ -103,6 +106,13 @@
         <script src="scripts/services/usuario.js"></script>
         <script src="scripts/services/perfilUsuario.js"></script>
         <script src="scripts/services/permissoesUsuario.js"></script>
+        <script src="scripts/services/tipoFollowUp.js"></script>
+        <script src="scripts/services/crFollowUp.js"></script>
+        <script src="scripts/services/atendimento.js"></script>
+        <script src="scripts/services/parecer.js"></script>
+        <script src="scripts/services/contatoParecer.js"></script>
+        <script src="scripts/services/statusHistoricoAtendimento.js"></script>
+        <script src="scripts/services/historicoAtendimento.js"></script>
         <script src="scripts/directives/alerta.js"></script>
         <script src="scripts/directives/redireciona.js"></script>
         <script src="scripts/directives/editableElem.js"></script>
@@ -112,6 +122,7 @@
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/orcamento.js"></script>
+        <script src="scripts/controllers/followUp.js"></script>
         <script src="scripts/controllers/cliente.js"></script>
         <script src="scripts/controllers/configuracoes.js"></script>
         <script src="scripts/controllers/modalPagamento.js"></script>
@@ -121,6 +132,7 @@
         <script src="scripts/controllers/modalBuscarPedido.js"></script>
         <script src="scripts/controllers/modalUsuario.js"></script>
         <script src="scripts/controllers/modalPerfil.js"></script>
+        <script src="scripts/controllers/modalAtendimento.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>

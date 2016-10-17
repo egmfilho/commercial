@@ -12,6 +12,7 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li><a href="" ng-click="controle = 'usuarios'; label = 'Usuários'"><span class="glyphicon glyphicon-ok" ng-show="controle==='usuarios'"></span>&nbsp; Usuários</a></li>
             <li><a href="" ng-click="controle = 'perfis'; label = 'Perfis'"><span class="glyphicon glyphicon-ok" ng-show="controle==='perfis'"></span>&nbsp; Perfis</a></li>
+            <li><a href="" ng-click="controle = 'follow-up'; label = 'Follow Up'"><span class="glyphicon glyphicon-comment" ng-show="controle==='follow-up'"></span>&nbsp; Follow Up</a></li>
             <li><a href="" ng-click="controle = 'sobre'; label = 'Sobre'"><span class="glyphicon glyphicon-ok" ng-show="controle==='sobre'"></span>&nbsp; Sobre</a></li>
           </ul>
         </div>
@@ -36,6 +37,12 @@
             Perfis
           </p>
         </div>
+        <div class="botao" ng-click="controle='follow-up'" ng-class="{ 'ativo': controle === 'follow-up'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-comment"></span>
+            Follow Up
+          </p>
+        </div>
         <div class="botao" ng-click="controle='sobre'" ng-class="{ 'ativo': controle === 'sobre'}">
           <p class="centerX centerY">
             <span class="glyphicon glyphicon-question-sign"></span>
@@ -49,6 +56,7 @@
 
         <div class="container card fill" ng-if="controle==='usuarios'" ng-include="'partials/dashboard/usuarios.html'"></div>
         <div class="container card fill" ng-if="controle==='perfis'" ng-include="'partials/dashboard/perfis.html'"></div>
+        <div class="container card fill" ng-if="controle==='follow-up'" ng-include="'partials/dashboard/follow-up.html'"></div>
         <div ng-include="'partials/dashboard/sobre.html'" ng-if="controle==='sobre'"></div>
 
       </div>

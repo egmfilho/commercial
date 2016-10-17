@@ -1,0 +1,183 @@
+<div class="col-md-12">
+  <div class="header">
+    <h3>Follow Up</h3>
+  </div>
+</div>
+
+<div class="col-lg-6">
+  <div class="col-md-12">
+    <h3>Tipo</h3>
+    <table class="tabela tabela-bordered tabela-esticada" ng-init="len = 15">
+      <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Cadastro</th>
+        <th>Atualização</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="tipo in configuracoes.tiposFollowUp">
+        <td data-label="Nome">{{tipo.nome}}</td>
+        <td data-label="Data de cadastro">{{tipo.dataCadastro | date:'dd/MM/yy'}}</td>
+        <td data-label="Última atualização">{{tipo.dataUpdate | date:'dd/MM/yy'}}</td>
+        <td class="hidden-xs">
+          <a href="" ng-click="configuracoes.editarTipoFollowUp(tipo)"><span
+            class="glyphicon glyphicon-pencil"></span></a>
+        </td>
+        <td class="hidden-xs">
+          <a href="" ng-click="configuracoes.excluirTipoFollowUp(tipo)"><span
+            class="glyphicon glyphicon-trash"></span></a>
+        </td>
+        <td class="visible-xs-block">
+          <button class="btn btn-default pull-right" ng-click="configuracoes.editarTipoFollowUp(tipo)"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+          <button class="btn btn-default pull-right" ng-click="configuracoes.excluirTipoFollowUp(tipo)"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+        </td>
+
+      </tr>
+      <tr class="hidden-xs" ng-if="configuracoes.tiposFollowUp.length < configuracoes.tiposFollowUpPagination.max"
+          ng-repeat="n in getNumber(configuracoes.tiposFollowUpPagination.max - configuracoes.tiposFollowUp.length < 0 ? 0 : configuracoes.tiposFollowUpPagination.max - configuracoes.tiposFollowUp.length) track by $index">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="row condensar-rows">
+      <br>
+      <div class="col-sm-6 col-md-6"></div>
+      <div class="col-xs-6 col-sm-3 col-md-3">
+        <button class="btn btn-default botao-esticado" ng-click="configuracoes.atualizarPerfis()"><span
+          class="glyphicon glyphicon-refresh"></span> Atualizar
+        </button>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-md-3">
+        <button class="btn btn-default botao-esticado" ng-click="configuracoes.adicionarTipoFollowUp()"><span
+          class="glyphicon glyphicon-plus"></span> Novo Tipo
+        </button>
+      </div>
+    </div>
+    <div class="paginas">
+      <ul uib-pagination total-items="configuracoes.tiposFollowUpPagination.total" ng-model="configuracoes.tiposFollowUpPagination.current" max-size="configuracoes.tiposFollowUpPagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-6">
+  <div class="col-md-12">
+    <h3>CR</h3>
+    <table class="tabela tabela-bordered tabela-esticada" ng-init="len = 15">
+      <thead>
+      <tr>
+        <th>CR</th>
+        <th>Cadastro</th>
+        <th>Atualização</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="cr in configuracoes.crsFollowUp">
+        <td data-label="Nome">{{cr.nome}}</td>
+        <td data-label="Data de cadastro">{{cr.dataCadastro | date:'dd/MM/yy'}}</td>
+        <td data-label="Última atualização">{{cr.dataUpdate | date:'dd/MM/yy'}}</td>
+        <td class="hidden-xs">
+          <a href="" ng-click="configuracoes.editarCRFollowUp(cr)"><span
+            class="glyphicon glyphicon-pencil"></span></a>
+        </td>
+        <td class="hidden-xs">
+          <a href="" ng-click="configuracoes.excluirCRFollowUp(cr)"><span
+            class="glyphicon glyphicon-trash"></span></a>
+        </td>
+        <td class="visible-xs-block">
+          <button class="btn btn-default pull-right" ng-click="configuracoes.editarCRFollowUp(cr)"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+          <button class="btn btn-default pull-right" ng-click="configuracoes.excluirCRFollowUp(cr)"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+        </td>
+
+      </tr>
+      <tr class="hidden-xs" ng-if="configuracoes.crsFollowUp.length < configuracoes.crsFollowUpPagination.max"
+          ng-repeat="n in getNumber(configuracoes.crsFollowUpPagination.max - configuracoes.crsFollowUp.length < 0 ? 0 : configuracoes.crsFollowUpPagination.max - configuracoes.crsFollowUp.length) track by $index">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="row condensar-rows">
+      <br>
+      <div class="col-sm-6 col-md-6"></div>
+      <div class="col-xs-6 col-sm-3 col-md-3">
+        <button class="btn btn-default botao-esticado" ng-click="configuracoes.atualizarPerfis()"><span
+          class="glyphicon glyphicon-refresh"></span> Atualizar
+        </button>
+      </div>
+      <div class="col-xs-6 col-sm-3 col-md-3">
+        <button class="btn btn-default botao-esticado" ng-click="configuracoes.adicionarCRFollowUp()"><span
+          class="glyphicon glyphicon-plus"></span> Novo CR
+        </button>
+      </div>
+    </div>
+    <div class="paginas">
+      <ul uib-pagination total-items="configuracoes.crsFollowUpPagination.total" ng-model="configuracoes.crsFollowUpPagination.current" max-size="configuracoes.crsFollowUpPagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+    </div>
+  </div>
+</div>
+
+<!--MODAL TIPO-->
+<div class="modal meu-modal fade" id="modalTipo" tabindex="-1" role="dialog" aria-labelledby="modalSenha">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="header">
+        <div class="title"><span class="glyphicon glyphicon-pencil"></span> Tipo <span
+          class="glyphicon glyphicon-remove close" ng-click="configuracoes.cancelarModalTipoFollowUp()"></span></div>
+      </div>
+      <div class="body xs condensar-rows">
+        <div class="col-md-3">
+          <h4>Codigo</h4>
+          <input type="text" class="form-control" ng-model="configuracoes.tipoFollowUp.codigo" readonly="true">
+        </div>
+        <div class="col-md-9">
+          <h4>Nome</h4>
+          <input type="text" class="form-control" ng-model="configuracoes.tipoFollowUp.nome">
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default" ng-click="configuracoes.cancelarModalTipoFollowUp()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+        <button type="button" class="btn btn-default" ng-click="configuracoes.salvarTipoFollowUp()"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL-->
+
+<!--MODAL CR-->
+<div class="modal meu-modal fade" id="modalCR" tabindex="-1" role="dialog" aria-labelledby="modalSenha">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="header">
+        <div class="title"><span class="glyphicon glyphicon-pencil"></span> CR <span
+          class="glyphicon glyphicon-remove close" ng-click="configuracoes.cancelarModalCRFollowUp()"></span></div>
+      </div>
+      <div class="body xs condensar-rows">
+        <div class="col-md-3">
+          <h4>Codigo</h4>
+          <input type="text" class="form-control" ng-model="configuracoes.crFollowUp.codigo" readonly="true">
+        </div>
+        <div class="col-md-9">
+          <h4>Nome</h4>
+          <input type="text" class="form-control" ng-model="configuracoes.crFollowUp.nome">
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default" ng-click="configuracoes.cancelarModalCRFollowUp()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+        <button type="button" class="btn btn-default" ng-click="configuracoes.salvarCRFollowUp()"><span class="glyphicon glyphicon-ok"></span> Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL-->

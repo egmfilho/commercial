@@ -16,7 +16,9 @@ angular.module('commercialApp.controllers')
     'ModalPerfil',
     'ProviderConfig',
     'PermissoesUsuario',
-    function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario) {
+    'TipoFollowUp',
+    'CRFollowUp',
+    function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario, TipoFollowUp, CRFollowUp) {
 
       var self = this,
         width = parseInt(jQuery(window).width()),
@@ -24,6 +26,9 @@ angular.module('commercialApp.controllers')
         header = 60,
         footer = 60,
         height = jQuery(window).height() - banner - header - footer;
+
+      self.tipoFollowUp = new TipoFollowUp();
+      self.crFollowUp = new CRFollowUp();
 
       self.usuariosPagination = {
         current: 1,
@@ -37,6 +42,18 @@ angular.module('commercialApp.controllers')
         total: 0
       };
 
+      self.tiposFollowUpPagination = {
+        current: 1,
+        max: 15,
+        total: 0
+      };
+
+      self.crsFollowUpPagination = {
+        current: 1,
+        max: 15,
+        total: 0
+      };
+
       if (width >= 768) {
         jQuery('.controle').css('height', height + 'px');
         jQuery('.dashboard').css('height', height + 'px');
@@ -44,6 +61,8 @@ angular.module('commercialApp.controllers')
       } else {
         self.usuariosPagination.max = 10;
         self.perfisPagination.max = 10;
+        self.tiposFollowUpPagination.max = 10;
+        self.crsFollowUpPagination.max = 10;
       }
 
       $scope.$on('$viewContentLoaded', function () {
@@ -51,6 +70,8 @@ angular.module('commercialApp.controllers')
         getUsuarios();
         getPerfis();
         getPermissoes();
+        getTiposFollowUp();
+        getCRsFollowUp();
       });
 
       function getUsuarios() {
@@ -93,33 +114,22 @@ angular.module('commercialApp.controllers')
         });
       }
 
-      function validarCadastro() {
-        if (!self.novoUsuario.nome) {
-          $rootScope.alerta.show('Preencha o nome do usuário!');
-          return false;
-        }
+      function getTiposFollowUp() {
+        self.tiposFollowUp = [ new TipoFollowUp({
+          codigo: 1001,
+          nome: 'Tipo teste',
+          dataCadastro: new Date(),
+          dataUpdate: new Date()
+        }) ];
+      }
 
-        if (!self.novoUsuario.usuario) {
-          $rootScope.alerta.show('Preencha o nome de usuário!');
-          return false;
-        }
-
-        if (!self.novoUsuario.senha || !self.senhaCheck) {
-          $rootScope.alerta.show('Preencha a senha do usuário!');
-          return false;
-        }
-
-        if (self.novoUsuario.senha !== self.senhaCheck) {
-          $rootScope.alerta.show('As senhas não conferem!');
-          return false;
-        }
-
-        if (!self.novoUsuario.perfilId) {
-          $rootScope.alerta.show('Selecione um perfil!');
-          return false;
-        }
-
-        return true;
+      function getCRsFollowUp() {
+        self.crsFollowUp = [ new CRFollowUp({
+          codigo: 1001,
+          nome: 'CR teste',
+          dataCadastro: new Date(),
+          dataUpdate: new Date()
+        }) ];
       }
 
       this.atualizarUsuarios = function () {
@@ -199,6 +209,58 @@ angular.module('commercialApp.controllers')
           console.log(error);
           $rootScope.isLoading = false;
         });
-      }
+      };
+
+      this.atualizarTiposFollowUp = function () {
+        getTiposFollowUp();
+      };
+
+      this.editarTipoFollowUp = function (tipo) {
+        self.tipoFollowUp = new TipoFollowUp(tipo);
+        jQuery('#modalTipo').modal('show');
+      };
+
+      this.adicionarTipoFollowUp = function () {
+        jQuery('#modalTipo').modal('show');
+      };
+
+      this.excluirTipoFollowUp = function () {
+        jQuery('#modalTipo').modal('show');
+      };
+
+      this.salvarTipoFollowUp = function () {
+        jQuery('#modalTipo').modal('hide');
+      };
+
+      this.cancelarModalTipoFollowUp = function () {
+        jQuery('#modalTipo').modal('hide');
+        self.tipoFollowUp = new TipoFollowUp();
+      };
+
+      this.atualizarCRsFollowUp = function () {
+        getCRsFollowUp();
+      };
+
+      this.editarCRFollowUp = function (cr) {
+        self.crFollowUp = new CRFollowUp(cr);
+        jQuery('#modalCR').modal('show');
+      };
+
+      this.adicionarCRFollowUp = function () {
+        jQuery('#modalCR').modal('show');
+      };
+
+      this.excluirCRFollowUp = function () {
+        jQuery('#modalCR').modal('show');
+      };
+
+      this.salvarCRFollowUp = function () {
+        jQuery('#modalCR').modal('hide');
+      };
+
+      this.cancelarModalCRFollowUp = function () {
+        jQuery('#modalCR').modal('hide');
+        self.crFollowUp = new CRFollowUp();
+      };
 
     }]);

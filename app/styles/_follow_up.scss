@@ -1,0 +1,28 @@
+.follow-up {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  .card, .card > div, .card .head {
+    padding: 4px;
+  }
+
+  .collapse.in {
+    display: inline-block;
+  }
+
+  .campo-duplo {
+    > div {
+      &:last-child {
+        padding-left: 8px !important;
+      }
+    }
+  }
+}
+
+//.follow-up.container {
+//  background-color: darksalmon !important;
+//
+//  .row {
+//    background-color: lightblue !important;;
+//  }
+//}

@@ -65,7 +65,7 @@ angular.module('commercialApp.services')
 
         novaSenha: function(id, senha) {
           return provider.save({
-            action: 'new_pass'
+            action: 'newPass'
           }, {
             user_id: id,
             user_pass: senha

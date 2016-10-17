@@ -33,7 +33,7 @@ angular.module('commercialApp')
       }, {
         nome: 'Follow Up',
         icone: 'glyphicon-comment',
-        url: '/follow'
+        url: '/follow-up'
       }, {
         nome: 'Produtos',
         icone: 'glyphicon-tags',
