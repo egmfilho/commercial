@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .provider('ProviderAtendimento', ['URLS', function (urls) {
+  .provider('ProviderParecer', ['URLS', function (urls) {
 
     var url = urls.root + 'attendance_note.php?action=:action',
       provider = null;

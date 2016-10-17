@@ -14,7 +14,7 @@ angular.module('commercialApp.services')
       this.pedido = atendimento ? atendimento.pedido : new Pedido();
       this.usuarioId = atendimento ? atendimento.usuarioId : '';
       this.usuario = atendimento ? atendimento.usuario : new Usuario();
-      this.parecer = atendimento ? atendimento.parecer : null;
+      this.parecer = atendimento ? atendimento.parecer : [ ];
       this.historico = atendimento ? atendimento.historico : new HistoricoAtendimento();
       this.dataCadastro = atendimento ? atendimento.dataCadastro : new Date();
       this.dataUpdate = atendimento ? atendimento.dataUpdate : null;
@@ -49,10 +49,23 @@ angular.module('commercialApp.services')
       atendimento.pedido = attendance.attendance_order ? new Pedido(Pedido.converterEmEntrada(attendance.attendance_order)) : new Pedido();
       atendimento.usuarioId = attendance.attendance_user_id;
       atendimento.usuario = attendance.attendance_maker ? new Usuario(Usuario.converterEmEntrada(attendance.attendance_maker)) : new Usuario();
-      atendimento.parecer = attendance.attendance_note ? new Parecer(Parecer.converterEmEntrada(attendance.attendance_note)) : new Parecer();
-      atendimento.historico = attendance.attendance_history ? new HistoricoAtendimento(HistoricoAtendimento.converterEmEntrada(attendance.attendance_history)) : new HistoricoAtendimento();
-      atendimento.dataCadastro = atendimento.dataCadastro ? new Date(attendance.attendance_date) : new Date();
-      atendimento.dataUpdate= atendimento.dataUpdate ? new Date(attendance.attendance_update) : new Date();
+
+      atendimento.parecer = [ ];
+      if (attendance.attendance_note) {
+        angular.forEach(attendance.attendance_note, function(item, index) {
+          atendimento.parecer.push(new Parecer(Parecer.converterEmEntrada(item)));
+        });
+      }
+
+      atendimento.historico = [ ];
+      if (attendance.attendance_history) {
+        angular.forEach(attendance.attendance_history, function(item, index) {
+          atendimento.historico.push(new HistoricoAtendimento(HistoricoAtendimento.converterEmEntrada(item)));
+        });
+      }
+
+      atendimento.dataCadastro = attendance.attendance_date ? new Date(attendance.attendance_date) : new Date();
+      atendimento.dataUpdate= attendance.attendance_update ? new Date(attendance.attendance_update) : new Date();
 
       return atendimento;
     };

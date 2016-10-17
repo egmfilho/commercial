@@ -9,13 +9,21 @@
   .collapse.in {
     display: inline-block;
   }
+}
 
-  .campo-duplo {
-    > div {
-      &:last-child {
-        padding-left: 8px !important;
-      }
-    }
+.campo-duplo {
+  > div {
+    padding: 0 4px;
+  }
+
+  > div:last-child {
+    padding-left: 4px !important;
+    padding-right: 0 !important;
+  }
+
+  > div:nth-child(2){
+    padding-left: 0 !important;
+    padding-right: 4px !important;
   }
 }
 

@@ -148,12 +148,9 @@ body.padding-bottom {
   padding-left: 0 !important;
   padding-right: 0 !important; }
 
-.condensar-rows .col-xs-1, .condensar-rows .col-sm-1, .condensar-rows .col-md-1, .condensar-rows .col-lg-1, .condensar-rows .col-xs-2, .condensar-rows .col-sm-2, .condensar-rows .col-md-2, .condensar-rows .col-lg-2, .condensar-rows .col-xs-3, .condensar-rows .col-sm-3, .condensar-rows .col-md-3, .condensar-rows .col-lg-3, .condensar-rows .col-xs-4, .condensar-rows .col-sm-4, .condensar-rows .col-md-4, .condensar-rows .col-lg-4, .condensar-rows .col-xs-5, .condensar-rows .col-sm-5, .condensar-rows .col-md-5, .condensar-rows .col-lg-5, .condensar-rows .col-xs-6, .condensar-rows .col-sm-6, .condensar-rows .col-md-6, .condensar-rows .col-lg-6, .condensar-rows .col-xs-7, .condensar-rows .col-sm-7, .condensar-rows .col-md-7, .condensar-rows .col-lg-7, .condensar-rows .col-xs-8, .condensar-rows .col-sm-8, .condensar-rows .col-md-8, .condensar-rows .col-lg-8, .condensar-rows .col-xs-9, .condensar-rows .col-sm-9, .condensar-rows .col-md-9, .condensar-rows .col-lg-9, .condensar-rows .col-xs-10, .condensar-rows .col-sm-10, .condensar-rows .col-md-10, .condensar-rows .col-lg-10, .condensar-rows .col-xs-11, .condensar-rows .col-sm-11, .condensar-rows .col-md-11, .condensar-rows .col-lg-11, .condensar-rows .col-xs-12, .condensar-rows .col-sm-12, .condensar-rows .col-md-12, .condensar-rows .col-lg-12 {
+.condensar-rows > .col-xs-1, .condensar-rows > .col-sm-1, .condensar-rows > .col-md-1, .condensar-rows > .col-lg-1, .condensar-rows > .col-xs-2, .condensar-rows > .col-sm-2, .condensar-rows > .col-md-2, .condensar-rows > .col-lg-2, .condensar-rows > .col-xs-3, .condensar-rows > .col-sm-3, .condensar-rows > .col-md-3, .condensar-rows > .col-lg-3, .condensar-rows > .col-xs-4, .condensar-rows > .col-sm-4, .condensar-rows > .col-md-4, .condensar-rows > .col-lg-4, .condensar-rows > .col-xs-5, .condensar-rows > .col-sm-5, .condensar-rows > .col-md-5, .condensar-rows > .col-lg-5, .condensar-rows > .col-xs-6, .condensar-rows > .col-sm-6, .condensar-rows > .col-md-6, .condensar-rows > .col-lg-6, .condensar-rows > .col-xs-7, .condensar-rows > .col-sm-7, .condensar-rows > .col-md-7, .condensar-rows > .col-lg-7, .condensar-rows > .col-xs-8, .condensar-rows > .col-sm-8, .condensar-rows > .col-md-8, .condensar-rows > .col-lg-8, .condensar-rows > .col-xs-9, .condensar-rows > .col-sm-9, .condensar-rows > .col-md-9, .condensar-rows > .col-lg-9, .condensar-rows > .col-xs-10, .condensar-rows > .col-sm-10, .condensar-rows > .col-md-10, .condensar-rows > .col-lg-10, .condensar-rows > .col-xs-11, .condensar-rows > .col-sm-11, .condensar-rows > .col-md-11, .condensar-rows > .col-lg-11, .condensar-rows > .col-xs-12, .condensar-rows > .col-sm-12, .condensar-rows > .col-md-12, .condensar-rows > .col-lg-12 {
   padding-left: 4px;
   padding-right: 4px; }
-  .condensar-rows .col-xs-1 > div, .condensar-rows .col-sm-1 > div, .condensar-rows .col-md-1 > div, .condensar-rows .col-lg-1 > div, .condensar-rows .col-xs-2 > div, .condensar-rows .col-sm-2 > div, .condensar-rows .col-md-2 > div, .condensar-rows .col-lg-2 > div, .condensar-rows .col-xs-3 > div, .condensar-rows .col-sm-3 > div, .condensar-rows .col-md-3 > div, .condensar-rows .col-lg-3 > div, .condensar-rows .col-xs-4 > div, .condensar-rows .col-sm-4 > div, .condensar-rows .col-md-4 > div, .condensar-rows .col-lg-4 > div, .condensar-rows .col-xs-5 > div, .condensar-rows .col-sm-5 > div, .condensar-rows .col-md-5 > div, .condensar-rows .col-lg-5 > div, .condensar-rows .col-xs-6 > div, .condensar-rows .col-sm-6 > div, .condensar-rows .col-md-6 > div, .condensar-rows .col-lg-6 > div, .condensar-rows .col-xs-7 > div, .condensar-rows .col-sm-7 > div, .condensar-rows .col-md-7 > div, .condensar-rows .col-lg-7 > div, .condensar-rows .col-xs-8 > div, .condensar-rows .col-sm-8 > div, .condensar-rows .col-md-8 > div, .condensar-rows .col-lg-8 > div, .condensar-rows .col-xs-9 > div, .condensar-rows .col-sm-9 > div, .condensar-rows .col-md-9 > div, .condensar-rows .col-lg-9 > div, .condensar-rows .col-xs-10 > div, .condensar-rows .col-sm-10 > div, .condensar-rows .col-md-10 > div, .condensar-rows .col-lg-10 > div, .condensar-rows .col-xs-11 > div, .condensar-rows .col-sm-11 > div, .condensar-rows .col-md-11 > div, .condensar-rows .col-lg-11 > div, .condensar-rows .col-xs-12 > div, .condensar-rows .col-sm-12 > div, .condensar-rows .col-md-12 > div, .condensar-rows .col-lg-12 > div {
-    padding-left: 0 !important;
-    padding-right: 0 !important; }
 
 .apontavel:hover {
   cursor: pointer; }
@@ -840,11 +837,8 @@ div[name="footer"] .navbar {
   #formulario-orcamento div {
     padding: 4px 4px; }
   #formulario-orcamento h4 {
-    margin-top: 0;
-    margin-bottom: 0;
-    color: #6481bb; }
+    margin-top: 0; }
   #formulario-orcamento h5 {
-    color: #6481bb;
     margin: 0;
     margin-top: 5px; }
   #formulario-orcamento .main-head {
@@ -1026,8 +1020,15 @@ div[name="footer"] .navbar {
     padding: 4px; }
   .follow-up .collapse.in {
     display: inline-block; }
-  .follow-up .campo-duplo > div:last-child {
-    padding-left: 8px !important; }
+
+.campo-duplo > div {
+  padding: 0 4px; }
+.campo-duplo > div:last-child {
+  padding-left: 4px !important;
+  padding-right: 0 !important; }
+.campo-duplo > div:nth-child(2) {
+  padding-left: 0 !important;
+  padding-right: 4px !important; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }

@@ -21,12 +21,33 @@ angular.module('commercialApp.services')
         }
       });
 
+      // PARAMETROS
+      // "attendance_user_id": "1001",
+      // "attendance_status_id": "1002",
+      // "attendance_order": "attendance_code ASC",
+      // "attendance_limit": "1",
+      // "get_attendance_maker": "1",
+      // "get_attendance_order": "1",
+      // "get_attendance_note": "1",
+      // "get_attendance_last_note": "1",
+      // "get_attendance_history": "1",
+      // "get_attendance_last_history": "1",
+      // "get_attendance_history_maker": "1",
+      // "get_attendance_history_status": "1",
+      // "get_attendance_history_responsible": "1"
+
       return {
-        obterTodos: function () {
+        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico) {
           return provider.query({
             action: 'getList'
           }, {
-
+            get_attendance_order: getPedido,
+            get_attendance_maker: getUsuario,
+            get_attendance_last_note: getParecer,
+            get_attendance_note_maker: getParecer,
+            get_attendance_note_contact_type: getParecer,
+            get_attendance_last_history: getHistorico,
+            get_attendance_history_responsible: getHistorico
           }).$promise;
         },
 
