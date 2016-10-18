@@ -19,7 +19,7 @@ angular.module('commercialApp.controllers')
       $scope.$on('$viewContentLoaded', function () {
         getAtendimentos();
 
-        modalAtendimento.show();
+        // modalAtendimento.show();
         // jQuery('#modalFiltros').modal('show');
       });
 

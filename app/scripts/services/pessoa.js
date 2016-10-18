@@ -68,7 +68,7 @@ angular.module('commercialApp.services')
       }
 
       pessoa.email = p.Email;
-      pessoa.ativo = p.Ativo;
+      pessoa.ativo = p.Ativo === 'S';
       pessoa.origem = p.Origem;
       pessoa.cadastro = new Date(p.Cadastro);
 

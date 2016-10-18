@@ -93,6 +93,11 @@ body.padding-bottom {
     .card .head .glyphicon-menu-up, .card #formulario-orcamento .main-head .glyphicon-menu-up, #formulario-orcamento .card .main-head .glyphicon-menu-up, .card .head .glyphicon-menu-down, .card #formulario-orcamento .main-head .glyphicon-menu-down, #formulario-orcamento .card .main-head .glyphicon-menu-down {
       float: right; }
 
+.dropdown-menu:hover, .dropdown-menu:focus, .dropdown-menu:active {
+  outline: none; }
+.dropdown-menu li:hover, .dropdown-menu li:focus, .dropdown-menu li:active, .dropdown-menu li > div:hover, .dropdown-menu li > div:focus, .dropdown-menu li > div:active, .dropdown-menu li > div table:hover, .dropdown-menu li > div table:focus, .dropdown-menu li > div table:active {
+  outline: none; }
+
 .alerta {
   position: fixed;
   top: 0px;
@@ -154,6 +159,9 @@ body.padding-bottom {
 
 .apontavel:hover {
   cursor: pointer; }
+
+.border-bottom {
+  border-bottom: 1px solid #ccc; }
 
 .btn.btn-default {
   color: #6481bb; }
@@ -814,23 +822,6 @@ div[name="footer"] .navbar {
 @media screen {
   .impressao {
     display: none; } }
-.dropdown-menu {
-  min-width: 200px;
-  width: 97.5%; }
-  .dropdown-menu li {
-    overflow-x: hidden; }
-    .dropdown-menu li > a {
-      color: #6481bb; }
-      .dropdown-menu li > a:hover, .dropdown-menu li > a:focus {
-        background-color: #6481bb;
-        color: white; }
-  .dropdown-menu > .active a {
-    background-color: #6481bb;
-    color: white; }
-    .dropdown-menu > .active a:hover, .dropdown-menu > .active a:focus {
-      background-color: #6481bb;
-      color: white; }
-
 #formulario-orcamento {
   margin-top: 40px;
   margin-bottom: 40px; }
@@ -859,6 +850,22 @@ div[name="footer"] .navbar {
     font-size: 2em; }
     #formulario-orcamento .btn-orcamento span {
       vertical-align: -10%; }
+  #formulario-orcamento .dropdown-menu {
+    min-width: 200px;
+    width: 97.5%; }
+    #formulario-orcamento .dropdown-menu li {
+      overflow-x: hidden; }
+      #formulario-orcamento .dropdown-menu li > a {
+        color: #6481bb; }
+        #formulario-orcamento .dropdown-menu li > a:hover, #formulario-orcamento .dropdown-menu li > a:focus {
+          background-color: #6481bb;
+          color: white; }
+    #formulario-orcamento .dropdown-menu > .active a {
+      background-color: #6481bb;
+      color: white; }
+      #formulario-orcamento .dropdown-menu > .active a:hover, #formulario-orcamento .dropdown-menu > .active a:focus {
+        background-color: #6481bb;
+        color: white; }
 
 #tabela-orcamento {
   border: 2px solid #6481bb; }
@@ -1016,19 +1023,12 @@ div[name="footer"] .navbar {
 .follow-up {
   margin-top: 40px;
   margin-bottom: 40px; }
-  .follow-up .card, .follow-up .card > div, .follow-up .card .head, .follow-up .card #formulario-orcamento .main-head, #formulario-orcamento .follow-up .card .main-head {
-    padding: 4px; }
-  .follow-up .collapse.in {
-    display: inline-block; }
-
-.campo-duplo > div {
-  padding: 0 4px; }
-.campo-duplo > div:last-child {
-  padding-left: 4px !important;
-  padding-right: 0 !important; }
-.campo-duplo > div:nth-child(2) {
-  padding-left: 0 !important;
-  padding-right: 4px !important; }
+  .follow-up .card .head, .follow-up .card #formulario-orcamento .main-head, #formulario-orcamento .follow-up .card .main-head {
+    padding: 6px;
+    margin: 0 -15px;
+    margin-bottom: 10px; }
+  .follow-up ul[name='historico'] {
+    min-height: 250px; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }

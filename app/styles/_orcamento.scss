@@ -52,36 +52,6 @@ $print-font-size: 11px;
   //border: none;
 }
 
-.dropdown-menu {
-  min-width: 200px;
-  width: 97.5%;
-
-  li {
-    overflow-x: hidden;
-      > a {
-      color: $cor-principal-clara;
-
-      &:hover, &:focus {
-        background-color: $cor-principal-clara;
-        color: white;
-      }
-    }
-  }
-
-  > .active {
-    a {
-      background-color: $cor-principal-clara;
-      color: white;
-
-      &:hover, &:focus {
-        background-color: $cor-principal-clara;
-        color: white;
-      }
-    }
-
-  }
-}
-
 #formulario-orcamento {
   margin-top: 40px;
   margin-bottom: 40px;
@@ -136,6 +106,36 @@ $print-font-size: 11px;
 
     &:hover {
       @extend .highlight;
+    }
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    width: 97.5%;
+
+    li {
+      overflow-x: hidden;
+      > a {
+        color: $cor-principal-clara;
+
+        &:hover, &:focus {
+          background-color: $cor-principal-clara;
+          color: white;
+        }
+      }
+    }
+
+    > .active {
+      a {
+        background-color: $cor-principal-clara;
+        color: white;
+
+        &:hover, &:focus {
+          background-color: $cor-principal-clara;
+          color: white;
+        }
+      }
+
     }
   }
 }

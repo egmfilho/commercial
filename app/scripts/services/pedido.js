@@ -107,8 +107,14 @@ angular.module('commercialApp.services')
       },
 
       setCliente: function (cliente) {
+        if (!cliente.ativo) {
+          return false;
+        }
+
         this.idCliente = cliente.id;
         this.cliente = cliente;
+
+        return true;
       },
 
       setIdCliente: function (id) {

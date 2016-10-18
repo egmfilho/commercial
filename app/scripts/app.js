@@ -22,7 +22,8 @@ angular
     'egmfilho.inputFilters',
     'ui.bootstrap',
     'ui.mask',
-    'ds.clock'
+    'ds.clock',
+    'multipleSelect'
   ])
   .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInjector');
@@ -67,6 +68,12 @@ angular
         templateUrl: 'views/follow_up.html',
         controller: 'FollowUpCtrl',
         controllerAs: 'followUp'
+      })
+      .when('/atendimento/:codigo?', {
+        modulo: 'follow_up',
+        templateUrl: 'views/atendimento.html',
+        controller: 'AtendimentoCtrl',
+        controllerAs: 'atendimento'
       })
       .when('/configuracoes', {
         modulo: 'config',

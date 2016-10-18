@@ -240,7 +240,9 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
     if (!codigo) {
       modalBuscarPessoa.show('Cliente').then(function (result) {
         if (result) {
-          self.pedido.setCliente(result);
+          if (!self.pedido.setCliente(result)) {
+            $rootScope.alerta.show('Cliente inativo!');
+          }
           $scope.cdCliente = result.codigo;
           jQuery('input[name="CdCliente"]').focus().select();
         }
@@ -259,7 +261,13 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
     $rootScope.isLoading = true;
     providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function (success) {
       $rootScope.isLoading = false;
-      self.pedido.setCliente(new Pessoa(Pessoa.converterEmEntrada(success.data)));
+      var cliente = new Pessoa(Pessoa.converterEmEntrada(success.data));
+      if (!cliente.ativo) {
+        $rootScope.alerta.show('Cliente inativo!');
+        jQuery('input[name="CdCliente"]').focus().select();
+        return;
+      }
+      self.pedido.setCliente(cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
     }, function (error) {
       $rootScope.isLoading = false;
@@ -268,7 +276,9 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
         $rootScope.alerta.show('Cliente não encontrado!');
         modalBuscarPessoa.show('Cliente').then(function (result) {
           if (result) {
-            self.pedido.setCliente(result);
+            if (!self.pedido.setCliente(result)) {
+              $rootScope.alerta.show('Cliente inativo!');
+            }
             $scope.cdCliente = result.codigo;
             jQuery('input[name="CdCliente"]').focus().select();
           }

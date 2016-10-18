@@ -139,6 +139,18 @@ body.padding-bottom {
   }
 }
 
+.dropdown-menu {
+  &:hover, &:focus, &:active {
+    outline: none;
+  }
+
+  li, li > div, li > div table {
+    &:hover, &:focus, &:active {
+      outline: none;
+    }
+  }
+}
+
 .alerta {
   position: fixed;
   top: 0px;
@@ -228,6 +240,10 @@ body.padding-bottom {
   &:hover {
     cursor: pointer;
   }
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ccc;
 }
 
 .btn.btn-default {

@@ -1,0 +1,121 @@
+<div class="follow-up container">
+  <div class="row card">
+
+    <div class="col-md-12">
+      <div class="head">
+        <h3><span class="glyphicon glyphicon-list-alt"></span> Atendimento</h3>
+      </div>
+    </div>
+
+    <!--LADO ESQUERDO-->
+    <div class="col-md-7">
+
+      <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+          <!--<a href="#/follow-up" class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span> Follow Up</a>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Cliente</h3>
+          <div class="well">
+            <dl class="dl-horizontal">
+              <dt>Código:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.codigo}}</dd>
+              <dt>Nome:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.nome}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Atendimento</h3>
+          <div class="well">
+            <dl class="dl-horizontal">
+              <dt>Criado por:</dt>
+              <dd>{{atendimento.atendimento.usuario.usuario}} ({{atendimento.atendimento.usuario.nome}})</dd>
+              <dt>Criado em:</dt>
+              <dd>{{atendimento.atendimento.dataCadastro | date:'short'}}</dd>
+              <dt>Atualizado em:</dt>
+              <dd>{{atendimento.atendimento.dataUpdate | date:'short'}}</dd>
+              <dt>Orçamento:</dt>
+              <dd>{{atendimento.atendimento.pedido.codigo}}</dd>
+              <dt>Pareceres:</dt>
+              <dd>{{atendimento.atendimento.parecer.length}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Histórico</h3>
+          <ul name="historico" class="list-group well" style="max-height: 200px;overflow-y: scroll">
+            <li class="list-group-item" ng-repeat="historico in atendimento.atendimento.historico">
+              <span class="glyphicon glyphicon-menu-right"></span> <b>responsável: </b>{{historico.responsavel.usuario}} <b>criado por: </b>{{historico.usuario.usuario}} <b>em: </b>{{historico.dataCadastro | date:'short'}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!--LADO DIREITO-->
+    <div class="col-md-5">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Parecer</h3>
+          <textarea name="" id="" cols="30" rows="8" class="form-control"></textarea>
+        </div>
+        <div class="col-md-6">
+          <h4>Tipo de contato</h4>
+          <input type="text" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <h4>Pessoa de contato</h4>
+          <input type="text" class="form-control">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="">Info</h3>
+        </div>
+        <div class="col-md-6">
+          <h4>Status</h4>
+          <select class="form-control"></select>
+        </div>
+        <div class="col-md-6">
+          <h4>Responsável</h4>
+          <input type="text" class="form-control">
+        </div>
+        <div class="col-md-12">
+          <h4>Próximo Contato</h4>
+          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.options" ng-required="true" close-text="Fechar">
+            <b>Data:</b> {{dt | date:'fullDate'}}
+            <button type="button" class="btn btn-default pull-right" ng-click="aberto = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <h4>Spy</h4>
+          <multiple-autocomplete ng-model="selectedList" object-property="usuario" suggestions-arr="atendimento.usuarios"></multiple-autocomplete>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <div class="row botoes-parecer">
+        <div class="col-xs-6 col-md-6">
+          <button class="btn btn-danger btn-lg btn-block"><span class="glyphicon glyphicon-save"></span> Finalizar</button>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <button class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-ok"></span> Continuar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,7 +47,8 @@ angular.module('commercialApp.services')
             get_attendance_note_maker: getParecer,
             get_attendance_note_contact_type: getParecer,
             get_attendance_last_history: getHistorico,
-            get_attendance_history_responsible: getHistorico
+            get_attendance_history_responsible: getHistorico,
+            get_attendance_history_status: getHistorico
           }).$promise;
         },
 
@@ -63,7 +64,8 @@ angular.module('commercialApp.services')
             get_attendance_note_contact_type: getParecer,
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
-            get_attendance_history_responsible: getHistorico
+            get_attendance_history_responsible: getHistorico,
+            get_attendance_history_status: getHistorico
           }).$promise;
         },
 
@@ -79,7 +81,8 @@ angular.module('commercialApp.services')
             get_attendance_note_contact_type: getParecer,
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
-            get_attendance_history_responsible: getHistorico
+            get_attendance_history_responsible: getHistorico,
+            get_attendance_history_status: getHistorico
           }).$promise;
         },
 

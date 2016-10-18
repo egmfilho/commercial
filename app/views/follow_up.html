@@ -3,13 +3,35 @@
   <div class="row card">
     <div class="col-md-12">
       <div class="head">
-        <h3><span class="glyphicon glyphicon-list-alt"></span> Atendimentos</h3>
+        <h3><span class="glyphicon glyphicon-comment"></span> Follow Up</h3>
       </div>
     </div>
 
-    <div class="col-md-12">
-      <table class="tabela tabela-bordered tabela-esticada">
-        <thead>
+    <div class="row">
+      <div class="col-md-3">
+        <button class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-refresh"></span> Atualizar</button>
+      </div>
+
+      <div class="col-md-3">
+        <button class="btn btn-default botao-esticado" data-toggle="modal" data-target="#modalFiltros"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
+      </div>
+
+      <div class="col-md-3">
+        <a href="#/atendimento" class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
+      </div>
+
+      <div class="col-md-3">
+        <button class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-plus"></span> Adicionar em lote</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Atendimentos</h3>
+      </div>
+      <div class="col-md-12">
+        <table class="tabela tabela-bordered tabela-esticada">
+          <thead>
           <tr>
             <th>Código</th>
             <th>Orçamento</th>
@@ -18,13 +40,13 @@
             <th>Atualização</th>
             <th>Último Parecer</th>
             <th>Cadastro</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <!--<th></th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
             <th></th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           <tr ng-repeat="a in followUp.atendimentos">
             <td data-label="Código">{{a.codigo}}</td>
             <td data-label="Código do orçamento">{{a.pedido.codigo}}</td>
@@ -33,13 +55,14 @@
             <td data-label="Data de Atualização">{{a.dataUpdate | date:'short'}}</td>
             <td data-label="Data do último parecer">{{a.parecer[0].dataCadastro | date:'short'}}</td>
             <td data-label="Data de cadastro">{{a.dataCadastro | date:'short'}}</td>
-            <td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
-            <td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></td>
-            <td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-time"></span></a></td>
-            <td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-folder-open"></span></a></td>
+            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>-->
+            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></td>-->
+            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-time"></span></a></td>-->
+            <td class="hidden-xs"><a ng-href="#/atendimento/{{a.codigo}}"><span class="glyphicon glyphicon-open-file"></span></a></td>
           </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
