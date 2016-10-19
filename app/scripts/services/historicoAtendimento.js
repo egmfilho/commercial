@@ -11,7 +11,7 @@ angular.module('commercialApp.services')
       this.id = historico ? historico.id : '';
       this.usuarioId = historico ? historico.usuarioId : '';
       this.usuario = historico ? historico.usuario : new Usuario();
-      this.statusId = historico ? historico.statusId : '';
+      this.statusId = historico ? historico.statusId : '1001';
       this.status = historico ? historico.status : new StatusHistoricoAtendimento();
       this.responsavelId = historico ? historico.responsavelId : '';
       this.responsavel = historico ? historico.responsavel : new Usuario();

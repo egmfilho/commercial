@@ -10,6 +10,7 @@ Orcamento.$inject = [
   '$rootScope',
   '$scope',
   '$timeout',
+  '$location',
   '$uibModalStack',
   'ProviderPessoa',
   'ProviderProduto',
@@ -27,7 +28,7 @@ Orcamento.$inject = [
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
+function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
 
   var self = this;
 
@@ -620,18 +621,18 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
       $rootScope.isLoading = true;
 
       // if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
-        providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-          var result = new Pedido(Pedido.converterEmEntrada(success.data));
-          $scope.backup = null;
-          self.pedido.id = result.id;
-          self.pedido.codigo = result.codigo;
-          $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
-          $rootScope.isLoading = false;
-          $scope.mostrarOpcoes();
-        }, function (error) {
-          console.log(error);
-          $rootScope.isLoading = false;
-        });
+      providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+        var result = new Pedido(Pedido.converterEmEntrada(success.data));
+        $scope.backup = null;
+        self.pedido.id = result.id;
+        self.pedido.codigo = result.codigo;
+        $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
+        $rootScope.isLoading = false;
+        $scope.mostrarOpcoes();
+      }, function (error) {
+        console.log(error);
+        $rootScope.isLoading = false;
+      });
       // } else { // salvar editado
       //   providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
       //     $scope.backup = null;
@@ -710,4 +711,12 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
       }
     });
   };
+
+  self.abrirAtendimento = function () {
+    if (self.pedido.atendimentoId) {
+      $location.path('/atendimento/open').search('type', 'order').search('code', self.pedido.codigo);
+    } else {
+      $location.path('/atendimento/new').search('type', 'order').search('code', self.pedido.codigo);
+    }
+  }
 }

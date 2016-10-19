@@ -35,16 +35,18 @@
           <h3>Atendimento</h3>
           <div class="well">
             <dl class="dl-horizontal">
+              <dt>Código:</dt>
+              <dd>{{atendimento.atendimento.codigo ? atendimento.atendimento.codigo : 'Não disponível'}}</dd>
               <dt>Criado por:</dt>
               <dd>{{atendimento.atendimento.usuario.usuario}} ({{atendimento.atendimento.usuario.nome}})</dd>
               <dt>Criado em:</dt>
               <dd>{{atendimento.atendimento.dataCadastro | date:'short'}}</dd>
               <dt>Atualizado em:</dt>
-              <dd>{{atendimento.atendimento.dataUpdate | date:'short'}}</dd>
+              <dd>{{atendimento.atendimento.dataUpdate ? (atendimento.atendimento.dataUpdate | date:'short') : 'Não disponível'}}</dd>
               <dt>Orçamento:</dt>
               <dd>{{atendimento.atendimento.pedido.codigo}}</dd>
               <dt>Pareceres:</dt>
-              <dd>{{atendimento.atendimento.parecer.length}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
+              <dd>{{atendimento.atendimento.parecer.length ? atendimento.atendimento.parecer.length : 'Nenhum'}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
             </dl>
           </div>
         </div>
@@ -72,12 +74,12 @@
           <textarea name="" id="" cols="30" rows="8" class="form-control"></textarea>
         </div>
         <div class="col-xs-6 col-md-6">
-          <h4>Tipo de contato</h4>
+          <h4>Pessoa de contato</h4>
           <input type="text" class="form-control">
         </div>
         <div class="col-xs-6 col-md-6">
-          <h4>Pessoa de contato</h4>
-          <input type="text" class="form-control">
+          <h4>Tipo de contato</h4>
+          <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="atendimento.atendimento.parecer[0].contatoId"></select>
         </div>
       </div>
 
@@ -87,17 +89,17 @@
         </div>
         <div class="col-xs-6 col-md-6">
           <h4>Status</h4>
-          <select class="form-control"></select>
+          <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="atendimento.atendimento.historico[0].statusId"></select>
         </div>
         <div class="col-xs-6 col-md-6">
           <h4>Responsável</h4>
-          <input type="text" class="form-control">
+          <select class="form-control" ng-options="usuario.id as usuario.usuario for usuario in atendimento.usuarios" ng-model="atendimento.atendimento.historico[0].responsavelId"></select>
         </div>
         <div class="col-xs-12 col-md-12">
           <h4>Próximo Contato</h4>
-          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.options" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
+          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
             <b>Data:</b> {{dt | date:'fullDate'}}
-            <button type="button" class="btn btn-default pull-right" ng-click="aberto = true"><i class="glyphicon glyphicon-calendar"></i></button>
+            <button type="button" class="btn btn-default pull-right botao-calendario" ng-click="aberto = true"><i class="caret"></i></button>
           </div>
         </div>
         <div class="col-md-12">

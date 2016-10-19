@@ -86,6 +86,23 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
+        obterPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico) {
+          return provider.get({
+            action: 'get'
+          }, {
+            attendance_order_code: codigo,
+            get_attendance_order: getPedido,
+            get_attendance_maker: getUsuario,
+            get_attendance_note: getParecer,
+            get_attendance_note_maker: getParecer,
+            get_attendance_note_contact_type: getParecer,
+            get_attendance_history: getHistorico,
+            get_attendance_history_maker: getHistorico,
+            get_attendance_history_responsible: getHistorico,
+            get_attendance_history_status: getHistorico
+          }).$promise;
+        },
+
         editar: function (attendance) {
           return provider.save({
             action: 'edit'

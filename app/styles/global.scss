@@ -139,6 +139,10 @@ body.padding-bottom {
   }
 }
 
+.dl-horizontal {
+  margin-bottom: 0;
+}
+
 .dropdown-menu {
   &:hover, &:focus, &:active {
     outline: none;

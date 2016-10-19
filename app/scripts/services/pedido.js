@@ -78,6 +78,8 @@ angular.module('commercialApp.services')
       }
 
       this.blocos = this.formataritemsParaImpressao();
+
+      this.atendimentoId = p ? p.atendimentoId : null;
     }
 
     Pedido.prototype = {
@@ -292,6 +294,8 @@ angular.module('commercialApp.services')
           pedido.pagamentos.push(new Pagamento(Pagamento.converterEmEntrada(item)));
         });
       }
+
+      pedido.atendimentoId = p.order_attendance_id;
 
       return pedido;
     };

@@ -23,16 +23,24 @@
         <td data-label="Data de cadastro">{{status.dataCadastro | date:'dd/MM/yy'}}</td>
         <td data-label="Última atualização">{{status.dataUpdate ? (status.dataUpdate | date:'dd/MM/yy') : 'Não disponível'}}</td>
         <td class="hidden-xs">
-          <a href="" ng-click="configuracoes.editarStatusAtendimento(status)"><span
+          <a href="" ng-click="configuracoes.editarStatusAtendimento(status)" ng-if="status.id != '1001' && status.id != '1002'"><span
             class="glyphicon glyphicon-pencil"></span></a>
+          <span class="glyphicon glyphicon-lock" ng-if="status.id == '1001' || status.id == '1002'"></span>
         </td>
         <td class="hidden-xs">
-          <a href="" ng-click="configuracoes.excluirStatusAtendimento(status)"><span
+          <a href="" ng-click="configuracoes.excluirStatusAtendimento(status)" ng-if="status.id != '1001' && status.id != '1002'"><span
             class="glyphicon glyphicon-trash"></span></a>
+          <span class="glyphicon glyphicon-lock" ng-if="status.id == '1001' || status.id == '1002'"></span>
         </td>
         <td class="visible-xs-block">
-          <button class="btn btn-default pull-right" ng-click="configuracoes.editarStatusAtendimento(status)"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
-          <button class="btn btn-default pull-right" ng-click="configuracoes.excluirStatusAtendimento(status)"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
+          <button class="btn btn-default pull-right" ng-click="configuracoes.editarStatusAtendimento(status)">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Editar
+          </button>
+          <button class="btn btn-default pull-right" ng-click="configuracoes.excluirStatusAtendimento(status)" ng-if="status.id != '1001' && status.id != '1002'">
+            <span class="glyphicon glyphicon-trash"></span>
+            Excluir
+          </button>
         </td>
 
       </tr>

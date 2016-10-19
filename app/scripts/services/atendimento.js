@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Atendimento', ['Parecer', 'Pedido', 'HistoricoAtendimento', 'Usuario', function(Parecer, Pedido, HistoricoAtendimento, Usuario) {
+  .factory('Atendimento', ['$cookies', 'Parecer', 'Pedido', 'HistoricoAtendimento', 'Usuario', function($cookies, Parecer, Pedido, HistoricoAtendimento, Usuario) {
 
     function Atendimento(atendimento) {
       this.id = atendimento ? atendimento.id : '';
@@ -13,9 +13,9 @@ angular.module('commercialApp.services')
       this.pedidoId = atendimento ? atendimento.pedidoId : '';
       this.pedido = atendimento ? atendimento.pedido : new Pedido();
       this.usuarioId = atendimento ? atendimento.usuarioId : '';
-      this.usuario = atendimento ? atendimento.usuario : new Usuario();
-      this.parecer = atendimento ? atendimento.parecer : [ ];
-      this.historico = atendimento ? atendimento.historico : new HistoricoAtendimento();
+      this.usuario = atendimento ? atendimento.usuario : new Usuario(JSON.parse(window.atob($cookies.get('currentUser'))));
+      this.parecer = atendimento ? atendimento.parecer : [ new Parecer() ];
+      this.historico = atendimento ? atendimento.historico : [ new HistoricoAtendimento() ];
       this.dataCadastro = atendimento ? atendimento.dataCadastro : new Date();
       this.dataUpdate = atendimento ? atendimento.dataUpdate : null;
     }

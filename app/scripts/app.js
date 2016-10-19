@@ -69,7 +69,7 @@ angular
         controller: 'FollowUpCtrl',
         controllerAs: 'followUp'
       })
-      .when('/atendimento/:codigo?', {
+      .when('/atendimento/:action', {
         modulo: 'follow_up',
         templateUrl: 'views/atendimento.html',
         controller: 'AtendimentoCtrl',

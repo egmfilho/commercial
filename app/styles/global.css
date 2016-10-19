@@ -93,6 +93,9 @@ body.padding-bottom {
     .card .head .glyphicon-menu-up, .card #formulario-orcamento .main-head .glyphicon-menu-up, #formulario-orcamento .card .main-head .glyphicon-menu-up, .card .head .glyphicon-menu-down, .card #formulario-orcamento .main-head .glyphicon-menu-down, #formulario-orcamento .card .main-head .glyphicon-menu-down {
       float: right; }
 
+.dl-horizontal {
+  margin-bottom: 0; }
+
 .dropdown-menu:hover, .dropdown-menu:focus, .dropdown-menu:active {
   outline: none; }
 .dropdown-menu li:hover, .dropdown-menu li:focus, .dropdown-menu li:active, .dropdown-menu li > div:hover, .dropdown-menu li > div:focus, .dropdown-menu li > div:active, .dropdown-menu li > div table:hover, .dropdown-menu li > div table:focus, .dropdown-menu li > div table:active {
@@ -1033,6 +1036,9 @@ div[name="footer"] .navbar {
     margin-bottom: 10px; }
   .follow-up ul[name='historico'] {
     min-height: 250px; }
+  .follow-up .botao-calendario {
+    height: 20px;
+    padding: 0 15px; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }
