@@ -619,7 +619,7 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
 
       $rootScope.isLoading = true;
 
-      if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
+      // if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
         providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
           var result = new Pedido(Pedido.converterEmEntrada(success.data));
           $scope.backup = null;
@@ -632,17 +632,17 @@ function Orcamento($rootScope, $scope, $timeout, $uibModalStack, providerPessoa,
           console.log(error);
           $rootScope.isLoading = false;
         });
-      } else { // salvar editado
-        providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-          $scope.backup = null;
-          $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
-          $rootScope.isLoading = false;
-          $scope.mostrarOpcoes();
-        }, function (error) {
-          console.log(error);
-          $rootScope.isLoading = false;
-        });
-      }
+      // } else { // salvar editado
+      //   providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+      //     $scope.backup = null;
+      //     $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
+      //     $rootScope.isLoading = false;
+      //     $scope.mostrarOpcoes();
+      //   }, function (error) {
+      //     console.log(error);
+      //     $rootScope.isLoading = false;
+      //   });
+      // }
     }
   };
 

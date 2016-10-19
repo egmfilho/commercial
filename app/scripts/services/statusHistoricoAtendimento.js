@@ -20,7 +20,7 @@ angular.module('commercialApp.services')
       status.id = s.attendance_history_status_id;
       status.nome = s.attendance_history_status_name;
       status.dataCadastro = new Date(s.attendance_history_status_date);
-      status.dataUpdate = new Date(s.attendance_history_status_update);
+      status.dataUpdate = s.attendance_history_status_update ? new Date(s.attendance_history_status_update) : null;
 
       return status;
     };

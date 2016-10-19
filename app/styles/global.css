@@ -850,6 +850,10 @@ div[name="footer"] .navbar {
     font-size: 2em; }
     #formulario-orcamento .btn-orcamento span {
       vertical-align: -10%; }
+    #formulario-orcamento .btn-orcamento:hover {
+      text-decoration: none; }
+  #formulario-orcamento a.btn-orcamento {
+    padding: 10px; }
   #formulario-orcamento .dropdown-menu {
     min-width: 200px;
     width: 97.5%; }

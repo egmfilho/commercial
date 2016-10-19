@@ -106,7 +106,12 @@ $print-font-size: 11px;
 
     &:hover {
       @extend .highlight;
+      text-decoration: none;
     }
+  }
+
+  a.btn-orcamento {
+    padding: 10px;
   }
 
   .dropdown-menu {

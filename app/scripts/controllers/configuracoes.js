@@ -8,6 +8,7 @@ angular.module('commercialApp.controllers')
   .controller('ConfiguracoesCtrl', [
     '$rootScope',
     '$scope',
+    '$timeout',
     'ProviderUsuario',
     'Usuario',
     'ProviderPerfilUsuario',
@@ -16,9 +17,11 @@ angular.module('commercialApp.controllers')
     'ModalPerfil',
     'ProviderConfig',
     'PermissoesUsuario',
-    'TipoFollowUp',
-    'CRFollowUp',
-    function ($rootScope, $scope, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario, TipoFollowUp, CRFollowUp) {
+    'ProviderStatusAtendimento',
+    'StatusHistoricoAtendimento',
+    'ProviderTipoContato',
+    'TipoContato',
+    function ($rootScope, $scope, $timeout, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato) {
 
       var self = this,
         width = parseInt(jQuery(window).width()),
@@ -27,8 +30,8 @@ angular.module('commercialApp.controllers')
         footer = 60,
         height = jQuery(window).height() - banner - header - footer;
 
-      self.tipoFollowUp = new TipoFollowUp();
-      self.crFollowUp = new CRFollowUp();
+      self.statusAtendimento = new StatusHistoricoAtendimento();
+      self.tipoContato = new TipoContato();
 
       self.usuariosPagination = {
         current: 1,
@@ -42,13 +45,13 @@ angular.module('commercialApp.controllers')
         total: 0
       };
 
-      self.tiposFollowUpPagination = {
+      self.statusAtendimentoPagination = {
         current: 1,
         max: 15,
         total: 0
       };
 
-      self.crsFollowUpPagination = {
+      self.tipoContatoPagination = {
         current: 1,
         max: 15,
         total: 0
@@ -61,8 +64,8 @@ angular.module('commercialApp.controllers')
       } else {
         self.usuariosPagination.max = 10;
         self.perfisPagination.max = 10;
-        self.tiposFollowUpPagination.max = 10;
-        self.crsFollowUpPagination.max = 10;
+        self.statusAtendimentoPagination.max = 10;
+        self.tipoContatoPagination.max = 10;
       }
 
       $scope.$on('$viewContentLoaded', function () {
@@ -70,8 +73,8 @@ angular.module('commercialApp.controllers')
         getUsuarios();
         getPerfis();
         getPermissoes();
-        getTiposFollowUp();
-        getCRsFollowUp();
+        getStatusAtendimentoArray();
+        getTiposContato();
       });
 
       function getUsuarios() {
@@ -114,22 +117,32 @@ angular.module('commercialApp.controllers')
         });
       }
 
-      function getTiposFollowUp() {
-        self.tiposFollowUp = [ new TipoFollowUp({
-          codigo: 1001,
-          nome: 'Tipo teste',
-          dataCadastro: new Date(),
-          dataUpdate: new Date()
-        }) ];
+      function getStatusAtendimentoArray() {
+        $rootScope.isLoading = true;
+        self.statusAtendimentoArray = [];
+        providerStatusAtendimento.obterTodos().then(function (success) {
+          angular.forEach(success.data, function (item, index) {
+            self.statusAtendimentoArray.push(new StatusHistoricoAtendimento(StatusHistoricoAtendimento.converterEmEntrada(item)));
+          });
+          $rootScope.isLoading = false;
+        }, function (error) {
+          console.log(error);
+          $rootScope.isLoading = false;
+        });
       }
 
-      function getCRsFollowUp() {
-        self.crsFollowUp = [ new CRFollowUp({
-          codigo: 1001,
-          nome: 'CR teste',
-          dataCadastro: new Date(),
-          dataUpdate: new Date()
-        }) ];
+      function getTiposContato() {
+        $rootScope.isLoading = true;
+        self.tiposContato = [];
+        providerTipoContato.obterTodos().then(function (success) {
+          angular.forEach(success.data, function (item, index) {
+            self.tiposContato.push(new TipoContato(TipoContato.converterEmEntrada(item)));
+          });
+          $rootScope.isLoading = false;
+        }, function (error) {
+          console.log(error);
+          $rootScope.isLoading = false;
+        });
       }
 
       this.atualizarUsuarios = function () {
@@ -211,56 +224,124 @@ angular.module('commercialApp.controllers')
         });
       };
 
-      this.atualizarTiposFollowUp = function () {
-        getTiposFollowUp();
+      this.atualizarStatusAtendimento = function () {
+        getStatusAtendimentoArray();
       };
 
-      this.editarTipoFollowUp = function (tipo) {
-        self.tipoFollowUp = new TipoFollowUp(tipo);
-        jQuery('#modalTipo').modal('show');
+      this.editarStatusAtendimento = function (tipo) {
+        self.statusAtendimento = new StatusHistoricoAtendimento(tipo);
+        jQuery('#modalStatus').modal('show').find('input').focus().select();
+        $timeout(function () {
+          jQuery('#modalStatus').find('input').focus().select();
+        }, 500);
       };
 
-      this.adicionarTipoFollowUp = function () {
-        jQuery('#modalTipo').modal('show');
+      this.adicionarStatusAtendimento = function () {
+        jQuery('#modalStatus').modal('show');
       };
 
-      this.excluirTipoFollowUp = function () {
-        jQuery('#modalTipo').modal('show');
+      this.excluirStatusAtendimento = function () {
+        jQuery('#modalStatus').modal('show');
       };
 
-      this.salvarTipoFollowUp = function () {
-        jQuery('#modalTipo').modal('hide');
+      this.salvarStatusAtendimento = function () {
+        if (!self.statusAtendimento.nome) {
+          $rootScope.alerta.show('Insira um nome!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.isLoading = true;
+        if (self.statusAtendimento.id) {
+          providerStatusAtendimento.editar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function(success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Status adicionado!', 'alert-success');
+            jQuery('#modalStatus').modal('hide');
+            self.statusAtendimento = new StatusHistoricoAtendimento();
+          }, function(error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+            jQuery('#modalStatus').modal('hide');
+            self.statusAtendimento = new StatusHistoricoAtendimento();
+          });
+        } else {
+          providerStatusAtendimento.adicionar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function (success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Status adicionado!', 'alert-success');
+            jQuery('#modalStatus').modal('hide');
+            self.statusAtendimento = new StatusHistoricoAtendimento();
+          }, function (error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+            jQuery('#modalStatus').modal('hide');
+            self.statusAtendimento = new StatusHistoricoAtendimento();
+          });
+        }
       };
 
-      this.cancelarModalTipoFollowUp = function () {
-        jQuery('#modalTipo').modal('hide');
-        self.tipoFollowUp = new TipoFollowUp();
+      this.cancelarModalStatusAtendimento = function () {
+        jQuery('#modalStatus').modal('hide');
+        self.statusAtendimento = new StatusHistoricoAtendimento();
       };
 
-      this.atualizarCRsFollowUp = function () {
-        getCRsFollowUp();
+      this.atualizarTiposContato = function () {
+        getTiposContato();
       };
 
-      this.editarCRFollowUp = function (cr) {
-        self.crFollowUp = new CRFollowUp(cr);
-        jQuery('#modalCR').modal('show');
+      this.editarTipoContato = function (tipo) {
+        self.tipoContato = new TipoContato(tipo);
+        jQuery('#modalTipoContato').modal('show');
+        $timeout(function () {
+          jQuery('#modalTipoContato').find('input').focus().select();
+        }, 500);
       };
 
-      this.adicionarCRFollowUp = function () {
-        jQuery('#modalCR').modal('show');
+      this.adicionarTipoContato = function () {
+        jQuery('#modalTipoContato').modal('show');
       };
 
-      this.excluirCRFollowUp = function () {
-        jQuery('#modalCR').modal('show');
+      this.excluirTipoContato = function () {
+        jQuery('#modalTipoContato').modal('show');
       };
 
-      this.salvarCRFollowUp = function () {
-        jQuery('#modalCR').modal('hide');
+      this.salvarTipoContato = function () {
+        if (!self.tipoContato.nome) {
+          $rootScope.alerta.show('Insira um nome!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.isLoading = true;
+        if (self.tipoContato.id) {
+          providerTipoContato.editar(TipoContato.converterEmSaida(self.tipoContato)).then(function (success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Tipo de contato adicionado!', 'alert-success');
+            jQuery('#modalTipoContato').modal('hide');
+            self.tipoContato = new TipoContato();
+          }, function (error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
+            jQuery('#modalTipoContato').modal('hide');
+            self.tipoContato = new TipoContato();
+          });
+        } else {
+          providerTipoContato.adicionar(TipoContato.converterEmSaida(self.tipoContato)).then(function (success) {
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Tipo de contato adicionado!', 'alert-success');
+            jQuery('#modalTipoContato').modal('hide');
+            self.tipoContato = new TipoContato();
+          }, function (error) {
+            console.log(error);
+            $rootScope.isLoading = false;
+            $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
+            jQuery('#modalTipoContato').modal('hide');
+            self.tipoContato = new TipoContato();
+          });
+        }
       };
 
-      this.cancelarModalCRFollowUp = function () {
-        jQuery('#modalCR').modal('hide');
-        self.crFollowUp = new CRFollowUp();
+      this.cancelarModalTipoContato = function () {
+        jQuery('#modalTipoContato').modal('hide');
+        self.tipoContato = new TipoContato();
       };
 
     }]);

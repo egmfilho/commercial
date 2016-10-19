@@ -71,11 +71,11 @@
           <h3>Parecer</h3>
           <textarea name="" id="" cols="30" rows="8" class="form-control"></textarea>
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 col-md-6">
           <h4>Tipo de contato</h4>
           <input type="text" class="form-control">
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 col-md-6">
           <h4>Pessoa de contato</h4>
           <input type="text" class="form-control">
         </div>
@@ -85,17 +85,17 @@
         <div class="col-md-12">
           <h3 class="">Info</h3>
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 col-md-6">
           <h4>Status</h4>
           <select class="form-control"></select>
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-6 col-md-6">
           <h4>Responsável</h4>
           <input type="text" class="form-control">
         </div>
-        <div class="col-md-12">
+        <div class="col-xs-12 col-md-12">
           <h4>Próximo Contato</h4>
-          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.options" ng-required="true" close-text="Fechar">
+          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.options" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
             <b>Data:</b> {{dt | date:'fullDate'}}
             <button type="button" class="btn btn-default pull-right" ng-click="aberto = true"><i class="glyphicon glyphicon-calendar"></i></button>
           </div>
