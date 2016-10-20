@@ -177,6 +177,26 @@ body.padding-bottom {
   .btn.btn-primary:hover, .btn.btn-primary:focus {
     background-color: #3b5998; }
 
+.botao-color-picker {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 34px;
+  padding: 4px 4px; }
+  .botao-color-picker .mostrador {
+    width: 26px;
+    height: 24px;
+    background-color: red;
+    margin: 0 auto;
+    cursor: pointer; }
+  .botao-color-picker .caret {
+    float: right; }
+
+.mostrador-de-cor {
+  width: 18px;
+  height: 18px;
+  background-color: red; }
+
 .panel-primary {
   border-color: #3b5998; }
   .panel-primary > .panel-heading {
@@ -1053,13 +1073,15 @@ div[name="footer"] .navbar {
     margin: 0 -15px;
     margin-bottom: 10px; }
   .atendimento .cliente {
-    max-height: 164px;
-    height: 164px;
+    max-height: 140px;
+    height: 140px;
     overflow-y: auto; }
   .atendimento .info {
-    max-height: 165px;
-    height: 165px;
+    max-height: 189px;
+    height: 189px;
     overflow-y: auto; }
+    .atendimento .info .label {
+      font-weight: 400; }
   .atendimento .historico ul {
     max-height: 305px;
     height: 305px;

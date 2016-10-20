@@ -33,6 +33,7 @@
         <table class="tabela tabela-bordered tabela-esticada">
           <thead>
           <tr>
+            <th></th>
             <th>Código</th>
             <th>Orçamento</th>
             <th>Cliente</th>
@@ -48,6 +49,8 @@
           </thead>
           <tbody>
           <tr ng-repeat="a in followUp.atendimentos">
+            <td class="hidden-xs"><span class="glyphicon"><div class="mostrador-de-cor" ng-style="{backgroundColor:a.historico[0].status.cor}"></div></span></td>
+            <td class="visible-xs-block" data-label="Status">{{a.historico[0].status.nome}}</td>
             <td data-label="Código">{{a.codigo}}</td>
             <td data-label="Código do orçamento">{{a.pedido.codigo}}</td>
             <td data-label="Cliente">{{a.pedido.cliente.nome | truncate:35}}</td>

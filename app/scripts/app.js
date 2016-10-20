@@ -23,7 +23,8 @@ angular
     'ui.bootstrap',
     'ui.mask',
     'ds.clock',
-    'multipleSelect'
+    'multipleSelect',
+    'colorpicker.module'
   ])
   .config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInjector');

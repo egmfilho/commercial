@@ -8,14 +8,15 @@ angular.module('commercialApp.services')
   .factory('Atendimento', ['$cookies', 'Parecer', 'Pedido', 'HistoricoAtendimento', 'Usuario', function($cookies, Parecer, Pedido, HistoricoAtendimento, Usuario) {
 
     function Atendimento(atendimento) {
+      var me = JSON.parse(window.atob($cookies.get('currentUser')));
       this.id = atendimento ? atendimento.id : '';
       this.codigo = atendimento ? atendimento.codigo : '';
       this.pedidoId = atendimento ? atendimento.pedidoId : '';
       this.pedido = atendimento ? atendimento.pedido : new Pedido();
-      this.usuarioId = atendimento ? atendimento.usuarioId : '';
-      this.usuario = atendimento ? atendimento.usuario : new Usuario(JSON.parse(window.atob($cookies.get('currentUser'))));
-      this.parecer = atendimento ? atendimento.parecer : [ new Parecer() ];
-      this.historico = atendimento ? atendimento.historico : [ new HistoricoAtendimento() ];
+      this.usuarioId = atendimento ? atendimento.usuarioId : me.id;
+      this.usuario = atendimento ? atendimento.usuario : new Usuario(me);
+      this.parecer = atendimento ? atendimento.parecer : [ ];
+      this.historico = atendimento ? atendimento.historico : [ ];
       this.dataCadastro = atendimento ? atendimento.dataCadastro : new Date();
       this.dataUpdate = atendimento ? atendimento.dataUpdate : null;
     }
@@ -39,7 +40,7 @@ angular.module('commercialApp.services')
       },
 
       isEncerrado: function() {
-        return this.historico[0].statusId === '1002';
+        return this.historico.length ? this.historico[0].statusId === '1002' : false;
       }
 
     };

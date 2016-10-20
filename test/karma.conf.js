@@ -37,6 +37,7 @@ module.exports = function(config) {
       'bower_components/egmfilho-input-filters/src/filters.js',
       'bower_components/angular-ui-clock/dist/angular-clock.js',
       'bower_components/angularMultipleSelect/build/multiple-select.min.js',
+      'bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

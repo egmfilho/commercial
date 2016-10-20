@@ -43,6 +43,8 @@
             <dl class="dl-horizontal">
               <dt>Código:</dt>
               <dd>{{atendimento.atendimento.codigo ? atendimento.atendimento.codigo : 'Não disponível'}}</dd>
+              <dt>Status:</dt>
+              <dd><span class="label label-default" ng-style="{backgroundColor:atendimento.atendimento.historico[0].status.cor}">{{atendimento.atendimento.historico.length ? atendimento.atendimento.historico[0].status.nome : 'Não disponível'}}</span></dd>
               <dt>Criado por:</dt>
               <dd>{{atendimento.atendimento.usuario.usuario}} ({{atendimento.atendimento.usuario.nome}})</dd>
               <dt>Criado em:</dt>
@@ -98,20 +100,20 @@
             <!--Limpar-->
           <!--</a>-->
           <div class="parecer well">
-            <textarea class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()"></textarea>
+            <textarea class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.texto"></textarea>
             <div class="row">
               <div class="col-xs-12 col-md-12">
                 <h4 class="hidden-md">Pessoa de contato</h4>
                 <h4 class="visible-md-block">Pessoa</h4>
-                <input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()">
+                <input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.pessoaDeContato">
               </div>
               <div class="col-xs-6 col-md-6">
                 <h4>Tipo de contato</h4>
-                <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+                <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
               </div>
               <div class="col-xs-6 col-md-6">
                 <h4>&nbsp;</h4>
-                <button class="btn btn-default btn-block" ng-disabled="atendimento.atendimento.isEncerrado()">
+                <button class="btn btn-default btn-block" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.limparParecer()">
                   <span class="glyphicon glyphicon-erase"></span>
                   Limpar
                 </button>
@@ -127,16 +129,16 @@
         <!--</div>-->
         <div class="col-xs-6 col-md-6">
           <h4>Status</h4>
-          <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="atendimento.atendimento.historico[0].statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+          <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="novoHistorico.statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
         </div>
         <div class="col-xs-6 col-md-6">
           <h4>Responsável</h4>
-          <select class="form-control" ng-options="usuario.id as usuario.usuario for usuario in atendimento.usuarios" ng-model="atendimento.atendimento.historico[0].responsavelId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+          <select class="form-control" ng-options="usuario.id as usuario.usuario for usuario in atendimento.usuarios" ng-model="novoHistorico.responsavelId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
         </div>
         <div class="col-xs-12 col-md-12">
           <h4>Próximo Contato</h4>
-          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="dt" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
-            <b>Data:</b> {{dt | date:'fullDate'}}
+          <div class="well well-sm clearfix" uib-datepicker-popup popup-placement="top-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
+            <b>Data:</b> {{novoHistorico.proximoContato | date:'fullDate'}}
             <button type="button" class="btn btn-default pull-right botao-calendario" ng-click="aberto = true" ng-disabled="atendimento.atendimento.isEncerrado()"><i class="caret"></i></button>
           </div>
         </div>

@@ -10,6 +10,7 @@ angular.module('commercialApp.services')
     function StatusHistoricoAtendimento(status) {
       this.id = status ? status.id : '';
       this.nome = status ? status.nome : '';
+      this.cor = status ? status.cor : '#ff0000';
       this.dataCadastro = status ? status.dataCadastro : new Date();
       this.dataUpdate = status ? status.dataUpdate : null;
     }
@@ -19,6 +20,7 @@ angular.module('commercialApp.services')
 
       status.id = s.attendance_history_status_id;
       status.nome = s.attendance_history_status_name;
+      status.cor = s.attendance_history_status_color;
       status.dataCadastro = new Date(s.attendance_history_status_date);
       status.dataUpdate = s.attendance_history_status_update ? new Date(s.attendance_history_status_update) : null;
 
@@ -30,6 +32,7 @@ angular.module('commercialApp.services')
 
       s.attendance_history_status_id = status.id;
       s.attendance_history_status_name = status.nome;
+      s.attendance_history_status_color = status.cor;
 
       return s;
     };

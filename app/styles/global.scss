@@ -267,6 +267,32 @@ body.padding-bottom {
   }
 }
 
+.botao-color-picker {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 34px;
+  padding: 4px 4px;
+
+  .mostrador {
+    width: 26px;
+    height: 24px;
+    background-color: red;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+
+  .caret {
+    float: right;
+  }
+}
+
+.mostrador-de-cor {
+  width: 18px;
+  height: 18px;
+  background-color: red;
+}
+
 .panel-primary {
   border-color: $cor-principal;
 

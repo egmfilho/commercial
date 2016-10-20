@@ -221,6 +221,9 @@ angular.module('commercialApp.controllers')
         }, function (error) {
           console.log(error);
           $rootScope.isLoading = false;
+          if (error.status === 420) {
+            $rootScope.alerta.show('Não é possível excluir perfis em uso!', 'alert-danger');
+          }
         });
       };
 
@@ -230,7 +233,7 @@ angular.module('commercialApp.controllers')
 
       this.editarStatusAtendimento = function (tipo) {
         self.statusAtendimento = new StatusHistoricoAtendimento(tipo);
-        jQuery('#modalStatus').modal('show').find('input').focus().select();
+        jQuery('#modalStatus').modal('show');
         $timeout(function () {
           jQuery('#modalStatus').find('input').focus().select();
         }, 500);
@@ -238,10 +241,27 @@ angular.module('commercialApp.controllers')
 
       this.adicionarStatusAtendimento = function () {
         jQuery('#modalStatus').modal('show');
+        $timeout(function () {
+          jQuery('#modalStatus').find('input').focus();
+        }, 500);
       };
 
-      this.excluirStatusAtendimento = function () {
-        jQuery('#modalStatus').modal('show');
+      this.excluirStatusAtendimento = function (status) {
+        if (!confirm('Excluir status?')) {
+          return;
+        }
+
+        $rootScope.isLoading = true;
+        providerStatusAtendimento.excluir(status.id).then(function(success) {
+          $rootScope.isLoading = false;
+          $rootScope.alerta.show('Status removido!', 'alert-success');
+        }, function(error) {
+          $rootScope.isLoading = false;
+          console.log(error);
+          if (error.status === 420) {
+            $rootScope.alerta.show('Não é possível excluir um Status em uso!', 'alert-danger');
+          }
+        });
       };
 
       this.salvarStatusAtendimento = function () {
@@ -299,8 +319,22 @@ angular.module('commercialApp.controllers')
         jQuery('#modalTipoContato').modal('show');
       };
 
-      this.excluirTipoContato = function () {
-        jQuery('#modalTipoContato').modal('show');
+      this.excluirTipoContato = function (tipo) {
+        if (!confirm('Excluir tipo de contato?')) {
+          return;
+        }
+
+        $rootScope.isLoading = true;
+        providerTipoContato.excluir(tipo.id).then(function(success) {
+          $rootScope.isLoading = false;
+          $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
+        }, function(error) {
+          $rootScope.isLoading = false;
+          console.log(error);
+          if (error.status === 420) {
+            $rootScope.alerta.show('Não é possível excluir tipos de contato em uso!', 'alert-danger');
+          }
+        });
       };
 
       this.salvarTipoContato = function () {
