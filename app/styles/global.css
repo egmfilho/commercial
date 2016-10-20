@@ -177,6 +177,14 @@ body.padding-bottom {
   .btn.btn-primary:hover, .btn.btn-primary:focus {
     background-color: #3b5998; }
 
+.panel-primary {
+  border-color: #3b5998; }
+  .panel-primary > .panel-heading {
+    background-color: #6481bb;
+    border-color: #3b5998; }
+    .panel-primary > .panel-heading .panel-title {
+      color: white !important; }
+
 input.form-control {
   padding-left: 6px;
   padding-right: 6px; }
@@ -1036,9 +1044,46 @@ div[name="footer"] .navbar {
     margin-bottom: 10px; }
   .follow-up ul[name='historico'] {
     min-height: 250px; }
-  .follow-up .botao-calendario {
-    height: 20px;
-    padding: 0 15px; }
+
+.atendimento {
+  margin-top: 40px;
+  margin-bottom: 40px; }
+  .atendimento .card .head, .atendimento .card #formulario-orcamento .main-head, #formulario-orcamento .atendimento .card .main-head {
+    padding: 6px;
+    margin: 0 -15px;
+    margin-bottom: 10px; }
+  .atendimento .cliente {
+    max-height: 164px;
+    height: 164px;
+    overflow-y: auto; }
+  .atendimento .info {
+    max-height: 165px;
+    height: 165px;
+    overflow-y: auto; }
+  .atendimento .historico ul {
+    max-height: 305px;
+    height: 305px;
+    overflow-y: scroll; }
+  .atendimento .historico .panel-default > .panel-heading {
+    background-color: white; }
+    .atendimento .historico .panel-default > .panel-heading a:hover, .atendimento .historico .panel-default > .panel-heading a:focus {
+      text-decoration: none; }
+    .atendimento .historico .panel-default > .panel-heading span {
+      font-weight: 400; }
+    .atendimento .historico .panel-default > .panel-heading b {
+      font-weight: 500; }
+    .atendimento .historico .panel-default > .panel-heading .panel-title {
+      color: #6481bb !important; }
+  .atendimento .historico .panel-default .panel-body {
+    color: #444; }
+  .atendimento .parecer textarea {
+    max-height: 220px;
+    height: 220px; }
+  .atendimento .status {
+    margin-top: 14px; }
+    .atendimento .status .botao-calendario {
+      height: 20px;
+      padding: 0 15px; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }

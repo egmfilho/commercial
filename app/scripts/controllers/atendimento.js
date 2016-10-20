@@ -87,7 +87,7 @@ angular.module('commercialApp.controllers')
         $rootScope.isLoading = true;
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
-          console.log(self.atendimento);
+          console.log(success.data, self.atendimento);
           $rootScope.isLoading = false;
         }, function (error) {
           console.log(error);

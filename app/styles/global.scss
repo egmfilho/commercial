@@ -267,6 +267,19 @@ body.padding-bottom {
   }
 }
 
+.panel-primary {
+  border-color: $cor-principal;
+
+  > .panel-heading {
+    background-color: $cor-principal-clara;
+    border-color: $cor-principal;
+
+    .panel-title {
+      color: white !important;
+    }
+  }
+}
+
 input.form-control{
   padding-left: 6px;
   padding-right: 6px;

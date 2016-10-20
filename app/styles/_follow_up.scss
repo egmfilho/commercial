@@ -11,10 +11,80 @@
   ul[name='historico'] {
     min-height: 250px;
   }
+}
 
-  .botao-calendario {
-    height: 20px;
-    padding: 0 15px;
+.atendimento {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  .card .head {
+    padding: 6px;
+    margin: 0 -15px;
+    margin-bottom: 10px;
+  }
+
+  .cliente {
+    max-height: 164px;
+    height: 164px;
+    overflow-y: auto;
+  }
+
+  .info {
+    max-height: 165px;
+    height: 165px;
+    overflow-y: auto;
+  }
+
+  .historico {
+    ul {
+      max-height: 305px;
+      height: 305px;
+      overflow-y: scroll;
+    }
+
+    .panel-default {
+      > .panel-heading {
+        background-color: white;
+
+        a {
+          &:hover, &:focus {
+            text-decoration: none;
+          }
+        }
+
+        span {
+          font-weight: 400;
+        }
+
+        b {
+          font-weight: 500;
+        }
+
+        .panel-title {
+          color: $cor-principal-clara !important;
+        }
+      }
+
+      .panel-body {
+        color: $cor-preto-leve;
+      }
+    }
+  }
+
+  .parecer {
+    textarea {
+      max-height: 220px;
+      height: 220px;
+    }
+  }
+
+  .status {
+    margin-top: 14px;
+
+    .botao-calendario {
+      height: 20px;
+      padding: 0 15px;
+    }
   }
 }
 

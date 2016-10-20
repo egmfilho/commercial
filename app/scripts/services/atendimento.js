@@ -36,6 +36,10 @@ angular.module('commercialApp.services')
         if (this.pedidoId && this.pedido) {
           return this.pedido.cliente;
         }
+      },
+
+      isEncerrado: function() {
+        return this.historico[0].statusId === '1002';
       }
 
     };
