@@ -65,13 +65,13 @@ angular.module('commercialApp.controllers')
       }
 
       //$scope.excluir = function () {
-      //  $rootScope.isLoading = true;
+      //  $rootScope.loading.load();
       //  provider.excluir(self.usuario.id).then(function (success) {
-      //    $rootScope.isLoading = false;
+      //    $rootScope.loading.unload();
       //    $uibModalInstance.close('Usuário excluído!');
       //  }, function (error) {
       //    console.log(error);
-      //    $rootScope.isLoading = false;
+      //    $rootScope.loading.unload();
       //  });
       //};
 
@@ -82,27 +82,27 @@ angular.module('commercialApp.controllers')
 
         console.log(Usuario.converterEmSaida(self.usuario));
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         if (self.usuario.id) {
           provider.editar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Usuário "' + self.usuario.usuario + '" editado!', 'alert-success');
             $uibModalInstance.close(true);
           }, function (error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
             }
           });
         } else {
           provider.adicionar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Usuário registrado com sucesso!', 'alert-success');
             $uibModalInstance.close(true);
           }, function (error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
             }

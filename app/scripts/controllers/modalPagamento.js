@@ -28,7 +28,7 @@ angular.module('commercialApp.controllers')
         $scope.cdModalidade = '';
         $scope.nmModalidade = '';
         lookup_valor = $scope.restante();
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
 
         $timeout(function() {
           jQuery('input[name="codigo"]').focus();
@@ -96,15 +96,15 @@ angular.module('commercialApp.controllers')
 
         if (!$scope.cdModalidade) return;
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerModalidade.obterPorCodigo($scope.cdModalidade).then(function(success) {
           $scope.modalidade = new Modalidade(Modalidade.converterEmEntrada(success.data));
           $scope.cdModalidade = $scope.modalidade.codigo;
           $scope.nmModalidade = $scope.modalidade.nome;
           $scope.avancar('input', 'valor');
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           if (error.status == 404) {
             console.log('Modalidade não encontrada!');
             $rootScope.alerta.show('Modalidade não encontrada!');

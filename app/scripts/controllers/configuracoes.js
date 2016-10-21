@@ -78,70 +78,70 @@ angular.module('commercialApp.controllers')
       });
 
       function getUsuarios() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerUsuario.obterTodos(true).then(function (success) {
           self.usuariosPagination.total = success.data.length;
           self.usuarios = [];
           angular.forEach(success.data, function (item, index) {
             self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getPerfis() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerPerfil.obterTodos().then(function (success) {
           self.perfisPagination.total = success.data.length;
           self.perfis = [];
           angular.forEach(success.data, function (item, index) {
             self.perfis.push(new PerfilUsuario(PerfilUsuario.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getPermissoes() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerConfig.obterPermissoes().then(function (success) {
           self.permissoes = new PermissoesUsuario(PermissoesUsuario.converterEmEntrada(success.data));
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getStatusAtendimentoArray() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         self.statusAtendimentoArray = [];
         providerStatusAtendimento.obterTodos().then(function (success) {
           angular.forEach(success.data, function (item, index) {
             self.statusAtendimentoArray.push(new StatusHistoricoAtendimento(StatusHistoricoAtendimento.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getTiposContato() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         self.tiposContato = [];
         providerTipoContato.obterTodos().then(function (success) {
           angular.forEach(success.data, function (item, index) {
             self.tiposContato.push(new TipoContato(TipoContato.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
@@ -154,15 +154,15 @@ angular.module('commercialApp.controllers')
           getPerfis();
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerUsuario.obterPorId(usuario.id, true, true).then(function (success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           ModalUsuario.show(new Usuario(Usuario.converterEmEntrada(success.data)), self.perfis).then(function (success) {
             self.atualizarUsuarios();
           });
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 
@@ -180,20 +180,39 @@ angular.module('commercialApp.controllers')
         });
       };
 
+      this.excluirUsuario = function(usuario) {
+        if (!confirm('Excluir usuario?')) {
+          return;
+        }
+
+        $rootScope.loading.load();
+        providerUsuario.excluir(usuario.id).then(function (success) {
+          $rootScope.loading.unload();
+          self.atualizarUsuarios();
+          $rootScope.alerta.show('Usuário excluído!', 'alert-success');
+        }, function (error) {
+          console.log(error);
+          $rootScope.loading.unload();
+          if (error.status === 420) {
+            $rootScope.alerta.show(error.status.message, 'alert-danger');
+          }
+        });
+      };
+
       this.atualizarPerfis = function () {
         getPerfis();
       };
 
       this.editarPerfil = function (perfil) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerPerfil.obterPorId(perfil.id, true).then(function (success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           ModalPerfil.show(new PerfilUsuario(PerfilUsuario.converterEmEntrada(success.data))).then(function (success) {
             self.atualizarPerfis();
           });
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 
@@ -212,15 +231,14 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerPerfil.excluir(perfil.id).then(function (success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           self.atualizarPerfis();
           $rootScope.alerta.show('Perfil excluído!', 'alert-success');
-          self.getPerfis();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           if (error.status === 420) {
             $rootScope.alerta.show('Não é possível excluir perfis em uso!', 'alert-danger');
           }
@@ -251,12 +269,12 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerStatusAtendimento.excluir(status.id).then(function(success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           $rootScope.alerta.show('Status removido!', 'alert-success');
         }, function(error) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           console.log(error);
           if (error.status === 420) {
             $rootScope.alerta.show('Não é possível excluir um Status em uso!', 'alert-danger');
@@ -270,28 +288,30 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         if (self.statusAtendimento.id) {
           providerStatusAtendimento.editar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function(success) {
-            $rootScope.isLoading = false;
-            $rootScope.alerta.show('Status adicionado!', 'alert-success');
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Status editado!', 'alert-success');
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
+            self.atualizarStatusAtendimento();
           }, function(error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
           });
         } else {
           providerStatusAtendimento.adicionar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function (success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Status adicionado!', 'alert-success');
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
+            self.atualizarStatusAtendimento();
           }, function (error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
           });
@@ -324,12 +344,12 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerTipoContato.excluir(tipo.id).then(function(success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
         }, function(error) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           console.log(error);
           if (error.status === 420) {
             $rootScope.alerta.show('Não é possível excluir tipos de contato em uso!', 'alert-danger');
@@ -343,29 +363,31 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         if (self.tipoContato.id) {
           providerTipoContato.editar(TipoContato.converterEmSaida(self.tipoContato)).then(function (success) {
-            $rootScope.isLoading = false;
-            $rootScope.alerta.show('Tipo de contato adicionado!', 'alert-success');
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Tipo de contato editado!', 'alert-success');
             jQuery('#modalTipoContato').modal('hide');
             self.tipoContato = new TipoContato();
+            self.atualizarTiposContato();
           }, function (error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
             jQuery('#modalTipoContato').modal('hide');
             self.tipoContato = new TipoContato();
           });
         } else {
           providerTipoContato.adicionar(TipoContato.converterEmSaida(self.tipoContato)).then(function (success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Tipo de contato adicionado!', 'alert-success');
             jQuery('#modalTipoContato').modal('hide');
             self.tipoContato = new TipoContato();
+            self.atualizarTiposContato();
           }, function (error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
             jQuery('#modalTipoContato').modal('hide');
             self.tipoContato = new TipoContato();

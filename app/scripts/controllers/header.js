@@ -41,16 +41,16 @@ angular.module('commercialApp.controllers')
         return;
       }
 
-      $rootScope.isLoading = true;
+      $rootScope.loading.load();
       provider.novaSenha(JSON.parse(window.atob($cookies.get('currentUser'))).id, self.novaSenha).then(function(success) {
         jQuery('#modalSenha').modal('hide');
         self.novaSenha = '';
         self.novaSenhaConfirm = '';
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
         $rootScope.alerta.show('Senha alterada!', 'alert-success');
       }, function(error) {
         console.log(error);
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
       });
     };
 

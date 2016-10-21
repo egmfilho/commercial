@@ -195,7 +195,8 @@ body.padding-bottom {
 .mostrador-de-cor {
   width: 18px;
   height: 18px;
-  background-color: red; }
+  background-color: red;
+  margin: 0 auto; }
 
 .panel-primary {
   border-color: #3b5998; }

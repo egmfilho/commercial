@@ -44,8 +44,6 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.$on('$viewContentLoaded', function () {
-        $rootScope.isLoading = true;
-
         if ($routeParams.action) {
           if (!$routeParams.code || !$routeParams.type) {
             $location.path('/');
@@ -81,7 +79,7 @@ angular.module('commercialApp.controllers')
       });
 
       function getPedido(codigo) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerPedido.obterPedidoPorCodigo(codigo, null, null, null, true).then(function (success) {
           var pedido = new Pedido(Pedido.converterEmEntrada(success.data));
           console.log(pedido);
@@ -90,77 +88,85 @@ angular.module('commercialApp.controllers')
             $location.path('/follow-up');
           }
           self.atendimento.setPedido(pedido);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getAtendimento(codigo) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
           console.log(success.data, self.atendimento);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getAtendimentoPorPedido(codigoPedido) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerAtendimento.obterPorCodigoPedido(codigoPedido, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getStatusAtendimento() {
         self.statusArray = [];
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerStatusAtendimento.obterTodos().then(function (success) {
           angular.forEach(success.data, function (item, index) {
             self.statusArray.push(new StatusHistoricoAtendimento(StatusHistoricoAtendimento.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
 
       function getTiposContato() {
         self.tiposContato = [];
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerTipoContato.obterTodos().then(function(success) {
           angular.forEach(success.data, function(item, index) {
             self.tiposContato.push(new TipoContato(TipoContato.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         })
       }
 
       function getUsuarios() {
         self.usuarios = [];
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         providerUsuario.obterTodos().then(function (success) {
           angular.forEach(success.data, function(item, index) {
             self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       }
+
+      this.continuar = function () {
+        var att = new Atendimento(self.atendimento);
+        att.parecer = new Parecer($scope.novoParecer);
+        att.historico = new HistoricoAtendimento($scope.novoHistorico);
+
+        console.log(Atendimento.converterEmSaida(att));
+      };
 
     }]);

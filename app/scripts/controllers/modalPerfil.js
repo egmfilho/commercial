@@ -32,27 +32,27 @@ angular.module('commercialApp.controllers')
 
         console.log(PerfilUsuario.converterEmSaida(self.perfil));
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         if (self.perfil.id) {
           provider.editar(PerfilUsuario.converterEmSaida(self.perfil)).then(function(success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Perfil "' + self.perfil.nome + '" editado!', 'alert-success');
             $uibModalInstance.close(true);
           }, function(error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             if (error.status == 420) {
               $rootScope.alerta.show('Nome de perfil ja registrado!', 'alert-danger');
             }
           });
         } else {
           provider.adicionar(PerfilUsuario.converterEmSaida(self.perfil)).then(function(success) {
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             $rootScope.alerta.show('Perfil registrado com sucesso!', 'alert-success');
             $uibModalInstance.close(true);
           }, function(error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
             if (error.status == 420) {
               $rootScope.alerta.show('Nome de perfil ja registrado!', 'alert-danger');
             }

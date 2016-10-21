@@ -25,7 +25,7 @@ angular.module('commercialApp.services')
       this.cadastro = pessoa ? pessoa.cadastro : new Date();
       this.enderecoId = pessoa ? pessoa.enderecoId : '';
       this.endereco = pessoa ? pessoa.endereco : new Endereco();
-      this.tpPessoa = pessoa ? pessoa.tpPessoa : ''; // Cliente - Funcionario
+      this.tpPessoa = pessoa ? pessoa.tpPessoa : ''; // Cliente / Funcionario
     }
 
     Pessoa.prototype = {

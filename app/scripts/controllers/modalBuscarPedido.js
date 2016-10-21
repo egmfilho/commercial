@@ -109,15 +109,15 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         console.log('busca de orçamento por código');
         provider.obterPedidoPorCodigo(codigo, true, null, null, true, null, null).then(function(success) {
           $scope.pedidos = [ ];
           $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(success.data)));
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           if (error.status == 404) {
             console.log('Orçamento não encontrado!');
             $rootScope.alerta.show('Orçamento não encontrado!');
@@ -144,7 +144,7 @@ angular.module('commercialApp.controllers')
         if ($scope.cdPedido) {
           $scope.buscarPorCodigoPedido($scope.cdPedido);
         } else {
-          $rootScope.isLoading = true;
+          $rootScope.loading.load();
 
           var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
               end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
@@ -154,16 +154,16 @@ angular.module('commercialApp.controllers')
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
             });
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
           }, function(error) {
             console.log(error);
-            $rootScope.isLoading = false;
+            $rootScope.loading.unload();
           });
         }
       };
 
       $scope.obterTodos = function() {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
 
         var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
           end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
@@ -173,10 +173,10 @@ angular.module('commercialApp.controllers')
           angular.forEach(success.data, function(item, index) {
             $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 
@@ -187,13 +187,13 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.selecionarPedido = function(pedido) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         provider.obterPedidoPorCodigo(pedido.codigo, true, true, true, true, true, true).then(function(success) {
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 

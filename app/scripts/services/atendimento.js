@@ -70,7 +70,7 @@ angular.module('commercialApp.services')
       }
 
       atendimento.dataCadastro = attendance.attendance_date ? new Date(attendance.attendance_date) : new Date();
-      atendimento.dataUpdate= attendance.attendance_update ? new Date(attendance.attendance_update) : new Date();
+      atendimento.dataUpdate= attendance.attendance_update;
 
       return atendimento;
     };
@@ -81,6 +81,10 @@ angular.module('commercialApp.services')
       attendance.attendance_id = atendimento.id;
       attendance.attendance_orderId = atendimento.pedidoId;
       attendance.attendance_user_id = atendimento.usuarioId;
+
+      attendance.attendance_note = Parecer.converterEmSaida(atendimento.parecer);
+
+      attendance.attendance_history = HistoricoAtendimento.converterEmSaida(atendimento.historico);
 
       return attendance;
     };

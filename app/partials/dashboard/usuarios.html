@@ -24,6 +24,7 @@
       <th>Email</th>
       <th>Último Acesso</th>
       <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
@@ -36,11 +37,18 @@
       <td data-label="Último Acesso">{{usuario.ultimoAcesso ? (usuario.ultimoAcesso | date) : 'Não disponível'}}</td>
       <td class="hidden-xs"><a href="" ng-click="configuracoes.editarUsuario(usuario)"><span
         class="glyphicon glyphicon-pencil"></span></a></td>
-      <td class="visible-xs-block"><button class="btn btn-default pull-right" ng-click="configuracoes.editarUsuario(usuario)"><span
-        class="glyphicon glyphicon-pencil"></span> Editar</button></td>
+      <td class="hidden-xs"><a href="" ng-click="configuracoes.excluirUsuario(usuario)"><span
+        class="glyphicon glyphicon-trash"></span></a></td>
+      <td class="visible-xs-block">
+        <button class="btn btn-default pull-right" ng-click="configuracoes.editarUsuario(usuario)"><span
+        class="glyphicon glyphicon-pencil"></span> Editar</button>
+        <button class="btn btn-default pull-right" ng-click="configuracoes.excluirUsuario(usuario)"><span
+          class="glyphicon glyphicon-trash"></span> Excluir</button>
+      </td>
     </tr>
     <tr class="hidden-xs" ng-if="configuracoes.usuarios.length < configuracoes.usuariosPagination.max"
         ng-repeat="n in getNumber(configuracoes.usuariosPagination.max - configuracoes.usuarios.length < 0 ? 0 : configuracoes.usuariosPagination.max - configuracoes.usuarios.length) track by $index">
+      <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>

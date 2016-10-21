@@ -39,13 +39,13 @@ angular.module('commercialApp.services')
         editar: function (tipo) {
           return provider.save({
             action: 'edit'
-          }, status).$promise;
+          }, tipo).$promise;
         },
 
         adicionar: function (tipo) {
           return provider.save({
             action: 'insert'
-          }, status).$promise;
+          }, tipo).$promise;
         },
 
         excluir: function (id) {

@@ -27,7 +27,7 @@
       <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhor experiência.</p>
     <![endif]-->
 
-    <div id="loading" ng-show="isLoading" ng-include="'partials/loading.html'"></div>
+    <div id="loading" ng-show="loading.isLoading()" ng-include="'partials/loading.html'"></div>
 
     <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login' || currentPath === '/signup'"></div>
     <div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>
@@ -113,7 +113,6 @@
         <script src="scripts/services/perfilUsuario.js"></script>
         <script src="scripts/services/permissoesUsuario.js"></script>
         <script src="scripts/services/tipoContato.js"></script>
-        <script src="scripts/services/crFollowUp.js"></script>
         <script src="scripts/services/atendimento.js"></script>
         <script src="scripts/services/parecer.js"></script>
         <script src="scripts/services/contatoParecer.js"></script>
@@ -123,6 +122,7 @@
         <script src="scripts/directives/redireciona.js"></script>
         <script src="scripts/directives/editableElem.js"></script>
         <script src="scripts/directives/relogio.js"></script>
+        <script src="scripts/directives/alertPopup.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/logout.js"></script>
         <script src="scripts/controllers/header.js"></script>

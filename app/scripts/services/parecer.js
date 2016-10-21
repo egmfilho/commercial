@@ -5,13 +5,16 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Parecer', ['ContatoParecer', 'Usuario', function (ContatoParecer, Usuario) {
+  .factory('Parecer', ['$cookies', 'ContatoParecer', 'Usuario', function ($cookies, ContatoParecer, Usuario) {
 
     function Parecer(parecer) {
+      var me = JSON.parse(window.atob($cookies.get('currentUser')));
+
       this.id = parecer ? parecer.id : '';
+      this.atendimentoId = parecer ? parecer.atendimentoId : '';
       this.texto = parecer ? parecer.texto : '';
-      this.usuarioId = parecer ? parecer.usuarioId : '';
-      this.usuario = parecer ? parecer.usuario : new Usuario();
+      this.usuarioId = parecer ? parecer.usuarioId : me.id;
+      this.usuario = parecer ? parecer.usuario : new Usuario(me);
       this.contatoId = parecer ? parecer.contatoId : '';
       this.contato = parecer ? parecer.contato : null;
       this.pessoaDeContato = parecer ? parecer.pessoaDeContato : '';
@@ -29,6 +32,7 @@ angular.module('commercialApp.services')
       var parecer = {};
 
       parecer.id = note.attendance_note_id;
+      parecer.atendimentoId = note.attendance_id;
       parecer.texto = note.attendance_note_text;
       parecer.usuarioId = note.attendance_note_user_id;
       parecer.usuario = note.attendance_note_maker ? new Usuario(Usuario.converterEmEntrada(note.attendance_note_maker)) : new Usuario();
@@ -44,6 +48,7 @@ angular.module('commercialApp.services')
       var note = {};
 
       note.attendance_note_id = parecer.id;
+      note.attendance_id = parecer.atendimentoId;
       note.attendance_note_text = parecer.texto;
       note.attendance_note_user_id = parecer.usuarioId;
       note.attendance_note_contact_type_id = parecer.contatoId;

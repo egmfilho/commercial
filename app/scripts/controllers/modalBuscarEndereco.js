@@ -22,7 +22,7 @@ angular.module('commercialApp.controllers')
 
       $uibModalInstance.opened.then(function() {
         $scope.enderecos = enderecos || [ ];
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
         setTimeout(function() {
           jQuery('input[name="cdEndereco"]').focus();
         }, 300);
@@ -39,17 +39,17 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         provider.obterEnderecosPorCEP(cep).then(function (success) {
           $scope.pagination.total = success.data.length;
           $scope.enderecos = [ ];
           angular.forEach(success.data, function (item, index) {
             $scope.enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 
@@ -59,16 +59,16 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
         provider.obterEnderecosPorLogradouro(logradouro).then(function(success) {
           $scope.enderecos = [ ];
           angular.forEach(success.data, function (item, index) {
             $scope.enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 

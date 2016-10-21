@@ -20,7 +20,7 @@
       </thead>
       <tbody>
       <tr ng-repeat="status in configuracoes.statusAtendimentoArray">
-        <td data-label="Cor"><span class="glyphicon"><div class="mostrador-de-cor" ng-style="{backgroundColor:status.cor}"></div></span></td>
+        <td data-label="Cor"><div class="mostrador-de-cor" ng-style="{backgroundColor:status.cor}"></div></td>
         <td data-label="Nome">{{status.nome}}</td>
         <td data-label="Data de cadastro">{{status.dataCadastro | date:'dd/MM/yy'}}</td>
         <td data-label="Última atualização">{{status.dataUpdate ? (status.dataUpdate | date:'dd/MM/yy') : 'Não disponível'}}</td>
@@ -99,7 +99,7 @@
             class="glyphicon glyphicon-pencil"></span></a>
         </td>
         <td class="hidden-xs">
-          <a href="" ng-click="configuracoes.excluirCRFollowUp(tipo)"><span
+          <a href="" ng-click="configuracoes.excluirTipoContato(tipo)"><span
             class="glyphicon glyphicon-trash"></span></a>
         </td>
         <td class="visible-xs-block">

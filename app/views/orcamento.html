@@ -389,6 +389,8 @@
 
 </div>
 
+<alert-popup titulo="{{alerta.titulo}}" mensagem="{{alerta.mensagem}}"></alert-popup>
+
 <div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'" ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"></div>
 <h1 class="impressao aviso" ng-show="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"><span class="glyphicon glyphicon-alert"></span> Impressão indisponível</h1>
 

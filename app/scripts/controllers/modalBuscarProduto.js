@@ -34,20 +34,20 @@ angular.module('commercialApp.controllers')
       });
 
       $scope.buscarPorCodigo = function(codigo) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
 
         provider.obterProdutoPorCodigo(codigo).then(function(success) {
           $scope.produtos = [ ];
           $scope.produtos.push(new Produto(Produto.converterEmEntrada(success.data)));
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 
       $scope.buscarPorNome = function(nome) {
-        $rootScope.isLoading = true;
+        $rootScope.loading.load();
 
         provider.obterProdutosPorDescricao(nome).then(function(success) {
           $scope.pagination.total = success.data.length;
@@ -59,10 +59,10 @@ angular.module('commercialApp.controllers')
           setTimeout(function() {
             jQuery('input[name="nmProduto"]').focus();
           }, 300)
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         });
       };
 

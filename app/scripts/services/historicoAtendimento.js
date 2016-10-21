@@ -30,7 +30,7 @@ angular.module('commercialApp.services')
       historico.status = history.attendance_history_status ? new StatusHistoricoAtendimento(StatusHistoricoAtendimento.converterEmEntrada(history.attendance_history_status)) : new StatusHistoricoAtendimento();
       historico.responsavelId = history.attendance_history_responsible_id;
       historico.responsavel = history.attendance_history_responsible ? new Usuario(Usuario.converterEmEntrada(history.attendance_history_responsible)) : new Usuario();
-      historico.proximoContato = new Date(history.attendance_history_deadline);
+      historico.proximoContato = history.attendance_history_deadline ? new Date(history.attendance_history_deadline) : new Date();
       historico.dataCadastro = new Date(history.attendance_history_date);
 
       return historico;

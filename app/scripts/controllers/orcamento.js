@@ -38,6 +38,14 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     return new Date();
   };
 
+  self.alert = function(mensagem) {
+    $scope.alerta = {
+      titulo: 'Aviso',
+      mensagem: mensagem
+    };
+    jQuery('#modalAlertaPopup').modal('show');
+  };
+
   // retira o padding-right que compensa o scroll se o SO for um MacOS
   if (navigator.platform === 'MacIntel') {
     angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
@@ -215,13 +223,13 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
     providerPessoa.obterPessoaPorCodigo('Vendedor', codigo).then(function (success) {
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       self.pedido.setVendedor(new Pessoa(Pessoa.converterEmEntrada(success.data)));
       $scope.cdVendedor = self.pedido.vendedor.codigo;
     }, function (error) {
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       if (error.status == 404) {
         console.log('Vendedor não encontrado!');
         $rootScope.alerta.show('Vendedor não encontrado!');
@@ -259,9 +267,9 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
     providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function (success) {
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       var cliente = new Pessoa(Pessoa.converterEmEntrada(success.data));
       if (!cliente.ativo) {
         $rootScope.alerta.show('Cliente inativo!');
@@ -271,7 +279,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       self.pedido.setCliente(cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
     }, function (error) {
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       if (error.status == 404) {
         console.log('Cliente não encontrado!');
         $rootScope.alerta.show('Cliente não encontrado!');
@@ -361,19 +369,19 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     }
 
     this.pedido.cliente.tpPessoa = 'Cliente';
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
     console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
     providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function (success) {
       self.pedido.setIdCliente(success.data.IdPessoa);
       self.pedido.cliente.codigo = success.data.CdPessoa;
       $scope.cdCliente = self.pedido.cliente.codigo;
       $scope.cliente.novo = false;
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
     }, function (error) {
       console.log(error);
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       if (error.data.status.code == 409) {
-        self.pedido.cliente.tipo == 'F' ? alert('CFP já cadastrado!') : alert('CNPJ já cadastrado!');
+        self.pedido.cliente.tipo == 'F' ? self.alert('CFP já cadastrado!') : self.alert('CNPJ já cadastrado!');
       }
     });
   };
@@ -412,21 +420,21 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
     providerProduto.obterProdutoPorCodigo(codigo).then(function (success) {
       if (!success.data.Ativo) {
-        $rootScope.isLoading = false;
-        alert('Produto inativo!');
+        $rootScope.loading.unload();
+        self.alert('Produto inativo!');
         return;
       }
       $scope.lockDescricao = true;
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       $scope.item.setProduto(success.data);
       $scope.cdProduto = $scope.item.produto.codigo;
       $scope.nmProduto = $scope.item.produto.nome;
       jQuery('input[name="quantidade"]').focus().select();
     }, function (error) {
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       if (error.status == 404) {
         console.log('Produto não encontrado!');
         $rootScope.alerta.show('Produto não encontrado!');
@@ -436,14 +444,14 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
 
   this.buscaProdutoPorDescricao = function (descricao) {
     $scope.typeahead.search = descricao;
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
     return providerProduto.obterProdutosPorDescricao(descricao, 10).then(function (success) {
       success.data.push({NmProduto: 'Mais resultados...', CdProduto: -1});
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       return success.data;
     }, function (err) {
       console.log(err);
-      $rootScope.isLoading = false;
+      $rootScope.loading.unload();
       $rootScope.alerta.show('Produto não encontrado!');
     });
   };
@@ -476,7 +484,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     if ($rootScope.isLoading) return;
 
     if (this.pedido.contemItem($scope.item) !== -1) {
-      alert('Produto já adicionado!');
+      self.alert('Produto já adicionado!');
       return;
     }
 
@@ -521,7 +529,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.buscarCEP = function (forceModal) {
-    $rootScope.isLoading = true;
+    $rootScope.loading.load();
 
     if (!$scope.cdCEP || forceModal) {
       modalBuscarEndereco.show([], function (result) {
@@ -537,7 +545,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
           angular.forEach(success.data, function (item, index) {
             enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));
           });
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
           modalBuscarEndereco.show(enderecos, function (result) {
             if (result) {
               self.pedido.cliente.setEndereco(result);
@@ -546,11 +554,11 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
           });
         } else {
           self.pedido.cliente.setEndereco(new Endereco(Endereco.converterEmEntrada(success.data[0])));
-          $rootScope.isLoading = false;
+          $rootScope.loading.unload();
         }
         jQuery('input[name="endNumero"]').focus();
       }, function (error) {
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
         if (error.status == 404) {
           console.log('CEP não encontrado!');
           $rootScope.alerta.show('CEP não encontrado!');
@@ -558,7 +566,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       });
     }
 
-    $rootScope.isLoading = false;
+    $rootScope.loading.unload();
   };
 
   function validar() {
@@ -618,7 +626,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
       $uibModalStack.dismissAll();
 
-      $rootScope.isLoading = true;
+      $rootScope.loading.load();
 
       // if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
       providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
@@ -627,21 +635,21 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
         self.pedido.id = result.id;
         self.pedido.codigo = result.codigo;
         $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
         $scope.mostrarOpcoes();
       }, function (error) {
         console.log(error);
-        $rootScope.isLoading = false;
+        $rootScope.loading.unload();
       });
       // } else { // salvar editado
       //   providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
       //     $scope.backup = null;
       //     $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
-      //     $rootScope.isLoading = false;
+      //     $rootScope.loading.unload();
       //     $scope.mostrarOpcoes();
       //   }, function (error) {
       //     console.log(error);
-      //     $rootScope.isLoading = false;
+      //     $rootScope.loading.unload();
       //   });
       // }
     }
@@ -662,7 +670,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.enviar = function () {
-    alert('Em breve!');
+    self.alert('Em breve!');
   };
 
   this.excluir = function () {
@@ -674,10 +682,10 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     if (confirm('Deseja excluir o orçamento?')) {
       providerPedido.excluirPedido(self.pedido).then(function (success) {
         self.limpar();
-        alert('Orçamento excluído!');
+        self.alert('Orçamento excluído!');
       }, function (error) {
         console.log(error);
-        alert('Não foi possível excluir o orçamento.');
+        self.alert('Não foi possível excluir o orçamento.');
       });
     }
   };
