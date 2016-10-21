@@ -8,8 +8,14 @@
     margin-bottom: 10px;
   }
 
-  ul[name='historico'] {
-    min-height: 250px;
+  .status-legenda {
+    div, h5 {
+      display: inline-block;
+    }
+
+    h5 {
+      font-size: 1.2em;
+    }
   }
 }
 

@@ -261,9 +261,11 @@ body.padding-bottom {
 .btn.btn-primary {
   background-color: $cor-principal-clara;
   border-color: $cor-principal;
+  color: white;
 
   &:hover, &:focus {
     background-color: $cor-principal;
+    color: white;
   }
 }
 

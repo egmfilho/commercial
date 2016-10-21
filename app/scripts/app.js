@@ -23,7 +23,7 @@ angular
     'ui.bootstrap',
     'ui.mask',
     'ds.clock',
-    'multipleSelect',
+    'ui.select',
     'colorpicker.module'
   ])
   .config(['$httpProvider', function ($httpProvider) {

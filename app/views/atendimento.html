@@ -3,7 +3,12 @@
 
     <div class="col-md-12">
       <div class="head">
-        <h3><span class="glyphicon glyphicon-list-alt"></span> Atendimento</h3>
+        <h3>
+          <span class="glyphicon glyphicon-list-alt"></span>
+          Atendimento
+          <span ng-if="atendimento.atendimento.codigo"> código ({{atendimento.atendimento.codigo}})</span>
+          <span class="hidden-xs" ng-if="atendimento.atendimento.historico.length"> - {{atendimento.atendimento.historico[0].status.nome}}</span>
+        </h3>
       </div>
     </div>
 
@@ -124,9 +129,6 @@
       </div>
 
       <div class="row status">
-        <!--<div class="col-md-12">-->
-          <!--<h3 class="">Info</h3>-->
-        <!--</div>-->
         <div class="col-xs-6 col-md-6">
           <h4>Status</h4>
           <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="novoHistorico.statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
@@ -144,7 +146,18 @@
         </div>
         <div class="col-md-12">
           <h4>Spy</h4>
-          <multiple-autocomplete ng-model="selectedList" object-property="usuario" suggestions-arr="atendimento.usuarios"></multiple-autocomplete>
+          <ui-select multiple tagging="atendimento.emailExterno" limit="10" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails">
+            <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
+            <ui-select-choices repeat="usuario in atendimento.usuarios | filter: {nome: $select.search, email: $select.search}">
+              <div ng-if="!usuario.isTag" ng-bind-html="''+usuario.nome | highlight: $select.search">
+                <small>
+                  nome: {{usuario.nome}}
+                  email: <span ng-bind-html="''+usuario.email | highlight: $select.search"></span>
+                </small>
+              </div>
+              <div ng-if="usuario.isTag" ng-bind-html="(usuario.email | highlight: $select.search) +' (externo)'"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
 
@@ -158,9 +171,9 @@
           </button>
         </div>
         <div class="col-xs-6 col-md-6">
-          <button class="btn btn-success btn-lg btn-block" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.continuar()">
+          <button class="btn btn-success btn-lg btn-block" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.salvar()">
             <span class="glyphicon glyphicon-ok"></span>
-            Continuar
+            Salvar
           </button>
         </div>
       </div>

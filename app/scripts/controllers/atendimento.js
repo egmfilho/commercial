@@ -14,6 +14,7 @@ angular.module('commercialApp.controllers')
     'Pedido',
     'ProviderAtendimento',
     'Parecer',
+    'ProviderHistoricoAtendimento',
     'HistoricoAtendimento',
     'Atendimento',
     'ProviderStatusAtendimento',
@@ -22,7 +23,7 @@ angular.module('commercialApp.controllers')
     'TipoContato',
     'ProviderUsuario',
     'Usuario',
-    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario) {
+    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, providerHistorico, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario) {
 
       var self = this;
 
@@ -33,6 +34,8 @@ angular.module('commercialApp.controllers')
         minDate: new Date(),
         showWeeks: false
       };
+
+      self.emails = [ ];
 
       $scope.novoParecer = new Parecer();
       $scope.novoHistorico = new HistoricoAtendimento();
@@ -161,12 +164,48 @@ angular.module('commercialApp.controllers')
         });
       }
 
-      this.continuar = function () {
+      this.emailExterno = function(email) {
+        return ({
+          nome: 'Externo',
+          email: email,
+          isTag: true
+        });
+      };
+
+      this.salvar = function () {
+        if (!confirm('Enviar?')) {
+          return;
+        }
+
         var att = new Atendimento(self.atendimento);
         att.parecer = new Parecer($scope.novoParecer);
+        att.parecer.atendimentoId = self.atendimento.id;
         att.historico = new HistoricoAtendimento($scope.novoHistorico);
+        angular.forEach(self.emails, function(item, index) {
+          att.historico.spy += item.email + ';';
+        });
 
         console.log(Atendimento.converterEmSaida(att));
+
+        if (self.atendimento.id) {
+          $rootScope.loading.load();
+          providerAtendimento.editar(Atendimento.converterEmSaida(att)).then(function(success) {
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Salvo', 'alert-success');
+          }, function(error) {
+            console.log(error);
+            $rootScope.loading.unload();
+          });
+        } else {
+          $rootScope.loading.load();
+          providerAtendimento.adicionar(Atendimento.converterEmSaida(att)).then(function(success) {
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Salvo', 'alert-success');
+          }, function(error) {
+            console.log(error);
+            $rootScope.loading.unload();
+          });
+        }
       };
 
     }]);

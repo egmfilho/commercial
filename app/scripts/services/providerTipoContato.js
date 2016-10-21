@@ -32,7 +32,7 @@ angular.module('commercialApp.services')
           return provider.get({
             action: 'get'
           }, {
-            attendance_note_contact_type_id: id
+            contact_type_id: id
           }).$promise;
         },
 
@@ -52,7 +52,7 @@ angular.module('commercialApp.services')
           return provider.save({
             action: 'del'
           }, {
-            attendance_note_contact_type_id: id
+            contact_type_id: id
           }).$promise;
         }
       };

@@ -194,7 +194,9 @@ angular.module('commercialApp.controllers')
           console.log(error);
           $rootScope.loading.unload();
           if (error.status === 420) {
-            $rootScope.alerta.show(error.status.message, 'alert-danger');
+            $rootScope.alerta.show(error.data.status.description, 'alert-danger');
+          } else {
+            $rootScope.alerta.show('Não foi possível excluir o usuário', 'alert-danger');
           }
         });
       };

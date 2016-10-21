@@ -79,7 +79,7 @@ angular.module('commercialApp.services')
       var attendance = { };
 
       attendance.attendance_id = atendimento.id;
-      attendance.attendance_orderId = atendimento.pedidoId;
+      attendance.attendance_order_id = atendimento.pedidoId;
       attendance.attendance_user_id = atendimento.usuarioId;
 
       attendance.attendance_note = Parecer.converterEmSaida(atendimento.parecer);

@@ -12,11 +12,14 @@ angular.module('commercialApp.controllers')
     'Usuario',
     'ProviderAtendimento',
     'ModalAtendimento',
-    function ($rootScope, $scope, Atendimento, Usuario, providerAtendimento, modalAtendimento) {
+    'ProviderStatusAtendimento',
+    'StatusHistoricoAtendimento',
+    function ($rootScope, $scope, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento) {
 
       var self = this;
 
       $scope.$on('$viewContentLoaded', function () {
+        getStatusAtendimento();
         getAtendimentos();
 
         // modalAtendimento.show();
@@ -39,6 +42,20 @@ angular.module('commercialApp.controllers')
           console.log(self.atendimentos);
           $rootScope.loading.unload();
         }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getStatusAtendimento() {
+        self.statusArray = [];
+        $rootScope.loading.load();
+        providerStatus.obterTodos().then(function (success) {
+          angular.forEach(success.data, function (item, index) {
+            self.statusArray.push(new StatusHistoricoAtendimento(StatusHistoricoAtendimento.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+        }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
         });

@@ -173,9 +173,11 @@ body.padding-bottom {
 
 .btn.btn-primary {
   background-color: #6481bb;
-  border-color: #3b5998; }
+  border-color: #3b5998;
+  color: white; }
   .btn.btn-primary:hover, .btn.btn-primary:focus {
-    background-color: #3b5998; }
+    background-color: #3b5998;
+    color: white; }
 
 .botao-color-picker {
   width: 100%;
@@ -1063,8 +1065,10 @@ div[name="footer"] .navbar {
     padding: 6px;
     margin: 0 -15px;
     margin-bottom: 10px; }
-  .follow-up ul[name='historico'] {
-    min-height: 250px; }
+  .follow-up .status-legenda div, .follow-up .status-legenda h5 {
+    display: inline-block; }
+  .follow-up .status-legenda h5 {
+    font-size: 1.2em; }
 
 .atendimento {
   margin-top: 40px;

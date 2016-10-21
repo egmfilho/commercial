@@ -28,6 +28,10 @@
     <div class="row">
       <div class="col-md-12">
         <h3>Atendimentos</h3>
+        <div class="hidden-xs col-sm-4 col-md-3 status-legenda" ng-repeat="s in followUp.statusArray">
+          <div class="mostrador-de-cor" ng-style="{backgroundColor:s.cor}"></div>
+          <h5>{{s.nome}}</h5>
+        </div>
       </div>
       <div class="col-md-12">
         <table class="tabela tabela-bordered tabela-esticada">
@@ -49,14 +53,14 @@
           </thead>
           <tbody>
           <tr ng-repeat="a in followUp.atendimentos">
-            <td class="hidden-xs"><span class="glyphicon"><div class="mostrador-de-cor" ng-style="{backgroundColor:a.historico[0].status.cor}"></div></span></td>
-            <td class="visible-xs-block" data-label="Status">{{a.historico[0].status.nome}}</td>
+            <td class="hidden-xs"><div class="mostrador-de-cor" ng-style="{backgroundColor:a.historico[0].status.cor}" uib-tooltip="{{a.historico[0].status.nome}}"></div></td>
+            <td class="visible-xs-block" data-label="Status"><span class="label label-default" ng-style="{backgroundColor:a.historico[0].status.cor}">{{a.historico[0].status.nome}}</span></td>
             <td data-label="Código">{{a.codigo}}</td>
             <td data-label="Código do orçamento">{{a.pedido.codigo}}</td>
             <td data-label="Cliente">{{a.pedido.cliente.nome | truncate:35}}</td>
-            <td data-label="Responsável">{{a.historico[0].responsavel.usuario}}</td>
+            <td data-label="Responsável">{{a.historico[0].responsavel.usuario || 'Não disponível'}}</td>
             <td data-label="Data de atualização">{{a.dataUpdate ? (a.dataUpdate | date:'short') : 'Não disponível'}}</td>
-            <td data-label="Data do último parecer">{{a.parecer[0].dataCadastro | date:'short'}}</td>
+            <td data-label="Data do último parecer">{{a.parecer.length ? (a.parecer[0].dataCadastro | date:'short') : 'Não disponível'}}</td>
             <td data-label="Data de cadastro">{{a.dataCadastro | date:'short'}}</td>
             <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>-->
             <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></td>-->
