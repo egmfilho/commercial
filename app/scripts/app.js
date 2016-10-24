@@ -141,22 +141,22 @@ angular
       $uibModalStack.dismissAll();
       $rootScope.currentPath = $location.path();
 
-      // // Bloqueia acesso de usuarios nao logados
-      // if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-      //   if (next.templateUrl !== 'views/login.html') {
-      //     $location.path('/login');
-      //   }
-      //   return;
-      // }
-      //
-      // // Bloqueia acessos pelas permissoes
-      // var user = JSON.parse(window.atob($cookies.get('currentUser')));
-      // if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
-      //   if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
-      //     $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
-      //     $location.path('/home');
-      //   }
-      // }
+      // Bloqueia acesso de usuarios nao logados
+      if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
+        if (next.templateUrl !== 'views/login.html') {
+          $location.path('/login');
+        }
+        return;
+      }
+
+      // Bloqueia acessos pelas permissoes
+      var user = JSON.parse(window.atob($cookies.get('currentUser')));
+      if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
+        if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
+          $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+          $location.path('/home');
+        }
+      }
     });
 
   }]);

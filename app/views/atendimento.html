@@ -1,5 +1,232 @@
 <div class="atendimento container">
+
+
   <div class="row card">
+    <div class="col-xs-12">
+      <div class="head">
+        <h3>
+          <span class="glyphicon glyphicon-list-alt"></span>
+          <span ng-if="!atendimento.atendimento.historico.length">Novo </span>
+          Atendimento
+          <span ng-if="atendimento.atendimento.codigo"> código ({{atendimento.atendimento.codigo}})</span>
+          <span class="hidden-xs" ng-if="atendimento.atendimento.historico.length"> - {{atendimento.atendimento.historico[0].status.nome}}</span>
+        </h3>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Dados do Cliente</h3>
+          <div class="cliente well">
+            <dl class="dl-horizontal">
+              <dt>Código:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.codigo}}</dd>
+              <dt>Nome:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.nome}}</dd>
+              <dt>Telefone:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.telefone || 'Não disponível'}}</dd>
+              <dt>Celular:</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.celular ? atendimento.atendimento.pedido.cliente.dddCelular : ''}} {{atendimento.atendimento.pedido.cliente.celular || 'Não disponível'}}</dd>
+              <dt>Email</dt>
+              <dd>{{atendimento.atendimento.pedido.cliente.email || 'Não disponível'}}</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h3>Dados do Atendimento</h3>
+          <div class="info well">
+            <dl class="dl-horizontal">
+              <dt>Código:</dt>
+              <dd>{{atendimento.atendimento.codigo ? atendimento.atendimento.codigo : 'Não disponível'}}</dd>
+              <dt>Status:</dt>
+              <dd><span class="label label-default" ng-style="{backgroundColor:atendimento.atendimento.historico[0].status.cor}">{{atendimento.atendimento.historico.length ? atendimento.atendimento.historico[0].status.nome : 'Não disponível'}}</span></dd>
+              <dt>Criado por:</dt>
+              <dd>{{atendimento.atendimento.usuario.usuario}} ({{atendimento.atendimento.usuario.nome}})</dd>
+              <dt>Criado em:</dt>
+              <dd>{{atendimento.atendimento.dataCadastro | date:'short'}}</dd>
+              <dt>Atualizado em:</dt>
+              <dd>{{atendimento.atendimento.dataUpdate ? (atendimento.atendimento.dataUpdate | date:'short') : 'Não disponível'}}</dd>
+              <dt>Orçamento:</dt>
+              <dd>{{atendimento.atendimento.pedido.codigo}}</dd>
+              <dt>Pareceres:</dt>
+              <dd>{{atendimento.atendimento.parecer.length ? atendimento.atendimento.parecer.length : 'Nenhum'}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row card">
+    <div class="col-xs-12">
+      <div class="head">
+        <h3>
+          <span class="glyphicon glyphicon-file"></span>
+          Novo Parecer
+        </h3>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-8">
+          <h4>Pessoa de Contato</h4>
+          <input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.pessoaDeContato">
+        </div>
+        <div class="col-xs-4">
+          <h4>Tipo de Contato</h4>
+          <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <h4>Texto</h4>
+      <div class="parecer well">
+        <textarea class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.texto"></textarea>
+        <!--<div class="row">-->
+          <!--<div class="col-xs-12 col-md-12">-->
+            <!--<h4 class="hidden-md">Pessoa de contato</h4>-->
+            <!--<h4 class="visible-md-block">Pessoa</h4>-->
+            <!--<input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.pessoaDeContato">-->
+          <!--</div>-->
+          <!--<div class="col-xs-6 col-md-6">-->
+            <!--<h4>Tipo de contato</h4>-->
+            <!--<select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>-->
+          <!--</div>-->
+          <!--<div class="col-xs-6 col-md-6">-->
+            <!--<h4>&nbsp;</h4>-->
+            <!--<button class="btn btn-default btn-block" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.limparParecer()">-->
+              <!--<span class="glyphicon glyphicon-erase"></span>-->
+              <!--Limpar-->
+            <!--</button>-->
+          <!--</div>-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-3 col-md-push-6">
+      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.limparParecer()"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
+    </div>
+    <div class="col-xs-6 col-md-3 col-md-push-6">
+      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.salvarParecer()"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row card">
+    <div class="col-xs-12">
+      <div class="head">
+        <h3>
+          <span class="glyphicon glyphicon-time"></span>
+          Histórico
+        </h3>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <h3>Histórico</h3>
+      <uib-accordion close-others="true" class="historico">
+        <ul class="list-group well">
+          <li uib-accordion-group class="panel-default" ng-repeat="parecer in atendimento.atendimento.parecer">
+            <uib-accordion-heading>
+              <span class="glyphicon glyphicon-menu-right"></span>
+              <b>Criado por:</b> {{parecer.usuario.usuario}} <b>em:</b> {{parecer.dataCadastro | date:'short'}}
+            </uib-accordion-heading>
+            <b>Parecer:</b><br>
+            {{parecer.texto}}<br>
+            <b>Pessoa de Contato:</b><br>
+            {{parecer.pessoaDeContato || 'Não disponível'}}<br>
+            <b>Tipo de Contato</b><br>
+            {{parecer.contato.nome}}
+          </li>
+        </ul>
+      </uib-accordion>
+    </div>
+  </div>
+
+  <!--MODAL HISTORICO-->
+  <div class="modal meu-modal fade" id="modal-historico" tabindex="-1" role="dialog" aria-labelledby="modal-historico">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="header">
+          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Attendance History <span
+            class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
+        </div>
+        <div class="body">
+
+          <div class="container">
+            <div class="row status">
+              <div class="col-xs-12 col-md-12">
+                <h4 ng-init="aberto = false">Próximo Contato</h4>
+                <div class="well well-sm clearfix" uib-datepicker-popup show-button-bar="false" popup-placement="bottom-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
+                  <b>Data:</b> {{novoHistorico.proximoContato | date:'fullDate'}}
+                  <button type="button" class="btn btn-default pull-right botao-calendario" ng-click="aberto = !aberto" ng-disabled="atendimento.atendimento.isEncerrado()"><i class="caret"></i></button>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <h4>Status</h4>
+                <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="novoHistorico.statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+              </div>
+              <div class="col-xs-6 col-md-6">
+                <h4>Responsável</h4>
+                <select class="form-control" ng-options="usuario.id as usuario.usuario for usuario in atendimento.usuarios" ng-model="novoHistorico.responsavelId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+              </div>
+              <div class="col-md-12">
+                <h4>Spy</h4>
+                <ui-select multiple tagging="atendimento.emailExterno" limit="10" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()">
+                  <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
+                  <ui-select-choices repeat="usuario in atendimento.contatos | filter: {nome: $select.search, email: $select.search}">
+                    <div ng-if="!usuario.isTag" ng-bind-html="''+usuario.nome | highlight: $select.search">
+                      <small>
+                        nome: {{usuario.nome}}
+                        email: <span ng-bind-html="''+usuario.email | highlight: $select.search"></span>
+                      </small>
+                    </div>
+                    <div ng-if="usuario.isTag" ng-bind-html="(usuario.email | highlight: $select.search) +' (externo)'"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="footer">
+          <button class="btn btn-default" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.salvar()">
+            <span class="glyphicon glyphicon-ok"></span>
+            Salvar
+          </button>
+          <button class="btn btn-default" data-dismiss="modal" ng-disabled="atendimento.atendimento.isEncerrado()">
+            <span class="glyphicon glyphicon-save"></span>
+            Encerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIM MODAL HISTORICO-->
+
+  <!--MODAL PARECER COMPLETO-->
+  <div class="modal meu-modal fade" id="modalParecerCompleto" tabindex="-1" role="dialog" aria-labelledby="modalParecerCompleto">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="header">
+          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Parecer <span
+            class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
+        </div>
+        <div class="body">
+          PARECER COMPLETO AQUI!
+        </div>
+        <div class="footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIM MODAL PARECER COMPLETO-->
+
+  <!--<br>-->
+  <!--ORIGINAL-->
+  <div class="row card" ng-if="false">
 
     <div class="col-md-12">
       <div class="head">

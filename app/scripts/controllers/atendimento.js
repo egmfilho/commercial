@@ -213,6 +213,10 @@ angular.module('commercialApp.controllers')
         $location.path('/follow-up');
       }
 
+      this.salvarParecer = function() {
+        jQuery('#modal-historico').modal('show');
+      };
+
       this.salvar = function () {
 
         if (!confirm('Enviar?')) {

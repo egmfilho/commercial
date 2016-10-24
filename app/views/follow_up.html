@@ -42,7 +42,7 @@
             <th>Orçamento</th>
             <th>Cliente</th>
             <th>Responsável</th>
-            <th>Atualizado em</th>
+            <!--<th>Atualizado em</th>-->
             <th>Último Parecer</th>
             <th>Cadastrado em</th>
             <!--<th></th>-->
@@ -59,7 +59,7 @@
             <td data-label="Código do orçamento">{{a.pedido.codigo}}</td>
             <td data-label="Cliente">{{a.pedido.cliente.nome | truncate:35}}</td>
             <td data-label="Responsável">{{a.historico[0].responsavel.usuario || 'Não disponível'}}</td>
-            <td data-label="Data de atualização">{{a.dataUpdate ? (a.dataUpdate | date:'short') : 'Não disponível'}}</td>
+            <!--<td data-label="Data de atualização">{{a.dataUpdate ? (a.dataUpdate | date:'short') : 'Não disponível'}}</td>-->
             <td data-label="Data do último parecer">{{a.parecer.length ? (a.parecer[0].dataCadastro | date:'short') : 'Não disponível'}}</td>
             <td data-label="Data de cadastro">{{a.dataCadastro | date:'short'}}</td>
             <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>-->
@@ -76,7 +76,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <!--<td>&nbsp;</td>-->
           </tr>
           </tbody>
         </table>

@@ -30,14 +30,14 @@
   }
 
   .cliente {
-    max-height: 140px;
-    height: 140px;
+    max-height: 180px;
+    height: 180px;
     overflow-y: auto;
   }
 
   .info {
-    max-height: 189px;
-    height: 189px;
+    max-height: 180px;
+    height: 180px;
     overflow-y: auto;
     .label {
       font-weight: 400;
@@ -93,6 +93,26 @@
     .botao-calendario {
       height: 20px;
       padding: 0 15px;
+    }
+  }
+
+  #modal-historico.meu-modal {
+    .modal-dialog {
+      width: 600px;
+    }
+
+    .body {
+      height: 400px !important;
+
+      .ui-select-multiple.ui-select-bootstrap {
+        padding: 4px 4px 2px 4px;
+
+        input.ui-select-search {
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        }
+      }
     }
   }
 }
