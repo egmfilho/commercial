@@ -103,6 +103,16 @@ angular.module('commercialApp.controllers')
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
+          if ($scope.novoHistorico.spy) {
+            angular.forEach($scope.novoHistorico.spy.split(';'), function(item, index) {
+              if (item) {
+                self.emails.push({
+                  nome: item.split(':')[0],
+                  email: item.split(':')[1]
+                });
+              }
+            });
+          }
           console.log(success.data, self.atendimento);
           $rootScope.loading.unload();
         }, function (error) {
@@ -115,6 +125,18 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         providerAtendimento.obterPorCodigoPedido(codigoPedido, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
+          $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
+          if ($scope.novoHistorico.spy) {
+            angular.forEach($scope.novoHistorico.spy.split(';'), function(item, index) {
+              if (item) {
+                self.emails.push({
+                  nome: item.split(':')[0],
+                  email: item.split(':')[1]
+                });
+              }
+            });
+          }
+          console.log(success.data, self.atendimento);
           $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
@@ -157,10 +179,22 @@ angular.module('commercialApp.controllers')
           angular.forEach(success.data, function(item, index) {
             self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
           });
+          getContatos();
           $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
           $rootScope.loading.unload();
+        });
+      }
+
+      function getContatos() {
+        self.contatos = [];
+
+        angular.forEach(self.usuarios, function(item, index) {
+          self.contatos.push({
+            nome: self.usuarios[index].nome,
+            email: self.usuarios[index].email
+          });
         });
       }
 
@@ -172,7 +206,15 @@ angular.module('commercialApp.controllers')
         });
       };
 
+      function voltar() {
+        $location.search('action', null);
+        $location.search('type', null);
+        $location.search('code', null);
+        $location.path('/follow-up');
+      }
+
       this.salvar = function () {
+
         if (!confirm('Enviar?')) {
           return;
         }
@@ -181,8 +223,9 @@ angular.module('commercialApp.controllers')
         att.parecer = new Parecer($scope.novoParecer);
         att.parecer.atendimentoId = self.atendimento.id;
         att.historico = new HistoricoAtendimento($scope.novoHistorico);
+        att.historico.spy = '';
         angular.forEach(self.emails, function(item, index) {
-          att.historico.spy += item.email + ';';
+          att.historico.spy += item.nome + ':' + item.email + (index  === (self.emails.length - 1) ? '' : ';');
         });
 
         console.log(Atendimento.converterEmSaida(att));
@@ -192,6 +235,7 @@ angular.module('commercialApp.controllers')
           providerAtendimento.editar(Atendimento.converterEmSaida(att)).then(function(success) {
             $rootScope.loading.unload();
             $rootScope.alerta.show('Salvo', 'alert-success');
+            voltar();
           }, function(error) {
             console.log(error);
             $rootScope.loading.unload();
@@ -201,6 +245,7 @@ angular.module('commercialApp.controllers')
           providerAtendimento.adicionar(Atendimento.converterEmSaida(att)).then(function(success) {
             $rootScope.loading.unload();
             $rootScope.alerta.show('Salvo', 'alert-success');
+            voltar();
           }, function(error) {
             console.log(error);
             $rootScope.loading.unload();

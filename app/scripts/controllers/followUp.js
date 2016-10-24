@@ -39,7 +39,6 @@ angular.module('commercialApp.controllers')
           angular.forEach(success.data, function(item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)))
           });
-          console.log(self.atendimentos);
           $rootScope.loading.unload();
         }, function(error) {
           console.log(error);

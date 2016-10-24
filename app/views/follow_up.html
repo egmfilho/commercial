@@ -42,9 +42,9 @@
             <th>Orçamento</th>
             <th>Cliente</th>
             <th>Responsável</th>
-            <th>Atualização</th>
+            <th>Atualizado em</th>
             <th>Último Parecer</th>
-            <th>Cadastro</th>
+            <th>Cadastrado em</th>
             <!--<th></th>-->
             <!--<th></th>-->
             <!--<th></th>-->
@@ -94,120 +94,122 @@
         <div class="title"><span class="glyphicon glyphicon-pencil"></span> Tipo <span
           class="glyphicon glyphicon-remove close" ng-click="configuracoes.cancelarModalTipoFollowUp()"></span></div>
       </div>
-      <div class="body condensar-rows">
+      <div class="body">
 
-        <div class="col-md-2">
-          <h4>Atendimento</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
-            <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
-          </span>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <h4>Orçamento</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
-            <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
-          </span>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-4">
-          <h4>Cliente</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar um cliente" readonly="true">
-            <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
-              <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-4">
-          <h4>Responsável</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar um cliente" readonly="true">
-            <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
-              <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
-        </div>
-        <div class="col-xs-6 col-md-4 campo-duplo">
-          <h4>Data de Cadastro (inicial x final)</h4>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
+        <div class="container">
+          <div class="row condensar-rows">
+            <div class="col-md-2">
+              <h4>Atendimento</h4>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <h4>Orçamento</h4>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <h4>Cliente</h4>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar um cliente" readonly="true">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
+                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <h4>Responsável</h4>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar um cliente" readonly="true">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
+                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-4">
+              <h4>Data de Cadastro (inicial x final)</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-4 campo-duplo">
+              <h4>Data de Atualização (inicial x final)</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-4">
+              <h4>Último Parecer (inicial x final)</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h4>Status</h4>
+              <select name="" class="form-control"></select>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-md-4 campo-duplo">
-          <h4>Data de Atualização (inicial x final)</h4>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6 col-md-4 campo-duplo">
-          <h4>Último Parecer (inicial x final)</h4>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="dtFinal" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
-              <span class="input-group-btn">
-                <button class="btn btn-default" tabindex="-1" ng-click="dtFinal=''"><span class="glyphicon glyphicon-remove"></span></button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <h4>Status</h4>
-          <select name="" class="form-control"></select>
-        </div>
-        <div class="col-xs-6 col-md-2">
-          <h4>&nbsp;</h4>
-          <button class="btn btn-default botao-esticado" ng-click=""><span class="glyphicon glyphicon-erase"></span> Limpar</button>
-        </div>
-        <div class="col-xs-6 col-md-2">
-          <h4>&nbsp;</h4>
-          <button class="btn btn-default botao-esticado" ng-click=""><span class="glyphicon glyphicon-search"></span> Filtrar</button>
         </div>
 
       </div>
       <div class="footer">
         <button type="button" class="btn btn-default" ng-click="configuracoes.cancelarModalTipoFollowUp()"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
-        <button type="button" class="btn btn-default" ng-click="configuracoes.salvarTipoFollowUp()"><span class="glyphicon glyphicon-ok"></span> Limpar</button>
+        <button type="button" class="btn btn-default" ng-click="configuracoes.salvarTipoFollowUp()"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
       </div>
     </div>
   </div>

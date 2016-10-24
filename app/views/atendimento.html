@@ -5,6 +5,7 @@
       <div class="head">
         <h3>
           <span class="glyphicon glyphicon-list-alt"></span>
+          <span ng-if="!atendimento.atendimento.historico.length">Novo </span>
           Atendimento
           <span ng-if="atendimento.atendimento.codigo"> código ({{atendimento.atendimento.codigo}})</span>
           <span class="hidden-xs" ng-if="atendimento.atendimento.historico.length"> - {{atendimento.atendimento.historico[0].status.nome}}</span>
@@ -68,15 +69,6 @@
       <div class="row">
         <div class="col-md-12">
           <h3>Histórico</h3>
-          <!--<ul name="historico" class="list-group well" style="max-height: 200px;overflow-y: scroll">-->
-            <!--<li class="list-group-item" role="tabpanel" ng-repeat="parecer in atendimento.atendimento.parecer">-->
-              <!--<span class="glyphicon glyphicon-menu-right"></span>-->
-              <!--<b>Criado por: </b>{{parecer.usuario.usuario}}-->
-              <!--<b>em: </b>{{parecer.dataCadastro | date: 'short'}}-->
-              <!--<b>contato: </b>{{parecer.contato.nome}}-->
-            <!--</li>-->
-          <!--</ul>-->
-
           <uib-accordion close-others="true" class="historico">
             <ul class="list-group well">
               <li uib-accordion-group class="panel-default" ng-repeat="parecer in atendimento.atendimento.parecer">
@@ -84,7 +76,12 @@
                   <span class="glyphicon glyphicon-menu-right"></span>
                   <b>Criado por:</b> {{parecer.usuario.usuario}} <b>em:</b> {{parecer.dataCadastro | date:'short'}}
                 </uib-accordion-heading>
-                {{parecer.texto}}
+                <b>Parecer:</b><br>
+                {{parecer.texto}}<br>
+                <b>Pessoa de Contato:</b><br>
+                {{parecer.pessoaDeContato || 'Não disponível'}}<br>
+                <b>Tipo de Contato</b><br>
+                {{parecer.contato.nome}}
               </li>
             </ul>
           </uib-accordion>
@@ -146,9 +143,9 @@
         </div>
         <div class="col-md-12">
           <h4>Spy</h4>
-          <ui-select multiple tagging="atendimento.emailExterno" limit="10" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails">
+          <ui-select multiple tagging="atendimento.emailExterno" limit="10" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()">
             <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
-            <ui-select-choices repeat="usuario in atendimento.usuarios | filter: {nome: $select.search, email: $select.search}">
+            <ui-select-choices repeat="usuario in atendimento.contatos | filter: {nome: $select.search, email: $select.search}">
               <div ng-if="!usuario.isTag" ng-bind-html="''+usuario.nome | highlight: $select.search">
                 <small>
                   nome: {{usuario.nome}}
