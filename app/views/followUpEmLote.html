@@ -1,0 +1,57 @@
+<div class="container em-lote">
+
+  <div class="row card">
+    <div class="col-xs-12">
+      <div class="head">
+        <h3>Orçamentos</h3>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">
+        <button class="btn btn-default btn-block">Atualizar</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <table class="tabela tabela-bordered tabela-esticada">
+          <thead>
+            <th></th>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Total</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pedido in emLote.pedidos">
+              <td><input type="checkbox"></td>
+              <td data-label="Código">{{pedido.codigo}}</td>
+              <td data-label="Cliente">{{pedido.cliente.nome}}</td>
+              <td data-label="Vendedor">{{pedido.vendedor.nome}}</td>
+              <td data-label="Total">{{pedido.valor | currency:'R$ '}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-3">
+      <a class="btn btn-orcamento" href="#/follow-up">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+      </a>
+    </div>
+    <div class="col-xs-6 col-sm-3 col-sm-push-6">
+      <a class="btn btn-orcamento" href="#/follow-up">
+        Criar
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+
+</div>

@@ -19,6 +19,41 @@
   }
 }
 
+.em-lote {
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  .card .head {
+    padding: 6px;
+    margin: 0 -15px !important;
+    margin-bottom: 10px;
+  }
+
+  .btn-orcamento {
+    border: none;
+    background-color: $cor-principal-clara;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 2em;
+
+    span {
+      vertical-align: -10%;
+    }
+
+    @extend .sombra;
+
+    &:hover {
+      @extend .highlight;
+      text-decoration: none;
+    }
+  }
+
+  a.btn-orcamento {
+    padding: 10px;
+  }
+}
+
 .atendimento {
   margin-top: 40px;
   margin-bottom: 40px;
@@ -46,6 +81,10 @@
       @extend .highlight;
       text-decoration: none;
     }
+  }
+
+  a.btn-orcamento {
+    padding: 10px;
   }
 
   .cliente {
@@ -147,7 +186,7 @@
       .parecer {
         overflow: auto;
 
-        pre, textarea {
+        .well, textarea {
           width: 100%;
           height: 100%;
         }
@@ -175,13 +214,5 @@
 //  > div:nth-child(2){
 //    padding-left: 0 !important;
 //    padding-right: 4px !important;
-//  }
-//}
-
-//.follow-up.container {
-//  background-color: darksalmon !important;
-//
-//  .row {
-//    background-color: lightblue !important;;
 //  }
 //}

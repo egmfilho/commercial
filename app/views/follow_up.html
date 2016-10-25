@@ -1,7 +1,7 @@
 <div class="follow-up container">
 
   <div class="row card">
-    <div class="col-md-12">
+    <div class="col-xs-12">
       <div class="head">
         <h3><span class="glyphicon glyphicon-comment"></span> Follow Up</h3>
       </div>
@@ -18,23 +18,27 @@
       </div>
 
       <div class="col-md-3">
-        <a href="#/atendimento" class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
+        <button class="btn btn-default botao-esticado" ng-click="followUp.buscarPedido()"><span class="glyphicon glyphicon-plus"></span> Adicionar</a>
       </div>
 
       <div class="col-md-3">
-        <button class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-plus"></span> Adicionar em lote</button>
+        <a href="#/follow-up/orcamentos" class="btn btn-default botao-esticado"><span class="glyphicon glyphicon-plus"></span> Adicionar em lote</a>
       </div>
     </div>
 
+    <!--<div class="col-xs-12 well">-->
+      <!---->
+    <!--</div>-->
+
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-xs-12">
         <h3>Atendimentos</h3>
         <div class="hidden-xs col-sm-4 col-md-3 status-legenda" ng-repeat="s in followUp.statusArray">
           <div class="mostrador-de-cor" ng-style="{backgroundColor:s.cor}"></div>
           <h5>{{s.nome}}</h5>
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-xs-12">
         <table class="tabela tabela-bordered tabela-esticada">
           <thead>
           <tr>

@@ -70,6 +70,12 @@ angular
         controller: 'FollowUpCtrl',
         controllerAs: 'followUp'
       })
+      .when('/follow-up/orcamentos', {
+        modulo: 'follow_up',
+        templateUrl: 'views/followUpEmLote.html',
+        controller: 'FollowUpEmLoteCtrl',
+        controllerAs: 'emLote'
+      })
       .when('/atendimento/:action', {
         modulo: 'follow_up',
         templateUrl: 'views/atendimento.html',

@@ -8,13 +8,15 @@ angular.module('commercialApp.controllers')
   .controller('FollowUpCtrl', [
     '$rootScope',
     '$scope',
+    '$location',
     'Atendimento',
     'Usuario',
     'ProviderAtendimento',
     'ModalAtendimento',
     'ProviderStatusAtendimento',
     'StatusHistoricoAtendimento',
-    function ($rootScope, $scope, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento) {
+    'ModalBuscarPedido',
+    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido) {
 
       var self = this;
 
@@ -60,4 +62,15 @@ angular.module('commercialApp.controllers')
         });
       }
 
+      this.buscarPedido = function() {
+        modalBuscarPedido.show().then(function (result) {
+          if (result) {
+            if (result.atendimentoId) {
+              $location.path('/atendimento/open').search('type', 'order').search('code', result.codigo);
+            } else {
+              $location.path('/atendimento/new').search('type', 'order').search('code', result.codigo);
+            }
+          }
+        });
+      };
   }]);

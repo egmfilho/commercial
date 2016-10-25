@@ -53,7 +53,7 @@ body.padding-bottom {
   width: 100%;
   margin: 0 auto; }
 
-.highlight, .navbar-default .navbar-nav > li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .atendimento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
+.highlight, .navbar-default .navbar-nav > li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .em-lote .btn-orcamento:hover, .atendimento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
   -webkit-transition: background-color 0.5s ease;
   -moz-transition: background-color 0.5s ease;
   -ms-transition: background-color 0.5s ease;
@@ -69,7 +69,7 @@ body.padding-bottom {
   -o-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease; }
 
-.sombra, .card, .navbar-default, .header-alternativo, .botao-menu, .botao-menu-barra, #formulario-orcamento .btn-orcamento, .atendimento .btn-orcamento, .configuracoes .controle {
+.sombra, .card, .navbar-default, .header-alternativo, .botao-menu, .botao-menu-barra, #formulario-orcamento .btn-orcamento, .em-lote .btn-orcamento, .atendimento .btn-orcamento, .configuracoes .controle {
   -webkit-box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35);
   -moz-box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35);
   box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35); }
@@ -1070,6 +1070,27 @@ div[name="footer"] .navbar {
   .follow-up .status-legenda h5 {
     font-size: 1.2em; }
 
+.em-lote {
+  margin-top: 40px;
+  margin-bottom: 40px; }
+  .em-lote .card .head, .em-lote .card #formulario-orcamento .main-head, #formulario-orcamento .em-lote .card .main-head {
+    padding: 6px;
+    margin: 0 -15px !important;
+    margin-bottom: 10px; }
+  .em-lote .btn-orcamento {
+    border: none;
+    background-color: #6481bb;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 2em; }
+    .em-lote .btn-orcamento span {
+      vertical-align: -10%; }
+    .em-lote .btn-orcamento:hover {
+      text-decoration: none; }
+  .em-lote a.btn-orcamento {
+    padding: 10px; }
+
 .atendimento {
   margin-top: 40px;
   margin-bottom: 40px; }
@@ -1087,6 +1108,8 @@ div[name="footer"] .navbar {
       vertical-align: -10%; }
     .atendimento .btn-orcamento:hover {
       text-decoration: none; }
+  .atendimento a.btn-orcamento {
+    padding: 10px; }
   .atendimento .cliente {
     max-height: 180px;
     height: 180px;
@@ -1134,7 +1157,7 @@ div[name="footer"] .navbar {
     height: 100%; }
     .atendimento #modal-parecer-completo .body div .parecer, .atendimento #modal-parecer-final .body div .parecer {
       overflow: auto; }
-      .atendimento #modal-parecer-completo .body div .parecer pre, .atendimento #modal-parecer-completo .body div .parecer textarea, .atendimento #modal-parecer-final .body div .parecer pre, .atendimento #modal-parecer-final .body div .parecer textarea {
+      .atendimento #modal-parecer-completo .body div .parecer .well, .atendimento #modal-parecer-completo .body div .parecer textarea, .atendimento #modal-parecer-final .body div .parecer .well, .atendimento #modal-parecer-final .body div .parecer textarea {
         width: 100%;
         height: 100%; }
   .atendimento #modal-parecer-final .body.sm {

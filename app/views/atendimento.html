@@ -109,10 +109,16 @@
       </div>
     </div>
     <div class="col-xs-6 col-md-3 col-md-push-6" uib-collapse="!formularios.parecer">
-      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.limparParecer()"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
+      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.limparParecer()" ng-disabled="atendimento.atendimento.isEncerrado()">
+        <span class="glyphicon glyphicon-erase"></span>
+        Limpar
+      </button>
     </div>
     <div class="col-xs-6 col-md-3 col-md-push-6" uib-collapse="!formularios.parecer">
-      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.salvarParecer()"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
+      <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.salvarParecer()" ng-disabled="atendimento.atendimento.isEncerrado()">
+        <span class="glyphicon glyphicon-floppy-save"></span>
+        Salvar
+      </button>
     </div>
   </div>
 
@@ -143,7 +149,7 @@
             <b>Tipo de Contato</b><br>
             {{parecer.contato.nome}}<br>
             <b>Parecer:</b><br>
-            {{parecer.texto | truncate: 200}}<br><br>
+            {{parecer.texto | truncate: 200 | stripTags}}<br><br>
             <button class="btn btn-primary" ng-click="atendimento.abrirParecer(parecer)"><span class="glyphicon glyphicon-new-window"></span> Ver mais</button>
           </li>
         </ul>
@@ -154,7 +160,13 @@
   <br>
 
   <div class="row">
-    <div class="col-sm-6 col-sm-push-6 col-md-3 col-md-push-9">
+    <div class="col-sm-6 col-md-3">
+      <a class="btn btn-orcamento" href="#/follow-up">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+      </a>
+    </div>
+    <div class="col-sm-6 col-md-3 col-md-push-6">
       <button class="btn btn-orcamento" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.encerrarAtendimento()">
         <span class="glyphicon glyphicon-save"></span>
         Encerrar
@@ -241,9 +253,7 @@
             <div class="row condensar-rows">
               <div class="col-xs-12">
                 <div class="parecer">
-                  <pre>
-                    <p>{{parecerCompleto.texto}}</p>
-                  </pre>
+                  <div class="well" ng-bind-html="parecerCompleto.texto"></div>
                 </div>
               </div>
             </div>
