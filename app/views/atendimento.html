@@ -3,26 +3,27 @@
 
   <div class="row card">
     <div class="col-xs-12">
-      <div class="head">
+      <div class="head" ng-click="formularios.info = !formularios.info; scrollTo($event)">
         <h3>
           <span class="glyphicon glyphicon-list-alt"></span>
           <span ng-if="!atendimento.atendimento.historico.length">Novo </span>
           Atendimento
           <span ng-if="atendimento.atendimento.codigo"> código ({{atendimento.atendimento.codigo}})</span>
           <span class="hidden-xs" ng-if="atendimento.atendimento.historico.length"> - {{atendimento.atendimento.historico[0].status.nome}}</span>
+          <span class="glyphicon" ng-class="{true:'glyphicon-menu-up', false: 'glyphicon-menu-down'}[formularios.info]"></span>
         </h3>
       </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12" uib-collapse="!formularios.info">
       <div class="row">
         <div class="col-md-6">
-          <h3>Dados do Cliente</h3>
+          <h4>Dados do Cliente</h4>
           <div class="cliente well">
             <dl class="dl-horizontal">
               <dt>Código:</dt>
-              <dd>{{atendimento.atendimento.pedido.cliente.codigo}}</dd>
+              <dd>{{atendimento.atendimento.pedido.cliente.codigo || 'Não disponível'}}</dd>
               <dt>Nome:</dt>
-              <dd>{{atendimento.atendimento.pedido.cliente.nome}}</dd>
+              <dd>{{atendimento.atendimento.pedido.cliente.nome || 'Não disponível'}}</dd>
               <dt>Telefone:</dt>
               <dd>{{atendimento.atendimento.pedido.cliente.telefone || 'Não disponível'}}</dd>
               <dt>Celular:</dt>
@@ -33,7 +34,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <h3>Dados do Atendimento</h3>
+          <h4>Dados do Atendimento</h4>
           <div class="info well">
             <dl class="dl-horizontal">
               <dt>Código:</dt>
@@ -47,7 +48,7 @@
               <dt>Atualizado em:</dt>
               <dd>{{atendimento.atendimento.dataUpdate ? (atendimento.atendimento.dataUpdate | date:'short') : 'Não disponível'}}</dd>
               <dt>Orçamento:</dt>
-              <dd>{{atendimento.atendimento.pedido.codigo}}</dd>
+              <dd>{{atendimento.atendimento.pedido.codigo || 'Não disponível'}}</dd>
               <dt>Pareceres:</dt>
               <dd>{{atendimento.atendimento.parecer.length ? atendimento.atendimento.parecer.length : 'Nenhum'}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
             </dl>
@@ -61,14 +62,15 @@
 
   <div class="row card">
     <div class="col-xs-12">
-      <div class="head">
+      <div class="head" ng-click="formularios.parecer = !formularios.parecer; scrollTo($event)">
         <h3>
           <span class="glyphicon glyphicon-file"></span>
           Novo Parecer
+          <span class="glyphicon" ng-class="{true:'glyphicon-menu-up', false: 'glyphicon-menu-down'}[formularios.parecer]"></span>
         </h3>
       </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12" uib-collapse="!formularios.parecer">
       <div class="row">
         <div class="col-xs-8">
           <h4>Pessoa de Contato</h4>
@@ -76,11 +78,13 @@
         </div>
         <div class="col-xs-4">
           <h4>Tipo de Contato</h4>
-          <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+          <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()">
+            <option value="" disabled>Selecione um tipo</option>
+          </select>
         </div>
       </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12" uib-collapse="!formularios.parecer">
       <h4>Texto</h4>
       <div class="parecer well">
         <textarea class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.texto"></textarea>
@@ -104,10 +108,10 @@
         <!--</div>-->
       </div>
     </div>
-    <div class="col-xs-6 col-md-3 col-md-push-6">
+    <div class="col-xs-6 col-md-3 col-md-push-6" uib-collapse="!formularios.parecer">
       <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.limparParecer()"><span class="glyphicon glyphicon-erase"></span> Limpar</button>
     </div>
-    <div class="col-xs-6 col-md-3 col-md-push-6">
+    <div class="col-xs-6 col-md-3 col-md-push-6" uib-collapse="!formularios.parecer">
       <button class="btn btn-default btn-block btn-lg" ng-click="atendimento.salvarParecer()"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
     </div>
   </div>
@@ -116,15 +120,17 @@
 
   <div class="row card">
     <div class="col-xs-12">
-      <div class="head">
+      <div class="head" ng-click="formularios.historico = !formularios.historico; scrollTo($event)">
         <h3>
           <span class="glyphicon glyphicon-time"></span>
           Histórico
+          <span class="glyphicon" ng-class="{true:'glyphicon-menu-up', false: 'glyphicon-menu-down'}[formularios.historico]"></span>
         </h3>
       </div>
     </div>
-    <div class="col-xs-12">
-      <h3>Histórico</h3>
+    <div class="col-xs-12" uib-collapse="!formularios.historico">
+      <!--<h3>Histórico</h3>-->
+      <br>
       <uib-accordion close-others="true" class="historico">
         <ul class="list-group well">
           <li uib-accordion-group class="panel-default" ng-repeat="parecer in atendimento.atendimento.parecer">
@@ -132,15 +138,27 @@
               <span class="glyphicon glyphicon-menu-right"></span>
               <b>Criado por:</b> {{parecer.usuario.usuario}} <b>em:</b> {{parecer.dataCadastro | date:'short'}}
             </uib-accordion-heading>
-            <b>Parecer:</b><br>
-            {{parecer.texto}}<br>
             <b>Pessoa de Contato:</b><br>
             {{parecer.pessoaDeContato || 'Não disponível'}}<br>
             <b>Tipo de Contato</b><br>
-            {{parecer.contato.nome}}
+            {{parecer.contato.nome}}<br>
+            <b>Parecer:</b><br>
+            {{parecer.texto | truncate: 200}}<br><br>
+            <button class="btn btn-primary" ng-click="atendimento.abrirParecer(parecer)"><span class="glyphicon glyphicon-new-window"></span> Ver mais</button>
           </li>
         </ul>
       </uib-accordion>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-6 col-sm-push-6 col-md-3 col-md-push-9">
+      <button class="btn btn-orcamento" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.encerrarAtendimento()">
+        <span class="glyphicon glyphicon-save"></span>
+        Encerrar
+      </button>
     </div>
   </div>
 
@@ -149,7 +167,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="header">
-          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Attendance History <span
+          <div class="title"><span class="glyphicon glyphicon-info-sign"></span> Status <span
             class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
         </div>
         <div class="body">
@@ -191,14 +209,18 @@
 
         </div>
         <div class="footer">
+          <button class="btn btn-default" ng-disabled="atendimento.atendimento.isEncerrado()" data-dismiss="modal">
+            <span class="glyphicon glyphicon-remove"></span>
+            Cancelar
+          </button>
           <button class="btn btn-default" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.salvar()">
             <span class="glyphicon glyphicon-ok"></span>
             Salvar
           </button>
-          <button class="btn btn-default" data-dismiss="modal" ng-disabled="atendimento.atendimento.isEncerrado()">
-            <span class="glyphicon glyphicon-save"></span>
-            Encerrar
-          </button>
+          <!--<button class="btn btn-default" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.salvar('encerrar')">-->
+            <!--<span class="glyphicon glyphicon-save"></span>-->
+            <!--Encerrar-->
+          <!--</button>-->
         </div>
       </div>
     </div>
@@ -206,15 +228,27 @@
   <!--FIM MODAL HISTORICO-->
 
   <!--MODAL PARECER COMPLETO-->
-  <div class="modal meu-modal fade" id="modalParecerCompleto" tabindex="-1" role="dialog" aria-labelledby="modalParecerCompleto">
+  <div class="modal meu-modal fade" id="modal-parecer-completo" tabindex="-1" role="dialog" aria-labelledby="modal-parecer-completo">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="header">
-          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Parecer <span
+          <div class="title"><span class="glyphicon glyphicon-ok-circle"></span> Parecer <span
             class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
         </div>
         <div class="body">
-          PARECER COMPLETO AQUI!
+
+          <div class="container-fluid">
+            <div class="row condensar-rows">
+              <div class="col-xs-12">
+                <div class="parecer">
+                  <pre>
+                    <p>{{parecerCompleto.texto}}</p>
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Fechar</button>
@@ -223,6 +257,36 @@
     </div>
   </div>
   <!--FIM MODAL PARECER COMPLETO-->
+
+  <!--MODAL PARECER FINAL-->
+  <div class="modal meu-modal fade" id="modal-parecer-final" tabindex="-1" role="dialog" aria-labelledby="modal-parecer-final">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="header">
+          <div class="title"><span class="glyphicon glyphicon-ok-circle"></span> Parecer <span
+            class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
+        </div>
+        <div class="body sm">
+
+          <div class="container-fluid">
+            <div class="row condensar-rows">
+              <div class="col-xs-12">
+                <div class="parecer">
+                  <textarea class="form-control" ng-model="novoParecer.texto"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+          <button type="button" class="btn btn-default" ng-click="atendimento.salvar('encerrar')" data-dismiss="modal"><span class="glyphicon glyphicon-save"></span> Encerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIM MODAL PARECER FINAL-->
 
   <!--<br>-->
   <!--ORIGINAL-->

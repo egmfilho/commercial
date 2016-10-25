@@ -4,7 +4,7 @@
 
   .card .head {
     padding: 6px;
-    margin: 0 -15px;
+    margin: 0 -15px !important;
     margin-bottom: 10px;
   }
 
@@ -26,7 +26,26 @@
   .card .head {
     padding: 6px;
     margin: 0 -15px;
-    margin-bottom: 10px;
+  }
+
+  .btn-orcamento {
+    border: none;
+    background-color: $cor-principal-clara;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 2em;
+
+    span {
+      vertical-align: -10%;
+    }
+
+    @extend .sombra;
+
+    &:hover {
+      @extend .highlight;
+      text-decoration: none;
+    }
   }
 
   .cliente {
@@ -105,14 +124,40 @@
       height: 400px !important;
 
       .ui-select-multiple.ui-select-bootstrap {
-        padding: 4px 4px 2px 4px;
+        //padding: 4px 4px 2px 4px;
 
         input.ui-select-search {
-          border: 1px solid #ccc;
-          border-radius: 3px;
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          //border: 1px solid #ccc;
+          //border-radius: 3px;
+          //box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          min-width: 30px;
+          &:focus {
+            border: none;
+            box-shadow: none;
+          }
         }
       }
+    }
+  }
+
+  #modal-parecer-completo, #modal-parecer-final {
+    .body div {
+      height: 100%;
+
+      .parecer {
+        overflow: auto;
+
+        pre, textarea {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  #modal-parecer-final {
+    .body.sm {
+      height: 200px;
     }
   }
 }

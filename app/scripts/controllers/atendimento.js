@@ -40,6 +40,21 @@ angular.module('commercialApp.controllers')
       $scope.novoParecer = new Parecer();
       $scope.novoHistorico = new HistoricoAtendimento();
 
+      $scope.formularios = {
+        info: true,
+        parecer: false,
+        historico: false
+      };
+
+      $scope.scrollTo = function ($event) {
+        var container = jQuery('body'),
+            scrollTo = jQuery($event.currentTarget);
+
+        container.animate({
+          scrollTop: scrollTo.offset().top - 20// - container.offset().top + container.scrollTop()
+        });
+      };
+
       self.limparParecer = function() {
         if (confirm('Limpar parecer?')) {
           $scope.novoParecer = new Parecer();
@@ -206,7 +221,13 @@ angular.module('commercialApp.controllers')
         });
       };
 
+      this.abrirParecer = function(parecer) {
+        $scope.parecerCompleto = new Parecer(parecer);
+        jQuery('#modal-parecer-completo').modal('show');
+      };
+
       function voltar() {
+        jQuery('.modal-backdrop').css('display', 'none');
         $location.search('action', null);
         $location.search('type', null);
         $location.search('code', null);
@@ -214,12 +235,21 @@ angular.module('commercialApp.controllers')
       }
 
       this.salvarParecer = function() {
+        if (!$scope.novoParecer.texto || !$scope.novoParecer.pessoaDeContato || !$scope.novoParecer.contatoId) {
+          $rootScope.alerta.show('Preencha corretamente o parecer!', 'alert-danger');
+          return;
+        }
+
         jQuery('#modal-historico').modal('show');
       };
 
-      this.salvar = function () {
+      this.encerrarAtendimento = function() {
+        jQuery('#modal-parecer-final').modal('show');
+      };
 
-        if (!confirm('Enviar?')) {
+      this.salvar = function (encerrar) {
+
+        if (!confirm(encerrar ? 'Encerrar?' : 'Salvar?')) {
           return;
         }
 
@@ -232,8 +262,13 @@ angular.module('commercialApp.controllers')
           att.historico.spy += item.nome + ':' + item.email + (index  === (self.emails.length - 1) ? '' : ';');
         });
 
+        if (encerrar) {
+          att.historico.statusId = 1002;
+        }
+
         console.log(Atendimento.converterEmSaida(att));
 
+        jQuery('#modal-historico').modal('hide');
         if (self.atendimento.id) {
           $rootScope.loading.load();
           providerAtendimento.editar(Atendimento.converterEmSaida(att)).then(function(success) {
@@ -243,6 +278,8 @@ angular.module('commercialApp.controllers')
           }, function(error) {
             console.log(error);
             $rootScope.loading.unload();
+            $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
+            jQuery('#modal-historico').modal('show');
           });
         } else {
           $rootScope.loading.load();
@@ -253,6 +290,8 @@ angular.module('commercialApp.controllers')
           }, function(error) {
             console.log(error);
             $rootScope.loading.unload();
+            $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
+            jQuery('#modal-historico').modal('show');
           });
         }
       };

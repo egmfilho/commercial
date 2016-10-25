@@ -53,7 +53,7 @@ body.padding-bottom {
   width: 100%;
   margin: 0 auto; }
 
-.highlight, .navbar-default .navbar-nav > li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
+.highlight, .navbar-default .navbar-nav > li:hover, .botao-menu:hover, .botao-menu-barra:hover, #formulario-orcamento .btn-orcamento:hover, .atendimento .btn-orcamento:hover, .configuracoes .controle .botao:hover {
   -webkit-transition: background-color 0.5s ease;
   -moz-transition: background-color 0.5s ease;
   -ms-transition: background-color 0.5s ease;
@@ -69,7 +69,7 @@ body.padding-bottom {
   -o-transition: opacity 0.5s ease;
   transition: opacity 0.5s ease; }
 
-.sombra, .card, .navbar-default, .header-alternativo, .botao-menu, .botao-menu-barra, #formulario-orcamento .btn-orcamento, .configuracoes .controle {
+.sombra, .card, .navbar-default, .header-alternativo, .botao-menu, .botao-menu-barra, #formulario-orcamento .btn-orcamento, .atendimento .btn-orcamento, .configuracoes .controle {
   -webkit-box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35);
   -moz-box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35);
   box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35); }
@@ -1063,7 +1063,7 @@ div[name="footer"] .navbar {
   margin-bottom: 40px; }
   .follow-up .card .head, .follow-up .card #formulario-orcamento .main-head, #formulario-orcamento .follow-up .card .main-head {
     padding: 6px;
-    margin: 0 -15px;
+    margin: 0 -15px !important;
     margin-bottom: 10px; }
   .follow-up .status-legenda div, .follow-up .status-legenda h5 {
     display: inline-block; }
@@ -1075,8 +1075,18 @@ div[name="footer"] .navbar {
   margin-bottom: 40px; }
   .atendimento .card .head, .atendimento .card #formulario-orcamento .main-head, #formulario-orcamento .atendimento .card .main-head {
     padding: 6px;
-    margin: 0 -15px;
-    margin-bottom: 10px; }
+    margin: 0 -15px; }
+  .atendimento .btn-orcamento {
+    border: none;
+    background-color: #6481bb;
+    color: white;
+    width: 100%;
+    height: 60px;
+    font-size: 2em; }
+    .atendimento .btn-orcamento span {
+      vertical-align: -10%; }
+    .atendimento .btn-orcamento:hover {
+      text-decoration: none; }
   .atendimento .cliente {
     max-height: 180px;
     height: 180px;
@@ -1115,12 +1125,20 @@ div[name="footer"] .navbar {
     width: 600px; }
   .atendimento #modal-historico.meu-modal .body {
     height: 400px !important; }
-    .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap {
-      padding: 4px 4px 2px 4px; }
-      .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search {
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+    .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+      min-width: 30px; }
+      .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search:focus {
+        border: none;
+        box-shadow: none; }
+  .atendimento #modal-parecer-completo .body div, .atendimento #modal-parecer-final .body div {
+    height: 100%; }
+    .atendimento #modal-parecer-completo .body div .parecer, .atendimento #modal-parecer-final .body div .parecer {
+      overflow: auto; }
+      .atendimento #modal-parecer-completo .body div .parecer pre, .atendimento #modal-parecer-completo .body div .parecer textarea, .atendimento #modal-parecer-final .body div .parecer pre, .atendimento #modal-parecer-final .body div .parecer textarea {
+        width: 100%;
+        height: 100%; }
+  .atendimento #modal-parecer-final .body.sm {
+    height: 200px; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }
