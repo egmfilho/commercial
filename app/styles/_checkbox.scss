@@ -1,0 +1,115 @@
+/* .squaredTwo from https://codepen.io/bbodine1/pen/novBm */
+.squaredTwo {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: 0;
+  background: #ddd;
+  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+  label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    background: white;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+    &:after {
+      content: '';
+      width: 10px;
+      height: 6px;
+      position: absolute;
+      top: 4px;
+      left: 3px;
+      border: 3px solid white;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+    &:hover::after {
+      border-color: $cor-principal-clara;
+      opacity: 0.3;
+    }
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label {
+      background-color: $cor-principal-clara;
+    }
+    &:checked + label:after {
+      opacity: 1;
+    }
+    &:checked + label:hover::after {
+      border-color: white;
+    }
+  }
+}
+/* end .squaredTwo */
+
+/* Custom checkbox */
+.custom-checkbox {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  margin: 0;
+  label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #ececec;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+    &:after {
+      content: '';
+      width: 10px;
+      height: 6px;
+      position: absolute;
+      top: 4px;
+      left: 3px;
+      border: 3px solid $cor-principal-clara;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+    }
+    &:hover::after {
+      border-color: $cor-principal-clara;
+      opacity: 0.3;
+    }
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label:after {
+      opacity: 1;
+    }
+    &:checked + label:hover::after {
+      border-color: $cor-principal-clara;
+    }
+  }
+}
+
+.custom-checkbox.inverted {
+  label {
+    &:after {
+      border-color: white;
+    }
+    &:hover::after {
+      border-color: $cor-principal-clara;
+    }
+  }
+
+  input[type=checkbox] {
+    &:checked + label {
+      background-color: $cor-principal-clara;
+    }
+    &:checked + label:hover::after {
+      border-color: white;
+    }
+  }
+}

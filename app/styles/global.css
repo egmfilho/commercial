@@ -1065,10 +1065,18 @@ div[name="footer"] .navbar {
     padding: 6px;
     margin: 0 -15px !important;
     margin-bottom: 10px; }
-  .follow-up .status-legenda div, .follow-up .status-legenda h5 {
-    display: inline-block; }
-  .follow-up .status-legenda h5 {
-    font-size: 1.2em; }
+  .follow-up .legenda-status {
+    width: 100%;
+    max-width: 100%;
+    display: inline;
+    overflow: hidden;
+    color: #777; }
+  .follow-up .filtros {
+    position: relative; }
+    .follow-up .filtros .close {
+      position: absolute;
+      top: 7px;
+      right: 7px; }
 
 .em-lote {
   margin-top: 40px;
@@ -1091,6 +1099,11 @@ div[name="footer"] .navbar {
   .em-lote a.btn-orcamento {
     padding: 10px; }
 
+#tabela-em-lote td, #tabela-em-lote th {
+  padding: 4px 5px; }
+  #tabela-em-lote td:first-child, #tabela-em-lote th:first-child {
+    width: 28px; }
+
 .atendimento {
   margin-top: 40px;
   margin-bottom: 40px; }
@@ -1110,6 +1123,10 @@ div[name="footer"] .navbar {
       text-decoration: none; }
   .atendimento a.btn-orcamento {
     padding: 10px; }
+  .atendimento .orcamentos {
+    max-height: 140px;
+    height: 140px;
+    overflow-y: auto; }
   .atendimento .cliente {
     max-height: 180px;
     height: 180px;
@@ -1407,5 +1424,95 @@ div[name="footer"] .navbar {
   background: none;
   width: 200px;
   height: 200px; }
+
+/* .squaredTwo from https://codepen.io/bbodine1/pen/novBm */
+.squaredTwo {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: 0;
+  background: #ddd;
+  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5); }
+  .squaredTwo label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    background: white;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white; }
+    .squaredTwo label:after {
+      content: '';
+      width: 10px;
+      height: 6px;
+      position: absolute;
+      top: 4px;
+      left: 3px;
+      border: 3px solid white;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg); }
+    .squaredTwo label:hover::after {
+      border-color: #6481bb;
+      opacity: 0.3; }
+  .squaredTwo input[type=checkbox] {
+    visibility: hidden; }
+    .squaredTwo input[type=checkbox]:checked + label {
+      background-color: #6481bb; }
+    .squaredTwo input[type=checkbox]:checked + label:after {
+      opacity: 1; }
+    .squaredTwo input[type=checkbox]:checked + label:hover::after {
+      border-color: white; }
+
+/* end .squaredTwo */
+/* Custom checkbox */
+.custom-checkbox {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  margin: 0; }
+  .custom-checkbox label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #ececec;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white; }
+    .custom-checkbox label:after {
+      content: '';
+      width: 10px;
+      height: 6px;
+      position: absolute;
+      top: 4px;
+      left: 3px;
+      border: 3px solid #6481bb;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg); }
+    .custom-checkbox label:hover::after {
+      border-color: #6481bb;
+      opacity: 0.3; }
+  .custom-checkbox input[type=checkbox] {
+    visibility: hidden; }
+    .custom-checkbox input[type=checkbox]:checked + label:after {
+      opacity: 1; }
+    .custom-checkbox input[type=checkbox]:checked + label:hover::after {
+      border-color: #6481bb; }
+
+.custom-checkbox.inverted label:after {
+  border-color: white; }
+.custom-checkbox.inverted label:hover::after {
+  border-color: #6481bb; }
+.custom-checkbox.inverted input[type=checkbox]:checked + label {
+  background-color: #6481bb; }
+.custom-checkbox.inverted input[type=checkbox]:checked + label:hover::after {
+  border-color: white; }
 
 /*# sourceMappingURL=global.css.map */

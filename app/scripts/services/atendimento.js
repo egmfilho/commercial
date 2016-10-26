@@ -12,6 +12,7 @@ angular.module('commercialApp.services')
       this.id = atendimento ? atendimento.id : '';
       this.codigo = atendimento ? atendimento.codigo : '';
       this.pedidoId = atendimento ? atendimento.pedidoId : '';
+      this.codigoPedido = atendimento ? atendimento.codigoPedido : '';
       this.pedido = atendimento ? atendimento.pedido : new Pedido();
       this.usuarioId = atendimento ? atendimento.usuarioId : me.id;
       this.usuario = atendimento ? atendimento.usuario : new Usuario(me);
@@ -51,6 +52,7 @@ angular.module('commercialApp.services')
       atendimento.id = attendance.attendance_id;
       atendimento.codigo = attendance.attendance_code;
       atendimento.pedidoId = attendance.attendance_order_id;
+      atendimento.codigoPedido = attendance.attendance_order_code;
       atendimento.pedido = attendance.attendance_order ? new Pedido(Pedido.converterEmEntrada(attendance.attendance_order)) : new Pedido();
       atendimento.usuarioId = attendance.attendance_user_id;
       atendimento.usuario = attendance.attendance_maker ? new Usuario(Usuario.converterEmEntrada(attendance.attendance_maker)) : new Usuario();
@@ -80,6 +82,7 @@ angular.module('commercialApp.services')
 
       attendance.attendance_id = atendimento.id;
       attendance.attendance_order_id = atendimento.pedidoId;
+      attendance.attendance_order_code = atendimento.codigoPedido;
       attendance.attendance_user_id = atendimento.usuarioId;
 
       attendance.attendance_note = Parecer.converterEmSaida(atendimento.parecer);

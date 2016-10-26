@@ -3,33 +3,159 @@
   <div class="row card">
     <div class="col-xs-12">
       <div class="head">
-        <h3>Orçamentos</h3>
+        <h3><span class="glyphicon glyphicon-list"></span> Orçamentos</h3>
       </div>
     </div>
 
+    <h4>&nbsp;</h4>
     <div class="row">
       <div class="col-xs-3">
-        <button class="btn btn-default btn-block">Atualizar</button>
+        <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-refresh"></span> Atualizar</button>
+      </div>
+      <div class="col-md-3 col-md-push-6">
+        <button class="btn btn-default botao-esticado" ng-click="showFiltros = !showFiltros" data-toggle="modal" data-target="#modalFiltros"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
       </div>
     </div>
 
+    <h4 uib-collapse="!showFiltros">&nbsp;</h4>
+    <div class="col-xs-12 well" uib-collapse="!showFiltros">
+      <div class="row condensar-rows">
+        <div class="col-md-2">
+          <h4>Atendimento</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Orçamento</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="cdPedido" placeholder="código" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <h4>Cliente</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar" readonly="true">
+            <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
+                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <h4>Responsável</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-value="cliente.codigo + (cliente.codigo?' - ':'') + cliente.nome" placeholder="Clique na lupa para buscar" readonly="true">
+            <span class="input-group-btn">
+                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
+                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Data</h4>
+          <select name="" class="form-control">
+            <option value="">Cadastro</option>
+            <option value="">Último Parecer</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <h4>Inicial</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Final</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="dtInicial" ui-mask="99/99/9999" model-view-value="true" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Valor mínimo</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="dtInicial" currency number-only model-view-value="true" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Valor máximo</h4>
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="dtInicial" currency number-only model-view-value="true" keys-shortcuts enter="buscar()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <h4>Status</h4>
+          <select name="" class="form-control" ng-model="filtros.status" ng-options="status.id as status.nome for status in followUp.statusArray"></select>
+        </div>
+      </div>
+      <div class="row condensar-rows">
+        <div class="col-sm-3 col-md-2 col-md-push-8">
+          <h4>&nbsp;</h4>
+          <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-remove"></span> Limpar filtros</button>
+        </div>
+        <div class="col-sm-3 col-md-2 col-md-push-8">
+          <h4>&nbsp;</h4>
+          <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-refresh"></span> Atualizar</button>
+        </div>
+      </div>
+    </div>
+
+    <h4>&nbsp;</h4>
     <div class="row">
       <div class="col-xs-12">
-        <table class="tabela tabela-bordered tabela-esticada">
+        <table class="tabela tabela-bordered tabela-esticada" id="tabela-em-lote">
           <thead>
-            <th></th>
+            <th>
+              <div class="custom-checkbox">
+                <input type="checkbox" value="None" id="all" name="check" ng-model="all" ng-click="emLote.marcarTodos(all)"/>
+                <label for="all"></label>
+              </div>
+            </th>
             <th>Código</th>
             <th>Cliente</th>
             <th>Vendedor</th>
+            <th>Data</th>
             <th>Total</th>
           </thead>
           <tbody>
-            <tr ng-repeat="pedido in emLote.pedidos">
-              <td><input type="checkbox"></td>
-              <td data-label="Código">{{pedido.codigo}}</td>
-              <td data-label="Cliente">{{pedido.cliente.nome}}</td>
-              <td data-label="Vendedor">{{pedido.vendedor.nome}}</td>
-              <td data-label="Total">{{pedido.valor | currency:'R$ '}}</td>
+            <tr ng-repeat="p in emLote.pedidos track by $index">
+              <td>
+                <div class="custom-checkbox inverted">
+                  <input type="checkbox" value="None" id="{{$index}}" name="check" ng-model="p.checked" />
+                  <label for="{{$index}}"></label>
+                </div>
+              </td>
+              <td data-label="Código">{{p.pedido.codigo}}</td>
+              <td data-label="Cliente">{{p.pedido.cliente.nome}}</td>
+              <td data-label="Vendedor">{{p.pedido.vendedor.nome}}</td>
+              <td data-label="Data">{{p.pedido.dataPedido | date: 'short'}}</td>
+              <td data-label="Total">{{p.pedido.valor | currency:'R$ '}}</td>
+            </tr>
+            <tr class="hidden-xs" ng-repeat="n in getNumber(emLote.pagination.max - emLote.pedidos.length) track by $index">
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
             </tr>
           </tbody>
         </table>
@@ -47,10 +173,10 @@
       </a>
     </div>
     <div class="col-xs-6 col-sm-3 col-sm-push-6">
-      <a class="btn btn-orcamento" href="#/follow-up">
+      <button class="btn btn-orcamento" ng-click="emLote.criar()">
         Criar
         <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
+      </button>
     </div>
   </div>
 

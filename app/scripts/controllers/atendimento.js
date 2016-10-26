@@ -63,7 +63,7 @@ angular.module('commercialApp.controllers')
 
       $scope.$on('$viewContentLoaded', function () {
         if ($routeParams.action) {
-          if (!$routeParams.code || !$routeParams.type) {
+          if ((!$routeParams.code && !$routeParams.codes) || !$routeParams.type) {
             $location.path('/');
             return;
           }
@@ -85,6 +85,18 @@ angular.module('commercialApp.controllers')
                 $location.path('/');
               }
               break;
+            case 'batch':
+              if ($routeParams.type === 'order') {
+                self.codigosArray = $routeParams.codes.split('x');
+                self.vendedores = $routeParams.v;
+                self.clientes = $routeParams.c;
+                self.min = $routeParams.min;
+                self.max = $routeParams.max;
+                console.log(self.codigosArray);
+              } else {
+                $location.path('/');
+              }
+              break;
             default:
               $location.path('/');
               break;
@@ -98,7 +110,7 @@ angular.module('commercialApp.controllers')
 
       function getPedido(codigo) {
         $rootScope.loading.load();
-        providerPedido.obterPedidoPorCodigo(codigo, null, null, null, true).then(function (success) {
+        providerPedido.obterPedidoPorCodigo(codigo, true, null, null, true).then(function (success) {
           var pedido = new Pedido(Pedido.converterEmEntrada(success.data));
           console.log(pedido);
           if (pedido.atendimentoId) {
@@ -266,7 +278,13 @@ angular.module('commercialApp.controllers')
           att.historico.statusId = 1002;
         }
 
+        if (self.codigosArray) {
+          att.codigoPedido = self.codigosArray;
+          att.historico.statusId = 1001;
+        }
+
         console.log(Atendimento.converterEmSaida(att));
+        return;
 
         jQuery('#modal-historico').modal('hide');
         if (self.atendimento.id) {

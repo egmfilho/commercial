@@ -28,6 +28,8 @@ angular.module('commercialApp.controllers')
         // jQuery('#modalFiltros').modal('show');
       });
 
+      self.showFiltros = false;
+
       self.pagination = {
         current: 1,
         max: 15,
@@ -35,14 +37,14 @@ angular.module('commercialApp.controllers')
       };
 
       function getAtendimentos() {
-        self.atendimentos = [ ];
+        self.atendimentos = [];
         $rootScope.loading.load();
-        providerAtendimento.obterTodos(true, true, true, true).then(function(success) {
-          angular.forEach(success.data, function(item, index) {
+        providerAtendimento.obterTodos(true, true, true, true).then(function (success) {
+          angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)))
           });
           $rootScope.loading.unload();
-        }, function(error) {
+        }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
         });
@@ -62,7 +64,7 @@ angular.module('commercialApp.controllers')
         });
       }
 
-      this.buscarPedido = function() {
+      this.buscarPedido = function () {
         modalBuscarPedido.show().then(function (result) {
           if (result) {
             if (result.atendimentoId) {
@@ -73,4 +75,4 @@ angular.module('commercialApp.controllers')
           }
         });
       };
-  }]);
+    }]);

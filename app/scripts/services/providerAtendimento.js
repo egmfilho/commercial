@@ -115,6 +115,12 @@ angular.module('commercialApp.services')
           }, attendance).$promise;
         },
 
+        adicionarEmLote: function (attendance) {
+          return provider.save({
+            action: 'insertBatch'
+          }, attendance).$promise;
+        },
+
         excluir: function (id) {
           return provider.save({
             action: 'del'
