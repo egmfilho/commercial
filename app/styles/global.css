@@ -1195,11 +1195,11 @@ div[name="footer"] .navbar {
 .configuracoes .controle {
   height: 100%;
   background-color: #29487d;
-  padding: 100px 0 0 0;
+  padding: 0 0 0 0;
   margin: 0; }
   .configuracoes .controle .botao {
     text-align: center;
-    height: 80px;
+    height: 60px;
     background-color: #3b5998;
     padding: 0;
     color: white;
@@ -1211,8 +1211,8 @@ div[name="footer"] .navbar {
       box-shadow: 0 2px 2px rgba(50, 50, 50, 0.35); }
     .configuracoes .controle .botao span {
       display: block;
-      font-size: 2em;
-      margin: 10px; }
+      font-size: 1.5em;
+      margin: 4px; }
   .configuracoes .controle .ativo {
     background-color: #29487d; }
 .configuracoes .dashboard.fill {

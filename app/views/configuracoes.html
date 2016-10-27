@@ -13,6 +13,7 @@
             <li><a href="" ng-click="controle = 'usuarios'; label = 'Usuários'"><span class="glyphicon glyphicon-ok" ng-show="controle==='usuarios'"></span>&nbsp; Usuários</a></li>
             <li><a href="" ng-click="controle = 'perfis'; label = 'Perfis'"><span class="glyphicon glyphicon-ok" ng-show="controle==='perfis'"></span>&nbsp; Perfis</a></li>
             <li><a href="" ng-click="controle = 'follow-up'; label = 'Follow Up'"><span class="glyphicon glyphicon-comment" ng-show="controle==='follow-up'"></span>&nbsp; Follow Up</a></li>
+            <li><a href="" ng-click="controle = 'geral'; label = 'Geral'"><span class="glyphicon glyphicon-wrench" ng-show="controle==='geral'"></span>&nbsp; Geral</a></li>
             <li><a href="" ng-click="controle = 'sobre'; label = 'Sobre'"><span class="glyphicon glyphicon-ok" ng-show="controle==='sobre'"></span>&nbsp; Sobre</a></li>
           </ul>
         </div>
@@ -43,6 +44,12 @@
             Follow Up
           </p>
         </div>
+        <div class="botao" ng-click="controle='geral'" ng-class="{ 'ativo': controle === 'geral'}">
+          <p class="centerX centerY">
+            <span class="glyphicon glyphicon-wrench"></span>
+            Geral
+          </p>
+        </div>
         <div class="botao" ng-click="controle='sobre'" ng-class="{ 'ativo': controle === 'sobre'}">
           <p class="centerX centerY">
             <span class="glyphicon glyphicon-question-sign"></span>
@@ -52,11 +59,12 @@
       </div>
 
 
-      <div class="col-md-offset-1 col-md-9 dashboard fill">
+      <div class="col-md-11 dashboard fill">
 
         <div class="container card fill" ng-if="controle==='usuarios'" ng-include="'partials/dashboard/usuarios.html'"></div>
         <div class="container card fill" ng-if="controle==='perfis'" ng-include="'partials/dashboard/perfis.html'"></div>
         <div class="container card fill" ng-if="controle==='follow-up'" ng-include="'partials/dashboard/follow-up.html'"></div>
+        <div class="container fill" ng-if="controle==='geral'" ng-include="'partials/dashboard/geral.html'"></div>
         <div ng-include="'partials/dashboard/sobre.html'" ng-if="controle==='sobre'"></div>
 
       </div>

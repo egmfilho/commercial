@@ -16,16 +16,14 @@ angular.module('commercialApp.controllers')
     'ProviderStatusAtendimento',
     'StatusHistoricoAtendimento',
     'ModalBuscarPedido',
-    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido) {
+    'ModalBuscarPessoa',
+    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido, modalBuscarPessoa) {
 
       var self = this;
 
       $scope.$on('$viewContentLoaded', function () {
         getStatusAtendimento();
         getAtendimentos();
-
-        // modalAtendimento.show();
-        // jQuery('#modalFiltros').modal('show');
       });
 
       self.showFiltros = false;
@@ -36,10 +34,48 @@ angular.module('commercialApp.controllers')
         total: 0
       };
 
+      self.filtro = {
+        atendimento: '',
+        pedido: '',
+        cliente: { id: null, nome: null},
+        responsavel: null,
+        dataMin: null,
+        dataMax: null,
+        valorMin: null,
+        valorMax: null,
+        status: ''
+      };
+
       function getAtendimentos() {
         self.atendimentos = [];
         $rootScope.loading.load();
-        providerAtendimento.obterTodos(true, true, true, true).then(function (success) {
+        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id).then(function (success) {
+          angular.forEach(success.data, function (item, index) {
+            self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getAtendimento(codigo) {
+        self.atendimentos = [];
+        $rootScope.loading.load();
+        providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
+          self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(success.data)));
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getAtendimentosPorCodigoDePedido(codigo) {
+        self.atendimentos = [];
+        $rootScope.loading.load();
+        providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status).then(function (success) {
           angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)))
           });
@@ -49,6 +85,22 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
         });
       }
+
+      this.filtrar = function () {
+        self.showFiltros = false;
+
+        if (this.filtro.atendimento) {
+          getAtendimento(this.filtro.atendimento);
+          return;
+        }
+
+        if (this.filtro.pedido) {
+          getAtendimentosPorCodigoDePedido(this.filtro.pedido);
+          return;
+        }
+
+        getAtendimentos();
+      };
 
       function getStatusAtendimento() {
         self.statusArray = [];
@@ -63,6 +115,20 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
         });
       }
+
+      this.atualizar = function () {
+        getAtendimentos();
+      };
+
+      $scope.buscarCliente = function () {
+        modalBuscarPessoa.show('Cliente').then(function (result) {
+          if (result) {
+            self.filtro.cliente = result;
+          }
+        }, function (error) {
+
+        });
+      };
 
       this.buscarPedido = function () {
         modalBuscarPedido.show().then(function (result) {

@@ -162,24 +162,6 @@
       <h4>Texto</h4>
       <div class="parecer well">
         <textarea class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.texto"></textarea>
-        <!--<div class="row">-->
-          <!--<div class="col-xs-12 col-md-12">-->
-            <!--<h4 class="hidden-md">Pessoa de contato</h4>-->
-            <!--<h4 class="visible-md-block">Pessoa</h4>-->
-            <!--<input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.pessoaDeContato">-->
-          <!--</div>-->
-          <!--<div class="col-xs-6 col-md-6">-->
-            <!--<h4>Tipo de contato</h4>-->
-            <!--<select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>-->
-          <!--</div>-->
-          <!--<div class="col-xs-6 col-md-6">-->
-            <!--<h4>&nbsp;</h4>-->
-            <!--<button class="btn btn-default btn-block" ng-disabled="atendimento.atendimento.isEncerrado()" ng-click="atendimento.limparParecer()">-->
-              <!--<span class="glyphicon glyphicon-erase"></span>-->
-              <!--Limpar-->
-            <!--</button>-->
-          <!--</div>-->
-        <!--</div>-->
       </div>
     </div>
     <div class="col-xs-6 col-md-3 col-md-push-6" uib-collapse="!formularios.parecer">
@@ -235,7 +217,7 @@
 
   <div class="row">
     <div class="col-sm-6 col-md-3">
-      <a class="btn btn-orcamento" href="#/follow-up">
+      <a class="btn btn-orcamento" ng-href="#/follow-up{{atendimento.codigosArray ? '/orcamentos' : ''}}">
         <span class="glyphicon glyphicon-chevron-left"></span>
         Voltar
       </a>
@@ -268,7 +250,7 @@
             <div class="row status">
               <div class="col-xs-12 col-md-12">
                 <h4 ng-init="aberto = false">Próximo Contato</h4>
-                <div class="well well-sm clearfix" uib-datepicker-popup show-button-bar="false" popup-placement="bottom-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
+                <div class="well well-sm clearfix" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" popup-placement="bottom-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
                   <b>Data:</b> {{novoHistorico.proximoContato | date:'fullDate'}}
                   <button type="button" class="btn btn-default pull-right botao-calendario" ng-click="aberto = !aberto" ng-disabled="atendimento.atendimento.isEncerrado()"><i class="caret"></i></button>
                 </div>

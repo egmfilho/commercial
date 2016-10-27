@@ -39,7 +39,8 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades
+            get_order_payments_modality: modalidades,
+            get_order_attendance: true
           }).$promise;
         },
 
@@ -53,7 +54,8 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades
+            get_order_payments_modality: modalidades,
+            get_order_attendance: true
           }).$promise;
         },
 
@@ -84,7 +86,8 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades
+            get_order_payments_modality: modalidades,
+            get_order_attendance: true
           }).$promise;
         },
 
@@ -101,7 +104,8 @@ angular.module('commercialApp.services')
             get_order_items: get_items,
             get_order_items_product: get_produtos,
             get_order_payments: get_pagamentos,
-            get_order_payments_modality: get_modalidades
+            get_order_payments_modality: get_modalidades,
+            get_order_attendance: true
           }).$promise;
         },
 
@@ -114,7 +118,8 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades
+            get_order_payments_modality: modalidades,
+            get_order_attendance: true
           }).$promise;
         },
 

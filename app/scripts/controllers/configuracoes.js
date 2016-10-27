@@ -59,6 +59,7 @@ angular.module('commercialApp.controllers')
 
       if (width >= 768) {
         jQuery('.controle').css('height', height + 'px');
+        jQuery('.botao').css('height', (height / 5) + 'px');
         jQuery('.dashboard').css('height', height + 'px');
         jQuery('.logs').css('height', height + 'px');
       } else {

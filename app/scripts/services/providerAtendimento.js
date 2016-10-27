@@ -35,9 +35,10 @@ angular.module('commercialApp.services')
       // "get_attendance_history_maker": "1",
       // "get_attendance_history_status": "1",
       // "get_attendance_history_responsible": "1"
+      // "get_order_seller": "1"
 
       return {
-        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico) {
+        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroOrcamento, filtroCliente) {
           return provider.query({
             action: 'getList'
           }, {
@@ -48,7 +49,10 @@ angular.module('commercialApp.services')
             get_attendance_note_contact_type: getParecer,
             get_attendance_last_history: getHistorico,
             get_attendance_history_responsible: getHistorico,
-            get_attendance_history_status: getHistorico
+            get_attendance_history_status: getHistorico,
+            get_order_seller: true,
+            attendance_status_id: filtroStatus,
+            attendance_client_id: filtroCliente
           }).$promise;
         },
 
@@ -65,7 +69,7 @@ angular.module('commercialApp.services')
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
-            get_attendance_history_status: getHistorico
+            get_attendance_history_status: getHistorico,
           }).$promise;
         },
 
@@ -82,7 +86,8 @@ angular.module('commercialApp.services')
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
-            get_attendance_history_status: getHistorico
+            get_attendance_history_status: getHistorico,
+            get_order_seller: true
           }).$promise;
         },
 
@@ -99,7 +104,26 @@ angular.module('commercialApp.services')
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
-            get_attendance_history_status: getHistorico
+            get_attendance_history_status: getHistorico,
+            get_order_seller: true
+          }).$promise;
+        },
+
+        obterTodosPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico) {
+          return provider.get({
+            action: 'getList'
+          }, {
+            attendance_order_code: codigo,
+            get_attendance_order: getPedido,
+            get_attendance_maker: getUsuario,
+            get_attendance_note: getParecer,
+            get_attendance_note_maker: getParecer,
+            get_attendance_note_contact_type: getParecer,
+            get_attendance_history: getHistorico,
+            get_attendance_history_maker: getHistorico,
+            get_attendance_history_responsible: getHistorico,
+            get_attendance_history_status: getHistorico,
+            get_order_seller: true
           }).$promise;
         },
 
