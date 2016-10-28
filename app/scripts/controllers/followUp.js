@@ -17,13 +17,16 @@ angular.module('commercialApp.controllers')
     'StatusHistoricoAtendimento',
     'ModalBuscarPedido',
     'ModalBuscarPessoa',
-    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido, modalBuscarPessoa) {
+    'ProviderUsuario',
+    'DataSaida',
+    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido, modalBuscarPessoa, providerUsuario, DataSaida) {
 
       var self = this;
 
       $scope.$on('$viewContentLoaded', function () {
         getStatusAtendimento();
         getAtendimentos();
+        getUsuarios();
       });
 
       self.showFiltros = false;
@@ -37,8 +40,9 @@ angular.module('commercialApp.controllers')
       self.filtro = {
         atendimento: '',
         pedido: '',
-        cliente: { id: null, nome: null},
+        cliente: {id: null, nome: null},
         responsavel: null,
+        data: 'nenhum',
         dataMin: null,
         dataMax: null,
         valorMin: null,
@@ -49,11 +53,28 @@ angular.module('commercialApp.controllers')
       function getAtendimentos() {
         self.atendimentos = [];
         $rootScope.loading.load();
-        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id).then(function (success) {
+        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax)).then(function (success) {
           angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
           });
           $rootScope.loading.unload();
+          self.showFiltros = false;
+        }, function (error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getAtendimentosPorCodigoDePedido(codigo) {
+        self.atendimentos = [];
+        $rootScope.loading.load();
+        console.log(self.filtro.responsavel);
+        providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax)).then(function (success) {
+          angular.forEach(success.data, function (item, index) {
+            self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+          self.showFiltros = false;
         }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
@@ -66,18 +87,19 @@ angular.module('commercialApp.controllers')
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(success.data)));
           $rootScope.loading.unload();
+          self.showFiltros = false;
         }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
         });
       }
 
-      function getAtendimentosPorCodigoDePedido(codigo) {
-        self.atendimentos = [];
+      function getUsuarios() {
+        self.usuarios = [];
         $rootScope.loading.load();
-        providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status).then(function (success) {
+        providerUsuario.obterTodos().then(function (success) {
           angular.forEach(success.data, function (item, index) {
-            self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)))
+            self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
           });
           $rootScope.loading.unload();
         }, function (error) {
@@ -87,8 +109,6 @@ angular.module('commercialApp.controllers')
       }
 
       this.filtrar = function () {
-        self.showFiltros = false;
-
         if (this.filtro.atendimento) {
           getAtendimento(this.filtro.atendimento);
           return;
@@ -97,6 +117,32 @@ angular.module('commercialApp.controllers')
         if (this.filtro.pedido) {
           getAtendimentosPorCodigoDePedido(this.filtro.pedido);
           return;
+        }
+
+        if (this.filtro.data === 'nenhum') {
+          if (angular.isDate(this.filtro.dataMin) || angular.isDate(this.filtro.dataMax)) {
+            $rootScope.alerta.show('Escolha um tipo de data', 'alert-danger');
+            return;
+          }
+        } else {
+          if (!angular.isDate(this.filtro.dataMin) && !angular.isDate(this.filtro.dataMax)) {
+            $rootScope.alerta.show('Informe pelo menos uma das datas!', 'alert-danger');
+            return;
+          }
+
+          if (angular.isDate(this.filtro.dataMin) && angular.isDate(this.filtro.dataMax)) {
+            if (this.filtro.dataMax < this.filtro.dataMin) {
+              $rootScope.alerta.show('A data final não pode ser menor que a inicial!', 'alert-danger');
+              return;
+            }
+          }
+        }
+
+        if (this.filtro.valorMax && this.filtro.valorMin) {
+          if (this.filtro.valorMax < this.filtro.valorMin) {
+            $rootScope.alerta.show('O valor máximo não pode ser menor que o mínimo!', 'alert-danger');
+            return;
+          }
         }
 
         getAtendimentos();
@@ -120,16 +166,6 @@ angular.module('commercialApp.controllers')
         getAtendimentos();
       };
 
-      $scope.buscarCliente = function () {
-        modalBuscarPessoa.show('Cliente').then(function (result) {
-          if (result) {
-            self.filtro.cliente = result;
-          }
-        }, function (error) {
-
-        });
-      };
-
       this.buscarPedido = function () {
         modalBuscarPedido.show().then(function (result) {
           if (result) {
@@ -141,4 +177,34 @@ angular.module('commercialApp.controllers')
           }
         });
       };
+
+      $scope.buscarCliente = function () {
+        modalBuscarPessoa.show('Cliente').then(function (result) {
+          if (result) {
+            self.filtro.cliente = result;
+          }
+        }, function (error) {
+
+        });
+      };
+
+      $scope.removeCliente = function () {
+        self.filtro.cliente = {id: null, nome: null};
+      };
+
+      $scope.removeFiltros = function () {
+        self.filtro = {
+          atendimento: '',
+          pedido: '',
+          cliente: {id: null, nome: null},
+          responsavel: null,
+          data: 'nenhum',
+          dataMin: null,
+          dataMax: null,
+          valorMin: null,
+          valorMax: null,
+          status: ''
+        };
+      };
+
     }]);

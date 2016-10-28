@@ -1128,12 +1128,12 @@ div[name="footer"] .navbar {
     height: 140px;
     overflow-y: auto; }
   .atendimento .cliente {
-    max-height: 180px;
-    height: 180px;
+    max-height: 200px;
+    height: 200px;
     overflow-y: auto; }
   .atendimento .info {
-    max-height: 180px;
-    height: 180px;
+    max-height: 200px;
+    height: 200px;
     overflow-y: auto; }
     .atendimento .info .label {
       font-weight: 400; }

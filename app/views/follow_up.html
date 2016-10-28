@@ -36,8 +36,8 @@
           <div class="input-group">
             <input type="text" class="form-control" ng-model="followUp.filtro.atendimento" placeholder="código" keys-shortcuts enter="buscar()">
             <span class="input-group-btn">
-                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
-                </span>
+              <button class="btn btn-default" tabindex="-1" ng-click="followUp.filtro.atendimento = null"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
           </div>
         </div>
         <div class="col-md-2">
@@ -45,44 +45,41 @@
           <div class="input-group">
             <input type="text" class="form-control" ng-model="followUp.filtro.pedido" placeholder="código" keys-shortcuts enter="buscar()">
             <span class="input-group-btn">
-                  <button class="btn btn-default" tabindex="-1" ng-click="cdPedido=''"><span class="glyphicon glyphicon-remove"></span></button>
-                </span>
+              <button class="btn btn-default" tabindex="-1" ng-click="followUp.filtro.pedido = null"><span class="glyphicon glyphicon-remove"></span></button>
+            </span>
           </div>
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-6">
           <h4>Cliente</h4>
           <div class="input-group">
             <input type="text" class="form-control" ng-value="followUp.filtro.cliente.nome" placeholder="Clique na lupa para buscar" readonly="true">
             <span class="input-group-btn">
-                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
-                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
+              <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
+              <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
           </div>
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-2">
           <h4>Responsável</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="followUp.filtro.responsavel" ng-value="followUp.filtro.responsavel.nome" placeholder="Clique na lupa para buscar" readonly="true">
-            <span class="input-group-btn">
-                  <button class="btn btn-default" tabindex="-1" ng-click="removeCliente()"><span class="glyphicon glyphicon-remove"></span></button>
-                  <button class="btn btn-default" tabindex="-1" ng-click="buscarCliente()"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-          </div>
+          <select name="" class="form-control" ng-model="followUp.filtro.responsavel" ng-options="usuario.id as usuario.usuario for usuario in followUp.usuarios">
+            <option value="">Todos</option>
+          </select>
         </div>
         <div class="col-md-2">
           <h4>Data</h4>
-          <select name="" class="form-control">
-            <option value="">Cadastro</option>
-            <option value="">Último Parecer</option>
-            <option value="">Próximo contato</option>
+          <select name="" class="form-control" ng-model="followUp.filtro.data">
+            <option value="nenhum">Nenhum</option>
+            <option value="creation">Cadastro</option>
+            <option value="last_attendance_note">Último Parecer</option>
+            <option value="attendance_history_deadline">Próximo contato</option>
           </select>
         </div>
         <div class="col-md-2">
           <h4>Inicial</h4>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="followUp.filtro.dataMin" ui-mask="99/99/9999" model-view-value="true" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="followUp.filtro.dataMin" is-open="abertoMin">
+            <input type="text" class="form-control" ng-model="followUp.filtro.dataMin" ui-mask="99/99/9999" model-view-value="true" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" is-open="abertoMin" datepicker-options="{showWeeks: false}">
             <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+              <button class="btn btn-default" tabindex="-1" ng-click="followUp.filtro.dataMin = null"><span class="glyphicon glyphicon-remove"></span></button>
               <button class="btn btn-default" tabindex="-1" ng-click="abertoMin = !abertoMin">
                 <span class="glyphicon glyphicon-calendar"></span>
               </button>
@@ -92,30 +89,12 @@
         <div class="col-md-2">
           <h4>Final</h4>
           <div class="input-group">
-            <input type="text" class="form-control" ng-model="followUp.filtro.dataMax" ui-mask="99/99/9999" model-view-value="true" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" ng-model="followUp.filtro.dataMax" is-open="abertoMax">
+            <input type="text" class="form-control" ng-model="followUp.filtro.dataMax" ui-mask="99/99/9999" model-view-value="true" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" is-open="abertoMax" datepicker-options="{showWeeks: false}">
             <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
+              <button class="btn btn-default" tabindex="-1" ng-click="followUp.filtro.dataMax = null"><span class="glyphicon glyphicon-remove"></span></button>
               <button class="btn btn-default" tabindex="-1" ng-click="abertoMax = !abertoMax">
                 <span class="glyphicon glyphicon-calendar"></span>
               </button>
-            </span>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <h4>Valor mínimo</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="followUp.filtro.valorMin" currency number-only model-view-value="true" keys-shortcuts enter="buscar()">
-            <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
-            </span>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <h4>Valor máximo</h4>
-          <div class="input-group">
-            <input type="text" class="form-control" ng-model="followUp.filtro.valorMax" currency number-only model-view-value="true" keys-shortcuts enter="buscar()">
-            <span class="input-group-btn">
-              <button class="btn btn-default" tabindex="-1" ng-click="dtInicial=''"><span class="glyphicon glyphicon-remove"></span></button>
             </span>
           </div>
         </div>
@@ -125,13 +104,11 @@
             <option value="">Todos</option>
           </select>
         </div>
-      </div>
-      <div class="row condensar-rows">
-        <div class="col-sm-3 col-md-2 col-md-push-8">
+        <div class="col-md-2">
           <h4>&nbsp;</h4>
-          <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-remove"></span> Limpar filtros</button>
+          <button class="btn btn-default btn-block" ng-click="removeFiltros()"><span class="glyphicon glyphicon-remove"></span> Limpar filtros</button>
         </div>
-        <div class="col-sm-3 col-md-2 col-md-push-8">
+        <div class="col-md-2">
           <h4>&nbsp;</h4>
           <button class="btn btn-default btn-block" ng-click="followUp.filtrar()"><span class="glyphicon glyphicon-refresh"></span> Atualizar</button>
         </div>
@@ -152,12 +129,9 @@
             <th>Cliente</th>
             <th>Responsável</th>
             <th>Vendedor</th>
-            <!--<th>Atualizado em</th>-->
+            <th>Próx Contato</th>
             <th>Último Parecer</th>
-            <th>Cadastrado em</th>
-            <!--<th></th>-->
-            <!--<th></th>-->
-            <!--<th></th>-->
+            <th>Cadastro</th>
             <th></th>
           </tr>
           </thead>
@@ -170,12 +144,9 @@
             <td data-label="Cliente">{{a.pedido.cliente.nome | truncate:35}}</td>
             <td data-label="Responsável">{{a.historico[0].responsavel.usuario || 'Não disponível'}}</td>
             <td data-label="Vendedor">{{a.pedido.vendedor.nome || 'Não disponível'}}</td>
-            <!--<td data-label="Data de atualização">{{a.dataUpdate ? (a.dataUpdate | date:'short') : 'Não disponível'}}</td>-->
+            <td data-label="Data do próximo contato">{{a.historico.length ? (a.historico[0].proximoContato | date:'dd/MM/yyyy') : 'Não disponível'}}</td>
             <td data-label="Data do último parecer">{{a.parecer.length ? (a.parecer[0].dataCadastro | date:'short') : 'Não disponível'}}</td>
             <td data-label="Data de cadastro">{{a.dataCadastro | date:'short'}}</td>
-            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>-->
-            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-plus-sign"></span></a></td>-->
-            <!--<td class="hidden-xs"><a href=""><span class="glyphicon glyphicon-time"></span></a></td>-->
             <td class="hidden-xs"><a ng-href="#/atendimento/open?type=attendance&code={{a.codigo}}"><span class="glyphicon glyphicon-open-file"></span></a></td>
           </tr>
           <tr class="hidden-xs" ng-repeat="n in getNumber(followUp.pagination.max - followUp.atendimentos.length) track by $index">
@@ -188,7 +159,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <!--<td>&nbsp;</td>-->
+            <td>&nbsp;</td>
           </tr>
           </tbody>
         </table>

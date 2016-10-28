@@ -59,22 +59,6 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidosPorVendedor: function(codigo, nome) {
-          return provider.query({
-            action: 'getList'
-          }, {
-
-          }).$promise;
-        },
-
-        obterPedidosPorCliente: function(codigo, nome) {
-          return provider.query({
-            action: 'getList'
-          }, {
-
-          }).$promise;
-        },
-
         obterPedidosPorData: function(inicial, final, vendedor, items, produtos, cliente, pagamentos, modalidades) {
           return provider.query({
             action: 'getList'
@@ -91,14 +75,17 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidosComFiltros: function(id_vendedor, id_cliente, data_inicial, data_final, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades) {
+        obterPedidosComFiltros: function(id_vendedor, id_cliente, valor_minimo, valor_maximo, data_inicial, data_final, com_atendimentos_abertos, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades) {
           return provider.query({
             action: 'getList'
           }, {
             order_seller_id: id_vendedor,
             order_client_id: id_cliente,
+            order_value_min: valor_minimo,
+            order_value_max: valor_maximo,
             order_date_start: data_inicial,
             order_date_end: data_final,
+            order_attendance: com_atendimentos_abertos === 'S' ? 'Y' : com_atendimentos_abertos, // apenas troca o S pelo Y, o N é igual. Y, N ou null
             get_order_seller: get_vendedor,
             get_order_client: get_cliente,
             get_order_items: get_items,

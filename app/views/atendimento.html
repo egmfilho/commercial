@@ -100,6 +100,8 @@
               <dd>{{atendimento.atendimento.dataCadastro | date:'short'}}</dd>
               <dt>Atualizado em:</dt>
               <dd>{{atendimento.atendimento.dataUpdate ? (atendimento.atendimento.dataUpdate | date:'short') : 'Não disponível'}}</dd>
+              <dt>Próximo contato:</dt>
+              <dd>{{atendimento.atendimento.historico.length ? (atendimento.atendimento.historico[0].proximoContato | date:'dd/MM/yyyy') : 'Não disponível'}}</dd>
               <dt>Pareceres:</dt>
               <dd>{{atendimento.atendimento.parecer.length ? atendimento.atendimento.parecer.length : 'Nenhum'}} parecer{{atendimento.atendimento.parecer.length > 1 ? 'es' : ''}}</dd>
               <dt>Último parecer em:</dt>

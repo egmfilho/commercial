@@ -149,7 +149,7 @@ angular.module('commercialApp.controllers')
           var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
               end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
 
-          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, init, end, true, true).then(function(success) {
+          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, null, true, true).then(function(success) {
             $scope.pedidos = [ ];
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));

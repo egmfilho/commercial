@@ -281,10 +281,21 @@ angular.module('commercialApp.controllers')
         if (self.codigosArray) {
           att.codigoPedido = self.codigosArray;
           att.historico.statusId = 1001;
-        }
 
-        console.log(Atendimento.converterEmSaida(att));
-        return;
+          $rootScope.loading.load();
+          providerAtendimento.adicionarEmLote(Atendimento.converterEmSaida(att)).then(function (success) {
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Atendimentos salvos', 'alert-success');
+            voltar();
+          }, function (error) {
+            console.log(error);
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Não foi possível salvar os atendimentos.', 'alert-danger');
+            jQuery('#modal-historico').modal('show');
+          });
+
+          return;
+        }
 
         jQuery('#modal-historico').modal('hide');
         if (self.atendimento.id) {

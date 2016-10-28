@@ -38,7 +38,7 @@ angular.module('commercialApp.services')
       // "get_order_seller": "1"
 
       return {
-        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroOrcamento, filtroCliente) {
+        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroCliente, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax) {
           return provider.query({
             action: 'getList'
           }, {
@@ -52,7 +52,11 @@ angular.module('commercialApp.services')
             get_attendance_history_status: getHistorico,
             get_order_seller: true,
             attendance_status_id: filtroStatus,
-            attendance_client_id: filtroCliente
+            attendance_client_id: filtroCliente,
+            attendance_responsible_id: filtroResponsavel,
+            attendance_date_column: filtroData,
+            attendance_date_start: filtroDataMin,
+            attendance_date_end: filtroDataMax
           }).$promise;
         },
 
@@ -69,7 +73,7 @@ angular.module('commercialApp.services')
             get_attendance_history: getHistorico,
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
-            get_attendance_history_status: getHistorico,
+            get_attendance_history_status: getHistorico
           }).$promise;
         },
 
@@ -109,7 +113,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterTodosPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico) {
+        obterTodosPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax) {
           return provider.get({
             action: 'getList'
           }, {
@@ -123,7 +127,12 @@ angular.module('commercialApp.services')
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
             get_attendance_history_status: getHistorico,
-            get_order_seller: true
+            get_order_seller: true,
+            attendance_status_id: filtroStatus,
+            attendance_responsible_id: filtroResponsavel,
+            attendance_date_column: filtroData,
+            attendance_date_start: filtroDataMin,
+            attendance_date_end: filtroDataMax
           }).$promise;
         },
 
