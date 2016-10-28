@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <br>
+  <br ng-if="!atendimento.codigosArray">
 
   <div class="row card" ng-if="!atendimento.codigosArray">
     <div class="col-xs-12">
@@ -180,7 +180,7 @@
     </div>
   </div>
 
-  <br>
+  <br ng-if="!atendimento.codigosArray">
 
   <div class="row card" ng-if="!atendimento.codigosArray">
     <div class="col-xs-12">
@@ -259,7 +259,7 @@
               </div>
               <div class="col-xs-6">
                 <h4>Status</h4>
-                <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray" ng-model="novoHistorico.statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
+                <select class="form-control" ng-options="status.id as status.nome for status in atendimento.statusArray | filter:mostraStatus" ng-model="novoHistorico.statusId" ng-disabled="atendimento.atendimento.isEncerrado()"></select>
               </div>
               <div class="col-xs-6 col-md-6">
                 <h4>Responsável</h4>

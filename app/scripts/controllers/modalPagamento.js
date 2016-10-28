@@ -16,11 +16,11 @@ angular.module('commercialApp.controllers')
     'Pagamento',
     'Pedido',
     'pedido',
-    function($rootScope, $scope, $uibModalInstance, $timeout, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
+    function ($rootScope, $scope, $uibModalInstance, $timeout, providerModalidade, providerPedido, Modalidade, Pagamento, Pedido, pedido) {
 
       var lookup_valor = 0;
 
-      $uibModalInstance.opened.then(function() {
+      $uibModalInstance.opened.then(function () {
         $scope.pedido = pedido;
         $scope.modalidade = new Modalidade();
         $scope.pagamento = new Pagamento();
@@ -30,12 +30,12 @@ angular.module('commercialApp.controllers')
         lookup_valor = $scope.restante();
         $rootScope.loading.unload();
 
-        $timeout(function() {
+        $timeout(function () {
           jQuery('input[name="codigo"]').focus();
         }, 350);
       });
 
-      $scope.blurLimitarNumero = function(obj, min) {
+      $scope.blurLimitarNumero = function (obj, min) {
         if (obj <= (min || 0)) {
           obj = min || 0;
         }
@@ -50,7 +50,7 @@ angular.module('commercialApp.controllers')
         $scope.avancar('input', 'codigo');
       }
 
-      $scope.blurCodigo = function() {
+      $scope.blurCodigo = function () {
         if ($scope.modalidade.codigo) {
           if ($scope.cdModalidade != $scope.modalidade.codigo) {
             $scope.cdModalidade = $scope.modalidade.codigo;
@@ -58,7 +58,7 @@ angular.module('commercialApp.controllers')
         }
       };
 
-      $scope.blurNome = function() {
+      $scope.blurNome = function () {
         if ($scope.modalidade.nome) {
           if ($scope.nmModalidade != $scope.modalidade.nome) {
             $scope.nmModalidade = $scope.modalidade.nome;
@@ -66,21 +66,21 @@ angular.module('commercialApp.controllers')
         }
       };
 
-      $scope.totalPagamentos = function() {
+      $scope.totalPagamentos = function () {
         var total = 0;
 
-        angular.forEach($scope.pedido.pagamentos, function(item, index) {
+        angular.forEach($scope.pedido.pagamentos, function (item, index) {
           total += item.valor;
         });
 
         return total;
       };
 
-      $scope.troco = function() {
+      $scope.troco = function () {
         return $scope.totalPagamentos() - pedido.getValorTotalComDesconto();
       };
 
-      $scope.restante = function() {
+      $scope.restante = function () {
         var restante = Math.round((pedido.getValorTotalComDesconto() - $scope.totalPagamentos()) * 100) / 100;
 
         if (lookup_valor != restante) {
@@ -91,19 +91,23 @@ angular.module('commercialApp.controllers')
         return restante;
       };
 
-      $scope.buscarModalidadePorCodigo = function() {
+      $scope.buscarModalidadePorCodigo = function () {
+        if (!parseInt($scope.cdModalidade)) {
+          return;
+        }
+
         if ($scope.restante() <= 0) return;
 
         if (!$scope.cdModalidade) return;
 
         $rootScope.loading.load();
-        providerModalidade.obterPorCodigo($scope.cdModalidade).then(function(success) {
+        providerModalidade.obterPorCodigo($scope.cdModalidade).then(function (success) {
           $scope.modalidade = new Modalidade(Modalidade.converterEmEntrada(success.data));
           $scope.cdModalidade = $scope.modalidade.codigo;
           $scope.nmModalidade = $scope.modalidade.nome;
-          $scope.avancar('input', 'valor');
+          // $scope.avancar('input', 'valor');
           $rootScope.loading.unload();
-        }, function(error) {
+        }, function (error) {
           $rootScope.loading.unload();
           if (error.status == 404) {
             console.log('Modalidade não encontrada!');
@@ -112,7 +116,11 @@ angular.module('commercialApp.controllers')
         });
       };
 
-      $scope.addModalidade = function() {
+      $scope.addModalidade = function () {
+        if (!$scope.modalidade.id) {
+          return;
+        }
+
         if ($scope.pagamento.valor <= 0) {
           $rootScope.alerta.show('Valor inválido');
           return;
@@ -127,19 +135,19 @@ angular.module('commercialApp.controllers')
         }
       };
 
-      $scope.removePagamento = function(pagamento) {
+      $scope.removePagamento = function (pagamento) {
         $scope.pedido.pagamentos.splice($scope.pedido.pagamentos.indexOf(pagamento), 1);
       };
 
-      $scope.avancar = function(elem, name) {
+      $scope.avancar = function (elem, name) {
         jQuery(elem + '[name="' + name + '"]').focus().select();
       };
 
-      $scope.cancel = function() {
+      $scope.cancel = function () {
         $uibModalInstance.dismiss();
       };
 
-      $scope.gravar = function() {
+      $scope.gravar = function () {
         //if (!$scope.pedido.pagamentos.length || $scope.troco() != 0) {
         //  $rootScope.alerta.show('Reveja os valores', 'alert-warning');
         //  return;
@@ -148,5 +156,18 @@ angular.module('commercialApp.controllers')
         $uibModalInstance.close(true);
       };
 
+      // PAGAMENTO 2.0
+      $scope.descontoPercent = 0;
+      $scope.descontoDinheiro = 0;
+      $scope.updateDescontoPercent = function () {
+        if ($scope.descontoPercent < 0.0 || !$scope.descontoPercent) {
+          $scope.descontoPercent = 0.0;
+          return;
+        } else if ($scope.descontoPercent > $scope.modalidade.desconto) {
+          $scope.descontoPercent = $scope.modalidade.desconto;
+        }
+
+        $scope.pedido.setDescontoPercent($scope.descontoPercent);
+      };
     }
   ]);

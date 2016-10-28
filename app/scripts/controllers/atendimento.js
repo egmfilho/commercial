@@ -68,6 +68,10 @@ angular.module('commercialApp.controllers')
             return;
           }
 
+          getStatusAtendimento();
+          getTiposContato();
+          getUsuarios();
+
           switch ($routeParams.action) {
             case 'new':
               if ($routeParams.type === 'order') {
@@ -92,7 +96,6 @@ angular.module('commercialApp.controllers')
                 self.clientes = $routeParams.c;
                 self.min = $routeParams.min;
                 self.max = $routeParams.max;
-                console.log(self.codigosArray);
               } else {
                 $location.path('/');
               }
@@ -101,10 +104,6 @@ angular.module('commercialApp.controllers')
               $location.path('/');
               break;
           }
-
-          getStatusAtendimento();
-          getTiposContato();
-          getUsuarios();
         }
       });
 
@@ -130,6 +129,9 @@ angular.module('commercialApp.controllers')
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
+          if (self.atendimento.historico[0].statusId == 1001) {
+            $scope.novoHistorico.statusId = !self.statusArray ? null : self.statusArray[1].id;
+          }
           if ($scope.novoHistorico.spy) {
             angular.forEach($scope.novoHistorico.spy.split(';'), function (item, index) {
               if (item) {
@@ -153,6 +155,9 @@ angular.module('commercialApp.controllers')
         providerAtendimento.obterPorCodigoPedido(codigoPedido, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
+          if (self.atendimento.historico[0].statusId == 1001) {
+            $scope.novoHistorico.statusId = !self.statusArray ? null : self.statusArray[1].id;
+          }
           if ($scope.novoHistorico.spy) {
             angular.forEach($scope.novoHistorico.spy.split(';'), function (item, index) {
               if (item) {
@@ -184,6 +189,10 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
         });
       }
+
+      $scope.mostraStatus = function(status) {
+        return status.id != 1001 && status.id != 1002;
+      };
 
       function getTiposContato() {
         self.tiposContato = [];

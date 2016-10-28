@@ -55,6 +55,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     $scope.formularios.vendedor = true;
     $scope.formularios.cliente = false;
     $scope.formularios.produtos = false;
+    $scope.formularios.observacoes = false;
 
     $timeout(function () {
       jQuery('input[name="CdVendedor"]').focus();
@@ -65,6 +66,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     $scope.formularios.vendedor = false;
     $scope.formularios.produtos = true;
     $scope.formularios.cliente = false;
+    $scope.formularios.observacoes = false;
 
     $timeout(function () {
       $scope.scrollTo(null, '#form-produtos');
@@ -76,10 +78,23 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     $scope.formularios.vendedor = false;
     $scope.formularios.produtos = false;
     $scope.formularios.cliente = true;
+    $scope.formularios.observacoes = false;
 
     $timeout(function () {
       $scope.scrollTo(null, '#form-cliente');
       jQuery('input[name="CdCliente"]').focus();
+    }, 350);
+  }
+
+  function focarObservacoes() {
+    $scope.formularios.vendedor = false;
+    $scope.formularios.produtos = false;
+    $scope.formularios.cliente = false;
+    $scope.formularios.observacoes = true;
+
+    $timeout(function () {
+      $scope.scrollTo(null, '#form-observacoes');
+      jQuery('textarea[name="obs"]').focus();
     }, 350);
   }
 
@@ -512,6 +527,10 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     focarProdutos();
   };
 
+  this.escapeCliente = function () {
+    focarObservacoes();
+  };
+
   this.limpar = function (perguntar) {
     var resposta = true;
 
@@ -617,10 +636,17 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       }
     }
 
-    if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
-      this.pagamento();
-      return;
+    // if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
+    //   this.pagamento();
+    //   return;
+    // }
+    if (this.pedido.pagamentos.length) {
+      if (this.pedido.troco() != 0) {
+        this.pagamento();
+        return;
+      }
     }
+
 
     if (confirm('Salvar orçamento?')) {
       console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
@@ -709,6 +735,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
         $scope.formularios.vendedor = false;
         $scope.formularios.produtos = false;
         $scope.formularios.cliente = false;
+        $scope.formularios.observacoes = false;
         $scope.lockCodigo = false;
         $scope.lockDescricao = false;
         $scope.cdVendedor = result.vendedor.codigo;

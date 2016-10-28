@@ -21,6 +21,8 @@ angular.module('commercialApp.services')
       if (this.descontoPercent != pedido.descontoPercent) return false;
       if (this.descontoDinheiro != pedido.descontoDinheiro) return false;
 
+      if (this.observacoes != pedido.observacoes) return false;
+
       if (this.pagamentos.length != pedido.pagamentos.length) return false;
 
       for (i = 0; i < this.items.length; i++) {
@@ -51,6 +53,7 @@ angular.module('commercialApp.services')
       this.idStatus = p ? p.idStatus : '';
       this.idCliente = p ? p.idCliente : '';
       this.idVendedor = p ? p.idVendedor : '';
+      this.observacoes = p ? p.observacoes : '';
       this.dataAtualizacao = p ? p.dataAtualizacao : new Date();
       this.dataPedido = p ? p.dataPedido : new Date();
 
@@ -262,6 +265,7 @@ angular.module('commercialApp.services')
       pedido.idStatus = p.order_status_id;
       pedido.idCliente = p.order_client_id;
       pedido.idVendedor = p.order_seller_id;
+      pedido.observacoes = p.order_note;
       pedido.descontoPercent = parseFloat(p.order_al_discount);
       pedido.descontoDinheiro = parseFloat(p.order_vl_discount);
       pedido.valor = parseFloat(p.order_value);
@@ -305,9 +309,8 @@ angular.module('commercialApp.services')
 
       p.order_id = pedido.id;
       p.order_client_id = pedido.idCliente.length ? pedido.cliente.id : pedido.idCliente;
-      //p.Cliente = Pessoa.converterEmSaida(pedido.cliente);
       p.order_seller_id = pedido.idVendedor.length ? pedido.vendedor.id : pedido.idVendedor;
-      //p.Vendedor = Pessoa.converterEmSaida(pedido.vendedor);
+      p.order_note = pedido.observacoes;
       p.order_status_id = pedido.status;
 
       p.order_items = [];

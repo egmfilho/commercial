@@ -2,16 +2,16 @@
 
   <div class="row">
     <!--<div class="col-sm-6 col-md-3">-->
-      <!--<button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>-->
+    <!--<button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>-->
     <!--</div>-->
     <!--<div class="col-sm-6 col-md-3 col-md-push-6">-->
-      <!--<button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Recuperar</button>-->
+    <!--<button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Recuperar</button>-->
     <!--</div>-->
     <!--<div class="col-sm-6 col-md-3">-->
-      <!--<button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</button>-->
+    <!--<button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</button>-->
     <!--</div>-->
     <!--<div class="col-sm-6 col-md-3">-->
-      <!--<button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->
+    <!--<button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->
     <!--</div>-->
   </div>
 
@@ -21,39 +21,50 @@
     <div class="col-md-12">
       <div class="main-head" style="text-align: center">
         <h3><span class="glyphicon glyphicon-shopping-cart"></span>
-          <span class="hidden-xs">{{orcamento.pedido.codigo ? ('Orçamento código ' + orcamento.pedido.codigo) : ''}}</span>
+          <span
+            class="hidden-xs">{{orcamento.pedido.codigo ? ('Orçamento código ' + orcamento.pedido.codigo) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('criado em ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.dataPedido | date:'dd/MM/yyyy') : ''}}</span>
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
         </h3>
-        <!--<a href="" style="float: right; margin-top: -36px;font-size: 1.5em;margin-right: 10px" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span></a>-->
       </div>
     </div>
     <!--<span uib-collapse="!orcamento.pedido.codigo">-->
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Recuperar</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.salvar()"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span> Excluir</button>
-      </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span
+        class="glyphicon glyphicon-pencil"></span> Novo
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt"></span> Recuperar
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.salvar()"><span
+        class="glyphicon glyphicon-floppy-save"></span> Salvar
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span>
+        Excluir
+      </button>
+    </div>
     <!--</span>-->
   </div>
 
   <!--VENDEDOR-->
   <br class="hidden-xs">
   <div class="row card">
-    <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false" ng-click="formularios.vendedor = !formularios.vendedor; scrollTo($event);">
+    <div id="form-vendedor" class="col-md-12" ng-init="formularios.vendedor = false"
+         ng-click="formularios.vendedor = !formularios.vendedor; scrollTo($event);">
       <div class="head">
         <h3>Vendedor
-          <span ng-if="!formularios.vendedor && orcamento.pedido.vendedor.nome"> &raquo; ({{orcamento.pedido.vendedor.codigo}}) <span class="hidden-xs">- {{orcamento.pedido.vendedor.nome}}</span></span>
-          <a href="" class="limpar" ng-click="orcamento.limparVendedor($event)" uib-tooltip="Limpar campos" tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
+          <span ng-if="!formularios.vendedor && orcamento.pedido.vendedor.nome"> &raquo;
+            ({{orcamento.pedido.vendedor.codigo}}) <span
+              class="hidden-xs">- {{orcamento.pedido.vendedor.nome}}</span></span>
+          <a href="" class="limpar" ng-click="orcamento.limparVendedor($event)" uib-tooltip="Limpar campos"
+             tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.vendedor" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.vendedor" class="glyphicon glyphicon-menu-down"></span></a>
         </h3>
@@ -63,9 +74,13 @@
       <div class="col-xs-5 col-sm-3">
         <h4>Código</h4>
         <span class="input-group">
-          <input type="text" number-only name="CdVendedor" class="form-control" aria-describedby="basic-addon2" ng-model="cdVendedor" ng-blur="blurCdVendedor()" keys-shortcuts prevent-default="true" enter="orcamento.buscaVendedorPorCodigo(cdVendedor)" shift-enter="orcamento.escapeVendedor()" f1="orcamento.buscaVendedorPorCodigo()"  uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+          <input type="text" number-only name="CdVendedor" class="form-control" aria-describedby="basic-addon2"
+                 ng-model="cdVendedor" ng-blur="blurCdVendedor()" keys-shortcuts prevent-default="true"
+                 enter="orcamento.buscaVendedorPorCodigo(cdVendedor)" shift-enter="orcamento.escapeVendedor()"
+                 f1="orcamento.buscaVendedorPorCodigo()" uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo()"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo()"><span
+              class="glyphicon glyphicon-search"></span></button>
           </span>
         </span>
       </div>
@@ -79,11 +94,15 @@
   <!--PRODUTOS-->
   <br class="hidden-xs">
   <div class="row card">
-    <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true" ng-click="formularios.produtos = !formularios.produtos; scrollTo($event);">
+    <div id="form-produtos" class="col-md-12" ng-init="formularios.produtos = true"
+         ng-click="formularios.produtos = !formularios.produtos; scrollTo($event);">
       <div class="head">
         <h3>Produtos
-          <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo; {{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} <span class="hidden-xs">- Total: {{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}}</span></span>
-          <a href="" class="limpar" ng-click="orcamento.limparProdutos($event)" uib-tooltip="Limpar campos" tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
+          <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0"> &raquo;
+            {{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} <span
+              class="hidden-xs">- Total: {{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}}</span></span>
+          <a href="" class="limpar" ng-click="orcamento.limparProdutos($event)" uib-tooltip="Limpar campos"
+             tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.produtos" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.produtos" class="glyphicon glyphicon-menu-down"></span></a>
         </h3>
@@ -92,15 +111,22 @@
     <div class="col-md-12" id="controle-tabela-orcamento" uib-collapse="!formularios.produtos">
       <div class="col-xs-7 col-sm-3">
         <h4>Código</h4>
-        <input name="CdProduto" type="text" number-only class="form-control text-right" aria-describedby="basic-addon2" ng-model="cdProduto" ng-blur="blurProduto()" keys-shortcuts prevent-default="true" enter="orcamento.buscaProdutoPorCodigo(cdProduto)" shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()" maxlength="6" uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+        <input name="CdProduto" type="text" number-only class="form-control text-right" aria-describedby="basic-addon2"
+               ng-model="cdProduto" ng-blur="blurProduto()" keys-shortcuts prevent-default="true"
+               enter="orcamento.buscaProdutoPorCodigo(cdProduto)" shift-enter="orcamento.escapeProdutos()"
+               f1="orcamento.pesquisarProdutoNoModal()" maxlength="6" uib-tooltip="Use F1 para buscar"
+               tooltip-append-to-body="true">
       </div>
       <div class="visible-xs-inline-block col-xs-5">
         <h4>&nbsp;</h4>
-        <button class="btn btn-default btn-block" ng-click="orcamento.buscaProdutoPorCodigo(cdProduto)"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+        <button class="btn btn-default btn-block" ng-click="orcamento.buscaProdutoPorCodigo(cdProduto)"><span
+          class="glyphicon glyphicon-search"></span> Buscar
+        </button>
       </div>
       <div class="col-xs-12 col-sm-6">
         <h4>Descrição</h4>
-        <input name="NmProduto" type="text" class="form-control" ng-model="nmProduto" ng-readonly="" ng-blur="blurProduto()"
+        <input name="NmProduto" type="text" class="form-control" ng-model="nmProduto" ng-readonly=""
+               ng-blur="blurProduto()"
                keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'quantidade')"
                shift-enter="orcamento.escapeProdutos()"
                f1="orcamento.pesquisarProdutoNoModal()"
@@ -115,20 +141,29 @@
         <h4>Valor unitário</h4>
         <span class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" readonly="true" tabindex="-1" ng-value="item.produto.preco | currency: ''">
+          <input type="text" class="form-control" readonly="true" tabindex="-1"
+                 ng-value="item.produto.preco | currency: ''">
         </span>
       </div>
       <div class="col-xs-4 col-xs-pull-4 col-sm-3 col-sm-pull-0">
         <h4>Quantidade</h4>
         <span class="input-group">
-          <input name="quantidade" type="text" class="form-control" currency symbol="''" number-only ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts prevent-default="true" enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
+          <input name="quantidade" type="text" class="form-control" currency symbol="''" number-only
+                 ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts
+                 prevent-default="true"
+                 enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()"
+                 shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()"
+                 uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </span>
       </div>
       <div class="hidden-xs col-sm-3">
         <h4>Desconto %</h4>
         <span class="input-group">
-          <input name="percent" type="text" class="form-control" currency symbol="''" number-only ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+          <input name="percent" type="text" class="form-control" currency symbol="''" number-only
+                 ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);"
+                 keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')"
+                 shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
           <span class="input-group-addon">%</span>
         </span>
       </div>
@@ -136,14 +171,18 @@
         <h4>Desconto R$</h4>
         <span class="input-group">
           <span class="input-group-addon">R$</span>
-          <input name="dinheiro" type="text" class="form-control" currency symbol="''" number-only ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)" keys-shortcuts prevent-default="true" enter="orcamento.addItem()" shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+          <input name="dinheiro" type="text" class="form-control" currency symbol="''" number-only
+                 ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)"
+                 keys-shortcuts prevent-default="true" enter="orcamento.addItem()"
+                 shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
         </span>
       </div>
       <div class="col-xs-4 col-sm-3">
         <h4>Total</h4>
         <span class="input-group">
           <span class="input-group-addon">R$</span>
-          <input type="text" class="form-control" readonly="true" tabindex="-1" ng-value="item.getTotalComDesconto() | currency: ''">
+          <input type="text" class="form-control" readonly="true" tabindex="-1"
+                 ng-value="item.getTotalComDesconto() | currency: ''">
         </span>
       </div>
     </div>
@@ -151,36 +190,42 @@
     <div class="hidden-xs col-md-12" uib-collapse="!formularios.produtos">
       <table id="tabela-orcamento" class="table">
         <thead>
-          <tr>
-            <th valign="middle">Cód</th>
-            <th>Descrição</th>
-            <th>Un</th>
-            <th>Qtd</th>
-            <th>Vl unit</th>
-            <th>Desc %</th>
-            <th>Desc $</th>
-            <th>Total</th>
-            <th>&nbsp;</th>
-          </tr>
+        <tr>
+          <th valign="middle">Cód</th>
+          <th>Descrição</th>
+          <th>Un</th>
+          <th>Qtd</th>
+          <th>Vl unit</th>
+          <th>Desc %</th>
+          <th>Desc $</th>
+          <th>Total</th>
+          <th>&nbsp;</th>
+        </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="i in orcamento.pedido.items track by $index">
-            <td>{{i.produto.codigo}}</td>
-            <td>{{i.produto.nome | limitTo : 50 }}</td>
-            <td>{{i.produto.unidade}}</td>
-            <td class="editable-elem" editable-elem><span>{{i.quantidade | currency : ""}}</span><input currency number-only type="text" ng-model="i.quantidade" ng-blur="i.quantidade <= 0 || !i.quantidade ? i.quantidade = 1 : ''"></td>
-            <td>{{i.produto.preco | currency}}</td>
-            <td><span>{{i.descontoPercent | currency : ""}}%</span></td>
-            <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span></td>
-            <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
-            <td>
-              <a tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
-            </td>
-          </tr>
+        <tr ng-repeat="i in orcamento.pedido.items track by $index">
+          <td>{{i.produto.codigo}}</td>
+          <td>{{i.produto.nome | limitTo : 50 }}</td>
+          <td>{{i.produto.unidade}}</td>
+          <td class="editable-elem" editable-elem><span>{{i.quantidade | currency : ""}}</span><input currency
+                                                                                                      number-only
+                                                                                                      type="text"
+                                                                                                      ng-model="i.quantidade"
+                                                                                                      ng-blur="i.quantidade <= 0 || !i.quantidade ? i.quantidade = 1 : ''">
+          </td>
+          <td>{{i.produto.preco | currency}}</td>
+          <td><span>{{i.descontoPercent | currency : ""}}%</span></td>
+          <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span></td>
+          <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
+          <td>
+            <a tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-xs-12 visible-xs-block well well-sm" uib-collapse="!formularios.produtos" ng-show="orcamento.pedido.items.length">
+    <div class="col-xs-12 visible-xs-block well well-sm" uib-collapse="!formularios.produtos"
+         ng-show="orcamento.pedido.items.length">
       <div style="max-height: 300px;overflow-y: auto">
         <table class="tabela tabela-bordered tabela-esticada">
           <tbody>
@@ -192,7 +237,9 @@
             <td data-label="valor unitário">{{i.produto.preco | currency: 'R$ '}}</td>
             <td data-label="total">{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
             <td>
-              <button class="btn btn-default pull-right" tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-remove"></span> Remover</button>
+              <button class="btn btn-default pull-right" tabindex="-1" ng-click="orcamento.removerItem(i)"><span
+                class="glyphicon glyphicon-remove"></span> Remover
+              </button>
             </td>
           </tr>
           </tbody>
@@ -203,7 +250,7 @@
       <div class="hidden-xs col-md-8 col-md-push-4">
         <div class="hidden-xs col-sm-4 col-md-4">
           <h4>Desconto %</h4>
-          <div class="div-display">{{(orcamento.pedido.getDescontoPercentItens() | currency : "")  || "0,00"}}%</div>
+          <div class="div-display">{{(orcamento.pedido.getDescontoPercentItens() | currency : "") || "0,00"}}%</div>
         </div>
         <div class="hidden-xs col-xs-4 col-sm-4 col-md-4">
           <h4>Desconto R$</h4>
@@ -226,11 +273,14 @@
   <!--CLIENTE-->
   <br class="hidden-xs">
   <div class="row card">
-    <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true" ng-click="formularios.cliente = !formularios.cliente; scrollTo($event);">
+    <div id="form-cliente" class="col-md-12" ng-init="formularios.cliente = true"
+         ng-click="formularios.cliente = !formularios.cliente; scrollTo($event);">
       <div class="head">
         <h3>Cliente
-          <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome"> &raquo; ({{cliente.novo ? 'Novo Cliente' : orcamento.pedido.cliente.codigo}}) <span class="hidden-xs">- {{orcamento.pedido.cliente.nome}})</span></span>
-          <a href="" class="limpar" ng-click="orcamento.limparCliente($event)" uib-tooltip="Limpar campos" tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
+          <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome"> &raquo; ({{cliente.novo ? 'Novo Cliente' : orcamento.pedido.cliente.codigo}}) <span
+            class="hidden-xs">- {{orcamento.pedido.cliente.nome}})</span></span>
+          <a href="" class="limpar" ng-click="orcamento.limparCliente($event)" uib-tooltip="Limpar campos"
+             tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
           <a href=""><span ng-if="formularios.cliente" class="glyphicon glyphicon-menu-up"></span></a>
           <a href=""><span ng-if="!formularios.cliente" class="glyphicon glyphicon-menu-down"></span></a>
         </h3>
@@ -240,43 +290,68 @@
       <div class="col-xs-5 col-sm-3">
         <h4>Código</h4>
         <span class="input-group">
-          <input type="text" number-only class="form-control" name="CdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" ng-blur="blurCdCliente()" keys-shortcuts prevent-default="true" enter="orcamento.buscaClientePorCodigo(cdCliente)" shift-enter="orcamento.pagamento()" f1="orcamento.buscaClientePorCodigo()" ng-readonly="cliente.novo" maxlength="6" uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+          <input type="text" number-only class="form-control" name="CdCliente" aria-describedby="basic-addon2"
+                 ng-model="cdCliente" ng-blur="blurCdCliente()" keys-shortcuts prevent-default="true"
+                 enter="orcamento.buscaClientePorCodigo(cdCliente)" shift-enter="orcamento.escapeCliente()"
+                 f1="orcamento.buscaClientePorCodigo()" ng-readonly="cliente.novo" maxlength="6"
+                 uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo()" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-search"></span></button>
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()" ng-disabled="cliente.novo"><span class="glyphicon glyphicon-plus"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo()"
+                    ng-disabled="cliente.novo"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()" ng-disabled="cliente.novo"><span
+              class="glyphicon glyphicon-plus"></span></button>
           </span>
         </span>
       </div>
       <div class="col-xs-7 col-sm-9">
         <h4>Nome <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-        <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('select', 'tipo')" shift-enter="orcamento.salvar()" maxlength="60">
+        <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome"
+               ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true"
+               enter="orcamento.avancar('select', 'tipo')" shift-enter="orcamento.salvar()" maxlength="60">
       </div>
       <div class="col-xs-6 col-sm-3">
         <h4>Tipo <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-        <select name="tipo" class="form-control" ng-model="orcamento.pedido.cliente.tipo"  ng-disabled="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', orcamento.pedido.cliente.tipo === 'F' ? 'cpf' : 'cnpj')" shift-enter="orcamento.salvar()">
+        <select name="tipo" class="form-control" ng-model="orcamento.pedido.cliente.tipo" ng-disabled="!cliente.novo"
+                keys-shortcuts prevent-default="true"
+                enter="orcamento.avancar('input', orcamento.pedido.cliente.tipo === 'F' ? 'cpf' : 'cnpj')"
+                shift-enter="orcamento.salvar()">
           <option value="F">Pessoa Física</option>
           <option value="J">Pessoa Jurídica</option>
         </select>
       </div>
       <div class="col-xs-6 col-sm-3">
         <h4>CPF <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-        <input name="cpf" type="text" class="form-control" ng-model="orcamento.pedido.cliente.cpf" ui-mask="999.999.999-99" ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'F'" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cep')" shift-enter="orcamento.salvar()" ng-change="onchangeCPF()">
+        <input name="cpf" type="text" class="form-control" ng-model="orcamento.pedido.cliente.cpf"
+               ui-mask="999.999.999-99" ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'F'"
+               keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cep')"
+               shift-enter="orcamento.salvar()" ng-change="onchangeCPF()">
       </div>
       <div class="col-xs-6 col-sm-3">
         <h4>CNPJ <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-        <input name="cnpj" type="text" class="form-control" ng-model="orcamento.pedido.cliente.cnpj" ui-mask="99.999.999/9999-99" ng-readonly="!cliente.novo  || orcamento.pedido.cliente.tipo !== 'J'" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'iEstadual')" shift-enter="orcamento.salvar()" ng-change="onchangeCNPJ()">
+        <input name="cnpj" type="text" class="form-control" ng-model="orcamento.pedido.cliente.cnpj"
+               ui-mask="99.999.999/9999-99" ng-readonly="!cliente.novo  || orcamento.pedido.cliente.tipo !== 'J'"
+               keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'iEstadual')"
+               shift-enter="orcamento.salvar()" ng-change="onchangeCNPJ()">
       </div>
       <div class="col-xs-6 col-sm-3">
         <h4>Inscrição Estadual <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-        <input name="iEstadual" type="text" class="form-control" ng-model="orcamento.pedido.cliente.iEstadual" ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'J'" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cep')" shift-enter="orcamento.salvar()" maxlength="20">
+        <input name="iEstadual" type="text" class="form-control" ng-model="orcamento.pedido.cliente.iEstadual"
+               ng-readonly="!cliente.novo || orcamento.pedido.cliente.tipo !== 'J'" keys-shortcuts
+               prevent-default="true" enter="orcamento.avancar('input', 'cep')" shift-enter="orcamento.salvar()"
+               maxlength="20">
       </div>
       <div class="col-xs-12 col-sm-3" style="padding: 0;">
         <div class="col-xs-6 col-sm-8">
           <h4>CEP <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
           <span ng-class="cliente.novo ? 'input-group' : ''">
-            <input name="cep" type="text" class="form-control" keys-shortcuts prevent-default="true" enter="cdCEP == orcamento.pedido.cliente.endereco.cep ? orcamento.avancar('input', 'endNumero') : orcamento.buscarCEP()" shift-enter="orcamento.salvar()" f1="orcamento.buscarCEP(true)" ng-disabled="!cliente.novo" ng-model="cdCEP" ui-mask="99999-999" ng-blur="blurCdCEP()" uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+            <input name="cep" type="text" class="form-control" keys-shortcuts prevent-default="true"
+                   enter="cdCEP == orcamento.pedido.cliente.endereco.cep ? orcamento.avancar('input', 'endNumero') : orcamento.buscarCEP()"
+                   shift-enter="orcamento.salvar()" f1="orcamento.buscarCEP(true)" ng-disabled="!cliente.novo"
+                   ng-model="cdCEP" ui-mask="99999-999" ng-blur="blurCdCEP()" uib-tooltip="Use F1 para buscar"
+                   tooltip-append-to-body="true">
             <span class="input-group-btn" ng-hide="!cliente.novo">
-              <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscarCEP(true)"><span class="glyphicon glyphicon-search"></span></button>
+              <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscarCEP(true)"><span
+                class="glyphicon glyphicon-search"></span></button>
             </span>
           </span>
         </div>
@@ -288,12 +363,15 @@
       <div class="col-xs-12 col-sm-6" style="padding: 0">
         <div class="col-xs-9 col-sm-9">
           <h4>Logradouro</h4>
-          <input type="text" class="form-control" ng-readonly="true" ng-value="orcamento.pedido.cliente.endereco.logradouro">
+          <input type="text" class="form-control" ng-readonly="true"
+                 ng-value="orcamento.pedido.cliente.endereco.logradouro">
         </div>
         <div class="col-xs-3 col-sm-3">
           <!--NUMERO-->
           <h4>&#8470; <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
-          <input name="endNumero" type="text" class="form-control" ng-readonly="!cliente.novo" ng-model="orcamento.pedido.cliente.endereco.numero" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'tel-cliente')" shift-enter="orcamento.salvar()" maxlength="10">
+          <input name="endNumero" type="text" class="form-control" ng-readonly="!cliente.novo"
+                 ng-model="orcamento.pedido.cliente.endereco.numero" keys-shortcuts prevent-default="true"
+                 enter="orcamento.avancar('input', 'tel-cliente')" shift-enter="orcamento.salvar()" maxlength="10">
         </div>
       </div>
       <div class="col-xs-6 col-sm-3">
@@ -308,22 +386,32 @@
         <h4>Telefone <sup>{{cliente.novo ? '2' : ''}}</sup></h4>
         <span class="input-group">
           <span class="input-group-addon">&nbsp;({{orcamento.pedido.cliente.endereco.ddd || 'DDD'}})&nbsp;</span>
-          <input name="tel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.telefone" ui-mask="9999-9999" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'ddd-cel-cliente')" shift-enter="orcamento.salvar()">
+          <input name="tel-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.telefone"
+                 ui-mask="9999-9999" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true"
+                 enter="orcamento.avancar('input', 'ddd-cel-cliente')" shift-enter="orcamento.salvar()">
         </span>
       </div>
       <div class="col-xs-6 col-sm-3">
         <div class="col-xs-4 col-sm-4 remove-padding">
           <h4>DDD </h4>
-          <input name="ddd-cel-cliente" type="text" class="form-control text-right" ng-model="orcamento.pedido.cliente.dddCelular" ui-mask="(99)" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cel-cliente')" shift-enter="orcamento.salvar()">
+          <input name="ddd-cel-cliente" type="text" class="form-control text-right"
+                 ng-model="orcamento.pedido.cliente.dddCelular" ui-mask="(99)" ng-readonly="!cliente.novo"
+                 keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'cel-cliente')"
+                 shift-enter="orcamento.salvar()">
         </div>
         <div class="col-xs-8 col-sm-8 remove-padding">
           <h4>Celular <sup>{{cliente.novo ? '2' : ''}}</sup></h4>
-          <input name="cel-cliente" type="text" class="form-control text-right" ng-model="orcamento.pedido.cliente.celular" ui-mask="99999-9999" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'email-cliente')" shift-enter="orcamento.salvar()">
+          <input name="cel-cliente" type="text" class="form-control text-right"
+                 ng-model="orcamento.pedido.cliente.celular" ui-mask="99999-9999" ng-readonly="!cliente.novo"
+                 keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'email-cliente')"
+                 shift-enter="orcamento.salvar()">
         </div>
       </div>
       <div class="col-xs-12 col-sm-3">
         <h4>Email <sup>{{cliente.novo ? '2' : ''}}</sup></h4>
-        <input name="email-cliente" type="email" class="form-control" ng-model="orcamento.pedido.cliente.email" ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter="" shift-enter="orcamento.salvar()" maxlength="50">
+        <input name="email-cliente" type="email" class="form-control" ng-model="orcamento.pedido.cliente.email"
+               ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true" enter=""
+               shift-enter="orcamento.salvar()" maxlength="50">
       </div>
 
 
@@ -338,9 +426,31 @@
       </div>
       <div class="col-xs-3 col-sm-3" uib-collapse="!cliente.novo">
         <h4>&nbsp;</h4>
-        <button class="btn btn-default btn-form" ng-click="cliente.novo = false; orcamento.limparCliente(null, true)">Cancelar</button>
+        <button class="btn btn-default btn-form" ng-click="cliente.novo = false; orcamento.limparCliente(null, true)">
+          Cancelar
+        </button>
       </div>
 
+    </div>
+  </div>
+
+  <!--OBSERVACOES-->
+  <br class="hidden-xs">
+  <div class="row card">
+    <div id="form-observacoes" class="col-md-12" ng-init="formularios.observacoes = true"
+         ng-click="formularios.observacoes = !formularios.observacoes; scrollTo($event);">
+      <div class="head">
+        <h3>Observações
+          <span ng-if="!formularios.observacoes"></span>
+          <a href="" class="limpar" ng-click="orcamento.limparPagamento($event)" uib-tooltip="Limpar campos"
+             tooltip-append-to-body="true"><span class="glyphicon glyphicon-erase"></span></a>
+          <a href=""><span ng-if="formularios.observacoes" class="glyphicon glyphicon-menu-up"></span></a>
+          <a href=""><span ng-if="!formularios.observacoes" class="glyphicon glyphicon-menu-down"></span></a>
+        </h3>
+      </div>
+    </div>
+    <div class="col-xs-12" uib-collapse="!formularios.observacoes">
+      <textarea name="obs" cols="30" rows="10" class="form-control" ng-model="orcamento.pedido.observacoes"></textarea>
     </div>
   </div>
 
@@ -349,39 +459,52 @@
     <div class="col-md-12">
       <div class="col-xs-3 col-sm-3">
         <h4>Vendedor</h4>
-        <h5 ng-show="orcamento.pedido.vendedor.codigo">{{orcamento.pedido.vendedor.codigo}} - {{orcamento.pedido.vendedor.nome}}</h5>
+        <h5 ng-show="orcamento.pedido.vendedor.codigo">{{orcamento.pedido.vendedor.codigo}} -
+          {{orcamento.pedido.vendedor.nome}}</h5>
         <h5 ng-hide="orcamento.pedido.vendedor.codigo">(Nenhum vendedor)</h5>
       </div>
       <div class="col-xs-3 col-sm-3">
         <h4>Produtos</h4>
-        <h5>{{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</h5>
+        <h5>{{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}} - Total:
+          {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</h5>
       </div>
       <div class="col-xs-3 col-sm-3">
         <h4>Cliente</h4>
-        <h5 ng-show="orcamento.pedido.cliente.codigo">{{orcamento.pedido.cliente.codigo}} - {{orcamento.pedido.cliente.nome}}</h5>
+        <h5 ng-show="orcamento.pedido.cliente.codigo">{{orcamento.pedido.cliente.codigo}} -
+          {{orcamento.pedido.cliente.nome}}</h5>
         <h5 ng-hide="orcamento.pedido.cliente.codigo">(Nenhum cliente)</h5>
       </div>
       <div class="col-xs-3 col-sm-3">
         <h4>Pagamento</h4>
         <h5 ng-show="orcamento.pedido.pagamentos.length">
-          <span ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
+          <span
+            ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
         </h5>
         <h5 ng-hide="orcamento.pedido.pagamentos.length">(Nenhuma forma de pagamento)</h5>
       </div>
     </div>
     <!--<span uib-collapse="!orcamento.pedido.codigo">-->
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.pagamento()"><span class="glyphicon glyphicon-credit-card"></span> Pagamento</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.abrirAtendimento()"><span class="glyphicon glyphicon-list-alt"></span> Atendimento</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span> Email</button>
-      </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.pagamento()"><span class="glyphicon glyphicon-credit-card"></span> Pagamento</button>
+      <!--<button class="btn btn-orcamento" data-toggle="modal" data-target="#modalObs"><span-->
+        <!--class="glyphicon glyphicon-edit"></span> Observações-->
+      <!--</button>-->
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.abrirAtendimento()"><span
+        class="glyphicon glyphicon-list-alt"></span> Atendimento
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span>
+        Imprimir
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span>
+        Email
+      </button>
+    </div>
     <!--</span>-->
   </div>
 
@@ -389,8 +512,32 @@
 
 </div>
 
+<!--MODAL OBSERVACOES-->
+<div class="modal meu-modal fade" id="modalObs" tabindex="-1" role="dialog" aria-labelledby="modalObs">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="header">
+        <div class="title"><span class="glyphicon glyphicon-pencil"></span> Observações <span
+          class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
+      </div>
+      <div class="body" style="height: 244px">
+        <textarea cols="30" rows="10" class="form-control"></textarea>
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span
+          class="glyphicon glyphicon-remove"></span> Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL OBSERVACOES-->
+
 <alert-popup titulo="{{alerta.titulo}}" mensagem="{{alerta.mensagem}}"></alert-popup>
 
-<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'" ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"></div>
-<h1 class="impressao aviso" ng-show="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"><span class="glyphicon glyphicon-alert"></span> Impressão indisponível</h1>
+<div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'"
+     ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"></div>
+<h1 class="impressao aviso"
+    ng-show="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)">
+  <span class="glyphicon glyphicon-alert"></span> Impressão indisponível</h1>
 

@@ -31,10 +31,11 @@ angular.module('commercialApp.controllers')
 
       self.showFiltros = false;
 
-      self.pagination = {
+      $scope.pagination = {
         current: 1,
-        max: 15,
-        total: 0
+        max: 5,
+        maxItems: 15,
+        total: 1300
       };
 
       self.filtro = {

@@ -11,7 +11,7 @@ angular.module('commercialApp.services')
       show: function(pedido, callback) {
         $uibModal.open({
           animation: true,
-          templateUrl: 'partials/modalPagamento.html',
+          templateUrl: 'partials/modalPagamento2.html',
           controller: 'ModalPagamentoCtrl',
           size: 'lg',
           resolve: {
