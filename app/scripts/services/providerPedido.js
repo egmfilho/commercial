@@ -129,6 +129,22 @@ angular.module('commercialApp.services')
           }, {
             order_id: pedido.id
           }).$promise;
+        },
+
+        email: function(id) {
+          return provider.save({
+            action: 'sendMail'
+          }, {
+            order_id: id
+          }).$promise;
+        },
+
+        exportar: function(id) {
+          return provider.save({
+            action: 'export'
+          }, {
+            order_id: id
+          }).$promise;
         }
 
       };

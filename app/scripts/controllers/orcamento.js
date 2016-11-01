@@ -756,5 +756,47 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     } else {
       $location.path('/atendimento/new').search('type', 'order').search('code', self.pedido.codigo);
     }
-  }
+  };
+
+  self.enviar = function() {
+    if (!this.pedido.items.length || !this.pedido.id) {
+      $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+      return;
+    }
+
+    if (!confirm('Enviar orçamento por email?')) {
+      return;
+    }
+
+    $rootScope.loading.load();
+    providerPedido.enviar(self.pedido.id).then(function(success) {
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('Não foi possível enviar o orçamento!', 'alert-danger');
+    });
+  };
+
+  self.exportar = function() {
+    if (!this.pedido.items.length || !this.pedido.id) {
+      $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+      return;
+    }
+
+    if (!confirm('Exportar orçamento para venda?')) {
+      return;
+    }
+
+    $rootScope.loading.load();
+    providerPedido.exportar(self.pedido.id).then(function(success) {
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('O orçamento será exportado!', 'alert-success');
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
+    });
+  };
 }

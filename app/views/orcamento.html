@@ -1,5 +1,6 @@
 <div id="formulario-orcamento" class="container">
 
+  <a href="" class="pull-right" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
   <div class="row">
     <!--<div class="col-sm-6 col-md-3">-->
     <!--<button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>-->
@@ -499,13 +500,16 @@
       </button>
     </div>
     <div class="col-sm-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span>
-        Imprimir
+      <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span>
+        Email
       </button>
     </div>
     <div class="col-sm-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span>
-        Email
+      <!--<button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span>-->
+      <!--Imprimir-->
+      <!--</button>-->
+      <button class="btn btn-orcamento" ng-click="orcamento.exportar()"><span class="glyphicon glyphicon-share-alt"></span>
+        Exportar
       </button>
     </div>
     <!--</span>-->
