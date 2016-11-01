@@ -18,8 +18,16 @@ angular.module('commercialApp.controllers')
     'key',
     function($rootScope, $scope, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, key) {
 
+      $scope.pagination = {
+        current: 1,
+        max: 10,
+        total: 0,
+        mudarPagina: function () {
+          $scope.buscar();
+        }
+      };
+
       $uibModalInstance.opened.then(function() {
-        $scope.vazio = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         $scope.vendedor = new Pessoa();
         $scope.cliente = new Pessoa();
         $scope.dtInicial = $filter('date')(new Date(), 'dd/MM/yyyy');
@@ -132,15 +140,6 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.buscar = function() {
-        //var params = [
-        //  $scope.filtros.contains('vendedor') ? $scope.cdVendedor : null,
-        //  $scope.filtros.contains('vendedor') ? $scope.nmVendedor : null,
-        //  $scope.filtros.contains('cliente') ? $scope.cdCliente : null,
-        //  $scope.filtros.contains('cliente') ? $scope.nmCliente : null,
-        //  $scope.filtros.contains('data-inicial') ? $scope.dtInicial : null,
-        //  $scope.filtros.contains('data-final') ? $scope.dtFinal : null
-        //];
-
         if ($scope.cdPedido) {
           $scope.buscarPorCodigoPedido($scope.cdPedido);
         } else {
@@ -149,8 +148,10 @@ angular.module('commercialApp.controllers')
           var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
               end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
 
-          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, null, true, true).then(function(success) {
+          var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
+          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, null, true, true, false, false, false, false, limite).then(function(success) {
             $scope.pedidos = [ ];
+            $scope.pagination.total = success.info.order_quantity;
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
             });
@@ -168,8 +169,10 @@ angular.module('commercialApp.controllers')
         var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
           end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
 
-        provider.obterPedidosComFiltros(null, null, null, null, init, end, null, null, true, true).then(function(success) {
+        var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
+        provider.obterPedidosComFiltros(null, null, null, null, init, end, null, null, true, true, false, false, false, limite).then(function(success) {
           $scope.pedidos = [ ];
+          $scope.pagination.total = success.info.order_quantity;
           angular.forEach(success.data, function(item, index) {
             $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
           });

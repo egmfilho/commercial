@@ -135,11 +135,15 @@ angular.module('commercialApp.services')
       addItem: function (itemPedido) {
         this.items.push(new ItemPedido(itemPedido));
         this.blocos = this.formataritemsParaImpressao();
+
+        this.atualizarValores();
       },
 
       removerItem: function (itemPedido) {
         this.items.splice(this.items.indexOf(itemPedido), 1);
         this.blocos = this.formataritemsParaImpressao();
+
+        this.atualizarValores();
       },
 
       setDescontoPercent: function (percent) {
@@ -208,6 +212,13 @@ angular.module('commercialApp.services')
         this.pagamentos.splice($scope.pagamentos.indexOf(pagamento), 1);
       },
 
+      removerDescontos: function () {
+        this.descontoPercent = 0;
+        this.setDescontoPercent(0);
+
+        this.atualizarValores();
+      },
+
       getPagamentos: function () {
         return this.pagamentos;
       },
@@ -220,6 +231,10 @@ angular.module('commercialApp.services')
         });
 
         return total;
+      },
+
+      atualizarValores: function () {
+        this.setDescontoPercent(this.descontoPercent);
       },
 
       formataritemsParaImpressao: function () {

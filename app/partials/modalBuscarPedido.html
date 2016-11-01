@@ -13,124 +13,6 @@
 
     <div class="container">
 
-      <!--<div class="filtros" ng-if="false">-->
-
-        <!--<div class="row well">-->
-          <!--<div class="col-md-3" ng-show="filtros.contains('pedido')">-->
-            <!--<div class="filtro-sm pedido">-->
-              <!--<table>-->
-                <!--<tr>-->
-                  <!--<td><input type="text" class="" ng-model="cdPedido" placeholder="código"></td>-->
-                  <!--<td><span class="glyphicon glyphicon-remove close" ng-click="removeFiltro('pedido')"></span></td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-md-9" ng-show="filtros.contains('vendedor')">-->
-            <!--<div class="filtro-lg vendedor">-->
-              <!--<table>-->
-                <!--<tr>-->
-                  <!--<td><input type="text" class="" ng-model="cdVendedor" placeholder="código"></td>-->
-                  <!--<td><input type="text" class="" ng-model="nmVendedor" placeholder="nome do vendedor"></td>-->
-                  <!--<td><span class="glyphicon glyphicon-remove close" ng-click="removeFiltro('vendedor')"></span></td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-md-9" ng-show="filtros.contains('cliente')">-->
-            <!--<div class="filtro-lg cliente">-->
-              <!--<table>-->
-                <!--<tr>-->
-                  <!--<td><input type="text" class="" ng-model="cdCliente" placeholder="código"></td>-->
-                  <!--<td><input type="text" class="" ng-model="nmCliente" placeholder="nome do cliente"></td>-->
-                  <!--<td><span class="glyphicon glyphicon-remove close" ng-click="removeFiltro('cliente')"></span></td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-md-3" ng-show="filtros.contains('data-inicial')">-->
-            <!--<div class="filtro-sm data-inicial">-->
-              <!--<table>-->
-                <!--<tr>-->
-                  <!--<td><input type="text" class="" ng-model="dtInicial" ui-mask="99/99/9999"></td>-->
-                  <!--<td><span class="glyphicon glyphicon-remove close" ng-click="removeFiltro('data')"></span></td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<div class="col-md-3" ng-show="filtros.contains('data-final')">-->
-            <!--<div class="filtro-sm data-final">-->
-              <!--<table>-->
-                <!--<tr>-->
-                  <!--<td><input type="text" class="" ng-model="dtInicial" ui-mask="99/99/9999"></td>-->
-                  <!--<td><span class="glyphicon glyphicon-remove close" ng-click="removeFiltro('data')"></span></td>-->
-                <!--</tr>-->
-              <!--</table>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="row">-->
-          <!--<div class="col-md-9">-->
-            <!--<a href="" class="badge pedido" ng-click="addFiltro('pedido')">Pedido (código)</a>-->
-            <!--<a href="" class="badge vendedor" ng-click="addFiltro('vendedor')">Vendedor (código ou nome)</a>-->
-            <!--<a href="" class="badge cliente" ng-click="addFiltro('cliente')">Cliente (código ou nome)</a>-->
-            <!--<a href="" class="badge data-inicial" ng-click="addFiltro('data-inicial')">Data Inicial</a>-->
-            <!--<a href="" class="badge data-final" ng-click="addFiltro('data-final')">Data Final</a>-->
-          <!--</div>-->
-          <!--<div class="col-md-3">-->
-            <!--<button class="btn btn-default botao-esticado" ng-click="buscar()"><span class="glyphicon glyphicon-search"></span> Buscar</button>-->
-          <!--</div>-->
-        <!--</div>-->
-
-      <!--</div>-->
-
-      <!--<div class="row" ng-repeat="filtro in filtros track by $index" ng-show="false">-->
-        <!--<div class="col-md-3">-->
-          <!--<h4>Filtro</h4>-->
-          <!--<select class="form-control" ng-init="opt = filtro" ng-model="opt" ng-change="filtros[$index] = opt">-->
-            <!--<option value="{{opcao.valor}}" ng-selected="opt===opcao.valor" ng-disabled="filtros.contains(opcao.valor)" ng-repeat="opcao in opcoes">{{opcao.nome}} {{opcao.desc}}</option>-->
-          <!--</select>-->
-        <!--</div>-->
-
-        <!--<div class="col-md-3" ng-show="opt == 'pedido'">-->
-          <!--<h4>Código</h4>-->
-          <!--<input type="text" class="form-control" name="cdPedido" aria-describedby="basic-addon2" ng-model="cdPedido" keys-shortcuts enter="buscarPorCodigoPedido(cdPedido)" ui-mask="999999">-->
-        <!--</div>-->
-
-        <!--<div class="col-md-3" ng-show="opt == 'vendedor'">-->
-          <!--<h4>Código</h4>-->
-          <!--<input type="text" class="form-control" name="cdVendedor" aria-describedby="basic-addon2" ng-model="cdVendedor" keys-shortcuts enter="buscarPorCodigoVendedor(cdVendedor)" ui-mask="9999">-->
-        <!--</div>-->
-        <!--<div class="col-md-6" ng-show="opt == 'vendedor'">-->
-          <!--<h4>Nome</h4>-->
-          <!--<input type="text" class="form-control" name="nmVendedor" aria-describedby="basic-addon2" ng-model="nmVendedor" keys-shortcuts enter="buscarPorNomeVendedor(nmVendedor)">-->
-        <!--</div>-->
-
-        <!--<div class="col-md-3" ng-show="opt == 'cliente'">-->
-          <!--<h4>Código</h4>-->
-          <!--<input type="text" class="form-control" name="cdCliente" aria-describedby="basic-addon2" ng-model="cdCliente" keys-shortcuts enter="buscarPorCodigoCliente(cdCliente)" ui-mask="999999">-->
-        <!--</div>-->
-        <!--<div class="col-md-6" ng-show="opt == 'cliente'">-->
-          <!--<h4>Nome</h4>-->
-          <!--<input type="text" class="form-control" name="nmCliente" aria-describedby="basic-addon2" ng-model="nmCliente" keys-shortcuts enter="buscarPorNomeCliente(nmCliente)">-->
-        <!--</div>-->
-
-        <!--<div class="col-md-3" ng-show="opt == 'data'">-->
-          <!--<h4>Inicial</h4>-->
-          <!--<input type="text" class="form-control" name="dtInicial" aria-describedby="basic-addon2" ng-model="dtInicial" keys-shortcuts enter="" ui-mask="99/99/9999" model-view-value="true">-->
-        <!--</div>-->
-        <!--<div class="col-md-3" ng-show="opt == 'data'">-->
-          <!--<h4>Final</h4>-->
-          <!--<input type="text" class="form-control" name="dtFinal" aria-describedby="basic-addon2" ng-model="dtFinal" keys-shortcuts enter="" ui-mask="99/99/9999" model-view-value="true">-->
-        <!--</div>-->
-
-      <!--</div>-->
-
       <div class="row condensar-rows">
         <div class="col-md-2">
           <h4>Orçamento</h4>
@@ -193,24 +75,6 @@
         </div>
       </div>
 
-      <!--<br>-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-3">-->
-          <!--<select class="form-control" ng-init="opt='pedido'" ng-model="opt">-->
-            <!--<option value="{{opcao.valor}}" ng-selected="opt===opcao.valor" ng-disabled="filtros.contains(opcao.valor)" ng-repeat="opcao in opcoes">{{opcao.nome}} {{opcao.desc}}</option>-->
-          <!--</select>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<button class="btn btn-default botao-esticado" ng-click="addFiltro(opt)" ng-disabled="filtros.length >= 4"><span class="glyphicon glyphicon-plus"></span> Adicionar Filtro</button>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<button class="btn btn-default botao-esticado" ng-click="removeFiltro()" ng-disabled="filtros.length <= 1"><span class="glyphicon glyphicon-minus"></span> Remover Filtro</button>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<button class="btn btn-default botao-esticado" ng-click=""><span class="glyphicon glyphicon-search"></span> Buscar</button>-->
-        <!--</div>-->
-      <!--</div>-->
-
       <br>
       <div class="row condensar-rows">
         <div class="col-md-12">
@@ -233,6 +97,7 @@
                 <td data-label="Total">{{p.valorComDesconto | currency: 'R$ '}}</td>
               </tr>
               <tr class="hidden-xs" ng-if="!pedidos.length" ng-repeat="v in vazio">
+              <tr class="hidden-xs" ng-repeat="p in getNumber(pagination.max > pedidos.length ? pagination.max - pedidos.length : 0) track by $index">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -242,6 +107,9 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="paginas">
+        <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" ng-change="pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
       </div>
     </div>
 

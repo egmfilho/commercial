@@ -126,6 +126,10 @@ angular.module('commercialApp.controllers')
           return;
         }
 
+        if ($scope.pedido.pagamentos.length >= 1) {
+          return;
+        }
+
         if ($scope.cdModalidade == $scope.modalidade.codigo) {
           $scope.pagamento.setModalidade(new Modalidade($scope.modalidade));
           $scope.pedido.pagamentos.push($scope.pagamento);
@@ -137,6 +141,7 @@ angular.module('commercialApp.controllers')
 
       $scope.removePagamento = function (pagamento) {
         $scope.pedido.pagamentos.splice($scope.pedido.pagamentos.indexOf(pagamento), 1);
+        $scope.pedido.removerDescontos();
       };
 
       $scope.avancar = function (elem, name) {
@@ -156,18 +161,39 @@ angular.module('commercialApp.controllers')
         $uibModalInstance.close(true);
       };
 
-      // PAGAMENTO 2.0
-      $scope.descontoPercent = 0;
-      $scope.descontoDinheiro = 0;
       $scope.updateDescontoPercent = function () {
-        if ($scope.descontoPercent < 0.0 || !$scope.descontoPercent) {
-          $scope.descontoPercent = 0.0;
-          return;
-        } else if ($scope.descontoPercent > $scope.modalidade.desconto) {
-          $scope.descontoPercent = $scope.modalidade.desconto;
+        if (parseFloat($scope.pedido.descontoPercent) > parseFloat($scope.pedido.pagamentos[0].modalidade.desconto)) {
+          $scope.pedido.descontoPercent = $scope.pedido.pagamentos[0].modalidade.desconto;
         }
 
-        $scope.pedido.setDescontoPercent($scope.descontoPercent);
+        $scope.pedido.setDescontoPercent($scope.pedido.descontoPercent);
       };
+
+      $scope.updateDescontoDinheiro = function () {
+        var max = ($scope.pedido.getValorTotalSemDesconto() * $scope.pedido.pagamentos[0].modalidade.desconto) / 100;
+
+        $scope.pedido.setDescontoDinheiro($scope.pedido.descontoDinheiro > max ? max : $scope.pedido.descontoDinheiro);
+      };
+
+      // PAGAMENTO 2.0
+      $scope.updateDescontoPercent = function (pagamento) {
+        if (parseFloat($scope.pedido.descontoPercent) > parseFloat(pagamento.modalidade.desconto)) {
+            $scope.pedido.descontoPercent = pagamento.modalidade.desconto;
+        }
+
+        $scope.pedido.setDescontoPercent($scope.pedido.descontoPercent);
+        pagamento.valor = $scope.pedido.getValorTotalComDesconto();
+      };
+
+      $scope.updateDescontoDinheiro = function(pagamento) {
+        if (parseFloat($scope.pedido.descontoDinheiro) < 0.0 || !$scope.pedido.descontoDinheiro) {
+          $scope.descontoDinheiro = 0.0;
+        }
+
+        var max = ($scope.pedido.getValorTotalSemDesconto() * pagamento.modalidade.desconto) / 100;
+
+        $scope.pedido.setDescontoDinheiro($scope.pedido.descontoDinheiro > max ? max : $scope.pedido.descontoDinheiro);
+        pagamento.valor = $scope.pedido.getValorTotalComDesconto();
+      }
     }
   ]);

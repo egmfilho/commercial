@@ -127,7 +127,7 @@
             <tr ng-repeat="p in emLote.pedidos track by $index">
               <td>
                 <div class="custom-checkbox inverted">
-                  <input type="checkbox" value="None" id="{{$index}}" name="check" ng-model="p.checked" />
+                  <input type="checkbox" value="None" id="{{$index}}" name="check" ng-model="p.checked" ng-change="emLote.changeCheck(p)" />
                   <label for="{{$index}}"></label>
                 </div>
               </td>
@@ -137,7 +137,7 @@
               <td data-label="Data">{{p.pedido.dataPedido | date: 'short'}}</td>
               <td data-label="Total">{{p.pedido.valor | currency:'R$ '}}</td>
             </tr>
-            <tr class="hidden-xs" ng-repeat="n in getNumber(emLote.pagination.max - emLote.pedidos.length) track by $index">
+            <tr class="hidden-xs" ng-repeat="n in getNumber(emLote.pagination.max > emLote.pedidos.length ? emLote.pagination.max - emLote.pedidos.length : 0) track by $index">
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -148,6 +148,9 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div class="paginas">
+      <ul uib-pagination total-items="emLote.pagination.total" ng-model="emLote.pagination.current" max-size="emLote.pagination.max" ng-change="emLote.pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
   </div>
 

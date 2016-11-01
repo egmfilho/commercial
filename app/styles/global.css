@@ -179,6 +179,15 @@ body.padding-bottom {
     background-color: #3b5998;
     color: white; }
 
+.btn-toggle {
+  width: 100%; }
+  .btn-toggle .btn {
+    width: 50%; }
+  .btn-toggle .btn.active {
+    background-color: #6481bb;
+    color: white;
+    border-color: #3b5998; }
+
 .botao-color-picker {
   width: 100%;
   border: 1px solid #ccc;

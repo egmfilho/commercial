@@ -269,6 +269,20 @@ body.padding-bottom {
   }
 }
 
+.btn-toggle {
+  width: 100%;
+
+  .btn {
+    width: 50%;
+  }
+
+  .btn.active {
+    background-color: $cor-principal-clara;
+    color: white;
+    border-color: $cor-principal;
+  }
+}
+
 .botao-color-picker {
   width: 100%;
   border: 1px solid #ccc;

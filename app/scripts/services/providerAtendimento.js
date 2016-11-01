@@ -38,7 +38,7 @@ angular.module('commercialApp.services')
       // "get_order_seller": "1"
 
       return {
-        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroCliente, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax) {
+        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroCliente, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax, limite) {
           return provider.query({
             action: 'getList'
           }, {
@@ -56,7 +56,8 @@ angular.module('commercialApp.services')
             attendance_responsible_id: filtroResponsavel,
             attendance_date_column: filtroData,
             attendance_date_start: filtroDataMin,
-            attendance_date_end: filtroDataMax
+            attendance_date_end: filtroDataMax,
+            attendance_limit: limite
           }).$promise;
         },
 
@@ -113,7 +114,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterTodosPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax) {
+        obterTodosPorCodigoPedido: function (codigo, getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax, limite) {
           return provider.get({
             action: 'getList'
           }, {
@@ -132,7 +133,8 @@ angular.module('commercialApp.services')
             attendance_responsible_id: filtroResponsavel,
             attendance_date_column: filtroData,
             attendance_date_start: filtroDataMin,
-            attendance_date_end: filtroDataMax
+            attendance_date_end: filtroDataMax,
+            attendance_limit: limite
           }).$promise;
         },
 

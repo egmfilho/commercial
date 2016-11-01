@@ -5,7 +5,7 @@
       class="glyphicon glyphicon-remove close" ng-click="cancel()"></span></div>
   </div>
 
-  <div class="body">
+  <div class="body" style="height: 200px">
 
     <div class="container">
       <div class="row">
@@ -39,7 +39,8 @@
               <th>Modalidade</th>
               <th>Desc %</th>
               <th>Desc $</th>
-              <th>Valor</th>
+              <th>Total</th>
+              <th>Líquido</th>
               <th>&nbsp;</th>
             </tr>
             </thead>
@@ -51,17 +52,19 @@
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
+              <td>&nbsp;</td>
             </tr>
             <tr ng-repeat="p in pedido.pagamentos track by $index">
               <td>{{p.modalidade.codigo}}</td>
               <td>{{p.modalidade.nome}}</td>
               <td class="editable-elem" editable-elem>
-                <span>{{($scope.descontoPercent | currency: '') || '0,00'}}%</span><input currency symbol="''" number-only type="text" ng-model="$scope.descontoPercent" ng-blur="updateDescontoPercent()"></span>
+                <span>{{ (pedido.descontoPercent | currency: '') || '0,00'}}%</span><input currency symbol="''" number-only type="text" ng-model="pedido.descontoPercent" ng-blur="updateDescontoPercent(p)"></span>
               </td>
               <td class="editable-elem" editable-elem>
-                <span>{{p.descontoDinheiro | currency: 'R$' }}</span><input currency symbol="''" number-only type="text" ng-model="p.descontoDinheiro" ng-blur="p.descontoDinheiro < 0.0 || !p.descontoDinheiro ? p.descontoDinheiro = 0.0 : false"></span>
+                <span>{{pedido.descontoDinheiro | currency: 'R$' }}</span><input currency symbol="''" number-only type="text" ng-model="pedido.descontoDinheiro" ng-blur="updateDescontoDinheiro(p)"></span>
               </td>
-              <td>{{p.valor | currency: 'R$'}}</td>
+              <td>{{pedido.getValorTotalSemDesconto() | currency: 'R$'}}</td>
+              <td>{{pedido.getValorTotalComDesconto() | currency: 'R$'}}</td>
               <td><a href="" ng-click="removePagamento(p)"><span class="glyphicon glyphicon-trash"></span></a></td>
             </tr>
             </tbody>

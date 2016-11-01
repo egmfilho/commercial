@@ -476,10 +476,13 @@
       </div>
       <div class="col-xs-3 col-sm-3">
         <h4>Pagamento</h4>
-        <h5 ng-show="orcamento.pedido.pagamentos.length">
-          <span
-            ng-repeat="p in orcamento.pedido.pagamentos">{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br></span>
-        </h5>
+        <!--VERSAO ANTIGA PARA VARIAS FORMAS DE PAGAMENTO-->
+        <!--<h5 ng-show="orcamento.pedido.pagamentos.length">-->
+          <!--<span ng-repeat="p in orcamento.pedido.pagamentos">-->
+            <!--{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}<br>-->
+          <!--</span>-->
+        <!--</h5>-->
+        <h5 ng-show="orcamento.pedido.pagamentos.length">{{orcamento.pedido.pagamentos[0].modalidade.nome}} - {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</h5>
         <h5 ng-hide="orcamento.pedido.pagamentos.length">(Nenhuma forma de pagamento)</h5>
       </div>
     </div>

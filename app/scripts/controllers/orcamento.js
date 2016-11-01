@@ -636,48 +636,51 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       }
     }
 
-    // if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
-    //   this.pagamento();
-    //   return;
-    // }
-    if (this.pedido.pagamentos.length) {
-      if (this.pedido.troco() != 0) {
-        this.pagamento();
-        return;
+    if (validar()) {
+
+      // if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
+      //   this.pagamento();
+      //   return;
+      // }
+      if (this.pedido.pagamentos.length) {
+        if (this.pedido.troco() != 0) {
+          this.pagamento();
+          return;
+        }
       }
-    }
 
+      if (confirm('Salvar orçamento?')) {
+        console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
+        $uibModalStack.dismissAll();
 
-    if (confirm('Salvar orçamento?')) {
-      console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
-      $uibModalStack.dismissAll();
+        $rootScope.loading.load();
 
-      $rootScope.loading.load();
-
-      if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
-      providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-        var result = new Pedido(Pedido.converterEmEntrada(success.data));
-        $scope.backup = null;
-        self.pedido.id = result.id;
-        self.pedido.codigo = result.codigo;
-        $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
-        $rootScope.loading.unload();
-        $scope.mostrarOpcoes();
-      }, function (error) {
-        console.log(error);
-        $rootScope.loading.unload();
-      });
-      } else { // salvar editado
-        providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
-          $scope.backup = null;
-          $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
-          $rootScope.loading.unload();
-          $scope.mostrarOpcoes();
-        }, function (error) {
-          console.log(error);
-          $rootScope.loading.unload();
-        });
+        if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
+          providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+            var result = new Pedido(Pedido.converterEmEntrada(success.data));
+            $scope.backup = null;
+            self.pedido.id = result.id;
+            self.pedido.codigo = result.codigo;
+            $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
+            $rootScope.loading.unload();
+            $scope.mostrarOpcoes();
+          }, function (error) {
+            console.log(error);
+            $rootScope.loading.unload();
+          });
+        } else { // salvar editado
+          providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+            $scope.backup = null;
+            $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
+            $rootScope.loading.unload();
+            $scope.mostrarOpcoes();
+          }, function (error) {
+            console.log(error);
+            $rootScope.loading.unload();
+          });
+        }
       }
+
     }
   };
 

@@ -16,12 +16,15 @@ angular.module('commercialApp.controllers')
     'DataSaida',
     function ($rootScope, $scope, $location, $filter, providerPedido, Pedido, modalBuscarPessoa, DataSaida) {
 
-      var self = this;
+      var self = this, pedidosMarcados = [];
 
       self.pagination = {
         current: 1,
-        max: 15,
-        total: 0
+        max: 10,
+        total: 0,
+        mudarPagina: function () {
+          getPedidos();
+        }
       };
 
       self.filtro = {
@@ -42,11 +45,16 @@ angular.module('commercialApp.controllers')
       function getPedidos() {
         $rootScope.loading.load();
         self.pedidos = [];
-        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), 'N', true, false, false, true).then(function (success) {
+        var limite = (self.pagination.current - 1) * self.pagination.max + ',' + self.pagination.max;
+        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), 'N', true, false, false, true, false, false, limite).then(function (success) {
+          self.pagination.total = success.info.order_quantity;
           angular.forEach(success.data, function (item, index) {
+            var pedido = new Pedido(Pedido.converterEmEntrada(item));
             self.pedidos.push({
-              checked: false,
-              pedido: new Pedido(Pedido.converterEmEntrada(item))
+              checked: pedidosMarcados.find(function(p) {
+                return p.codigo === pedido.codigo;
+              }) != null,
+              pedido: pedido
             });
           });
           $rootScope.loading.unload();
@@ -85,6 +93,14 @@ angular.module('commercialApp.controllers')
         });
       };
 
+      this.changeCheck = function(p) {
+        if (p.checked) {
+          pedidosMarcados.push(p.pedido);
+        } else {
+          pedidosMarcados.splice(pedidosMarcados.indexOf(p.pedido), 1);
+        }
+      };
+
       this.criar = function () {
         var codes = '',
           clientes = [],
@@ -92,24 +108,22 @@ angular.module('commercialApp.controllers')
           min = new Date(),
           max = new Date();
 
-        angular.forEach(self.pedidos, function (item, index) {
-          if (item.checked) {
-            if (clientes.length != 0) {
-              codes += 'x';
-            }
-            codes += item.pedido.codigo;
-
-            if (!clientes.contains(item.pedido.idCliente)) {
-              clientes.push(item.pedido.idCliente);
-            }
-
-            if (!vendedores.contains(item.pedido.idVendedor)) {
-              vendedores.push(item.pedido.idVendedor);
-            }
-
-            min = item.pedido.dataPedido < min ? item.pedido.dataPedido : min;
-            max = item.pedido.dataPedido > max ? item.pedido.dataPedido : max;
+        angular.forEach(pedidosMarcados, function (item, index) {
+          if (clientes.length != 0) {
+            codes += 'x';
           }
+          codes += item.codigo;
+
+          if (!clientes.contains(item.idCliente)) {
+            clientes.push(item.idCliente);
+          }
+
+          if (!vendedores.contains(item.idVendedor)) {
+            vendedores.push(item.idVendedor);
+          }
+
+          min = item.dataPedido < min ? item.dataPedido : min;
+          max = item.dataPedido > max ? item.dataPedido : max;
         });
 
         if (!codes) {

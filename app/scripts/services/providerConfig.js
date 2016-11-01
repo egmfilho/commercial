@@ -22,6 +22,66 @@ angular.module('commercialApp.services')
           return provider.get({
             action: 'getJsonAccess'
           }).$promise;
+        },
+
+        obterConexao: function () {
+          return provider.get({
+            action: 'getSqlConfig'
+          }).$promise;
+        },
+
+        configurarConexao: function (host, database, username, password) {
+          return provider.save({
+            action: 'editSQL'
+          }, {
+            sql_host: host,
+            sql_data_base: database,
+            sql_user_name: username,
+            sql_password: password
+          }).$promise;
+        },
+
+        testarConexao: function (host, database, username, password) {
+          return provider.save({
+            action: 'sqlConnTest'
+          }, {
+            sql_host: host,
+            sql_data_base: database,
+            sql_user_name: username,
+            sql_password: password
+          }).$promise;
+        },
+
+        obterEmail: function () {
+          return provider.get({
+            action: 'getMailConfig'
+          }).$promise;
+        },
+
+        configurarEmail: function (host, porta, smtp, sender, email, password) {
+          return provider.save({
+            action: 'editMail'
+          }, {
+            mail_host: host,
+            mail_port: porta,
+            mail_smtp: smtp,
+            mail_sender: sender,
+            mail_mail: email,
+            mail_password: password
+          }).$promise;
+        },
+
+        testarEmail: function(host, porta, smtp, sender, email, password) {
+          return provider.save({
+            action: 'mailConnTest'
+          }, {
+            mail_host: host,
+            mail_port: porta,
+            mail_smtp: smtp,
+            mail_sender: sender,
+            mail_mail: email,
+            mail_password: password
+          }).$promise;
         }
       };
 

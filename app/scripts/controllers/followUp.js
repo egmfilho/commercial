@@ -33,9 +33,15 @@ angular.module('commercialApp.controllers')
 
       $scope.pagination = {
         current: 1,
-        max: 5,
-        maxItems: 15,
-        total: 1300
+        max: 10,
+        total: 0,
+        mudarPagina: function () {
+          if (self.filtro.pedido) {
+            getAtendimentosPorCodigoDePedido(self.filtro.pedido);
+          } else {
+            getAtendimentos();
+          }
+        }
       };
 
       self.filtro = {
@@ -54,7 +60,9 @@ angular.module('commercialApp.controllers')
       function getAtendimentos() {
         self.atendimentos = [];
         $rootScope.loading.load();
-        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax)).then(function (success) {
+        var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
+        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), limite).then(function (success) {
+          $scope.pagination.total = success.info.attendance_quantity;
           angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
           });
@@ -70,7 +78,9 @@ angular.module('commercialApp.controllers')
         self.atendimentos = [];
         $rootScope.loading.load();
         console.log(self.filtro.responsavel);
-        providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax)).then(function (success) {
+        var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
+        providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), limite).then(function (success) {
+          $scope.pagination.total = success.info.attendance_quantity;
           angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
           });

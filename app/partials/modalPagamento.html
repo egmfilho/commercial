@@ -14,7 +14,7 @@
           <div class="input-group">
             <input type="text" name="codigo" class="form-control" ng-model="cdModalidade" ng-blur="blurCodigo()"
                    number-only aria-describedby="basic-addon2" keys-shortcuts enter="buscarModalidadePorCodigo()"
-                   ng-readonly="restante() <= 0" shift-enter="gravar()">
+                   ng-readonly="restante() <= 0 || pedido.pagamentos.length >= 1" shift-enter="gravar()">
             <span class="input-group-btn">
               <button class="btn btn-default" tabindex="-1" ng-click="buscarModalidadePorCodigo()"><span
                 class="glyphicon glyphicon-search"></span></button>
@@ -31,7 +31,7 @@
           <div class="input-group">
             <span class="input-group-addon">R$</span>
             <input type="text" name="valor" ng-model="pagamento.valor" currency symbol="''" number-only class="form-control"
-                   keys-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
+                   keys-shortcuts enter="addModalidade()" shift-enter="gravar()" ng-readonly="restante() <= 0 || pedido.pagamentos.length >= 1" uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           </div>
         </div>
       </div>
@@ -84,10 +84,13 @@
         <div class="col-md-4">
           <div><h4>Desconto %</h4></div>
           <div class="div-display editable-elem" editable-elem>
+            <!--<span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input-->
+            <!--type="text" currency symbol="''" number-only ng-model="pedido.descontoPercent"-->
+            <!--ng-change="pedido.setDescontoPercent(pedido.descontoPercent)"-->
+            <!--ng-blur="pedido.descontoPercent < 0 ? pedido.descontoPercent = 0 : false">-->
             <span>{{(pedido.descontoPercent | currency: '') || '0,00'}}%</span><input
             type="text" currency symbol="''" number-only ng-model="pedido.descontoPercent"
-            ng-change="pedido.setDescontoPercent(pedido.descontoPercent)"
-            ng-blur="pedido.descontoPercent < 0 ? pedido.descontoPercent = 0 : false">
+            ng-change="pedido.setDescontoPercent(pedido.descontoPercent)">
           </div>
         </div>
         <div class="col-md-4">

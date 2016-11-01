@@ -75,7 +75,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidosComFiltros: function(id_vendedor, id_cliente, valor_minimo, valor_maximo, data_inicial, data_final, com_atendimentos_abertos, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades) {
+        obterPedidosComFiltros: function(id_vendedor, id_cliente, valor_minimo, valor_maximo, data_inicial, data_final, com_atendimentos_abertos, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades, limite) {
           return provider.query({
             action: 'getList'
           }, {
@@ -92,7 +92,8 @@ angular.module('commercialApp.services')
             get_order_items_product: get_produtos,
             get_order_payments: get_pagamentos,
             get_order_payments_modality: get_modalidades,
-            get_order_attendance: true
+            get_order_attendance: true,
+            order_limit: limite
           }).$promise;
         },
 

@@ -33,6 +33,10 @@ angular.module('commercialApp.controllers')
       self.statusAtendimento = new StatusHistoricoAtendimento();
       self.tipoContato = new TipoContato();
 
+      self.email = {};
+      self.email.smtp = false;
+      self.conexao = {};
+
       self.usuariosPagination = {
         current: 1,
         max: 15,
@@ -76,6 +80,8 @@ angular.module('commercialApp.controllers')
         getPermissoes();
         getStatusAtendimentoArray();
         getTiposContato();
+        getEmail();
+        getConexao();
       });
 
       function getUsuarios() {
@@ -146,6 +152,48 @@ angular.module('commercialApp.controllers')
         });
       }
 
+      function getEmail() {
+        $rootScope.loading.load();
+        providerConfig.obterEmail().then(function (success) {
+          self.email = {
+            host: success.data.mail.mail_host,
+            email: success.data.mail.mail_mail,
+            senha: atob(success.data.mail.mail_password),
+            porta: success.data.mail.mail_port,
+            remetente: success.data.mail.mail_sender,
+            smtp: success.data.mail.mail_smtp === 'Y',
+            status: 'sucesso'
+          };
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          self.email = {
+            status: 'falha'
+          };
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getConexao() {
+        $rootScope.loading.load();
+        providerConfig.obterConexao().then(function (success) {
+          self.conexao = {
+            database: success.data.sql.sql_data_base,
+            host: success.data.sql.sql_host,
+            usuario: success.data.sql.sql_user_name,
+            senha: atob(success.data.sql.sql_password),
+            status: 'sucesso'
+          };
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          self.conexao = {
+            status: 'falha'
+          };
+          $rootScope.loading.unload();
+        });
+      }
+
       this.atualizarUsuarios = function () {
         getUsuarios();
       };
@@ -181,7 +229,7 @@ angular.module('commercialApp.controllers')
         });
       };
 
-      this.excluirUsuario = function(usuario) {
+      this.excluirUsuario = function (usuario) {
         if (!confirm('Excluir usuario?')) {
           return;
         }
@@ -273,10 +321,10 @@ angular.module('commercialApp.controllers')
         }
 
         $rootScope.loading.load();
-        providerStatusAtendimento.excluir(status.id).then(function(success) {
+        providerStatusAtendimento.excluir(status.id).then(function (success) {
           $rootScope.loading.unload();
           $rootScope.alerta.show('Status removido!', 'alert-success');
-        }, function(error) {
+        }, function (error) {
           $rootScope.loading.unload();
           console.log(error);
           if (error.status === 420) {
@@ -293,13 +341,13 @@ angular.module('commercialApp.controllers')
 
         $rootScope.loading.load();
         if (self.statusAtendimento.id) {
-          providerStatusAtendimento.editar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function(success) {
+          providerStatusAtendimento.editar(StatusHistoricoAtendimento.converterEmSaida(self.statusAtendimento)).then(function (success) {
             $rootScope.loading.unload();
             $rootScope.alerta.show('Status editado!', 'alert-success');
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
             self.atualizarStatusAtendimento();
-          }, function(error) {
+          }, function (error) {
             console.log(error);
             $rootScope.loading.unload();
             jQuery('#modalStatus').modal('hide');
@@ -348,10 +396,10 @@ angular.module('commercialApp.controllers')
         }
 
         $rootScope.loading.load();
-        providerTipoContato.excluir(tipo.id).then(function(success) {
+        providerTipoContato.excluir(tipo.id).then(function (success) {
           $rootScope.loading.unload();
           $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
-        }, function(error) {
+        }, function (error) {
           $rootScope.loading.unload();
           console.log(error);
           if (error.status === 420) {
@@ -401,6 +449,87 @@ angular.module('commercialApp.controllers')
       this.cancelarModalTipoContato = function () {
         jQuery('#modalTipoContato').modal('hide');
         self.tipoContato = new TipoContato();
+      };
+
+      this.salvarEmail = function () {
+        if (!this.email.host || !this.email.porta || !this.email.remetente || !this.email.email || !this.email.senha) {
+          $rootScope.alerta.show('Preencha corretamente as informações de email!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.loading.load();
+        this.email.status = 'testando';
+        providerConfig.configurarEmail(this.email.host, this.email.porta, this.email.smtp ? 'Y' : 'N', this.email.remetente, this.email.email, btoa(this.email.senha)).then(function (success) {
+          self.email.status = 'sucesso';
+          self.email.retorno = 'Configuração bem sucedida!';
+          $rootScope.loading.unload();
+          $rootScope.alerta.show('Configurações de email salvas!', 'alert-success');
+        }, function (error) {
+          console.log(error);
+          self.email.status = 'falha';
+          self.email.retorno = error.data.status.description;
+          $rootScope.loading.unload();
+        });
+      };
+
+      this.testarEmail = function () {
+        if (!this.email.host || !this.email.porta || !this.email.remetente || !this.email.email || !this.email.senha) {
+          $rootScope.alerta.show('Preencha corretamente as informações de email!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.loading.load();
+        this.email.status = 'testando';
+        providerConfig.testarEmail(this.email.host, this.email.porta, this.email.smtp ? 'Y' : 'N', this.email.remetente, this.email.email, btoa(this.email.senha)).then(function (success) {
+          self.email.status = 'sucesso';
+          self.email.retorno = 'Configuração bem sucedida!';
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          self.email.status = 'falha';
+          self.email.retorno = error.data.status.description;
+          $rootScope.loading.unload();
+        });
+      };
+
+      this.testarConexao = function () {
+        if (!this.conexao.host || !this.conexao.database || !this.conexao.usuario || !this.conexao.senha) {
+          $rootScope.alerta.show('Preencha corretamente as informações de conexão!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.loading.load();
+        this.conexao.status = 'testando';
+        providerConfig.testarConexao(this.conexao.host, this.conexao.database, this.conexao.usuario, btoa(this.conexao.senha)).then(function(success) {
+          self.conexao.status = 'sucesso';
+          self.conexao.retorno = 'Conexão bem sucedida!';
+          $rootScope.loading.unload();
+        }, function (error) {
+          console.log(error);
+          self.conexao.status = 'falha';
+          self.conexao.retorno = error.data.status.description;
+          $rootScope.loading.unload();
+        });
+      };
+
+      this.salvarConexao = function () {
+        if (!this.conexao.host || !this.conexao.database || !this.conexao.usuario || !this.conexao.senha) {
+          $rootScope.alerta.show('Preencha corretamente as informações de conexão!', 'alert-danger');
+          return;
+        }
+
+        $rootScope.loading.load();
+        this.conexao.status = 'testando';
+        providerConfig.configurarConexao(this.conexao.host, this.conexao.database, this.conexao.usuario, btoa(this.conexao.senha)).then(function (success) {
+          self.conexao.status = 'sucesso';
+          $rootScope.loading.unload();
+          $rootScope.alerta.show('Configurações de conexão salvas!', 'alert-success');
+        }, function (error) {
+          console.log(error);
+          self.conexao.retorno = self.conexao.retorno = error.data.status.description;;
+          self.conexao.status = 'falha';
+          $rootScope.loading.unload();
+        });
       };
 
     }]);
