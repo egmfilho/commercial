@@ -1,4 +1,4 @@
-<div class="meu-modal">
+ta<div class="meu-modal">
 
   <div class="header">
     <div class="title"><span class="glyphicon glyphicon-tags"></span>&nbsp; Buscar Produto <span
@@ -64,7 +64,7 @@
     </div>
 
     <div class="paginas">
-      <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+      <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" ng-change="pagination.mudarPagina(nmProduto)" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
 
   </div>

@@ -53,7 +53,7 @@
     </div>
 
     <div class="paginas">
-      <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" class="pagination-sm" boundary-link-numbers="true" rotate="false" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+      <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" max-size="pagination.max" ng-change="pagination.mudarPagina(nmPessoa)" class="pagination-sm"class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
 
   </div>

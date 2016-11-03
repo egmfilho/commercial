@@ -17,7 +17,7 @@ angular.module('commercialApp.services')
 
         'request': function(req) {
 
-          // req.headers['x-session-token'] = 'lucilei';
+          req.headers['x-session-token'] = 'lucilei';
 
           req.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 

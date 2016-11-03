@@ -769,7 +769,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     }
 
     $rootScope.loading.load();
-    providerPedido.enviar(self.pedido.id).then(function(success) {
+    providerPedido.email(self.pedido.id).then(function(success) {
       $rootScope.loading.unload();
       $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
     }, function(error) {

@@ -172,7 +172,7 @@ angular.module('commercialApp.controllers')
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
         provider.obterPedidosComFiltros(null, null, null, null, init, end, null, null, true, true, false, false, false, limite).then(function(success) {
           $scope.pedidos = [ ];
-          $scope.pagination.total = success.info.order_quantity;
+          $scope.pagination.total = success.info ? success.info.order_quantity : 0;
           angular.forEach(success.data, function(item, index) {
             $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
           });

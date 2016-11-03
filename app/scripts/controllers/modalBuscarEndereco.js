@@ -17,7 +17,10 @@ angular.module('commercialApp.controllers')
       $scope.pagination = {
         current: 1,
         max: 10,
-        total: 0
+        total: 0,
+        mudarPagina: function (logradouro, cidade) {
+          $scope.buscarPorLogradouro(logradouro, cidade);
+        }
       };
 
       $uibModalInstance.opened.then(function() {

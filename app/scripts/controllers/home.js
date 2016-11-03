@@ -26,23 +26,28 @@ angular.module('commercialApp')
         nome: 'Orçamento',
         icone: 'glyphicon-shopping-cart',
         url: '/orcamento'
-      }, {
-        nome: 'Relatórios',
-        icone: 'glyphicon-print',
-        url: '/relatorios'
-      }, {
+      },
+      // {
+      //   nome: 'Relatórios',
+      //   icone: 'glyphicon-print',
+      //   url: '/relatorios'
+      // },
+      {
         nome: 'Follow Up',
         icone: 'glyphicon-comment',
         url: '/follow-up'
-      }, {
-        nome: 'Produtos',
-        icone: 'glyphicon-tags',
-        url: '/produtos'
-      }, {
-        nome: 'Clientes',
-        icone: 'glyphicon-user',
-        url: '/clientes'
-      }, {
+      },
+      // {
+      //   nome: 'Produtos',
+      //   icone: 'glyphicon-tags',
+      //   url: '/produtos'
+      // },
+      // {
+      //   nome: 'Clientes',
+      //   icone: 'glyphicon-user',
+      //   url: '/clientes'
+      // },
+      {
         nome: 'Configurações',
         icone: 'glyphicon-cog',
         url: '/configuracoes'
