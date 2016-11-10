@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('commercialApp')
+angular.module('commercialApp.controllers')
   .controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
 
     function redimensiona() {

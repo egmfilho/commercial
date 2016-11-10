@@ -23,7 +23,8 @@ angular.module('commercialApp.controllers')
     'TipoContato',
     'ProviderUsuario',
     'Usuario',
-    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, providerHistorico, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario) {
+    'ModalConfirm',
+    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, providerHistorico, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario, modalConfirm) {
 
       var self = this;
 
@@ -56,9 +57,9 @@ angular.module('commercialApp.controllers')
       };
 
       self.limparParecer = function () {
-        if (confirm('Limpar parecer?')) {
+        modalConfirm.show('Aviso', 'Limpar parecer?').then(function() {
           $scope.novoParecer = new Parecer();
-        }
+        });
       };
 
       $scope.$on('$viewContentLoaded', function () {
@@ -256,7 +257,14 @@ angular.module('commercialApp.controllers')
       }
 
       this.salvarParecer = function () {
-        if (!$scope.novoParecer.texto || !$scope.novoParecer.pessoaDeContato || !$scope.novoParecer.contatoId) {
+        if (!self.codigosArray.length) {
+          if (!$scope.novoParecer.pessoaDeContato || !$scope.novoParecer.contatoId) {
+            $rootScope.alerta.show('Preencha corretamente o parecer!', 'alert-danger');
+            return;
+          }
+        }
+
+        if (!$scope.novoParecer.texto) {
           $rootScope.alerta.show('Preencha corretamente o parecer!', 'alert-danger');
           return;
         }
@@ -270,68 +278,66 @@ angular.module('commercialApp.controllers')
 
       this.salvar = function (encerrar) {
 
-        if (!confirm(encerrar ? 'Encerrar?' : 'Salvar?')) {
-          return;
-        }
+        modalConfirm.show('Aviso', encerrar ? 'Deseja encerrar?' : 'Deseja salvar?').then(function() {
+          var att = new Atendimento(self.atendimento);
+          att.parecer = new Parecer($scope.novoParecer);
+          att.parecer.atendimentoId = self.atendimento.id;
+          att.historico = new HistoricoAtendimento($scope.novoHistorico);
+          att.historico.spy = '';
+          angular.forEach(self.emails, function (item, index) {
+            att.historico.spy += item.nome + ':' + item.email + (index === (self.emails.length - 1) ? '' : ';');
+          });
 
-        var att = new Atendimento(self.atendimento);
-        att.parecer = new Parecer($scope.novoParecer);
-        att.parecer.atendimentoId = self.atendimento.id;
-        att.historico = new HistoricoAtendimento($scope.novoHistorico);
-        att.historico.spy = '';
-        angular.forEach(self.emails, function (item, index) {
-          att.historico.spy += item.nome + ':' + item.email + (index === (self.emails.length - 1) ? '' : ';');
+          if (encerrar) {
+            att.historico.statusId = 1002;
+          }
+
+          if (self.codigosArray) {
+            att.codigoPedido = self.codigosArray;
+            att.historico.statusId = 1001;
+
+            $rootScope.loading.load();
+            providerAtendimento.adicionarEmLote(Atendimento.converterEmSaida(att)).then(function (success) {
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Atendimentos salvos', 'alert-success');
+              voltar();
+            }, function (error) {
+              console.log(error);
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Não foi possível salvar os atendimentos.', 'alert-danger');
+              jQuery('#modal-historico').modal('show');
+            });
+
+            return;
+          }
+
+          jQuery('#modal-historico').modal('hide');
+          if (self.atendimento.id) {
+            $rootScope.loading.load();
+            providerAtendimento.editar(Atendimento.converterEmSaida(att)).then(function (success) {
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Salvo', 'alert-success');
+              voltar();
+            }, function (error) {
+              console.log(error);
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
+              jQuery('#modal-historico').modal('show');
+            });
+          } else {
+            $rootScope.loading.load();
+            providerAtendimento.adicionar(Atendimento.converterEmSaida(att)).then(function (success) {
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Salvo', 'alert-success');
+              voltar();
+            }, function (error) {
+              console.log(error);
+              $rootScope.loading.unload();
+              $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
+              jQuery('#modal-historico').modal('show');
+            });
+          }
         });
-
-        if (encerrar) {
-          att.historico.statusId = 1002;
-        }
-
-        if (self.codigosArray) {
-          att.codigoPedido = self.codigosArray;
-          att.historico.statusId = 1001;
-
-          $rootScope.loading.load();
-          providerAtendimento.adicionarEmLote(Atendimento.converterEmSaida(att)).then(function (success) {
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Atendimentos salvos', 'alert-success');
-            voltar();
-          }, function (error) {
-            console.log(error);
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Não foi possível salvar os atendimentos.', 'alert-danger');
-            jQuery('#modal-historico').modal('show');
-          });
-
-          return;
-        }
-
-        jQuery('#modal-historico').modal('hide');
-        if (self.atendimento.id) {
-          $rootScope.loading.load();
-          providerAtendimento.editar(Atendimento.converterEmSaida(att)).then(function (success) {
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Salvo', 'alert-success');
-            voltar();
-          }, function (error) {
-            console.log(error);
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
-            jQuery('#modal-historico').modal('show');
-          });
-        } else {
-          $rootScope.loading.load();
-          providerAtendimento.adicionar(Atendimento.converterEmSaida(att)).then(function (success) {
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Salvo', 'alert-success');
-            voltar();
-          }, function (error) {
-            console.log(error);
-            $rootScope.loading.unload();
-            $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
-            jQuery('#modal-historico').modal('show');
-          });
-        }
       };
 
     }]);

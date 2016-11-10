@@ -21,7 +21,8 @@ angular.module('commercialApp.controllers')
     'StatusHistoricoAtendimento',
     'ProviderTipoContato',
     'TipoContato',
-    function ($rootScope, $scope, $timeout, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato) {
+    'ModalConfirm',
+    function ($rootScope, $scope, $timeout, providerUsuario, Usuario, providerPerfil, PerfilUsuario, ModalUsuario, ModalPerfil, providerConfig, PermissoesUsuario, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, modalConfirm) {
 
       var self = this,
         width = parseInt(jQuery(window).width()),
@@ -230,23 +231,21 @@ angular.module('commercialApp.controllers')
       };
 
       this.excluirUsuario = function (usuario) {
-        if (!confirm('Excluir usuario?')) {
-          return;
-        }
-
-        $rootScope.loading.load();
-        providerUsuario.excluir(usuario.id).then(function (success) {
-          $rootScope.loading.unload();
-          self.atualizarUsuarios();
-          $rootScope.alerta.show('Usuário excluído!', 'alert-success');
-        }, function (error) {
-          console.log(error);
-          $rootScope.loading.unload();
-          if (error.status === 420) {
-            $rootScope.alerta.show(error.data.status.description, 'alert-danger');
-          } else {
-            $rootScope.alerta.show('Não foi possível excluir o usuário', 'alert-danger');
-          }
+        modalConfirm.show('Aviso', 'Excluir usuario?').then(function() {
+          $rootScope.loading.load();
+          providerUsuario.excluir(usuario.id).then(function (success) {
+            $rootScope.loading.unload();
+            self.atualizarUsuarios();
+            $rootScope.alerta.show('Usuário excluído!', 'alert-success');
+          }, function (error) {
+            console.log(error);
+            $rootScope.loading.unload();
+            if (error.status === 420) {
+              $rootScope.alerta.show(error.data.status.description, 'alert-danger');
+            } else {
+              $rootScope.alerta.show('Não foi possível excluir o usuário', 'alert-danger');
+            }
+          });
         });
       };
 
@@ -278,21 +277,19 @@ angular.module('commercialApp.controllers')
       };
 
       this.excluirPerfil = function (perfil) {
-        if (!confirm('Excluir perfil?')) {
-          return;
-        }
-
-        $rootScope.loading.load();
-        providerPerfil.excluir(perfil.id).then(function (success) {
-          $rootScope.loading.unload();
-          self.atualizarPerfis();
-          $rootScope.alerta.show('Perfil excluído!', 'alert-success');
-        }, function (error) {
-          console.log(error);
-          $rootScope.loading.unload();
-          if (error.status === 420) {
-            $rootScope.alerta.show('Não é possível excluir perfis em uso!', 'alert-danger');
-          }
+        modalConfirm.show('Aviso', 'Excluir perfil?').then(function() {
+          $rootScope.loading.load();
+          providerPerfil.excluir(perfil.id).then(function (success) {
+            $rootScope.loading.unload();
+            self.atualizarPerfis();
+            $rootScope.alerta.show('Perfil excluído!', 'alert-success');
+          }, function (error) {
+            console.log(error);
+            $rootScope.loading.unload();
+            if (error.status === 420) {
+              $rootScope.alerta.show('Não é possível excluir perfis em uso!', 'alert-danger');
+            }
+          });
         });
       };
 
@@ -316,20 +313,18 @@ angular.module('commercialApp.controllers')
       };
 
       this.excluirStatusAtendimento = function (status) {
-        if (!confirm('Excluir status?')) {
-          return;
-        }
-
-        $rootScope.loading.load();
-        providerStatusAtendimento.excluir(status.id).then(function (success) {
-          $rootScope.loading.unload();
-          $rootScope.alerta.show('Status removido!', 'alert-success');
-        }, function (error) {
-          $rootScope.loading.unload();
-          console.log(error);
-          if (error.status === 420) {
-            $rootScope.alerta.show('Não é possível excluir um Status em uso!', 'alert-danger');
-          }
+        modalConfirm.show('Aviso', 'Excluir status?').then(function() {
+          $rootScope.loading.load();
+          providerStatusAtendimento.excluir(status.id).then(function (success) {
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Status removido!', 'alert-success');
+          }, function (error) {
+            $rootScope.loading.unload();
+            console.log(error);
+            if (error.status === 420) {
+              $rootScope.alerta.show('Não é possível excluir um Status em uso!', 'alert-danger');
+            }
+          });
         });
       };
 
@@ -391,20 +386,18 @@ angular.module('commercialApp.controllers')
       };
 
       this.excluirTipoContato = function (tipo) {
-        if (!confirm('Excluir tipo de contato?')) {
-          return;
-        }
-
-        $rootScope.loading.load();
-        providerTipoContato.excluir(tipo.id).then(function (success) {
-          $rootScope.loading.unload();
-          $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
-        }, function (error) {
-          $rootScope.loading.unload();
-          console.log(error);
-          if (error.status === 420) {
-            $rootScope.alerta.show('Não é possível excluir tipos de contato em uso!', 'alert-danger');
-          }
+        modalConfirm.show('Aviso', 'Excluir tipo de contato?').then(function() {
+          $rootScope.loading.load();
+          providerTipoContato.excluir(tipo.id).then(function (success) {
+            $rootScope.loading.unload();
+            $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
+          }, function (error) {
+            $rootScope.loading.unload();
+            console.log(error);
+            if (error.status === 420) {
+              $rootScope.alerta.show('Não é possível excluir tipos de contato em uso!', 'alert-danger');
+            }
+          });
         });
       };
 

@@ -83,6 +83,8 @@ angular.module('commercialApp.services')
       this.blocos = this.formataritemsParaImpressao();
 
       this.atendimentoId = p ? p.atendimentoId : null;
+
+      this.erp = p ? p.erp : null;
     }
 
     Pedido.prototype = {
@@ -316,6 +318,8 @@ angular.module('commercialApp.services')
 
       pedido.atendimentoId = p.order_attendance_id;
 
+      pedido.erp = p.order_code_erp;
+
       return pedido;
     };
 
@@ -326,7 +330,7 @@ angular.module('commercialApp.services')
       p.order_client_id = pedido.idCliente.length ? pedido.cliente.id : pedido.idCliente;
       p.order_seller_id = pedido.idVendedor.length ? pedido.vendedor.id : pedido.idVendedor;
       p.order_note = pedido.observacoes;
-      p.order_status_id = pedido.status;
+      p.order_status_id = pedido.statusId;
 
       p.order_items = [];
       angular.forEach(pedido.items, function (item, index) {

@@ -74,6 +74,7 @@
 
       <div class="espacador"
            ng-repeat="n in getNumber(max - (bloco.length >= max ? max : bloco.length)) track by $index"></div>
+
       <p
         ng-class="{ 'quebra': $index + 1 >= orcamento.pedido.blocos.length && orcamento.pedido.blocos[$index].length >= 18 }"></p>
 
@@ -110,6 +111,10 @@
   <br>
 
   <div class="assinatura">
+    <span ng-if="orcamento.pedido.observacoes">
+      <h5>Observações: </h5>
+      {{orcamento.pedido.observacoes}}
+    </span>
     <div>
       <h5>Atenciosamente</h5>
     </div>

@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('commercialApp').controller('OrcamentoCtrl', Orcamento);
+angular.module('commercialApp.controllers').controller('OrcamentoCtrl', Orcamento);
 
 Orcamento.$inject = [
   '$rootScope',
@@ -25,10 +25,11 @@ Orcamento.$inject = [
   'ModalBuscarEndereco',
   'ModalBuscarProduto',
   'ModalBuscarPedido',
+  'ModalConfirm',
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, ValidadorDocumento) {
+function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, ValidadorDocumento) {
 
   var self = this;
 
@@ -253,10 +254,10 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.limparVendedor = function ($event) {
-    if (confirm('Limpar campos do Vendedor?')) {
+    modalConfirm.show('Aviso', 'Limpar campos do Vendedor?').then(function() {
       $scope.cdVendedor = '';
-      this.pedido.removeVendedor();
-    }
+      self.pedido.removeVendedor();
+    });
     if ($event) $event.stopPropagation();
   };
 
@@ -314,16 +315,23 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.limparCliente = function ($event, force) {
-    if (force ? true : confirm('Limpar campos do cliente?')) {
+    function limpa() {
       $scope.cdCliente = '';
       $scope.cdCEP = '';
-      this.pedido.removeCliente();
+      self.pedido.removeCliente();
 
       $scope.cliente.novo ? jQuery('input[name="nome-cliente"]').focus() : jQuery('input[name="CdCliente"]').focus();
 
       jQuery('input[name="cpf"]').removeClass('input-error');
       jQuery('input[name="cnpj"]').removeClass('input-error');
     }
+
+    if (!force) {
+      modalConfirm.show('Aviso', 'Limpar campos do cliente?').then(limpa);
+    } else {
+      limpa();
+    }
+
     if ($event) $event.stopPropagation();
   };
 
@@ -412,10 +420,11 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
-    if (confirm('Deseja remover todos os produtos?')) {
-      this.limparProdutoTemp();
-      this.pedido.items = [];
-    }
+    modalConfirm.show('Aviso', 'Deseja remover todos os produtos?').then(function() {
+      self.limparProdutoTemp();
+      self.pedido.items = [];
+    });
+
     if ($event) $event.stopPropagation();
   };
 
@@ -490,9 +499,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.removerItem = function (item) {
-    if (confirm('Deseja excluir o produto?')) {
-      this.pedido.removerItem(item);
-    }
+    this.pedido.removerItem(item);
   };
 
   this.addItem = function () {
@@ -532,18 +539,21 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.limpar = function (perguntar) {
-    var resposta = true;
 
-    if (perguntar) {
-      resposta = confirm('Descartar alterações?');
-    }
-
-    if (resposta) {
-      this.pedido = new Pedido();
+    function limpa() {
+      self.pedido = new Pedido();
       $scope.item = new ItemPedido();
       $scope.cdCliente = null;
       $scope.cdVendedor = null;
       focarVendedor();
+    }
+
+    if (perguntar) {
+      modalConfirm.show('Aviso', 'Descartar alterações?').then(function() {
+        limpa();
+      });
+    } else {
+      limpa();
     }
   };
 
@@ -629,6 +639,10 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.salvar = function () {
+    if (self.pedido.idStatus == 1001 || self.pedido.erp) {
+      return;
+    }
+
     if ($scope.backup) {
       if ($scope.backup.compare(this.pedido)) {
         $rootScope.alerta.show('Nenhuma alteração!');
@@ -649,14 +663,14 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
         }
       }
 
-      if (confirm('Salvar orçamento?')) {
-        console.log('saida pedido', Pedido.converterEmSaida(this.pedido));
-        $uibModalStack.dismissAll();
+      modalConfirm.show('Aviso', 'Salvar orçamento?').then(function() {
+        console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
+        // $uibModalStack.dismissAll();
 
         $rootScope.loading.load();
 
-        if (!this.pedido.id && !this.pedido.codigo) { // salvar novo
-          providerPedido.adicionarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+        if (!self.pedido.id && !self.pedido.codigo) { // salvar novo
+          providerPedido.adicionarPedido(Pedido.converterEmSaida(self.pedido)).then(function (success) {
             var result = new Pedido(Pedido.converterEmEntrada(success.data));
             $scope.backup = null;
             self.pedido.id = result.id;
@@ -669,7 +683,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
             $rootScope.loading.unload();
           });
         } else { // salvar editado
-          providerPedido.editarPedido(Pedido.converterEmSaida(this.pedido)).then(function (success) {
+          providerPedido.editarPedido(Pedido.converterEmSaida(self.pedido)).then(function (success) {
             $scope.backup = null;
             $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();
@@ -679,8 +693,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
             $rootScope.loading.unload();
           });
         }
-      }
-
+      });
     }
   };
 
@@ -699,7 +712,12 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.enviar = function () {
-    self.alert('Em breve!');
+    if (!this.pedido.items.length || !this.pedido.id) {
+      $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+      return;
+    }
+
+    jQuery('#modalEmail').modal('show');
   };
 
   this.excluir = function () {
@@ -708,7 +726,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
-    if (confirm('Deseja excluir o orçamento?')) {
+    modalConfirm.show('Aviso', 'Deseja excluir o orçamento?').then(function() {
       providerPedido.excluirPedido(self.pedido).then(function (success) {
         self.limpar();
         self.alert('Orçamento excluído!');
@@ -716,7 +734,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
         console.log(error);
         self.alert('Não foi possível excluir o orçamento.');
       });
-    }
+    });
   };
 
   $scope.mostrarOpcoes = function () {
@@ -758,45 +776,52 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     }
   };
 
-  self.enviar = function() {
+  self.enviarEmail = function(endereco) {
     if (!this.pedido.items.length || !this.pedido.id) {
       $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
       return;
     }
 
-    if (!confirm('Enviar orçamento por email?')) {
+    if (!endereco) {
       return;
     }
 
-    $rootScope.loading.load();
-    providerPedido.email(self.pedido.id).then(function(success) {
-      $rootScope.loading.unload();
-      $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
-    }, function(error) {
-      console.log(error);
-      $rootScope.loading.unload();
-      $rootScope.alerta.show('Não foi possível enviar o orçamento!', 'alert-danger');
-    });
+    // modalConfirm.show('Aviso', 'Enviar orçamento por email?').then(function() {
+      $rootScope.loading.load();
+      providerPedido.email(self.pedido.id, endereco).then(function(success) {
+        $rootScope.loading.unload();
+        $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
+      }, function(error) {
+        console.log(error);
+        $rootScope.loading.unload();
+        $rootScope.alerta.show('Não foi possível enviar o orçamento!', 'alert-danger');
+      });
+    // });
   };
 
   self.exportar = function() {
+    if (self.pedido.idStatus == 1001 || self.pedido.erp) {
+      return;
+    }
+
     if (!this.pedido.items.length || !this.pedido.id) {
       $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
       return;
     }
 
-    if (!confirm('Exportar orçamento para venda?')) {
-      return;
-    }
-
-    $rootScope.loading.load();
-    providerPedido.exportar(self.pedido.id).then(function(success) {
-      $rootScope.loading.unload();
-      $rootScope.alerta.show('O orçamento será exportado!', 'alert-success');
-    }, function(error) {
-      console.log(error);
-      $rootScope.loading.unload();
-      $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
+    modalConfirm.show('Aviso', 'Exportar orçamento para venda?').then(function() {
+      $rootScope.loading.load();
+      providerPedido.exportar(self.pedido.id).then(function(success) {
+        var p = new Pedido(Pedido.converterEmEntrada(success.data));
+        self.pedido.erp = p.erp;
+        self.pedido.idStatus = p.idStatus;
+        $rootScope.loading.unload();
+        $rootScope.alerta.show('O orçamento será exportado!', 'alert-success');
+      }, function(error) {
+        console.log(error);
+        $rootScope.loading.unload();
+        $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
+      });
     });
   };
 }

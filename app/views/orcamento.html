@@ -1,7 +1,10 @@
 <div id="formulario-orcamento" class="container">
 
-  <a href="" class="pull-right" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
-  <div class="row">
+  <div class="row" ng-if="orcamento.pedido.erp">
+    <p class="alert alert-success text-center" role="alert">Orçamento já exportado! Código ERP: {{orcamento.pedido.erp}}</p>
+  </div>
+
+  <!--<div class="row">-->
     <!--<div class="col-sm-6 col-md-3">-->
     <!--<button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span class="glyphicon glyphicon-pencil"></span> Novo</button>-->
     <!--</div>-->
@@ -14,20 +17,22 @@
     <!--<div class="col-sm-6 col-md-3">-->
     <!--<button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash"></span> Excluir</button>-->
     <!--</div>-->
-  </div>
+  <!--</div>-->
 
   <!--TITULO-->
   <!--<br>-->
   <div class="row card">
     <div class="col-md-12">
       <div class="main-head" style="text-align: center">
-        <h3><span class="glyphicon glyphicon-shopping-cart"></span>
+        <h3>
+          <span class="glyphicon glyphicon-shopping-cart"></span>
           <span
             class="hidden-xs">{{orcamento.pedido.codigo ? ('Orçamento código ' + orcamento.pedido.codigo) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('criado em ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.dataPedido | date:'dd/MM/yyyy') : ''}}</span>
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
+          <a href="" class="pull-right" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span></a>
         </h3>
       </div>
     </div>
@@ -43,12 +48,12 @@
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.salvar()"><span
-        class="glyphicon glyphicon-floppy-save hidden-xs"></span> Salvar
+      <button class="btn btn-orcamento" ng-click="orcamento.abrirAtendimento()"><span
+        class="glyphicon glyphicon-list-alt hidden-xs"></span> Atendimento
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash hidden-xs"></span>
+      <button class="btn btn-orcamento danger" ng-click="orcamento.excluir()"><span class="glyphicon glyphicon-trash hidden-xs"></span>
         Excluir
       </button>
     </div>
@@ -209,18 +214,19 @@
           <td>{{i.produto.codigo}}</td>
           <td>{{i.produto.nome | limitTo : 50 }}</td>
           <td>{{i.produto.unidade}}</td>
-          <td class="editable-elem" editable-elem><span>{{i.quantidade | currency : ""}}</span><input currency
-                                                                                                      number-only
-                                                                                                      type="text"
-                                                                                                      ng-model="i.quantidade"
-                                                                                                      ng-blur="i.quantidade <= 0 || !i.quantidade ? i.quantidade = 1 : ''">
+          <td class="editable-elem" editable-elem>
+            <span>{{i.quantidade | currency : ""}}</span>
+            <input currency symbol="''" n
+                   umber-only type="text" ng-model="i.quantidade" ng-blur="i.quantidade <= 0 || !i.quantidade ? i.quantidade = 1 : ''">
           </td>
           <td>{{i.produto.preco | currency}}</td>
           <td><span>{{i.descontoPercent | currency : ""}}%</span></td>
           <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span></td>
           <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
           <td>
-            <a tabindex="-1" ng-click="orcamento.removerItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
+            <a tabindex="-1" confirm-popup title="Aviso" message="Deseja remover o item?" ok-func="orcamento.removerItem(i)" placement="left">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
           </td>
         </tr>
         </tbody>
@@ -496,20 +502,21 @@
       <!--</button>-->
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.abrirAtendimento()"><span
-        class="glyphicon glyphicon-list-alt hidden-xs"></span> Atendimento
+      <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope hidden-xs"></span>
+        Email
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope hidden-xs"></span>
-        Email
+      <button class="btn btn-orcamento warning" ng-click="orcamento.salvar()" ng-disabled="orcamento.pedido.idStatus == 1001 || orcamento.pedido.erp">
+        <span class="glyphicon glyphicon-floppy-save hidden-xs"></span> Salvar
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
       <!--<button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print hidden-xs"></span>-->
       <!--Imprimir-->
       <!--</button>-->
-      <button class="btn btn-orcamento" ng-click="orcamento.exportar()"><span class="glyphicon glyphicon-share-alt hidden-xs"></span>
+      <button class="btn btn-orcamento success" ng-click="orcamento.exportar()" ng-disabled="orcamento.pedido.erp">
+        <span class="glyphicon glyphicon-share-alt hidden-xs"></span>
         Exportar
       </button>
     </div>
@@ -548,4 +555,29 @@
 <h1 class="impressao aviso"
     ng-show="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)">
   <span class="glyphicon glyphicon-alert"></span> Impressão indisponível</h1>
+
+<!--MODAL EMAIL-->
+<div class="modal meu-modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="modalEmail" ng-init="enderecoEmail = orcamento.pedido.cliente.email">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="header clearfix">
+        <div class="title"><span class="glyphicon glyphicon-envelope"></span> Enviar orçamento <span
+          class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
+      </div>
+      <div class="body xs condensar-rows">
+        <div class="col-md-12">
+          <h4>Endereço</h4>
+          <input type="email" class="form-control" ng-model="enderecoEmail">
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+        <button type="button" class="btn btn-default" ng-click="orcamento.enviarEmail(enderecoEmail)" data-dismiss="modal">
+          <span class="glyphicon glyphicon-envelope"></span> Enviar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM EMAIL-->
 

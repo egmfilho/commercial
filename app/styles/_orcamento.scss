@@ -110,6 +110,30 @@ $print-font-size: 11px;
     }
   }
 
+  .btn-orcamento.success {
+    background-color: darken($brand-success, 5%);
+
+    &:hover {
+      background-color: darken($brand-success, 15%);
+    }
+  }
+
+  .btn-orcamento.danger {
+    background-color: $brand-danger;
+
+    &:hover {
+      background-color: darken($brand-danger, 10%);
+    }
+  }
+
+  .btn-orcamento.warning {
+    background-color: $brand-warning;
+
+    &:hover {
+      background-color: darken($brand-warning, 10%);
+    }
+  }
+
   a.btn-orcamento {
     padding: 10px;
   }

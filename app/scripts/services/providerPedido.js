@@ -131,11 +131,12 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        email: function(id) {
+        email: function(id, endereco) {
           return provider.save({
             action: 'sendMail'
           }, {
-            order_id: id
+            order_id: id,
+            email_address: endereco
           }).$promise;
         },
 

@@ -30,7 +30,7 @@
 
     <div id="loading" ng-show="loading.isLoading()" ng-include="'partials/loading.html'"></div>
 
-    <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login' || currentPath === '/signup'"></div>
+    <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login' || currentPath === '/signup' || currentPath.indexOf('/orcamento/impressao/') >= 0"></div>
     <div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>
 
     <!--<div class="container">-->
@@ -41,7 +41,7 @@
       {{alerta.mensagem}}
     </div>
 
-    <div name="footer" class="hidden-xs" ng-include="'partials/footer.html'"></div>
+    <div name="footer" class="hidden-xs" ng-include="'partials/footer.html'" ng-hide="currentPath.indexOf('/orcamento/impressao/') >= 0"></div>
 
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -122,11 +122,13 @@
         <script src="scripts/services/contatoParecer.js"></script>
         <script src="scripts/services/statusHistoricoAtendimento.js"></script>
         <script src="scripts/services/historicoAtendimento.js"></script>
+        <script src="scripts/services/modalConfirm.js"></script>
         <script src="scripts/directives/alerta.js"></script>
         <script src="scripts/directives/redireciona.js"></script>
         <script src="scripts/directives/editableElem.js"></script>
         <script src="scripts/directives/relogio.js"></script>
         <script src="scripts/directives/alertPopup.js"></script>
+        <script src="scripts/directives/confirmPopup.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/logout.js"></script>
         <script src="scripts/controllers/header.js"></script>
@@ -145,6 +147,8 @@
         <script src="scripts/controllers/modalUsuario.js"></script>
         <script src="scripts/controllers/modalPerfil.js"></script>
         <script src="scripts/controllers/modalAtendimento.js"></script>
+        <script src="scripts/controllers/impressao.js"></script>
+        <script src="scripts/controllers/modalConfirm.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>

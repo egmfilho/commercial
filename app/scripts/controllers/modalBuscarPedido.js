@@ -133,10 +133,10 @@ angular.module('commercialApp.controllers')
         });
       };
 
-      function parseDate(date) {
+      function parseDate(date, h, m, s) {
         var parts = date.split('/');
 
-        return new Date(parts[2], parts[1] - 1, parts[0]);
+        return new Date(parts[2], parts[1] - 1, parts[0], h, m, s);
       }
 
       $scope.buscar = function() {
@@ -145,8 +145,8 @@ angular.module('commercialApp.controllers')
         } else {
           $rootScope.loading.load();
 
-          var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
-              end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
+          var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial, 0, 0, 0)) : null,
+              end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
           var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
           provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, null, true, true, false, false, false, false, limite).then(function(success) {
@@ -166,11 +166,11 @@ angular.module('commercialApp.controllers')
       $scope.obterTodos = function() {
         $rootScope.loading.load();
 
-        var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial)) : null,
-          end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal)) : null;
+        var init = $scope.dtInicial ? DataSaida.converter(parseDate($scope.dtInicial, 0, 0, 0)) : null,
+            end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
-        provider.obterPedidosComFiltros(null, null, null, null, init, end, null, null, true, true, false, false, false, limite).then(function(success) {
+        provider.obterPedidosComFiltros(null, null, null, null, init, end, null, true, true, true, false, false, false, limite).then(function(success) {
           $scope.pedidos = [ ];
           $scope.pagination.total = success.info ? success.info.order_quantity : 0;
           angular.forEach(success.data, function(item, index) {

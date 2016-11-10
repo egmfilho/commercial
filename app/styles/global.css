@@ -331,7 +331,7 @@ span:focus, a:focus {
   height: auto;
   text-align: center;
   border: 1px solid #6481bb;
-  padding: 0px !important; }
+  padding: 0 !important; }
 .editable-elem:hover, .inactive-editable-elem:hover {
   cursor: pointer;
   padding: 4px !important; }
@@ -420,6 +420,14 @@ span:focus, a:focus {
       border: 1px solid #6481bb; }
     .tabela-bordered td, .tabela-bordered th {
       color: #6481bb; } }
+.popover {
+  padding: 0 !important; }
+  .popover .arrow {
+    padding: 0 !important; }
+  .popover h3 {
+    background-color: #6481bb;
+    color: white; }
+
 .meu-modal .header {
   background-color: #6481bb;
   height: 60px;
@@ -476,52 +484,6 @@ span:focus, a:focus {
   width: 20%; }
 #tabela-buscar-pessoas th:nth-child(2), #tabela-buscar-pessoas td:nth-child(2) {
   width: 80%; }
-
-.filtros .well {
-  padding: 8px;
-  min-height: 50px; }
-  .filtros .well > div {
-    height: 45px; }
-.filtros .filtro-sm, .filtros .filtro-md, .filtros .filtro-lg {
-  display: inline-block;
-  padding: 4px;
-  margin: 4px;
-  background-color: #3b5998;
-  border-radius: 6px;
-  width: 100%; }
-  .filtros .filtro-sm table, .filtros .filtro-md table, .filtros .filtro-lg table {
-    width: 100%; }
-    .filtros .filtro-sm table tr td:last-child, .filtros .filtro-md table tr td:last-child, .filtros .filtro-lg table tr td:last-child {
-      width: 30px; }
-  .filtros .filtro-sm i, .filtros .filtro-md i, .filtros .filtro-lg i {
-    color: white;
-    margin-top: 4px;
-    vertical-align: sub; }
-  .filtros .filtro-sm input, .filtros .filtro-md input, .filtros .filtro-lg input {
-    border-radius: 6px;
-    font-size: 1.2em;
-    border-color: transparent;
-    width: 100%;
-    text-align: center; }
-    .filtros .filtro-sm input:first-child, .filtros .filtro-md input:first-child, .filtros .filtro-lg input:first-child {
-      margin-left: 0; }
-    .filtros .filtro-sm input:last-child, .filtros .filtro-md input:last-child, .filtros .filtro-lg input:last-child {
-      margin-right: 0; }
-.filtros .filtro-lg table tr td:first-child {
-  width: 130px;
-  padding-right: 4px; }
-.filtros .filtro-lg table tr td:nth-child(2) {
-  padding-left: 4px; }
-.filtros .pedido {
-  background-color: #0086b3; }
-.filtros .vendedor {
-  background-color: goldenrod; }
-.filtros .cliente {
-  background-color: #006600; }
-.filtros .data-inicial {
-  background-color: orangered; }
-.filtros .data-final {
-  background-color: #880000; }
 
 .nav-tabs li > a {
   color: #444; }
@@ -895,6 +857,18 @@ div[name="footer"] .navbar {
       vertical-align: -10%; }
     #formulario-orcamento .btn-orcamento:hover {
       text-decoration: none; }
+  #formulario-orcamento .btn-orcamento.success {
+    background-color: #4cae4c; }
+    #formulario-orcamento .btn-orcamento.success:hover {
+      background-color: #3d8b3d; }
+  #formulario-orcamento .btn-orcamento.danger {
+    background-color: #d9534f; }
+    #formulario-orcamento .btn-orcamento.danger:hover {
+      background-color: #c9302c; }
+  #formulario-orcamento .btn-orcamento.warning {
+    background-color: #f0ad4e; }
+    #formulario-orcamento .btn-orcamento.warning:hover {
+      background-color: #ec971f; }
   #formulario-orcamento a.btn-orcamento {
     padding: 10px; }
   #formulario-orcamento .dropdown-menu {
