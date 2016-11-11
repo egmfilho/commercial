@@ -24,6 +24,7 @@
     <!-- endbuild -->
   </head>
   <body class="padding-bottom" ng-class="{ 'padding-top': currentPath === '/login' }" ng-app="commercialApp">
+
     <!--[if lte IE 8]>
       <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhor experiência.</p>
     <![endif]-->
@@ -37,7 +38,7 @@
       <div name="view-principal" ng-view=""></div>
     <!--</div>-->
 
-    <div class="alert alerta" ng-class="alerta.classe" role="alert">
+    <div class="alert alerta" ng-class="alerta.classe" role="alert" ng-if="currentPath.indexOf('/orcamento/impressao/') == -1">
       {{alerta.mensagem}}
     </div>
 

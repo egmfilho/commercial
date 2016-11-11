@@ -797,8 +797,17 @@ div[name="footer"] .navbar {
   box-shadow: 0 12px 14px rgba(50, 50, 50, 0.35); }
 
 @media print {
+  .header {
+    display: none; }
+
+  .header-alternativo {
+    display: none; }
+
+  .footer {
+    display: none; }
+
   .impressao {
-    display: inline; }
+    display: block; }
 
   .impressao .espacador {
     min-height: 26px !important;
@@ -908,9 +917,6 @@ div[name="footer"] .navbar {
   margin-bottom: 0; }
 
 .impressao {
-  padding: 20px;
-  height: 800px;
-  min-height: 800px;
   font-family: sans-serif; }
   .impressao .cabecalho {
     height: 120px; }

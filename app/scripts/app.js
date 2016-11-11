@@ -89,9 +89,19 @@ angular
         controllerAs: 'configuracoes'
       })
       .when('/orcamento/impressao/:code', {
-        templateUrl: 'views/impressao.html',
+        templateUrl: 'partials/impressaoOrcamento.html',
         controller: 'ImpressaoCtrl',
-        controllerAs: 'orcamento'
+        controllerAs: 'orcamento',
+        resolve: {
+          pedido: ['$route', 'ProviderPedido', 'Pedido', function($route, provider, Pedido) {
+            return provider.obterPedidoPorCodigo($route.current.params.code, true, true, true, true, true, true).then(function(success) {
+              return new Pedido(Pedido.converterEmEntrada(success.data));
+            }, function(error) {
+              console.log(error);
+              return null;
+            });
+          }]
+        }
       })
       // .when('/about', {
       //   templateUrl: 'views/about.html',
@@ -154,7 +164,7 @@ angular
 
       // Bloqueia acesso de usuarios nao logados
       if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-        if (next.templateUrl !== 'views/login.html') {
+        if (next.templateUrl !== 'views/login.html' && next.templateUrl.indexOf('/orcamento/impressao/') != -1) {
           $location.path('/login');
         }
         return;

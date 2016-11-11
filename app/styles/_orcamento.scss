@@ -1,8 +1,20 @@
 $print-font-size: 11px;
 
 @media print {
+  .header {
+    display: none;
+  }
+
+  .header-alternativo {
+    display: none;
+  }
+
+  .footer {
+    display: none;
+  }
+
   .impressao {
-    display: inline;
+    display: block;
   }
 
   .impressao {
@@ -212,9 +224,9 @@ $print-font-size: 11px;
 }
 
 .impressao {
-  padding: 20px;
-  height: 800px;
-  min-height: 800px;
+  //padding: 50px;
+  //height: 800px;
+  //min-height: 800px;
   font-family: sans-serif;
 
   .cabecalho {

@@ -7,9 +7,9 @@
 angular.module('commercialApp.controllers')
   .controller('ImpressaoCtrl', ImpressaoCtrl);
 
-ImpressaoCtrl.$inject = [ '$scope', '$routeParams', 'ProviderPedido', 'Pedido' ];
+ImpressaoCtrl.$inject = [ '$scope', 'pedido' ];
 
-function ImpressaoCtrl($scope, $routeParams, provider, Pedido) {
+function ImpressaoCtrl($scope, pedido) {
 
   var self = this;
 
@@ -17,19 +17,22 @@ function ImpressaoCtrl($scope, $routeParams, provider, Pedido) {
     return new Date();
   };
 
-  this.pedido = new Pedido();
+  console.log(pedido);
+  // this.pedido = new Pedido();
+  this.pedido = pedido;
+  // jQuery('.impressao').css('display', 'block');
 
   $scope.$on('$viewContentLoaded', function () {
 
-    if ($routeParams.code) {
-      provider.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
-        self.pedido = new Pedido(Pedido.converterEmEntrada(success.data));
-        jQuery('.impressao').css('display', 'block');
-      }, function(error) {
-        console.log(error);
-      });
-    }
-
+    // if ($routeParams.code) {
+    //   provider.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
+    //     self.pedido = new Pedido(Pedido.converterEmEntrada(success.data));
+    //     jQuery('.impressao').css('display', 'block');
+    //   }, function(error) {
+    //     console.log(error);
+    //   });
+    // }
+    window.callPhantom();
   });
 
 }

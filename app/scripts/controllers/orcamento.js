@@ -788,7 +788,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
 
     // modalConfirm.show('Aviso', 'Enviar orçamento por email?').then(function() {
       $rootScope.loading.load();
-      providerPedido.email(self.pedido.id, endereco).then(function(success) {
+      providerPedido.email(self.pedido.codigo, endereco).then(function(success) {
         $rootScope.loading.unload();
         $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
       }, function(error) {
