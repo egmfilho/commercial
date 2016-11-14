@@ -5,7 +5,7 @@
       <div class="botao-menu highlight" redireciona="{{botao.url}}">
         <div class="centerX centerY">
           <span class="glyphicon" ng-class="botao.icone"></span>
-          <p>{{botao.nome}}</p>
+          <p ng-bind-html="botao.nome"></p>
         </div>
       </div>
     </div>

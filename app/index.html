@@ -38,7 +38,7 @@
       <div name="view-principal" ng-view=""></div>
     <!--</div>-->
 
-    <div class="alert alerta" ng-class="alerta.classe" role="alert" ng-if="currentPath.indexOf('/orcamento/impressao/') == -1">
+    <div class="alert alerta" ng-class="alerta.classe" role="alert" ng-hide="currentPath.indexOf('/orcamento/impressao/') != -1">
       {{alerta.mensagem}}
     </div>
 
@@ -150,6 +150,7 @@
         <script src="scripts/controllers/modalAtendimento.js"></script>
         <script src="scripts/controllers/impressao.js"></script>
         <script src="scripts/controllers/modalConfirm.js"></script>
+        <script src="scripts/controllers/buscarPedido.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>

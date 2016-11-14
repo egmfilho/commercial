@@ -50,7 +50,7 @@ angular.module('commercialApp.services')
       this.id = p ? p.id : '';
       this.codigo = p ? p.codigo : '';
       this.idUsuario = p ? p.idUsuario : '';
-      this.idStatus = p ? p.idStatus : '';
+      this.idStatus = p ? p.idStatus : 1001;
       this.idCliente = p ? p.idCliente : '';
       this.idVendedor = p ? p.idVendedor : '';
       this.observacoes = p ? p.observacoes : '';
@@ -270,7 +270,6 @@ angular.module('commercialApp.services')
       },
 
       compare: compare
-
     };
 
     Pedido.converterEmEntrada = function (p) {

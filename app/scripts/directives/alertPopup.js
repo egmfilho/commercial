@@ -12,6 +12,6 @@ angular.module('commercialApp.directives')
         title: '@titulo',
         message: '@mensagem'
       },
-      templateUrl: '/partials/alertPopup.html'
+      templateUrl: 'partials/alertPopup.html'
     };
   }]);

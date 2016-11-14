@@ -267,7 +267,7 @@
               </div>
               <div class="col-md-12">
                 <h4>Spy</h4>
-                <ui-select multiple tagging="atendimento.emailExterno" limit="10" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()">
+                <ui-select title="Informe os emails" multiple tagging="atendimento.emailExterno" limit="10" theme="bootstrap" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()">
                   <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
                   <ui-select-choices repeat="usuario in atendimento.contatos | filter: {nome: $select.search, email: $select.search}">
                     <div ng-if="!usuario.isTag" ng-bind-html="''+usuario.nome | highlight: $select.search">

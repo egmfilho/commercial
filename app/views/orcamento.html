@@ -44,7 +44,7 @@
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-list-alt hidden-xs"></span> Recuperar
+      <button class="btn btn-orcamento" ng-click="lista()"><span class="glyphicon glyphicon-open hidden-xs"></span> Recuperar
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
@@ -507,7 +507,7 @@
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento warning" ng-click="orcamento.salvar()" ng-disabled="orcamento.pedido.idStatus == 1001 || orcamento.pedido.erp">
+      <button class="btn btn-orcamento warning" ng-click="orcamento.salvar()" ng-disabled="orcamento.pedido.idStatus != 1001 || orcamento.pedido.erp">
         <span class="glyphicon glyphicon-floppy-save hidden-xs"></span> Salvar
       </button>
     </div>
@@ -564,10 +564,22 @@
         <div class="title"><span class="glyphicon glyphicon-envelope"></span> Enviar orçamento <span
           class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
       </div>
-      <div class="body xs condensar-rows">
+      <div class="body xs-2 condensar-rows">
         <div class="col-md-12">
           <h4>Endereço</h4>
-          <input type="email" class="form-control" ng-model="enderecoEmail">
+          <!--<input type="email" class="form-control" ng-model="enderecoEmail">-->
+          <ui-select multiple tagging="orcamento.emailExterno" limit="10" sortable="true" search-enabled="orcamento.emails.length < 10" ng-model="orcamento.emails">
+            <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
+            <ui-select-choices repeat="c in orcamento.contatos | filter: {nome: $select.search, email: $select.search}">
+              <div ng-if="!c.isTag" ng-bind-html="''+c.nome | highlight: $select.search">
+                <small>
+                  nome: {{c.nome}}
+                  email: <span ng-bind-html="''+c.email | highlight: $select.search"></span>
+                </small>
+              </div>
+              <div ng-if="c.isTag" ng-bind-html="(c.email | highlight: $select.search) +' (externo)'"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
       <div class="footer">

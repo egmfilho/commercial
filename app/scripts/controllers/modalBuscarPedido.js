@@ -8,6 +8,7 @@ angular.module('commercialApp.controllers')
   .controller('ModalBuscarPedidoCtrl', [
     '$rootScope',
     '$scope',
+    '$location',
     '$filter',
     '$uibModalInstance',
     'ProviderPedido',
@@ -16,7 +17,7 @@ angular.module('commercialApp.controllers')
     'ModalBuscarPessoa',
     'Pessoa',
     'key',
-    function($rootScope, $scope, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, key) {
+    function($rootScope, $scope, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, key) {
 
       $scope.pagination = {
         current: 1,
@@ -190,14 +191,7 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.selecionarPedido = function(pedido) {
-        $rootScope.loading.load();
-        provider.obterPedidoPorCodigo(pedido.codigo, true, true, true, true, true, true).then(function(success) {
-          $rootScope.loading.unload();
-          $uibModalInstance.close(new Pedido(Pedido.converterEmEntrada(success.data)));
-        }, function(error) {
-          console.log(error);
-          $rootScope.loading.unload();
-        });
+        $location.path('orcamento/' + pedido.codigo);
       };
 
       $scope.cancel = function() {

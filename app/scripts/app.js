@@ -58,10 +58,21 @@ angular
         controller: 'ClientesCtrl',
         controllerAs: 'clientes'
       })
-      .when('/orcamento', {
+      .when('/buscar-orcamento', {
+        module: 'order',
+        templateUrl: 'views/buscarPedido.html',
+        controller: 'BuscarPedidoCtrl',
+        controllerAs: 'busca'
+      })
+      .when('/orcamento/:code', {
         modulo: 'order',
         templateUrl: 'views/orcamento.html',
         controller: 'OrcamentoCtrl',
+        controllerAs: 'orcamento'
+      })
+      .when('/orcamento/impressao/:code', {
+        templateUrl: 'partials/impressaoOrcamento.html',
+        controller: 'ImpressaoCtrl',
         controllerAs: 'orcamento'
       })
       .when('/follow-up', {
@@ -87,21 +98,6 @@ angular
         templateUrl: 'views/configuracoes.html',
         controller: 'ConfiguracoesCtrl',
         controllerAs: 'configuracoes'
-      })
-      .when('/orcamento/impressao/:code', {
-        templateUrl: 'partials/impressaoOrcamento.html',
-        controller: 'ImpressaoCtrl',
-        controllerAs: 'orcamento',
-        resolve: {
-          pedido: ['$route', 'ProviderPedido', 'Pedido', function($route, provider, Pedido) {
-            return provider.obterPedidoPorCodigo($route.current.params.code, true, true, true, true, true, true).then(function(success) {
-              return new Pedido(Pedido.converterEmEntrada(success.data));
-            }, function(error) {
-              console.log(error);
-              return null;
-            });
-          }]
-        }
       })
       // .when('/about', {
       //   templateUrl: 'views/about.html',
@@ -164,18 +160,22 @@ angular
 
       // Bloqueia acesso de usuarios nao logados
       if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-        if (next.templateUrl !== 'views/login.html' && next.templateUrl.indexOf('/orcamento/impressao/') != -1) {
-          $location.path('/login');
+        if (next && next.templateUrl) {
+          if (next.templateUrl !== 'views/login.html' && next.templateUrl.indexOf('impressaoOrcamento.html') < 0) {
+            $location.path('/login');
+          }
+          return;
         }
-        return;
       }
 
       // Bloqueia acessos pelas permissoes
-      var user = JSON.parse(window.atob($cookies.get('currentUser')));
-      if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
-        if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
-          $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
-          $location.path('/home');
+      if ($cookies.get('currentUser')) {
+        var user = JSON.parse(window.atob($cookies.get('currentUser')));
+        if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
+          if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
+            $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+            $location.path('/home');
+          }
         }
       }
     });

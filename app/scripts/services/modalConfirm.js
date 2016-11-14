@@ -14,6 +14,7 @@ angular.module('commercialApp.services')
           templateUrl: 'partials/modalConfirm.html',
           controller: 'ModalConfirmCtrl',
           size: 'md',
+          windowClass: 'modal-confirm',
           resolve: {
             options: function() {
               return {

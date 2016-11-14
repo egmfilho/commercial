@@ -10,12 +10,14 @@ Orcamento.$inject = [
   '$rootScope',
   '$scope',
   '$timeout',
+  '$routeParams',
   '$location',
-  '$uibModalStack',
+  'ProviderPedido',
   'ProviderPessoa',
   'ProviderProduto',
   'ProviderEndereco',
-  'ProviderPedido',
+  'ProviderUsuario',
+  'Usuario',
   'ItemPedido',
   'Pedido',
   'Pessoa',
@@ -29,7 +31,7 @@ Orcamento.$inject = [
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, providerPessoa, providerProduto, providerEndereco, providerPedido, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, ValidadorDocumento) {
+function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, ValidadorDocumento) {
 
   var self = this;
 
@@ -47,9 +49,47 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     jQuery('#modalAlertaPopup').modal('show');
   };
 
+  self.emails = [ ];
+  self.contatos = [ ];
+  self.usuarios = [ ];
+
   // retira o padding-right que compensa o scroll se o SO for um MacOS
   if (navigator.platform === 'MacIntel') {
     angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
+  }
+
+  function getUsuarios() {
+    $rootScope.loading.load();
+    self.usuarios = [ ];
+    providerUsuario.obterTodos().then(function(success) {
+      angular.forEach(success.data, function(item, index) {
+        self.usuarios.push(new Usuario(Usuario.converterEmEntrada(item)));
+      });
+      $rootScope.loading.unload();
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+    });
+  }
+  getUsuarios();
+
+  function setContatos() {
+    self.contatos = [ ];
+    self.emails = [ ];
+
+    angular.forEach(self.usuarios, function(item, index) {
+      self.contatos.push({
+        nome: item.nome,
+        email: item.email,
+        isTag: false
+      });
+    });
+
+    if (self.pedido.cliente.email) {
+      var cliente = { nome: self.pedido.cliente.nome, email: self.pedido.cliente.email, isTag: false };
+      self.contatos.push(cliente);
+      self.emails.push(cliente);
+    }
   }
 
   function focarVendedor() {
@@ -99,6 +139,23 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     }, 350);
   }
 
+  function setPedido(pedido) {
+    self.limpar();
+    $scope.formularios.vendedor = false;
+    $scope.formularios.produtos = false;
+    $scope.formularios.cliente = false;
+    $scope.formularios.observacoes = false;
+    $scope.lockCodigo = false;
+    $scope.lockDescricao = false;
+    $scope.cdVendedor = pedido.vendedor.codigo;
+    $scope.cdCliente = pedido.cliente.codigo;
+    $scope.cdCEP = pedido.cliente.endereco.cep;
+    self.pedido = new Pedido(pedido);
+    $scope.backup = new Pedido(pedido);
+
+    setContatos();
+  }
+
   $scope.$on('$viewContentLoaded', function () {
     self.pedido = new Pedido();
     $scope.item = new ItemPedido();
@@ -120,6 +177,16 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
         event.preventDefault();
       }
     });
+
+    if ($routeParams.code) {
+      $rootScope.loading.load();
+      providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
+        setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
+        $rootScope.loading.unload();
+      }, function(error) {
+        $rootScope.loading.unload();
+      });
+    }
   });
 
   $scope.$on("$destroy", function () {
@@ -269,6 +336,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
             $rootScope.alerta.show('Cliente inativo!');
           }
           $scope.cdCliente = result.codigo;
+          setContatos();
           jQuery('input[name="CdCliente"]').focus().select();
         }
       }, function (error) {
@@ -294,6 +362,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       }
       self.pedido.setCliente(cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
+      setContatos();
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
@@ -304,6 +373,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
             if (!self.pedido.setCliente(result)) {
               $rootScope.alerta.show('Cliente inativo!');
             }
+            setContatos();
             $scope.cdCliente = result.codigo;
             jQuery('input[name="CdCliente"]').focus().select();
           }
@@ -639,7 +709,7 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   };
 
   this.salvar = function () {
-    if (self.pedido.idStatus == 1001 || self.pedido.erp) {
+    if (self.pedido.idStatus != 1001 || self.pedido.erp) {
       return;
     }
 
@@ -717,6 +787,13 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
       return;
     }
 
+    if ($scope.backup) {
+      if (!$scope.backup.compare(this.pedido)) {
+        $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+        return;
+      }
+    }
+
     jQuery('#modalEmail').modal('show');
   };
 
@@ -751,19 +828,22 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
   $scope.lista = function () {
     modalBuscarPedido.show().then(function (result) {
       if (result) {
-        console.log(result);
-        self.limpar();
-        $scope.formularios.vendedor = false;
-        $scope.formularios.produtos = false;
-        $scope.formularios.cliente = false;
-        $scope.formularios.observacoes = false;
-        $scope.lockCodigo = false;
-        $scope.lockDescricao = false;
-        $scope.cdVendedor = result.vendedor.codigo;
-        $scope.cdCliente = result.cliente.codigo;
-        $scope.cdCEP = result.cliente.endereco.cep;
-        self.pedido = new Pedido(result);
-        $scope.backup = new Pedido(result);
+        // console.log(result);
+        // self.limpar();
+        // $scope.formularios.vendedor = false;
+        // $scope.formularios.produtos = false;
+        // $scope.formularios.cliente = false;
+        // $scope.formularios.observacoes = false;
+        // $scope.lockCodigo = false;
+        // $scope.lockDescricao = false;
+        // $scope.cdVendedor = result.vendedor.codigo;
+        // $scope.cdCliente = result.cliente.codigo;
+        // $scope.cdCEP = result.cliente.endereco.cep;
+        // self.pedido = new Pedido(result);
+        // $scope.backup = new Pedido(result);
+        //
+        // setContatos();
+        // setPedido(result);
       }
     });
   };
@@ -776,37 +856,58 @@ function Orcamento($rootScope, $scope, $timeout, $location, $uibModalStack, prov
     }
   };
 
+  self.emailExterno = function (email) {
+    return ({
+      nome: 'Externo',
+      email: email,
+      isTag: true
+    });
+  };
+
   self.enviarEmail = function(endereco) {
     if (!this.pedido.items.length || !this.pedido.id) {
       $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
       return;
     }
 
-    if (!endereco) {
+    if (!self.emails) {
+      $scope.alerta.show('Nenhum email informado!');
       return;
     }
 
+    var addresses = '';
+    angular.forEach(self.emails, function (item, index) {
+      addresses += item.nome + ':' + item.email + (index === (self.emails.length - 1) ? '' : ';');
+    });
+
     // modalConfirm.show('Aviso', 'Enviar orçamento por email?').then(function() {
       $rootScope.loading.load();
-      providerPedido.email(self.pedido.codigo, endereco).then(function(success) {
+      providerPedido.email(self.pedido.codigo, addresses).then(function(success) {
         $rootScope.loading.unload();
-        $rootScope.alerta.show('O orçamento será enviado!', 'alert-success');
+        $rootScope.alerta.show('Email enviado!', 'alert-success');
       }, function(error) {
         console.log(error);
         $rootScope.loading.unload();
-        $rootScope.alerta.show('Não foi possível enviar o orçamento!', 'alert-danger');
+        $rootScope.alerta.show(error.data.status.message + ' ' + error.data.status.description, 'alert-danger');
       });
     // });
   };
 
   self.exportar = function() {
-    if (self.pedido.idStatus == 1001 || self.pedido.erp) {
+    if (self.pedido.idStatus != 1001 || self.pedido.erp) {
       return;
     }
 
     if (!this.pedido.items.length || !this.pedido.id) {
       $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
       return;
+    }
+
+    if ($scope.backup) {
+      if (!$scope.backup.compare(this.pedido)) {
+        $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+        return;
+      }
     }
 
     modalConfirm.show('Aviso', 'Exportar orçamento para venda?').then(function() {

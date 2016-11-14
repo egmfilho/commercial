@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('commercialApp.controllers')
-  .controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
+  .controller('HomeCtrl', ['$scope', '$location', 'ModalBuscarPedido', function ($scope, $location, modalBuscarPedido) {
 
     function redimensiona() {
       var min = 480, current = jQuery(window).height() - 160 - 60;
@@ -23,9 +23,14 @@ angular.module('commercialApp.controllers')
 
     $scope.botoes = [
       {
-        nome: 'Orçamento',
+        nome: 'Novo<br>orçamento',
         icone: 'glyphicon-shopping-cart',
         url: '/orcamento'
+      },
+      {
+        nome: 'Buscar<br>orçamento',
+        icone: 'glyphicon-search',
+        url: '/buscar-orcamento'
       },
       // {
       //   nome: 'Relatórios',

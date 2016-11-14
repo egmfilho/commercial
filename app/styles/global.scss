@@ -674,6 +674,10 @@ span:focus, a:focus {
   //margin-top: 100px;
 }
 
+.modal-confirm {
+  z-index: 1060 !important;
+}
+
 .meu-modal {
 
   .header {
@@ -714,6 +718,10 @@ span:focus, a:focus {
 
   .body.xs {
     height: 120px;
+  }
+
+  .body.xs-2 {
+    height: 240px;
   }
 
   .body.sm {
@@ -949,12 +957,32 @@ span:focus, a:focus {
   }
 }
 
+.ui-select-multiple.ui-select-bootstrap.ui-select-container input.ui-select-search.ng-pristine.ng-untouched {
+  //width: inherit !important;
+  width: 100% !important;
+}
+
+.ui-select-multiple.ui-select-bootstrap.ui-select-container.ng-empty input.ui-select-search {
+  width: 100% !important;
+}
+
+.ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+  //border: 1px solid red;
+
+  &:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+
 @import 'header';
 @import 'footer';
 @import 'login';
 @import 'signup';
 @import 'home';
 @import 'orcamento';
+@import 'buscar-orcamento';
 @import 'follow_up';
 @import 'configuracoes';
 @import 'loading';

@@ -130,6 +130,7 @@ angular.module('commercialApp.controllers')
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
+          $scope.novoHistorico.proximoContato = new Date();
           if (self.atendimento.historico[0].statusId == 1001) {
             $scope.novoHistorico.statusId = !self.statusArray ? null : self.statusArray[1].id;
           }
@@ -192,7 +193,11 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.mostraStatus = function(status) {
-        return status.id != 1001 && status.id != 1002;
+        if (!self.atendimento.historico.length) {
+          return status.id == 1001;
+        } else {
+          return status.id != 1001 && status.id != 1002;
+        }
       };
 
       function getTiposContato() {
@@ -257,7 +262,7 @@ angular.module('commercialApp.controllers')
       }
 
       this.salvarParecer = function () {
-        if (!self.codigosArray.length) {
+        if (!self.codigosArray || !self.codigosArray.length) {
           if (!$scope.novoParecer.pessoaDeContato || !$scope.novoParecer.contatoId) {
             $rootScope.alerta.show('Preencha corretamente o parecer!', 'alert-danger');
             return;

@@ -7,9 +7,9 @@
 angular.module('commercialApp.controllers')
   .controller('ImpressaoCtrl', ImpressaoCtrl);
 
-ImpressaoCtrl.$inject = [ '$scope', 'pedido' ];
+ImpressaoCtrl.$inject = [ '$scope', '$routeParams', '$http', 'Pedido', 'URLS' ];
 
-function ImpressaoCtrl($scope, pedido) {
+function ImpressaoCtrl($scope, $routeParams, $http, Pedido, urls) {
 
   var self = this;
 
@@ -17,22 +17,33 @@ function ImpressaoCtrl($scope, pedido) {
     return new Date();
   };
 
-  console.log(pedido);
-  // this.pedido = new Pedido();
-  this.pedido = pedido;
-  // jQuery('.impressao').css('display', 'block');
+  this.pedido = new Pedido();
 
   $scope.$on('$viewContentLoaded', function () {
 
-    // if ($routeParams.code) {
-    //   provider.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
-    //     self.pedido = new Pedido(Pedido.converterEmEntrada(success.data));
-    //     jQuery('.impressao').css('display', 'block');
-    //   }, function(error) {
-    //     console.log(error);
-    //   });
-    // }
-    window.callPhantom();
+    if ($routeParams.code) {
+      $http({
+        method: 'POST',
+        url: urls.root + 'order.php?action=get',
+        headers: {
+          'x-session-token': 'lucilei'
+        },
+        data: {
+          order_code: $routeParams.code,
+          get_order_seller: 1,
+          get_order_items: 1,
+          get_order_items_product: 1,
+          get_order_client: 1,
+          get_order_payments: 1,
+          get_order_payments_modality: 1
+        }
+      }).then(function(success) {
+        self.pedido = new Pedido(Pedido.converterEmEntrada(success.data.data));
+        window.callPhantom();
+      }, function(error) {
+        console.log(error);
+      });
+    }
   });
 
 }
