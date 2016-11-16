@@ -125,7 +125,7 @@
               <td data-label="Vendedor">{{p.pedido.vendedor.nome}}</td>
               <td data-label="Data">{{p.pedido.dataPedido | date: 'short'}}</td>
               <td data-label="Total">{{p.pedido.valor | currency:'R$ '}}</td>
-              <td><a ng-href="#/orcamento/{{p.pedido.codigo}}"><span class="glyphicon glyphicon-open"></span></a></td>
+              <td><a ng-href="#/orcamento/edit?code={{p.pedido.codigo}}"><span class="glyphicon glyphicon-open"></span></a></td>
             </tr>
             <tr class="hidden-xs" ng-repeat="n in getNumber(busca.pagination.max > busca.pedidos.length ? busca.pagination.max - busca.pedidos.length : 0) track by $index">
               <td>&nbsp;</td>
@@ -140,25 +140,8 @@
       </div>
     </div>
     <div class="paginas">
-      <ul uib-pagination total-items="busca.pagination.total" ng-model="busca.pagination.current" max-size="busca.pagination.max" ng-change="busca.pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
+      <ul uib-pagination total-items="busca.pagination.total" ng-model="busca.pagination.current" items-per-page="busca.pagination.max" ng-change="busca.pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
   </div>
-
-  <br>
-
-  <!--<div class="row">-->
-    <!--<div class="col-xs-6 col-sm-3">-->
-      <!--<a class="btn btn-orcamento" href="#/follow-up">-->
-        <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
-        <!--Voltar-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<div class="col-xs-6 col-sm-3 col-sm-push-6">-->
-      <!--<button class="btn btn-orcamento" ng-click="busca.criar()">-->
-        <!--Criar-->
-        <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
-      <!--</button>-->
-    <!--</div>-->
-  <!--</div>-->
 
 </div>

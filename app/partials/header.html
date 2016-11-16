@@ -36,7 +36,7 @@
                 <div class="navbar-login">
                   <div class="row">
                     <div class="col-sm-4 hidden-xs">
-                      <p class="text-center">
+                      <p class="text-center avatar">
                         <span class="glyphicon glyphicon-user icon-size"></span>
                       </p>
                     </div>
@@ -44,9 +44,8 @@
                       <p class="text-left"><strong>{{header.getCurrentUser().nome}}</strong></p>
                       <p class="text-left small">{{header.getCurrentUser().email}}</p>
                       <p class="text-center perfil">{{header.getCurrentUser().perfil}}</p>
-                      <!--<p class="text-left">-->
-                        <!--<a href="" class="btn btn-default botao-invertido botao-esticado btn-sm">Perfil</a>-->
-                      <!--</p>-->
+                      <p class="text-center loja">{{header.getCurrentUser().loja}}</p>
+                      <p class="text-center precos">{{header.getCurrentUser().precos}}</p>
                     </div>
                   </div>
                 </div>

@@ -39,8 +39,8 @@
     <!--<span uib-collapse="!orcamento.pedido.codigo">-->
     <br class="visible-xs-block">
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.limpar(true)"><span
-        class="glyphicon glyphicon-pencil hidden-xs"></span> Novo
+      <button class="btn btn-orcamento" ng-click="orcamento.limpar(true)">
+        <span class="glyphicon glyphicon-pencil hidden-xs"></span> Novo
       </button>
     </div>
     <div class="col-xs-6 col-md-3">
@@ -515,7 +515,7 @@
       <!--<button class="btn btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print hidden-xs"></span>-->
       <!--Imprimir-->
       <!--</button>-->
-      <button class="btn btn-orcamento success" ng-click="orcamento.exportar()" ng-disabled="orcamento.pedido.erp">
+      <button class="btn btn-orcamento success" ng-click="orcamento.exportar()" ng-disabled="orcamento.pedido.erp || orcamento.pedido.idStatus != 1001 || !orcamento.pedido.id">
         <span class="glyphicon glyphicon-share-alt hidden-xs"></span>
         Exportar
       </button>
@@ -547,8 +547,6 @@
   </div>
 </div>
 <!--FIM MODAL OBSERVACOES-->
-
-<alert-popup titulo="{{alerta.titulo}}" mensagem="{{alerta.mensagem}}"></alert-popup>
 
 <div name="impressao" class="impressao" ng-include="'partials/impressaoOrcamento.html'"
      ng-hide="!orcamento.pedido.id || !orcamento.pedido.codigo || (backup ? !backup.compare(orcamento.pedido) : false)"></div>

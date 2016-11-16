@@ -10,6 +10,10 @@ angular.module('commercialApp.services')
     function Usuario(usuario) {
       this.id = usuario ? usuario.id : '';
       this.perfilId = usuario ? usuario.perfilId : '';
+      this.lojaId = usuario ? usuario.lojaId : '';
+      this.loja = usuario ? usuario.loja : null;
+      this.precosId = usuario ? usuario.precosId : '';
+      this.precos = usuario ? usuario.precos : null;
       this.sessao = usuario ? usuario.sessao : '';
       this.ativo = usuario ? usuario.ativo : true;
       this.nome = usuario ? usuario.nome : '';
@@ -33,6 +37,10 @@ angular.module('commercialApp.services')
 
       usuario.id = user.user_id;
       usuario.perfilId = user.user_profile_id;
+      usuario.lojaId = user.user_shop_id;
+      usuario.loja = user.user_shop;
+      usuario.precosId = user.user_price_id;
+      usuario.precos = user.user_price;
       usuario.sessao = user.user_current_session_id;
       usuario.ativo = user.user_active == 'Y';
       usuario.nome = user.user_name;
@@ -54,6 +62,8 @@ angular.module('commercialApp.services')
 
       user.user_id = usuario.id;
       user.user_profile_id = usuario.perfilId;
+      user.user_shop_id = usuario.lojaId;
+      user.user_price_id = usuario.precosId;
       user.user_active = usuario.ativo;
       user.user_user = usuario.usuario;
       user.user_pass = usuario.senha;

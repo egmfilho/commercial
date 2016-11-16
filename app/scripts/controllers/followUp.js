@@ -33,7 +33,7 @@ angular.module('commercialApp.controllers')
 
       $scope.pagination = {
         current: 1,
-        max: 10,
+        max: 15,
         total: 0,
         mudarPagina: function () {
           if (self.filtro.pedido) {
@@ -178,7 +178,7 @@ angular.module('commercialApp.controllers')
       };
 
       this.buscarPedido = function () {
-        modalBuscarPedido.show().then(function (result) {
+        modalBuscarPedido.show(null, 'N').then(function (result) {
           if (result) {
             if (result.atendimentoId) {
               $location.path('/atendimento/open').search('type', 'order').search('code', result.codigo);

@@ -64,7 +64,7 @@ angular
         controller: 'BuscarPedidoCtrl',
         controllerAs: 'busca'
       })
-      .when('/orcamento/:code', {
+      .when('/orcamento/:action', {
         modulo: 'order',
         templateUrl: 'views/orcamento.html',
         controller: 'OrcamentoCtrl',

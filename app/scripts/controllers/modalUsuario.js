@@ -10,11 +10,13 @@ angular.module('commercialApp.controllers')
     '$scope',
     '$uibModalInstance',
     'ProviderUsuario',
+    'ProviderLoja',
+    'ProviderTabelaPrecos',
     'Usuario',
     'usuario',
     'perfis',
     'permissoes',
-    function ($rootScope, $scope, $uibModalInstance, provider, Usuario, usuario, perfis, permissoes) {
+    function ($rootScope, $scope, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, Usuario, usuario, perfis, permissoes) {
 
       var self = this;
 
@@ -24,7 +26,38 @@ angular.module('commercialApp.controllers')
         if (!self.usuario.perfil.permissoes) {
           self.usuario.perfil.permissoes = permissoes;
         }
+        getLojas();
+        getTabelaPrecos();
       });
+
+      function getLojas() {
+        $rootScope.loading.load();
+        self.lojas = [ ];
+        providerLoja.obterTodos().then(function(success) {
+          angular.forEach(success.data, function(item, index) {
+            self.lojas.push(item);
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getTabelaPrecos() {
+        $rootScope.loading.load();
+        self.tabelaPrecos = [ ];
+        providerTabelaPrecos.obterTodos().then(function(success) {
+          angular.forEach(success.data, function(item, index) {
+            self.tabelaPrecos.push(item);
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
 
       function validarCadastro() {
         if (!self.usuario.nome) {

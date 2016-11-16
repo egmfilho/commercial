@@ -61,6 +61,20 @@
             </label>
           </div>
         </div>
+        <div class="col-md-6">
+          <h4>Loja</h4>
+          <select class="form-control" ng-model="modal.usuario.lojaId"
+                  ng-options="s.shop_id as s.shop_name for s in modal.lojas">
+            <option value="" disabled>Selecione uma loja</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <h4>Tabela de preços</h4>
+          <select class="form-control" ng-model="modal.usuario.precosId"
+                  ng-options="tp.price_id as tp.price_name for tp in modal.tabelaPrecos">
+            <option value="" disabled>Selecione uma tabela de preços</option>
+          </select>
+        </div>
       </div>
 
       <!--<div ng-show="opt === 'permissoes'">-->

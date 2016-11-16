@@ -1,0 +1,14 @@
+<div class="meu-modal modal-confirm">
+  <div class="header">
+    <div class="title">
+      <span class="glyphicon glyphicon-alert" style="font-size: .8em; vertical-align: 0;"></span> {{title || 'Aviso'}}
+      <span class="glyphicon glyphicon-remove close" ng-click="cancel()"></span>
+    </div>
+  </div>
+  <div class="body xs">
+    <p style="font-size: 1.2em">{{message}}</p>
+  </div>
+  <div class="footer">
+    <button class="btn btn-default" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span> Ok</button>
+  </div>
+</div>

@@ -168,6 +168,15 @@
     }
   }
 
+  .modal {
+    .parecer {
+      .well {
+        overflow-y: scroll;
+        margin: 0;
+      }
+    }
+  }
+
   .status {
     margin-top: 14px;
 

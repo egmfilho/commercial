@@ -603,11 +603,25 @@ span:focus, a:focus {
     width: 305px;
     padding: 10px;
     padding-bottom: 0; }
+    .navbar-default .navbar-login .avatar {
+      margin-top: 30px; }
     .navbar-default .navbar-login .perfil {
-      font-size: 1.1em;
+      font-size: .8em;
       border: 2px solid #6481bb;
       border-radius: 4px;
       color: #6481bb;
+      padding: 4px; }
+    .navbar-default .navbar-login .loja {
+      font-size: .8em;
+      border: 2px solid #5cb85c;
+      border-radius: 4px;
+      color: #5cb85c;
+      padding: 4px; }
+    .navbar-default .navbar-login .precos {
+      font-size: .8em;
+      border: 2px solid #f0ad4e;
+      border-radius: 4px;
+      color: #f0ad4e;
       padding: 4px; }
   @media (max-width: 767px) {
     .navbar-default .navbar-login {
@@ -1182,6 +1196,9 @@ div[name="footer"] .navbar {
   .atendimento .parecer textarea {
     max-height: 220px;
     height: 220px; }
+  .atendimento .modal .parecer .well {
+    overflow-y: scroll;
+    margin: 0; }
   .atendimento .status {
     margin-top: 14px; }
     .atendimento .status .botao-calendario {

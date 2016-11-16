@@ -16,8 +16,9 @@ angular.module('commercialApp.controllers')
     'DataSaida',
     'ModalBuscarPessoa',
     'Pessoa',
-    'key',
-    function($rootScope, $scope, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, key) {
+    'destino',
+    'atendimento',
+    function($rootScope, $scope, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, destino, atendimento) {
 
       $scope.pagination = {
         current: 1,
@@ -78,15 +79,16 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.buscarCliente = function() {
-        ModalBuscarPessoa.show('Cliente', function(result) {
+        ModalBuscarPessoa.show('Cliente').then(function(result) {
           if (result) {
+            console.log(result);
             $scope.cliente = new Pessoa(result);
           }
         });
       };
 
       $scope.buscarVendedor = function() {
-        ModalBuscarPessoa.show('Vendedor', function(result) {
+        ModalBuscarPessoa.show('Vendedor').then(function(result) {
           if (result) {
             $scope.vendedor = new Pessoa(result);
           }
@@ -150,7 +152,7 @@ angular.module('commercialApp.controllers')
               end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
           var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
-          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, null, true, true, false, false, false, false, limite).then(function(success) {
+          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, atendimento, true, true, false, false, false, false, limite).then(function(success) {
             $scope.pedidos = [ ];
             $scope.pagination.total = success.info.order_quantity;
             angular.forEach(success.data, function(item, index) {
@@ -191,7 +193,11 @@ angular.module('commercialApp.controllers')
       }
 
       $scope.selecionarPedido = function(pedido) {
-        $location.path('orcamento/' + pedido.codigo);
+        if (destino) {
+          $location.path(destino).search('code', pedido.codigo);
+        } else {
+          $uibModalInstance.close(pedido);
+        }
       };
 
       $scope.cancel = function() {

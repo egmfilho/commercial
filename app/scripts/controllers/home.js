@@ -25,7 +25,7 @@ angular.module('commercialApp.controllers')
       {
         nome: 'Novo<br>orçamento',
         icone: 'glyphicon-shopping-cart',
-        url: '/orcamento'
+        url: '/orcamento/new'
       },
       {
         nome: 'Buscar<br>orçamento',

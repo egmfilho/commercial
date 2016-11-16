@@ -28,10 +28,11 @@ Orcamento.$inject = [
   'ModalBuscarProduto',
   'ModalBuscarPedido',
   'ModalConfirm',
+  'ModalAlert',
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, ValidadorDocumento) {
+function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, modalAlert, ValidadorDocumento) {
 
   var self = this;
 
@@ -39,14 +40,6 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
 
   $scope.getHoje = function () {
     return new Date();
-  };
-
-  self.alert = function(mensagem) {
-    $scope.alerta = {
-      titulo: 'Aviso',
-      mensagem: mensagem
-    };
-    jQuery('#modalAlertaPopup').modal('show');
   };
 
   self.emails = [ ];
@@ -140,7 +133,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
   }
 
   function setPedido(pedido) {
-    self.limpar();
+    // self.limpar();
     $scope.formularios.vendedor = false;
     $scope.formularios.produtos = false;
     $scope.formularios.cliente = false;
@@ -178,14 +171,23 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
       }
     });
 
-    if ($routeParams.code) {
-      $rootScope.loading.load();
-      providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
-        setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
-        $rootScope.loading.unload();
-      }, function(error) {
-        $rootScope.loading.unload();
-      });
+    if ($routeParams.action) {
+      if ($routeParams.action == 'edit') {
+        if (!$routeParams.code) {
+          return;
+        }
+        $rootScope.loading.load();
+        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
+          setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
+          $rootScope.loading.unload();
+        }, function(error) {
+          $rootScope.loading.unload();
+        });
+      } else if ($routeParams.action == 'new') {
+
+      } else {
+        $location.path('/');
+      }
     }
   });
 
@@ -474,7 +476,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
       console.log(error);
       $rootScope.loading.unload();
       if (error.data.status.code == 409) {
-        self.pedido.cliente.tipo == 'F' ? self.alert('CFP já cadastrado!') : self.alert('CNPJ já cadastrado!');
+        self.pedido.cliente.tipo == 'F' ? modalAlert.show('Aviso', 'CFP já cadastrado!') : modalAlert.show('Aviso', 'CNPJ já cadastrado!');
       }
     });
   };
@@ -518,7 +520,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
     providerProduto.obterProdutoPorCodigo(codigo).then(function (success) {
       if (!success.data.Ativo) {
         $rootScope.loading.unload();
-        self.alert('Produto inativo!');
+        modalAlert.show('Aviso', 'Produto inativo!');
         return;
       }
       $scope.lockDescricao = true;
@@ -576,7 +578,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
     if ($rootScope.isLoading) return;
 
     if (this.pedido.contemItem($scope.item) !== -1) {
-      self.alert('Produto já adicionado!');
+      modalAlert.show('Aviso', 'Produto já adicionado!');
       return;
     }
 
@@ -616,11 +618,15 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
       $scope.cdCliente = null;
       $scope.cdVendedor = null;
       focarVendedor();
+      $location.search('code', null);
+      $location.path('/orcamento/new');
     }
 
     if (perguntar) {
       modalConfirm.show('Aviso', 'Descartar alterações?').then(function() {
-        limpa();
+        setTimeout(function() {
+          limpa();
+        }, 300);
       });
     } else {
       limpa();
@@ -728,8 +734,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
       // }
       if (this.pedido.pagamentos.length) {
         if (this.pedido.troco() != 0) {
-          this.pagamento();
-          return;
+          self.pedido.pagamentos[0].valor = self.pedido.getValorTotalComDesconto();
         }
       }
 
@@ -798,6 +803,11 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
   };
 
   this.excluir = function () {
+    if (this.pedido.atendimentoId) {
+      $rootScope.alerta.show('Não é possível excluir pois o orçamento possui um atendimento em aberto!', 'alert-danger');
+      return;
+    }
+
     if (!this.pedido.id && !this.pedido.codigo) {
       this.limpar(true);
       return;
@@ -805,11 +815,12 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
 
     modalConfirm.show('Aviso', 'Deseja excluir o orçamento?').then(function() {
       providerPedido.excluirPedido(self.pedido).then(function (success) {
-        self.limpar();
-        self.alert('Orçamento excluído!');
+        modalAlert.show('Aviso', 'Orçamento excluído!').then(function() {
+          self.limpar();
+        });
       }, function (error) {
         console.log(error);
-        self.alert('Não foi possível excluir o orçamento.');
+        modalAlert.show('Aviso', 'Não foi possível excluir o orçamento.');
       });
     });
   };
@@ -819,14 +830,16 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
   };
 
   $scope.ocultarOpcoes = function () {
-    self.limpar();
     jQuery('.opcoes').fadeTo('fast', 0, function () {
       jQuery(this).css('display', 'none');
+      setTimeout(function() {
+        self.limpar();
+      }, 200);
     });
   };
 
   $scope.lista = function () {
-    modalBuscarPedido.show().then(function (result) {
+    modalBuscarPedido.show('orcamento/edit').then(function (result) {
       if (result) {
         // console.log(result);
         // self.limpar();

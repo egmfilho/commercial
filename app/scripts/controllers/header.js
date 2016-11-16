@@ -7,7 +7,8 @@
 angular.module('commercialApp.controllers')
   .controller('HeaderCtrl', ['$rootScope', '$cookies', 'ProviderUsuario', function($rootScope, $cookies, provider) {
 
-    var self = this;
+    var self = this,
+        user = JSON.parse(window.atob($cookies.get('currentUser')));
 
     this.novaSenha = '';
     this.novaSenhaConfirm = '';
@@ -15,13 +16,17 @@ angular.module('commercialApp.controllers')
     this.getCurrentUser = function() {
       if (!$cookies.get('currentUser')) return;
 
-      var user = JSON.parse(window.atob($cookies.get('currentUser')));
+      if (!user) {
+        user = JSON.parse(window.atob($cookies.get('currentUser')));
+      }
 
       return {
         nome: user.nome,
         usuario: user.usuario,
         email: user.email,
-        perfil: user.perfil.nome
+        perfil: user.perfil.nome,
+        loja: user.loja.shop_name,
+        precos: user.precos.price_name
       };
     };
 

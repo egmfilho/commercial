@@ -20,7 +20,7 @@ angular.module('commercialApp.controllers')
 
       self.pagination = {
         current: 1,
-        max: 10,
+        max: 15,
         total: 0,
         mudarPagina: function () {
           getPedidos();

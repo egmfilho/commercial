@@ -38,7 +38,7 @@ angular.module('commercialApp.controllers')
       $scope.buscarPorCEP = function(cep) {
 
         if (!cep || cep.length < 8) {
-          alert('Informe corretamente um CEP!');
+          $rootScope.alerta.show('Informe corretamente um CEP!', 'alert-danger');
           return;
         }
 
@@ -58,7 +58,7 @@ angular.module('commercialApp.controllers')
 
       $scope.buscarPorLogradouro = function(logradouro, cidade) {
         if (!logradouro || !cidade) {
-          alert('Informe corretamente um logradouro e uma cidade!');
+          $rootScope.alerta.show('Informe corretamente um logradouro e uma cidade!', 'alert-danger');
           return;
         }
 

@@ -81,6 +81,8 @@ angular.module('commercialApp.controllers')
         getPermissoes();
         getStatusAtendimentoArray();
         getTiposContato();
+        getLojas();
+        getTabelaPrecos();
         getEmail();
         getConexao();
       });

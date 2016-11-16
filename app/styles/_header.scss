@@ -122,11 +122,31 @@
     padding: 10px;
     padding-bottom: 0;
 
+    .avatar {
+      margin-top: 30px;
+    }
+
     .perfil {
-      font-size: 1.1em;
+      font-size: .8em;
       border: 2px solid $cor-principal-clara;
       border-radius: 4px;
       color: $cor-principal-clara;
+      padding: 4px;
+    }
+
+    .loja {
+      font-size: .8em;
+      border: 2px solid $brand-success;
+      border-radius: 4px;
+      color: $brand-success;
+      padding: 4px;
+    }
+
+    .precos {
+      font-size: .8em;
+      border: 2px solid $brand-warning;
+      border-radius: 4px;
+      color: $brand-warning;
       padding: 4px;
     }
   }
