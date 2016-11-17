@@ -7,20 +7,6 @@
 
   <div class="body sm condensar-rows" ng-init="opt = 'info'">
 
-    <!--<ul class="nav nav-tabs nav-justified">-->
-      <!--<li role="presentation" ng-class="opt === 'info' ? 'active' : ''">-->
-        <!--<a href="" class="sombra-texto" ng-click="opt = 'info'">-->
-          <!--Informações-->
-        <!--</a>-->
-      <!--</li>-->
-      <!--<li role="presentation" ng-class="opt === 'permissoes' ? 'active' : ''">-->
-        <!--<a href="" class="sombra-texto" ng-click="opt = 'permissoes'">-->
-          <!--Permissões-->
-        <!--</a>-->
-      <!--</li>-->
-    <!--</ul>-->
-
-    <!--<div class="container corpo-tabs">-->
       <div ng-show="opt === 'info'">
         <div class="col-md-12">
           <h4>Nome</h4>
@@ -64,53 +50,24 @@
         <div class="col-md-6">
           <h4>Loja</h4>
           <select class="form-control" ng-model="modal.usuario.lojaId"
-                  ng-options="s.shop_id as s.shop_name for s in modal.lojas">
+                  ng-options="l.id as l.nome for l in modal.lojas">
             <option value="" disabled>Selecione uma loja</option>
           </select>
         </div>
         <div class="col-md-6">
           <h4>Tabela de preços</h4>
           <select class="form-control" ng-model="modal.usuario.precosId"
-                  ng-options="tp.price_id as tp.price_name for tp in modal.tabelaPrecos">
+                  ng-options="tp.id as tp.nome for tp in modal.tabelaPrecos">
             <option value="" disabled>Selecione uma tabela de preços</option>
           </select>
         </div>
       </div>
-
-      <!--<div ng-show="opt === 'permissoes'">-->
-        <!--<uib-accordion close-others="false">-->
-          <!--<div class="col-md-12">-->
-            <!--<div uib-accordion-group class="panel-default" heading="{{modulo.nome}}"-->
-                 <!--ng-repeat="modulo in modal.usuario.perfil.permissoes track by $index">-->
-              <!--<div ng-repeat="(key, value) in modulo.permissoes">-->
-                <!--<div class="col-md-6" ng-if="value.tipo === 'percent'">-->
-                  <!--<label>{{value.nome}}</label>-->
-
-                  <!--<div class="input-group">-->
-                    <!--<input type="text" class="form-control text-right" currency symbol="''" number-only ng-model="value.valor">-->
-                    <!--<span class="input-group-addon">%</span>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-md-6" ng-if="value.tipo === 'bool'">-->
-                  <!--<label><input type="checkbox" ng-model="value.valor"> {{value.nome}}</label>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</uib-accordion>-->
-      <!--</div>-->
-
-    <!--</div>-->
-
   </div>
 
   <div class="footer">
     <button class="btn btn-default botao-esticado botao-principal" ng-click="cancel()"><span
       class="glyphicon glyphicon-remove"></span> Fechar
     </button>
-    <!--<button class="btn btn-default botao-esticado botao-principal" ng-click="excluir()"><span-->
-    <!--class="glyphicon glyphicon-trash"></span> Excluir-->
-    <!--</button>-->
     <button class="btn btn-default botao-esticado botao-principal" ng-click="salvar()"><span
       class="glyphicon glyphicon-floppy-save"></span> Salvar
     </button>

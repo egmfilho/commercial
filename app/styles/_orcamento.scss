@@ -95,6 +95,12 @@ $print-font-size: 11px;
     }
   }
 
+  .alert-exportado {
+    background-color: $brand-success;
+    color: white;
+    border-color: lighten($brand-success, 10%);
+  }
+
   .btn-form {
     width: 100%;
     font-size: 1.2em;
@@ -400,7 +406,7 @@ $print-font-size: 11px;
 
     .body {
       background-color: white;
-      height: 280px;
+      height: 365px;
       padding: 20px !important;
       text-align: center;
     }

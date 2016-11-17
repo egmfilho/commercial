@@ -880,6 +880,10 @@ div[name="footer"] .navbar {
     cursor: default; }
   #formulario-orcamento .input-group input {
     text-align: right; }
+  #formulario-orcamento .alert-exportado {
+    background-color: #5cb85c;
+    color: white;
+    border-color: #80c780; }
   #formulario-orcamento .btn-form {
     width: 100%;
     font-size: 1.2em;
@@ -1062,7 +1066,7 @@ div[name="footer"] .navbar {
         font-size: 1.5em; }
     .opcoes .container .body {
       background-color: white;
-      height: 280px;
+      height: 365px;
       padding: 20px !important;
       text-align: center; }
     .opcoes .container .footer {
@@ -1213,15 +1217,15 @@ div[name="footer"] .navbar {
       .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search:focus {
         border: none;
         box-shadow: none; }
-  .atendimento #modal-parecer-completo .body div, .atendimento #modal-parecer-final .body div {
+  .atendimento #modal-parecer-completo .body div {
     height: 100%; }
-    .atendimento #modal-parecer-completo .body div .parecer, .atendimento #modal-parecer-final .body div .parecer {
+    .atendimento #modal-parecer-completo .body div .parecer {
       overflow: auto; }
-      .atendimento #modal-parecer-completo .body div .parecer .well, .atendimento #modal-parecer-completo .body div .parecer textarea, .atendimento #modal-parecer-final .body div .parecer .well, .atendimento #modal-parecer-final .body div .parecer textarea {
+      .atendimento #modal-parecer-completo .body div .parecer .well, .atendimento #modal-parecer-completo .body div .parecer textarea {
         width: 100%;
         height: 100%; }
   .atendimento #modal-parecer-final .body.sm {
-    height: 200px; }
+    height: 370px; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }

@@ -8,6 +8,7 @@ angular.module('commercialApp.controllers')
   .controller('ModalBuscarPedidoCtrl', [
     '$rootScope',
     '$scope',
+    '$routeParams',
     '$location',
     '$filter',
     '$uibModalInstance',
@@ -18,7 +19,7 @@ angular.module('commercialApp.controllers')
     'Pessoa',
     'destino',
     'atendimento',
-    function($rootScope, $scope, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, destino, atendimento) {
+    function($rootScope, $scope, $routeParams, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, destino, atendimento) {
 
       $scope.pagination = {
         current: 1,
@@ -122,8 +123,8 @@ angular.module('commercialApp.controllers')
 
         $rootScope.loading.load();
         console.log('busca de orçamento por código');
+        $scope.pedidos = [ ];
         provider.obterPedidoPorCodigo(codigo, true, null, null, true, null, null).then(function(success) {
-          $scope.pedidos = [ ];
           $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(success.data)));
           $rootScope.loading.unload();
         }, function(error) {
@@ -152,8 +153,8 @@ angular.module('commercialApp.controllers')
               end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
           var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
+          $scope.pedidos = [ ];
           provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, atendimento, true, true, false, false, false, false, limite).then(function(success) {
-            $scope.pedidos = [ ];
             $scope.pagination.total = success.info.order_quantity;
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
@@ -162,6 +163,9 @@ angular.module('commercialApp.controllers')
           }, function(error) {
             console.log(error);
             $rootScope.loading.unload();
+            if (error.status == 404) {
+              $rootScope.alerta.show('Nenhum resultado.');
+            }
           });
         }
       };
@@ -194,6 +198,10 @@ angular.module('commercialApp.controllers')
 
       $scope.selecionarPedido = function(pedido) {
         if (destino) {
+          if ($routeParams.code == pedido.codigo) {
+            $rootScope.alerta.show('O pedido já está aberto!');
+            return;
+          }
           $location.path(destino).search('code', pedido.codigo);
         } else {
           $uibModalInstance.close(pedido);

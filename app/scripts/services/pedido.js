@@ -53,6 +53,9 @@ angular.module('commercialApp.services')
       this.idStatus = p ? p.idStatus : 1001;
       this.idCliente = p ? p.idCliente : '';
       this.idVendedor = p ? p.idVendedor : '';
+      this.idLoja = p ? p.idLoja : '';
+      this.loja = p ? p.loja : null;
+      this.idPrecos = p ? p.idPrecos : '';
       this.observacoes = p ? p.observacoes : '';
       this.dataAtualizacao = p ? p.dataAtualizacao : new Date();
       this.dataPedido = p ? p.dataPedido : new Date();
@@ -85,6 +88,7 @@ angular.module('commercialApp.services')
       this.atendimentoId = p ? p.atendimentoId : null;
 
       this.erp = p ? p.erp : null;
+      this.nfe = p ? p.nfe : null;
     }
 
     Pedido.prototype = {
@@ -281,6 +285,9 @@ angular.module('commercialApp.services')
       pedido.idStatus = p.order_status_id;
       pedido.idCliente = p.order_client_id;
       pedido.idVendedor = p.order_seller_id;
+      pedido.idLoja = p.order_shop_id;
+      pedido.loja = p.order_shop;
+      pedido.idPrecos = p.order_price_id;
       pedido.observacoes = p.order_note;
       pedido.descontoPercent = parseFloat(p.order_al_discount);
       pedido.descontoDinheiro = parseFloat(p.order_vl_discount);
@@ -318,6 +325,7 @@ angular.module('commercialApp.services')
       pedido.atendimentoId = p.order_attendance_id;
 
       pedido.erp = p.order_code_erp;
+      pedido.nfe = p.order_code_nfe;
 
       return pedido;
     };

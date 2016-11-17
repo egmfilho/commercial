@@ -341,10 +341,20 @@
             class="glyphicon glyphicon-remove close" data-dismiss="modal"></span></div>
         </div>
         <div class="body sm">
-
           <div class="container-fluid">
             <div class="row condensar-rows">
+              <div class="col-xs-8">
+                <h4>Pessoa de Contato</h4>
+                <input type="text" class="form-control" ng-disabled="atendimento.atendimento.isEncerrado()" ng-model="novoParecer.pessoaDeContato">
+              </div>
+              <div class="col-xs-4">
+                <h4>Tipo de Contato</h4>
+                <select class="form-control" ng-options="tipo.id as tipo.nome for tipo in atendimento.tiposContato" ng-model="novoParecer.contatoId" ng-disabled="atendimento.atendimento.isEncerrado()">
+                  <option value="" disabled>Selecione um tipo</option>
+                </select>
+              </div>
               <div class="col-xs-12">
+                <h4>Parecer</h4>
                 <div class="parecer">
                   <textarea class="form-control" ng-model="novoParecer.texto"></textarea>
                 </div>

@@ -8,11 +8,12 @@ angular.module('commercialApp.controllers')
   .controller('ModalBuscarProdutoCtrl', [
     '$rootScope',
     '$scope',
+    '$cookies',
     '$uibModalInstance',
     'ProviderProduto',
     'Produto',
     'key',
-    function($rootScope, $scope, $uibModalInstance, provider, Produto, key) {
+    function($rootScope, $scope, $cookies, $uibModalInstance, provider, Produto, key) {
 
       $scope.pagination = {
         current: 1,
@@ -61,7 +62,7 @@ angular.module('commercialApp.controllers')
           ordenarPorCodigo();
           setTimeout(function() {
             jQuery('input[name="nmProduto"]').focus();
-          }, 300)
+          }, 300);
           $rootScope.loading.unload();
         }, function(error) {
           console.log(error);

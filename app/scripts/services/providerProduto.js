@@ -23,26 +23,29 @@ angular.module('commercialApp.services')
         });
 
         return {
-          obterProdutosPorDescricao: function(descricao, limite) {
+          obterProdutosPorDescricao: function(descricao, limite, idTabelaPrecos) {
             return provider.query({
               action: 'getList'
             }, {
               NmProduto: descricao,
-              Limite: limite
+              Limite: limite,
+              price_id: idTabelaPrecos
             }).$promise;
           },
-          obterProdutoPorCodigo: function(codigo) {
+          obterProdutoPorCodigo: function(codigo, idTabelaPrecos) {
             return provider.get({
               action: 'get'
             }, {
-              CdProduto: codigo
+              CdProduto: codigo,
+              price_id: idTabelaPrecos
             }).$promise;
           },
-          obterProdutoPorId: function(id) {
+          obterProdutoPorId: function(id, idTabelaPrecos) {
             return provider.get({
               action: 'get'
             }, {
-              IdProduto: id
+              IdProduto: id,
+              price_id: idTabelaPrecos
             }).$promise;
           }
         };

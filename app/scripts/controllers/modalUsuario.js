@@ -12,16 +12,19 @@ angular.module('commercialApp.controllers')
     'ProviderUsuario',
     'ProviderLoja',
     'ProviderTabelaPrecos',
+    'ModalAlert',
     'Usuario',
     'usuario',
     'perfis',
     'permissoes',
-    function ($rootScope, $scope, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, Usuario, usuario, perfis, permissoes) {
+    function ($rootScope, $scope, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Usuario, usuario, perfis, permissoes) {
 
       var self = this;
+      self.usuario = new Usuario();
 
       $uibModalInstance.opened.then(function () {
         self.usuario = new Usuario(usuario);
+        console.log(self.usuario);
         self.perfis = perfis; // para usar no select
         if (!self.usuario.perfil.permissoes) {
           self.usuario.perfil.permissoes = permissoes;
@@ -35,7 +38,10 @@ angular.module('commercialApp.controllers')
         self.lojas = [ ];
         providerLoja.obterTodos().then(function(success) {
           angular.forEach(success.data, function(item, index) {
-            self.lojas.push(item);
+            self.lojas.push({
+              id: item.shop_id.toString(),
+              nome: item.shop_name
+            });
           });
           $rootScope.loading.unload();
         }, function(error) {
@@ -49,7 +55,10 @@ angular.module('commercialApp.controllers')
         self.tabelaPrecos = [ ];
         providerTabelaPrecos.obterTodos().then(function(success) {
           angular.forEach(success.data, function(item, index) {
-            self.tabelaPrecos.push(item);
+            self.tabelaPrecos.push({
+              id: item.price_id.toString(),
+              nome: item.price_name
+            });
           });
           $rootScope.loading.unload();
         }, function(error) {
@@ -119,7 +128,8 @@ angular.module('commercialApp.controllers')
         if (self.usuario.id) {
           provider.editar(Usuario.converterEmSaida(self.usuario)).then(function (success) {
             $rootScope.loading.unload();
-            $rootScope.alerta.show('Usuário "' + self.usuario.usuario + '" editado!', 'alert-success');
+            // $rootScope.alerta.show('Usuário "' + self.usuario.usuario + '" editado!', 'alert-success');
+            modalAlert.show('Editado!', 'Alterações de usuário terão efeito na próxima vez que o login for realizado.');
             $uibModalInstance.close(true);
           }, function (error) {
             console.log(error);

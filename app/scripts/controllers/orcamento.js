@@ -12,6 +12,7 @@ Orcamento.$inject = [
   '$timeout',
   '$routeParams',
   '$location',
+  '$cookies',
   'ProviderPedido',
   'ProviderPessoa',
   'ProviderProduto',
@@ -32,9 +33,10 @@ Orcamento.$inject = [
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, modalAlert, ValidadorDocumento) {
+function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cookies, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, modalAlert, ValidadorDocumento) {
 
-  var self = this;
+  var self = this,
+      user = JSON.parse(window.atob($cookies.get('currentUser')));
 
   $scope.backup = null;
 
@@ -177,8 +179,12 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
           return;
         }
         $rootScope.loading.load();
-        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true).then(function(success) {
+        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
           setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
+          console.log(self.pedido);
+          if (self.pedido.erp) {
+            jQuery('#formulario-orcamento input, textarea, .input-group-btn .btn').prop('disabled', true).prop('tabindex', '-1');
+          }
           $rootScope.loading.unload();
         }, function(error) {
           $rootScope.loading.unload();
@@ -517,7 +523,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
     }
 
     $rootScope.loading.load();
-    providerProduto.obterProdutoPorCodigo(codigo).then(function (success) {
+    providerProduto.obterProdutoPorCodigo(codigo, self.pedido.id ? self.pedido.idPrecos : user.precosId).then(function (success) {
       if (!success.data.Ativo) {
         $rootScope.loading.unload();
         modalAlert.show('Aviso', 'Produto inativo!');
@@ -541,7 +547,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
   this.buscaProdutoPorDescricao = function (descricao) {
     $scope.typeahead.search = descricao;
     $rootScope.loading.load();
-    return providerProduto.obterProdutosPorDescricao(descricao, 10).then(function (success) {
+    return providerProduto.obterProdutosPorDescricao(descricao, 10, self.pedido.id ? self.pedido.idPrecos : user.precosId).then(function (success) {
       success.data.push({NmProduto: 'Mais resultados...', CdProduto: -1});
       $rootScope.loading.unload();
       return success.data;
@@ -750,9 +756,12 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
             $scope.backup = null;
             self.pedido.id = result.id;
             self.pedido.codigo = result.codigo;
+            self.pedido.idLoja = result.idLoja;
+            self.pedido.loja = result.loja;
+            console.log(success.data);
             $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();
-            $scope.mostrarOpcoes();
+            $scope.mostrarOpcoesSalvo();
           }, function (error) {
             console.log(error);
             $rootScope.loading.unload();
@@ -762,7 +771,7 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
             $scope.backup = null;
             $rootScope.alerta.show('Orçamento código ' + new Pedido(Pedido.converterEmEntrada(success.data)).codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();
-            $scope.mostrarOpcoes();
+            $scope.mostrarOpcoesSalvo();
           }, function (error) {
             console.log(error);
             $rootScope.loading.unload();
@@ -803,6 +812,10 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
   };
 
   this.excluir = function () {
+    if (this.pedido.erp) {
+      return;
+    }
+
     if (this.pedido.atendimentoId) {
       $rootScope.alerta.show('Não é possível excluir pois o orçamento possui um atendimento em aberto!', 'alert-danger');
       return;
@@ -825,16 +838,22 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
     });
   };
 
-  $scope.mostrarOpcoes = function () {
-    jQuery('.opcoes').css('display', 'inline').fadeTo('fast', 1);
+  $scope.mostrarOpcoesSalvo = function () {
+    jQuery('.opcoes.salvo').css('display', 'inline').fadeTo('fast', 1);
   };
 
-  $scope.ocultarOpcoes = function () {
+  $scope.mostrarOpcoesExportado = function () {
+    jQuery('.opcoes.exportado').css('display', 'inline').fadeTo('fast', 1);
+  };
+
+  $scope.ocultarOpcoes = function (limpar) {
     jQuery('.opcoes').fadeTo('fast', 0, function () {
       jQuery(this).css('display', 'none');
-      setTimeout(function() {
-        self.limpar();
-      }, 200);
+      if (limpar) {
+        setTimeout(function() {
+          self.limpar();
+        }, 200);
+      }
     });
   };
 
@@ -912,25 +931,27 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, provid
     }
 
     if (!this.pedido.items.length || !this.pedido.id) {
-      $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+      $rootScope.alerta.show('O orçamento precisa ser salvo antes!');
       return;
     }
 
     if ($scope.backup) {
       if (!$scope.backup.compare(this.pedido)) {
-        $scope.alerta.show('O orçamento precisa ser salvo primeiro!');
+        $rootScope.alerta.show('O orçamento precisa ser salvo antes!');
         return;
       }
     }
 
-    modalConfirm.show('Aviso', 'Exportar orçamento para venda?').then(function() {
+    modalConfirm.show('Exportar para venda?', 'Depois de exportado, o orçamento não poderá mais ser editado. Deseja continuar?').then(function() {
+      $scope.ocultarOpcoes();
       $rootScope.loading.load();
       providerPedido.exportar(self.pedido.id).then(function(success) {
         var p = new Pedido(Pedido.converterEmEntrada(success.data));
         self.pedido.erp = p.erp;
         self.pedido.idStatus = p.idStatus;
         $rootScope.loading.unload();
-        $rootScope.alerta.show('O orçamento será exportado!', 'alert-success');
+        $rootScope.alerta.show('Orçamento foi exportado!', 'alert-success');
+        $scope.mostrarOpcoesExportado();
       }, function(error) {
         console.log(error);
         $rootScope.loading.unload();

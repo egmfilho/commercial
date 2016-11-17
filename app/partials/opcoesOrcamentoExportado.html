@@ -1,0 +1,21 @@
+<div class="vertical-center">
+  <div class="container">
+    <div class="header">
+      <span class="glyphicon glyphicon-ok"></span>
+      Orçamento Exportado!
+      <span class="glyphicon glyphicon-remove close" ng-click="ocultarOpcoes(true)"></span>
+    </div>
+    <div class="body">
+      <h2>Código ERP: {{orcamento.pedido.erp}}</h2>
+      <br>
+      <br>
+      <button class="btn-orcamento" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+      <br>
+      <br>
+      <button class="btn-orcamento" ng-click="orcamento.enviar()"><span class="glyphicon glyphicon-envelope"></span> Email</button>
+    </div>
+    <div class="footer">
+      <button class="btn btn-default" ng-click="ocultarOpcoes(true)"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+    </div>
+  </div>
+</div>

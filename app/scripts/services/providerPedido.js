@@ -29,7 +29,7 @@ angular.module('commercialApp.services')
 
       return {
 
-        obterPedidoPorCodigo: function(codigo, vendedor, items, produtos, cliente, pagamentos, modalidades) {
+        obterPedidoPorCodigo: function(codigo, vendedor, items, produtos, cliente, pagamentos, modalidades, loja) {
           return provider.get({
             action: 'get'
           }, {
@@ -40,7 +40,8 @@ angular.module('commercialApp.services')
             get_order_client: cliente,
             get_order_payments: pagamentos,
             get_order_payments_modality: modalidades,
-            get_order_attendance: true
+            get_order_attendance: true,
+            get_order_shop: true
           }).$promise;
         },
 

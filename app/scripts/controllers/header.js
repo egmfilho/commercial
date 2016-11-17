@@ -8,7 +8,7 @@ angular.module('commercialApp.controllers')
   .controller('HeaderCtrl', ['$rootScope', '$cookies', 'ProviderUsuario', function($rootScope, $cookies, provider) {
 
     var self = this,
-        user = JSON.parse(window.atob($cookies.get('currentUser')));
+        user = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))) : null;
 
     this.novaSenha = '';
     this.novaSenhaConfirm = '';
