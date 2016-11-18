@@ -33,7 +33,31 @@ Orcamento.$inject = [
   'ValidadorDocumento'
 ];
 
-function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cookies, providerPedido, providerPessoa, providerProduto, providerEndereco, providerUsuario, Usuario, ItemPedido, Pedido, Pessoa, Endereco, modalPagamento, modalBuscarPessoa, modalBuscarEndereco, modalBuscarProduto, modalBuscarPedido, modalConfirm, modalAlert, ValidadorDocumento) {
+function Orcamento(
+  $rootScope,
+  $scope,
+  $timeout,
+  $routeParams,
+  $location,
+  $cookies,
+  providerPedido,
+  providerPessoa,
+  providerProduto,
+  providerEndereco,
+  providerUsuario,
+  Usuario,
+  ItemPedido,
+  Pedido,
+  Pessoa,
+  Endereco,
+  modalPagamento,
+  modalBuscarPessoa,
+  modalBuscarEndereco,
+  modalBuscarProduto,
+  modalBuscarPedido,
+  modalConfirm,
+  modalAlert,
+  ValidadorDocumento) {
 
   var self = this,
       user = JSON.parse(window.atob($cookies.get('currentUser')));
@@ -52,6 +76,56 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cooki
   if (navigator.platform === 'MacIntel') {
     angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
   }
+
+  $scope.$on('$viewContentLoaded', function () {
+    self.pedido = new Pedido();
+    $scope.item = new ItemPedido();
+    $scope.cliente = {novo: false};
+    $scope.lockCodigo = false;
+    $scope.lockDescricao = false;
+    $scope.typeahead = {
+      search: '',
+      wait: 100,
+      min_length: 3
+    };
+
+    focarVendedor();
+
+    jQuery('body').bind('keyup', function (event) {
+      // TECLA F5
+      if (event.keyCode === 116) {
+        self.salvar();
+        event.preventDefault();
+      }
+    });
+
+    if ($routeParams.action) {
+      if ($routeParams.action == 'edit') {
+        if (!$routeParams.code) {
+          return;
+        }
+        $rootScope.loading.load();
+        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
+          setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
+          console.log(self.pedido);
+          if (self.pedido.erp) {
+            jQuery('#formulario-orcamento input, textarea, .input-group-btn .btn').prop('disabled', true).prop('tabindex', '-1');
+          }
+          $rootScope.loading.unload();
+        }, function(error) {
+          $rootScope.loading.unload();
+        });
+      } else if ($routeParams.action == 'new') {
+
+      } else {
+        $location.path('/');
+      }
+    }
+  });
+
+  $scope.$on("$destroy", function () {
+    jQuery('body').unbind('keyup');
+  });
 
   function getUsuarios() {
     $rootScope.loading.load();
@@ -150,56 +224,6 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cooki
 
     setContatos();
   }
-
-  $scope.$on('$viewContentLoaded', function () {
-    self.pedido = new Pedido();
-    $scope.item = new ItemPedido();
-    $scope.cliente = {novo: false};
-    $scope.lockCodigo = false;
-    $scope.lockDescricao = false;
-    $scope.typeahead = {
-      search: '',
-      wait: 100,
-      min_length: 3
-    };
-
-    focarVendedor();
-
-    jQuery('body').bind('keyup', function (event) {
-      // TECLA F5
-      if (event.keyCode === 116) {
-        self.salvar();
-        event.preventDefault();
-      }
-    });
-
-    if ($routeParams.action) {
-      if ($routeParams.action == 'edit') {
-        if (!$routeParams.code) {
-          return;
-        }
-        $rootScope.loading.load();
-        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
-          setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
-          console.log(self.pedido);
-          if (self.pedido.erp) {
-            jQuery('#formulario-orcamento input, textarea, .input-group-btn .btn').prop('disabled', true).prop('tabindex', '-1');
-          }
-          $rootScope.loading.unload();
-        }, function(error) {
-          $rootScope.loading.unload();
-        });
-      } else if ($routeParams.action == 'new') {
-
-      } else {
-        $location.path('/');
-      }
-    }
-  });
-
-  $scope.$on("$destroy", function () {
-    jQuery('body').unbind('keyup');
-  });
 
   $scope.blurCdVendedor = function () {
     if (self.pedido.vendedor.codigo) {
@@ -698,13 +722,11 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cooki
     }
 
     if (!self.pedido.idCliente && !self.pedido.cliente.nome) {
-      //if (!self.pedido.cliente.telefone && !self.pedido.cliente.celular && !self.pedido.cliente.email) {
       focarCliente();
 
       $rootScope.alerta.show('Cliente não informado', 'alert-danger');
 
       return false;
-      //}
     }
 
     return true;
@@ -857,27 +879,8 @@ function Orcamento($rootScope, $scope, $timeout, $routeParams, $location, $cooki
     });
   };
 
-  $scope.lista = function () {
-    modalBuscarPedido.show('orcamento/edit').then(function (result) {
-      if (result) {
-        // console.log(result);
-        // self.limpar();
-        // $scope.formularios.vendedor = false;
-        // $scope.formularios.produtos = false;
-        // $scope.formularios.cliente = false;
-        // $scope.formularios.observacoes = false;
-        // $scope.lockCodigo = false;
-        // $scope.lockDescricao = false;
-        // $scope.cdVendedor = result.vendedor.codigo;
-        // $scope.cdCliente = result.cliente.codigo;
-        // $scope.cdCEP = result.cliente.endereco.cep;
-        // self.pedido = new Pedido(result);
-        // $scope.backup = new Pedido(result);
-        //
-        // setContatos();
-        // setPedido(result);
-      }
-    });
+  $scope.buscarOrcamento = function () {
+    modalBuscarPedido.show('orcamento/edit');
   };
 
   self.abrirAtendimento = function () {

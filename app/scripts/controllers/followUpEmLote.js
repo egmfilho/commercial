@@ -46,7 +46,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         self.pedidos = [];
         var limite = (self.pagination.current - 1) * self.pagination.max + ',' + self.pagination.max;
-        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), 'N', true, false, false, true, false, false, limite).then(function (success) {
+        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), null, 'N', true, false, false, true, false, false, limite).then(function (success) {
           self.pagination.total = success.info.order_quantity;
           angular.forEach(success.data, function (item, index) {
             var pedido = new Pedido(Pedido.converterEmEntrada(item));

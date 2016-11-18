@@ -13,13 +13,16 @@ angular.module('commercialApp.controllers')
     '$filter',
     '$uibModalInstance',
     'ProviderPedido',
+    'ProviderConfig',
     'Pedido',
     'DataSaida',
     'ModalBuscarPessoa',
     'Pessoa',
     'destino',
     'atendimento',
-    function($rootScope, $scope, $routeParams, $location, $filter, $uibModalInstance, provider, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, destino, atendimento) {
+    function($rootScope, $scope, $routeParams, $location, $filter, $uibModalInstance, provider, providerConfig, Pedido, DataSaida, ModalBuscarPessoa, Pessoa, destino, atendimento) {
+
+      var self = this;
 
       $scope.pagination = {
         current: 1,
@@ -30,11 +33,30 @@ angular.module('commercialApp.controllers')
         }
       };
 
+      (function obterStatus() {
+        $rootScope.loading.load();
+        $scope.statusArray = [];
+        providerConfig.obterStatusPedido().then(function(success) {
+          console.log(success.data);
+          angular.forEach(success.data, function(item, index) {
+            $scope.statusArray.push({
+              id: item.order_status_id.toString(),
+              nome: item.order_status_name
+            });
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      })();
+
       $uibModalInstance.opened.then(function() {
         $scope.vendedor = new Pessoa();
         $scope.cliente = new Pessoa();
         $scope.dtInicial = $filter('date')(new Date(), 'dd/MM/yyyy');
         $scope.dtFinal = $filter('date')(new Date(), 'dd/MM/yyyy');
+        $scope.statusId = '';
 
         $scope.pedidos = [ ];
         $scope.opcoes = [ {
@@ -77,6 +99,7 @@ angular.module('commercialApp.controllers')
         $scope.removeCliente();
         $scope.dtInicial = '';
         $scope.dtFinal = '';
+        $scope.statusId = '';
       };
 
       $scope.buscarCliente = function() {
@@ -154,7 +177,7 @@ angular.module('commercialApp.controllers')
 
           var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
           $scope.pedidos = [ ];
-          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, atendimento, true, true, false, false, false, false, limite).then(function(success) {
+          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, $scope.statusId, atendimento, true, true, false, false, false, false, limite).then(function(success) {
             $scope.pagination.total = success.info.order_quantity;
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
@@ -177,7 +200,7 @@ angular.module('commercialApp.controllers')
             end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
-        provider.obterPedidosComFiltros(null, null, null, null, init, end, null, true, true, true, false, false, false, limite).then(function(success) {
+        provider.obterPedidosComFiltros(null, null, null, null, init, end, $scope.statusId, null, true, true, true, false, false, false, limite).then(function(success) {
           $scope.pedidos = [ ];
           $scope.pagination.total = success.info ? success.info.order_quantity : 0;
           angular.forEach(success.data, function(item, index) {

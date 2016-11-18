@@ -11,10 +11,11 @@ angular.module('commercialApp.controllers')
     '$location',
     '$filter',
     'ProviderPedido',
+    'ProviderConfig',
     'Pedido',
     'ModalBuscarPessoa',
     'DataSaida',
-    function ($rootScope, $scope, $location, $filter, providerPedido, Pedido, modalBuscarPessoa, DataSaida) {
+    function ($rootScope, $scope, $location, $filter, providerPedido, providerConfig, Pedido, modalBuscarPessoa, DataSaida) {
 
       var self = this, pedidosMarcados = [];
 
@@ -33,19 +34,39 @@ angular.module('commercialApp.controllers')
         vendedor: {id: null, nome: null},
         dataMin: null,
         dataMax: null,
+        statusId: '',
         valorMin: null,
         valorMax: null
       };
 
       $scope.$on('$viewContentLoaded', function () {
+        obterStatus();
         getPedidos();
       });
+
+      function obterStatus() {
+        $rootScope.loading.load();
+        $scope.statusArray = [];
+        providerConfig.obterStatusPedido().then(function(success) {
+          console.log(success.data);
+          angular.forEach(success.data, function(item, index) {
+            $scope.statusArray.push({
+              id: item.order_status_id.toString(),
+              nome: item.order_status_name
+            });
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
 
       function getPedidos() {
         $rootScope.loading.load();
         self.pedidos = [];
         var limite = (self.pagination.current - 1) * self.pagination.max + ',' + self.pagination.max;
-        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), null, true, false, false, true, false, false, limite).then(function (success) {
+        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), self.filtro.statusId, null, true, false, false, true, false, false, limite).then(function (success) {
           self.pagination.total = success.info.order_quantity;
           angular.forEach(success.data, function (item, index) {
             var pedido = new Pedido(Pedido.converterEmEntrada(item));
@@ -168,6 +189,7 @@ angular.module('commercialApp.controllers')
           vendedor: {id: null, nome: null},
           dataMin: null,
           dataMax: null,
+          statusId: '',
           valorMin: null,
           valorMax: null
         };
@@ -199,6 +221,16 @@ angular.module('commercialApp.controllers')
 
       $scope.removeVendedor = function () {
         self.filtro.vendedor = {id: null, nome: null};
+      };
+
+      $scope.getStatusName = function (id) {
+        for (var i = 0; i < $scope.statusArray.length; i++) {
+          if ($scope.statusArray[i].id == id) {
+            return $scope.statusArray[i].nome;
+          }
+        }
+
+        return 'não disponível';
       };
 
     }]);

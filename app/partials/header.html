@@ -18,10 +18,8 @@
       <div class="collapse navbar-collapse" id="menu-collapse">
         <ul class="nav navbar-nav" tabindex="-1">
           <li><a ng-href="#/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a ng-href="#/orcamento"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
+          <li><a ng-href="#/orcamento/new"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
           <li><a ng-href="#/follow-up"><span class="glyphicon glyphicon-comment"></span> Follow Up</a></li>
-          <!--<li><a ng-href="#/"><span class="glyphicon glyphicon-user"></span> Clientes</a></li>-->
-          <!--<li><a ng-href="#/"><span class="glyphicon glyphicon-refresh"></span> Atualização</a></li>-->
           <li><a ng-href="#/configuracoes"><span class="glyphicon glyphicon-cog"></span> Configurações</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -78,18 +76,20 @@
 
   <!--MODAL NOVA SENHA-->
   <div class="modal meu-modal fade" id="modalSenha" tabindex="-1" role="dialog" aria-labelledby="modalSenha">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="header">
-          <div class="title"><span class="glyphicon glyphicon-pencil"></span> Nova senha <span
-            class="glyphicon glyphicon-remove close" ng-click="header.cancelarModalSenha()"></span></div>
+          <div class="title">
+            <span class="glyphicon glyphicon-pencil"></span> Nova senha
+            <span class="glyphicon glyphicon-remove close" ng-click="header.cancelarModalSenha()"></span>
+          </div>
         </div>
-        <div class="body xs condensar-rows">
-          <div class="col-md-6">
+        <div class="body sm condensar-rows">
+          <div class="col-xs-12">
             <h4>Nova senha</h4>
             <input type="password" class="form-control" ng-model="header.novaSenha">
           </div>
-          <div class="col-md-6">
+          <div class="col-xs-12">
             <h4>Confirmar senha</h4>
             <input type="password" class="form-control" ng-model="header.novaSenhaConfirm">
           </div>
@@ -103,3 +103,4 @@
   </div>
   <!--FIM MODAL-->
 </span>
+

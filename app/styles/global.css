@@ -663,6 +663,11 @@ span:focus, a:focus {
     margin-top: 80px;
     margin-right: 20px; }
 
+#modalSenha.meu-modal .modal-dialog.modal-sm {
+  width: 340px; }
+  #modalSenha.meu-modal .modal-dialog.modal-sm .body.sm {
+    height: 200px !important; }
+
 div[name="footer"] .navbar {
   height: 60px !important;
   box-shadow: 0 -2px 4px rgba(50, 50, 50, 0.35); }

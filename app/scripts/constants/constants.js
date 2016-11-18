@@ -6,5 +6,6 @@
 
 angular.module('commercialApp.constants')
   .constant('URLS', {
-    root: 'http://172.16.4.17/commercial/public/php/'
+    // root: 'http://172.16.4.17/commercial/php/'
+    root: 'php/'
   });

@@ -30,6 +30,12 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
+        obterStatusPedido: function() {
+          return provider.get({
+            action: 'getOrderStatus'
+          }).$promise;
+        },
+
         configurarConexao: function (host, database, username, password) {
           return provider.save({
             action: 'editSQL'
