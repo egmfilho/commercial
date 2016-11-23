@@ -145,6 +145,7 @@
       </div>
     </div>
     <div class="paginas">
+      <h3 class="text-center">{{busca.pagination.total}} resultado{{busca.pagination.total == 1 ? '.' : 's.'}}</h3>
       <ul uib-pagination total-items="busca.pagination.total" ng-model="busca.pagination.current" items-per-page="busca.pagination.max" ng-change="busca.pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
   </div>

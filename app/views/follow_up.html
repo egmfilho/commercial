@@ -169,6 +169,7 @@
       <span class="glyphicon glyphicon-stop" ng-style="{color:s.cor}"></span>&nbsp;{{s.nome}}
     </div>
     <div class="paginas">
+      <h3 class="text-center">{{pagination.total}} resultado{{pagination.total == 1 ? '.' : 's.'}}</h3>
       <ul uib-pagination total-items="pagination.total" ng-model="pagination.current" items-per-page="pagination.max" max-size="5" ng-change="pagination.mudarPagina()" class="pagination-sm" boundary-link-numbers="true" rotate="true" force-ellipses="true" previous-text="&lsaquo; anterior" next-text="próximo &rsaquo;"></ul>
     </div>
   </div>
