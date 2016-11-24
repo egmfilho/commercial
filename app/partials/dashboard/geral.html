@@ -101,3 +101,28 @@
     </div>
   </div>
 </div>
+
+<!--AVISO ORCAMENTO-->
+<div class="col-md-6">
+  <div class="card">
+    <div class="header">
+      <h3>
+        Mensagem do Orçamento
+      </h3>
+    </div>
+    <div class="clearfix">
+      <h4>Mensagem</h4>
+      <textarea cols="30" rows="4" class="form-control" ng-model="configuracoes.mensagemOrcamento"></textarea>
+
+      <h4>&nbsp;</h4>
+      <div>
+        <span class="pull-left" ng-show="configuracoes.conexao.retorno">
+          <h5>
+            <span class="glyphicon glyphicon-info-sign"></span> {{configuracoes.conexao.retorno}}
+          </h5>
+        </span>
+        <button class="btn btn-default btn-lg pull-right" ng-click="configuracoes.salvarMensagemOrcamento()" style="margin-right: 10px"><span class="glyphicon glyphicon-floppy-save"></span> Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

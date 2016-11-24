@@ -239,9 +239,9 @@ $print-font-size: 11px;
     height: 120px;
 
     .logo {
-      width: 240px;
-      height: 80px;
-      float: left;
+      width: 192px;
+      height: 64px;
+      //float: left;
 
       > img {
         width: 100%;
@@ -249,8 +249,21 @@ $print-font-size: 11px;
       }
     }
 
+    table {
+      width: 100%;
+      margin-bottom: 30px;
+
+      td {
+        vertical-align: middle;
+      }
+    }
+
+    .endereco {
+      font-size: 0.8em;
+    }
+
     .orcamento-identificacao {
-      float: right;
+      //float: right;
       margin: 0;
     }
 
@@ -271,6 +284,11 @@ $print-font-size: 11px;
     width: 100%;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+
+    .mensagem {
+      margin-top: 10px;
+      font-size: 0.7em;
+    }
 
     table {
       td {
@@ -334,11 +352,15 @@ $print-font-size: 11px;
     }
   }
 
-  .assinatura {
+  .rodape {
     width: 100%;
 
-    > div {
-      margin: 0 auto;
+    .observacoes {
+      font-size: 0.9em;
+    }
+
+    .assinatura {
+      margin: 50px auto;
       border-bottom: 1px solid black;
       width: 350px;
       padding-bottom: 30px;
@@ -346,7 +368,7 @@ $print-font-size: 11px;
     }
   }
 
-  .rodape {
+  .lucilei {
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -428,6 +450,45 @@ $print-font-size: 11px;
   .remove-padding {
     > div {
       padding: 8px;
+    }
+  }
+}
+
+.atalhos-flutuantes {
+  width: 300px;
+  height: 150px;
+  margin: 20px;
+  position: absolute;
+  background-color: white;
+  //top: 0;
+  //bottom: 0;
+  //left: 0;
+  right: 0;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+  .header {
+    background-color: $cor-principal-clara;
+    width: 100%;
+    padding: 5px;
+
+    h4 {
+      margin: 0;
+      color: white;
+    }
+  }
+
+  .atalhos {
+    padding: 5px;
+
+    .comando {
+      margin: 5px 0;
+
+      .label-primary {
+        background-color: $cor-principal-clara;
+      }
     }
   }
 }

@@ -1,10 +1,31 @@
 <div class="impressao">
+  <!--<div class="cabecalho">-->
+    <!--<div class="logo"><img src="images/carrapeta.jpg" alt=""></div>-->
+    <!--<br>-->
+    <!--<h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>-->
+    <!--<br>-->
+    <!--<span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'medium'}}</span>-->
+  <!--</div>-->
+
   <div class="cabecalho">
-    <div class="logo"><img src="images/carrapeta.jpg" alt=""></div>
-    <br>
-    <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
-    <br>
-    <span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'medium'}}</span>
+    <table class="clearfix">
+      <tr>
+        <td>
+          <span class="logo"><img src="images/carrapeta.jpg" alt=""></span>
+        </td>
+        <td class="endereco">
+          <b>LOJA:</b> {{orcamento.pedido.loja.nome}}<br>
+          <b>ENDEREÇO:</b> {{orcamento.pedido.loja.endereco.logradouro}} <b>COMPLEMENTO:</b> {{orcamento.pedido.loja.complemento}}<br>
+          <b>BAIRRO:</b> {{orcamento.pedido.loja.endereco.bairro}} <b>CIDADE:</b> {{orcamento.pedido.loja.endereco.cidade}} <br>
+          <b>CEP:</b> {{orcamento.pedido.loja.endereco.cep}} <b>TEL:</b> {{orcamento.pedido.loja.telefone}}
+        </td>
+        <td class="text-right">
+          <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
+          <br>
+          <span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'dd/MM/yyyy'}}</span>
+        </td>
+      </tr>
+    </table>
   </div>
 
   <div class="info">
@@ -68,7 +89,7 @@
       <!--</tr>-->
     <!--</table>-->
     <!--<br>-->
-    <h5 class="text-center">Não é documento fiscal.</h5>
+    <p class="mensagem text-center">{{orcamento.pedido.mensagem}}</p>
     <br>
 
     <div ng-repeat="bloco in orcamento.pedido.blocos track by $index">
@@ -140,16 +161,17 @@
   </div>
   <br>
 
-  <div class="assinatura">
-    <span ng-if="orcamento.pedido.observacoes">
-      <h5>Observações: </h5>
+  <div class="rodape">
+    <div class="observacoes" ng-if="orcamento.pedido.observacoes">
+      <b>Observações: </b>
       {{orcamento.pedido.observacoes}}
-    </span>
-    <div>
+    </div>
+    <div class="assinatura">
       <h5>Atenciosamente</h5>
     </div>
   </div>
-  <div class="rodape">
-    <span>A Carrapeta 68 Mat Hidráulico Ltda - Avenida Lucio Meira, 68 - Várzea - Teresópolis - RJ 25953-003 - email: vendas@carrapeta.com<br>Futura Agência - 2016 - Commercial ver. {{versao}}</span>
+  <div class="lucilei">
+    <!--<span>A Carrapeta 68 Mat Hidráulico Ltda - Avenida Lucio Meira, 68 - Várzea - Teresópolis - RJ 25953-003 - email: vendas@carrapeta.com<br>Futura Agência - 2016 - Commercial ver. {{versao}}</span>-->
+    <span>Futura Agência - 2016 - Commercial ver. {{versao}}</span>
   </div>
 </div>

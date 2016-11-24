@@ -960,14 +960,19 @@ div[name="footer"] .navbar {
   .impressao .cabecalho {
     height: 120px; }
     .impressao .cabecalho .logo {
-      width: 240px;
-      height: 80px;
-      float: left; }
+      width: 192px;
+      height: 64px; }
       .impressao .cabecalho .logo > img {
         width: 100%;
         height: auto; }
+    .impressao .cabecalho table {
+      width: 100%;
+      margin-bottom: 30px; }
+      .impressao .cabecalho table td {
+        vertical-align: middle; }
+    .impressao .cabecalho .endereco {
+      font-size: 0.8em; }
     .impressao .cabecalho .orcamento-identificacao {
-      float: right;
       margin: 0; }
     .impressao .cabecalho .data {
       float: right;
@@ -981,6 +986,9 @@ div[name="footer"] .navbar {
     width: 100%;
     border-top: 1px solid black;
     border-bottom: 1px solid black; }
+    .impressao .info .mensagem {
+      margin-top: 10px;
+      font-size: 0.7em; }
     .impressao .info table td {
       vertical-align: top;
       font-size: 11px; }
@@ -1019,15 +1027,17 @@ div[name="footer"] .navbar {
     .impressao .tabela th:nth-child(3), .impressao #tabela-orcamento th:nth-child(3), .impressao .tabela th:nth-child(4), .impressao #tabela-orcamento th:nth-child(4), .impressao .tabela td:nth-child(3), .impressao #tabela-orcamento td:nth-child(3), .impressao .tabela td:nth-child(4), .impressao #tabela-orcamento td:nth-child(4) {
       width: 40px;
       min-width: 40px; }
-  .impressao .assinatura {
+  .impressao .rodape {
     width: 100%; }
-    .impressao .assinatura > div {
-      margin: 0 auto;
+    .impressao .rodape .observacoes {
+      font-size: 0.9em; }
+    .impressao .rodape .assinatura {
+      margin: 50px auto;
       border-bottom: 1px solid black;
       width: 350px;
       padding-bottom: 30px;
       text-align: center; }
-  .impressao .rodape {
+  .impressao .lucilei {
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -1085,6 +1095,31 @@ div[name="footer"] .navbar {
         float: right; }
   .opcoes .remove-padding > div {
     padding: 8px; }
+
+.atalhos-flutuantes {
+  width: 300px;
+  height: 150px;
+  margin: 20px;
+  position: absolute;
+  background-color: white;
+  right: 0;
+  z-index: 100;
+  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
+  .atalhos-flutuantes .header {
+    background-color: #6481bb;
+    width: 100%;
+    padding: 5px; }
+    .atalhos-flutuantes .header h4 {
+      margin: 0;
+      color: white; }
+  .atalhos-flutuantes .atalhos {
+    padding: 5px; }
+    .atalhos-flutuantes .atalhos .comando {
+      margin: 5px 0; }
+      .atalhos-flutuantes .atalhos .comando .label-primary {
+        background-color: #6481bb; }
 
 .buscar-orcamento {
   margin-top: 40px;

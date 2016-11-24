@@ -122,6 +122,9 @@ angular.module('commercialApp.controllers')
         }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
+          if (error.status == 404) {
+            $location.path('/');
+          }
         });
       }
 
@@ -149,6 +152,9 @@ angular.module('commercialApp.controllers')
         }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
+          if (error.status == 404) {
+            $location.path('/');
+          }
         });
       }
 
@@ -175,6 +181,9 @@ angular.module('commercialApp.controllers')
         }, function (error) {
           console.log(error);
           $rootScope.loading.unload();
+          if (error.status == 404) {
+            $location.path('/');
+          }
         });
       }
 

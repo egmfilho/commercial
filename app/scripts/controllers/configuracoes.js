@@ -83,6 +83,7 @@ angular.module('commercialApp.controllers')
         getTiposContato();
         getEmail();
         getConexao();
+        getMensagemOrcamento();
       });
 
       function getUsuarios() {
@@ -191,6 +192,17 @@ angular.module('commercialApp.controllers')
           self.conexao = {
             status: 'falha'
           };
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getMensagemOrcamento() {
+        $rootScope.loading.load();
+        providerConfig.obterMensagemOrcamento().then(function(success) {
+          self.mensagemOrcamento = success.data.order_message;
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -519,10 +531,21 @@ angular.module('commercialApp.controllers')
           $rootScope.alerta.show('Configurações de conexão salvas!', 'alert-success');
         }, function (error) {
           console.log(error);
-          self.conexao.retorno = self.conexao.retorno = error.data.status.description;;
+          self.conexao.retorno = self.conexao.retorno = error.data.status.description;
           self.conexao.status = 'falha';
           $rootScope.loading.unload();
         });
       };
+
+      this.salvarMensagemOrcamento = function() {
+        $rootScope.loading.load();
+        providerConfig.salvarMensagemOrcamento(self.mensagemOrcamento).then(function(success) {
+          $rootScope.alerta.show('Mensagem salva!', 'alert-success');
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
 
     }]);

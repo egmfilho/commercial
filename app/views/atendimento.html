@@ -207,7 +207,7 @@
             <b>Tipo de Contato</b><br>
             {{parecer.contato.nome}}<br>
             <b>Parecer:</b><br>
-            {{parecer.texto | truncate: 200 | stripTags}}<br><br>
+            {{parecer.texto | stripTags | truncate: 200}}<br><br>
             <button class="btn btn-primary" ng-click="atendimento.abrirParecer(parecer)"><span class="glyphicon glyphicon-new-window"></span> Ver mais</button>
           </li>
         </ul>

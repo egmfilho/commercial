@@ -77,6 +77,10 @@ function Orcamento(
     angular.element('#tabela-orcamento thead tr').css('padding-right', '0px');
   }
 
+  $scope.escondeAtalhos = function() {
+    jQuery('.atalhos-flutuantes').fadeOut('slow');
+  };
+
   $scope.$on('$viewContentLoaded', function () {
     self.pedido = new Pedido();
     $scope.item = new ItemPedido();
@@ -145,6 +149,14 @@ function Orcamento(
   function setContatos() {
     self.contatos = [ ];
     self.emails = [ ];
+    angular.forEach(self.pedido.emailsEnviados, function(item, index) {
+      self.emails.push({
+        nome: item.nome,
+        email: item.email,
+        isTag: item.nome === 'Externo'
+      })
+    });
+    console.log(self.emails);
 
     angular.forEach(self.usuarios, function(item, index) {
       self.contatos.push({
@@ -156,8 +168,16 @@ function Orcamento(
 
     if (self.pedido.cliente.email) {
       var cliente = { nome: self.pedido.cliente.nome, email: self.pedido.cliente.email, isTag: false };
-      self.contatos.push(cliente);
-      self.emails.push(cliente);
+      if (!self.contatos.find(function(c) {
+          return c.email == cliente.email;
+        })) {
+        self.contatos.push(cliente);
+      }
+      if (!self.emails.find(function(e) {
+          return e.email == cliente.email;
+        })) {
+        self.emails.push(cliente);
+      }
     }
   }
 
@@ -735,7 +755,8 @@ function Orcamento(
   this.pagamento = function () {
     if (validar()) {
       modalPagamento.show(this.pedido, function (result) {
-        if (result && self.pedido.troco() == 0) {
+        // if (result && self.pedido.troco() == 0) {
+        if (result) {
           self.salvar();
         }
       });
@@ -779,7 +800,7 @@ function Orcamento(
             self.pedido.id = result.id;
             self.pedido.codigo = result.codigo;
             self.pedido.idLoja = result.idLoja;
-            self.pedido.loja = result.loja;
+            self.pedido.setLoja(result.loja);
             console.log(success.data);
             $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();

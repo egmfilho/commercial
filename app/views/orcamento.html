@@ -1,3 +1,18 @@
+<div class="atalhos-flutuantes hidden-xs">
+  <div class="header clearfix">
+    <h4 class="pull-left">Atalhos de teclado</h4>
+    <span class="pull-right">
+      <span class="glyphicon glyphicon-remove close" ng-click="escondeAtalhos()"></span>
+    </span>
+  </div>
+  <div class="atalhos">
+    <div class="comando"><span class="label label-primary">Enter</span> Ação ou avançar p/ próx. campo</div>
+    <div class="comando"><span class="label label-primary">Shift</span> + <span class="label label-primary">Enter</span> Avançar para próximo módulo</div>
+    <div class="comando"><span class="label label-primary">F1</span> Abrir busca</div>
+    <div class="comando"><span class="label label-primary">F5</span> Salvar orçamento</div>
+  </div>
+</div>
+
 <div id="formulario-orcamento" class="container">
 
   <div class="row" ng-if="orcamento.pedido.erp">
@@ -15,7 +30,7 @@
           <span class="glyphicon glyphicon-shopping-cart"></span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('Código ' + orcamento.pedido.codigo) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
-          <span class="hidden-xs">{{orcamento.pedido.loja ? ('- ' + (orcamento.pedido.loja.shop_name)) : ''}}</span>
+          <span class="hidden-xs">{{orcamento.pedido.loja ? ('- ' + (orcamento.pedido.loja.nome)) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.dataPedido | date:'dd/MM/yyyy') : ''}}</span>
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}

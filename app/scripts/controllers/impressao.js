@@ -35,7 +35,9 @@ function ImpressaoCtrl($scope, $routeParams, $http, Pedido, urls) {
           get_order_items_product: 1,
           get_order_client: 1,
           get_order_payments: 1,
-          get_order_payments_modality: 1
+          get_order_payments_modality: 1,
+          get_order_shop: 1,
+          get_shop_cep: 1
         }
       }).then(function(success) {
         self.pedido = new Pedido(Pedido.converterEmEntrada(success.data.data));

@@ -88,6 +88,20 @@ angular.module('commercialApp.services')
             mail_mail: email,
             mail_password: password
           }).$promise;
+        },
+
+        obterMensagemOrcamento: function() {
+          return provider.get({
+            action: 'getOrderMessage'
+          }, { }).$promise;
+        },
+
+        salvarMensagemOrcamento: function(mensagem) {
+          return provider.save({
+            action: 'editOrderMessage'
+          }, {
+            order_message: mensagem
+          }).$promise;
         }
       };
 

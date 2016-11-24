@@ -14,7 +14,10 @@ angular.module('commercialApp.controllers')
     this.novaSenhaConfirm = '';
 
     this.getCurrentUser = function() {
-      if (!$cookies.get('currentUser')) return;
+      if (!$cookies.get('currentUser')) {
+        user = null;
+        return;
+      }
 
       if (!user) {
         user = JSON.parse(window.atob($cookies.get('currentUser')));

@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'DataSaida', function ($filter, $cookies, ItemPedido, Pessoa, Pagamento, dataSaida) {
+  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'Loja', 'DataSaida', function ($filter, $cookies, ItemPedido, Pessoa, Pagamento, Loja, dataSaida) {
 
     function compare(pedido) {
       var i;
@@ -54,7 +54,7 @@ angular.module('commercialApp.services')
       this.idCliente = p ? p.idCliente : '';
       this.idVendedor = p ? p.idVendedor : '';
       this.idLoja = p ? p.idLoja : '';
-      this.loja = p ? p.loja : null;
+      this.loja = p ? p.loja : new Loja();
       this.idPrecos = p ? p.idPrecos : '';
       this.observacoes = p ? p.observacoes : '';
       this.dataAtualizacao = p ? p.dataAtualizacao : new Date();
@@ -89,6 +89,9 @@ angular.module('commercialApp.services')
 
       this.erp = p ? p.erp : null;
       this.nfe = p ? p.nfe : null;
+
+      this.mensagem = p ? p.mensagem : '';
+      this.emailsEnviados = p ? p.emailsEnviados : [ ];
     }
 
     Pedido.prototype = {
@@ -126,6 +129,11 @@ angular.module('commercialApp.services')
         this.cliente = cliente;
 
         return true;
+      },
+
+      setLoja: function(shop) {
+        this.loja = new Loja(Loja.converterEmEntrada(shop));
+        this.lojaId = this.loja.id;
       },
 
       setIdCliente: function (id) {
@@ -286,7 +294,11 @@ angular.module('commercialApp.services')
       pedido.idCliente = p.order_client_id;
       pedido.idVendedor = p.order_seller_id;
       pedido.idLoja = p.order_shop_id;
-      pedido.loja = p.order_shop;
+      if (p.order_shop) {
+        pedido.loja = new Loja(Loja.converterEmEntrada(p.order_shop));
+      } else {
+        pedido.loja = new Loja();
+      }
       pedido.idPrecos = p.order_price_id;
       pedido.observacoes = p.order_note;
       pedido.descontoPercent = parseFloat(p.order_al_discount);
@@ -326,6 +338,18 @@ angular.module('commercialApp.services')
 
       pedido.erp = p.order_code_erp;
       pedido.nfe = p.order_code_nfe;
+
+      pedido.mensagem = p.order_message;
+      pedido.emailsEnviados = [];
+      if (p.order_mail_sent) {
+        var lista = p.order_mail_sent.split(';');
+        angular.forEach(lista, function(item, index) {
+          pedido.emailsEnviados.push({
+            nome: item.split(':')[0],
+            email: item.split(':')[1]
+          });
+        });
+      }
 
       return pedido;
     };
