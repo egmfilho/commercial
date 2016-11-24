@@ -78,7 +78,7 @@ angular.module('commercialApp.controllers')
               if ($routeParams.type === 'order') {
                 getPedido($routeParams.code);
               } else {
-                $location.path('/');
+                voltar();
               }
               break;
             case 'open':
@@ -87,7 +87,7 @@ angular.module('commercialApp.controllers')
               } else if ($routeParams.type === 'attendance') {
                 getAtendimento($routeParams.code);
               } else {
-                $location.path('/');
+                voltar();
               }
               break;
             case 'batch':
@@ -98,11 +98,11 @@ angular.module('commercialApp.controllers')
                 self.min = $routeParams.min;
                 self.max = $routeParams.max;
               } else {
-                $location.path('/');
+                voltar();
               }
               break;
             default:
-              $location.path('/');
+              voltar();
               break;
           }
         }
@@ -115,7 +115,7 @@ angular.module('commercialApp.controllers')
           console.log(pedido);
           if (pedido.atendimentoId) {
             $rootScope.alerta.show('Este pedido já possui um atendimento em aberto!', 'alert-danger');
-            $location.path('/follow-up');
+            voltar();
           }
           self.atendimento.setPedido(pedido);
           $rootScope.loading.unload();
@@ -123,7 +123,7 @@ angular.module('commercialApp.controllers')
           console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
-            $location.path('/');
+            voltar();
           }
         });
       }
@@ -153,7 +153,7 @@ angular.module('commercialApp.controllers')
           console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
-            $location.path('/');
+            voltar();
           }
         });
       }
@@ -182,7 +182,7 @@ angular.module('commercialApp.controllers')
           console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
-            $location.path('/');
+            voltar();
           }
         });
       }
