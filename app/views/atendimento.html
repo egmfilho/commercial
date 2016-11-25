@@ -13,6 +13,21 @@
     </div>
     <div class="col-xs-12" uib-collapse="!formularios.info">
       <div class="row">
+        <div class="col-md-4">
+          <h4>Loja</h4>
+          <ui-select ng-model="atendimento.atendimento.lojaId" title="Informe a loja" ng-disabled="trancaLoja">
+            <ui-select-match placeholder="Informe a loja">{{$select.selected.nome}}</ui-select-match>
+            <ui-select-choices repeat="loja.id as loja in atendimento.lojas | propsFilter: {nome: $select.search, codigo: $select.search}">
+              <div ng-bind-html="loja.nome | highlight: $select.search"></div>
+              <small>
+                Código: <span ng-bind-html="loja.codigo | highlight: $select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-8"></div>
+      </div>
+      <div class="row">
         <div class="col-md-6">
           <h4>Dados dos Atendimentos</h4>
           <div class="orcamentos well">
