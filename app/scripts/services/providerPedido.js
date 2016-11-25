@@ -79,7 +79,7 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPedidosComFiltros: function(id_vendedor, id_cliente, valor_minimo, valor_maximo, data_inicial, data_final, status, com_atendimentos_abertos, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades, limite) {
+        obterPedidosComFiltros: function(id_vendedor, id_cliente, valor_minimo, valor_maximo, data_inicial, data_final, status, loja, com_atendimentos_abertos, get_vendedor, get_cliente, get_items, get_produtos, get_pagamentos, get_modalidades, limite) {
           return provider.query({
             action: 'getList'
           }, {
@@ -90,6 +90,7 @@ angular.module('commercialApp.services')
             order_date_start: data_inicial,
             order_date_end: data_final,
             order_status_id: status,
+            order_shop_id: loja,
             order_attendance: com_atendimentos_abertos === 'S' ? 'Y' : com_atendimentos_abertos, // apenas troca o S pelo Y, o N é igual. Y, N ou null
             get_order_seller: get_vendedor,
             get_order_client: get_cliente,
@@ -98,6 +99,7 @@ angular.module('commercialApp.services')
             get_order_payments: get_pagamentos,
             get_order_payments_modality: get_modalidades,
             get_order_attendance: true,
+            get_order_shop: true,
             order_limit: limite
           }).$promise;
         },

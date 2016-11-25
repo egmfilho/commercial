@@ -37,13 +37,22 @@
       <td data-label="Último Acesso">{{usuario.ultimoAcesso ? (usuario.ultimoAcesso | date) : 'Não disponível'}}</td>
       <td class="hidden-xs"><a href="" ng-click="configuracoes.editarUsuario(usuario)"><span
         class="glyphicon glyphicon-pencil"></span></a></td>
-      <td class="hidden-xs"><a href="" ng-click="configuracoes.excluirUsuario(usuario)"><span
-        class="glyphicon glyphicon-trash"></span></a></td>
+      <td class="hidden-xs" ng-if="usuario.id != 1001">
+        <a href="" ng-click="configuracoes.excluirUsuario(usuario)">
+          <span class="glyphicon glyphicon-trash"></span>
+        </a>
+      </td>
+      <td class="hidden-xs" ng-if="usuario.id == 1001">
+        <a href="">
+          <span class="glyphicon glyphicon-lock"></span>
+        </a>
+      </td>
       <td class="visible-xs-block">
         <button class="btn btn-default pull-right" ng-click="configuracoes.editarUsuario(usuario)"><span
         class="glyphicon glyphicon-pencil"></span> Editar</button>
-        <button class="btn btn-default pull-right" ng-click="configuracoes.excluirUsuario(usuario)"><span
-          class="glyphicon glyphicon-trash"></span> Excluir</button>
+        <button class="btn btn-default pull-right" ng-click="configuracoes.excluirUsuario(usuario)" ng-if="usuario.id != 1001">
+          <span class="glyphicon glyphicon-trash"></span> Excluir
+        </button>
       </td>
     </tr>
     <tr class="hidden-xs" ng-if="configuracoes.usuarios.length < configuracoes.usuariosPagination.max"

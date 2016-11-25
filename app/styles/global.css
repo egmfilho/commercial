@@ -454,8 +454,6 @@ span:focus, a:focus {
     width: 100%; }
 .meu-modal .body.xs {
   height: 120px; }
-.meu-modal .body.xs-2 {
-  height: 240px; }
 .meu-modal .body.sm {
   height: 330px; }
 .meu-modal .body.md {
@@ -540,6 +538,9 @@ span:focus, a:focus {
   outline: none;
   border: none;
   box-shadow: none; }
+
+.uib-datepicker-popup.dropdown-menu {
+  z-index: 2000 !important; }
 
 .banner {
   background-image: url("../images/logotipo.png");
@@ -672,6 +673,20 @@ div[name="footer"] .navbar {
   height: 60px !important;
   box-shadow: 0 -2px 4px rgba(50, 50, 50, 0.35); }
 
+.footer .dropup {
+  position: absolute;
+  top: 10px;
+  left: 40px; }
+  .footer .dropup .btn-primary {
+    color: white;
+    background-color: transparent; }
+    .footer .dropup .btn-primary:active, .footer .dropup .btn-primary:focus {
+      background-color: #3b5998; }
+  .footer .dropup .atalhos {
+    padding: 5px 0 !important;
+    width: 330px !important; }
+    .footer .dropup .atalhos .comando .label-primary {
+      background-color: #6481bb; }
 .footer .agencia {
   color: white;
   font-size: .8em;
@@ -1096,31 +1111,6 @@ div[name="footer"] .navbar {
   .opcoes .remove-padding > div {
     padding: 8px; }
 
-.atalhos-flutuantes {
-  width: 300px;
-  height: 150px;
-  margin: 20px;
-  position: absolute;
-  background-color: white;
-  right: 0;
-  z-index: 100;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
-  .atalhos-flutuantes .header {
-    background-color: #6481bb;
-    width: 100%;
-    padding: 5px; }
-    .atalhos-flutuantes .header h4 {
-      margin: 0;
-      color: white; }
-  .atalhos-flutuantes .atalhos {
-    padding: 5px; }
-    .atalhos-flutuantes .atalhos .comando {
-      margin: 5px 0; }
-      .atalhos-flutuantes .atalhos .comando .label-primary {
-        background-color: #6481bb; }
-
 .buscar-orcamento {
   margin-top: 40px;
   margin-bottom: 40px; }
@@ -1251,7 +1241,7 @@ div[name="footer"] .navbar {
   .atendimento #modal-historico.meu-modal .modal-dialog {
     width: 600px; }
   .atendimento #modal-historico.meu-modal .body {
-    height: 400px !important; }
+    height: 300px !important; }
     .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search {
       min-width: 30px; }
       .atendimento #modal-historico.meu-modal .body .ui-select-multiple.ui-select-bootstrap input.ui-select-search:focus {

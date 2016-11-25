@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Atendimento', ['$cookies', 'Parecer', 'Pedido', 'HistoricoAtendimento', 'Usuario', function($cookies, Parecer, Pedido, HistoricoAtendimento, Usuario) {
+  .factory('Atendimento', ['$cookies', 'Parecer', 'Pedido', 'HistoricoAtendimento', 'Usuario', 'Loja', function($cookies, Parecer, Pedido, HistoricoAtendimento, Usuario, Loja) {
 
     function Atendimento(atendimento) {
       var me = JSON.parse(window.atob($cookies.get('currentUser')));
@@ -20,6 +20,8 @@ angular.module('commercialApp.services')
       this.historico = atendimento ? atendimento.historico : [ ];
       this.dataCadastro = atendimento ? atendimento.dataCadastro : new Date();
       this.dataUpdate = atendimento ? atendimento.dataUpdate : null;
+      this.lojaId = atendimento ? atendimento.lojaId : '';
+      this.loja = atendimento ? atendimento.loja : new Loja();
     }
 
     Atendimento.prototype = {
@@ -74,6 +76,13 @@ angular.module('commercialApp.services')
       atendimento.dataCadastro = attendance.attendance_date ? new Date(attendance.attendance_date) : new Date();
       atendimento.dataUpdate= attendance.attendance_update;
 
+      atendimento.lojaId = parseInt(attendance.attendance_shop_id);
+      if (attendance.attendance_shop) {
+        atendimento.loja = new Loja(Loja.converterEmEntrada(attendance.attendance_shop));
+      } else {
+        atendimento.loja = new Loja();
+      }
+
       return atendimento;
     };
 
@@ -88,6 +97,8 @@ angular.module('commercialApp.services')
       attendance.attendance_note = Parecer.converterEmSaida(atendimento.parecer);
 
       attendance.attendance_history = HistoricoAtendimento.converterEmSaida(atendimento.historico);
+
+      attendance.attendance_shop_id = atendimento.lojaId;
 
       return attendance;
     };

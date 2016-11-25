@@ -6,6 +6,33 @@ div[name="footer"] {
 }
 
 .footer {
+  .dropup {
+    position: absolute;
+    top: 10px;
+    left: 40px;
+
+    .btn-primary {
+      color: white;
+      background-color: transparent;
+
+      &:active, &:focus {
+        background-color: $cor-principal;
+      }
+    }
+
+    .atalhos {
+      padding: 5px 0 !important;
+      width: 330px !important;
+
+      .comando {
+
+        .label-primary {
+          background-color: $cor-principal-clara;
+        }
+      }
+    }
+  }
+
   .agencia {
     color: white;
     font-size: .8em;

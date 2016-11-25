@@ -22,7 +22,10 @@
         <td class="text-right">
           <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
           <br>
-          <span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'dd/MM/yyyy'}}</span>
+          <span class="data">
+            <h5>Data da impressão: </h5>{{getHoje() | date: 'dd/MM/yyyy'}}<br>
+            <h5>Hora da impressão: </h5>{{getHoje() | date: 'HH:mm:ss'}}
+          </span>
         </td>
       </tr>
     </table>

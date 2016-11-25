@@ -18,12 +18,15 @@ angular.module('commercialApp.controllers')
     'ModalBuscarPedido',
     'ModalBuscarPessoa',
     'ProviderUsuario',
+    'ProviderLoja',
+    'Loja',
     'DataSaida',
-    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido, modalBuscarPessoa, providerUsuario, DataSaida) {
+    function ($rootScope, $scope, $location, Atendimento, Usuario, providerAtendimento, modalAtendimento, providerStatus, StatusHistoricoAtendimento, modalBuscarPedido, modalBuscarPessoa, providerUsuario, providerLoja, Loja, DataSaida) {
 
       var self = this;
 
       $scope.$on('$viewContentLoaded', function () {
+        getLojas();
         getStatusAtendimento();
         getAtendimentos();
         getUsuarios();
@@ -48,6 +51,7 @@ angular.module('commercialApp.controllers')
         atendimento: '',
         pedido: '',
         cliente: {id: null, nome: null},
+        loja: null,
         responsavel: null,
         data: 'nenhum',
         dataMin: null,
@@ -57,11 +61,25 @@ angular.module('commercialApp.controllers')
         status: ''
       };
 
+      function getLojas() {
+        self.lojas = [];
+        $rootScope.loading.load();
+        providerLoja.obterTodos().then(function(success) {
+          angular.forEach(success.data, function(item, index) {
+            self.lojas.push(new Loja(Loja.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
       function getAtendimentos() {
         self.atendimentos = [];
         $rootScope.loading.load();
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
-        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), limite).then(function (success) {
+        providerAtendimento.obterTodos(true, true, true, true, self.filtro.status, self.filtro.cliente.id, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), self.filtro.loja, limite).then(function (success) {
           $scope.pagination.total = success.info.attendance_quantity;
           angular.forEach(success.data, function (item, index) {
             self.atendimentos.push(new Atendimento(Atendimento.converterEmEntrada(item)));
@@ -87,6 +105,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           self.showFiltros = false;
         }, function (error) {
+          $scope.pagination.total = 0;
           console.log(error);
           $rootScope.loading.unload();
         });
@@ -208,6 +227,7 @@ angular.module('commercialApp.controllers')
           atendimento: '',
           pedido: '',
           cliente: {id: null, nome: null},
+          loja: null,
           responsavel: null,
           data: 'nenhum',
           dataMin: null,

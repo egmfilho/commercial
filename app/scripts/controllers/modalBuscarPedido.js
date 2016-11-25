@@ -177,13 +177,14 @@ angular.module('commercialApp.controllers')
 
           var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
           $scope.pedidos = [ ];
-          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, $scope.statusId, atendimento, true, true, false, false, false, false, limite).then(function(success) {
-            $scope.pagination.total = success.info.order_quantity;
+          provider.obterPedidosComFiltros($scope.vendedor.id, $scope.cliente.id, null, null, init, end, $scope.statusId, null, atendimento, true, true, false, false, false, false, limite).then(function(success) {
+            $scope.pagination.total = success.info ? success.info.order_quantity : 0;
             angular.forEach(success.data, function(item, index) {
               $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(item)));
             });
             $rootScope.loading.unload();
           }, function(error) {
+            $scope.pagination.total = 0;
             console.log(error);
             $rootScope.loading.unload();
             if (error.status == 404) {
@@ -200,7 +201,7 @@ angular.module('commercialApp.controllers')
             end = $scope.dtFinal ? DataSaida.converter(parseDate($scope.dtFinal, 23, 59, 59)) : null;
 
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
-        provider.obterPedidosComFiltros(null, null, null, null, init, end, $scope.statusId, null, true, true, true, false, false, false, limite).then(function(success) {
+        provider.obterPedidosComFiltros(null, null, null, null, init, end, $scope.statusId, null, null, true, true, true, false, false, false, limite).then(function(success) {
           $scope.pedidos = [ ];
           $scope.pagination.total = success.info ? success.info.order_quantity : 0;
           angular.forEach(success.data, function(item, index) {
@@ -208,6 +209,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
+          $scope.pagination.total = 0;
           console.log(error);
           $rootScope.loading.unload();
         });

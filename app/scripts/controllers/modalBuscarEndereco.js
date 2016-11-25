@@ -63,7 +63,7 @@ angular.module('commercialApp.controllers')
         }
 
         $rootScope.loading.load();
-        provider.obterEnderecosPorLogradouro(logradouro).then(function(success) {
+        provider.obterEnderecosPorLogradouro(logradouro, cidade).then(function(success) {
           $scope.enderecos = [ ];
           angular.forEach(success.data, function (item, index) {
             $scope.enderecos.push(new Endereco(Endereco.converterEmEntrada(item)));

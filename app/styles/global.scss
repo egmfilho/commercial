@@ -720,10 +720,6 @@ span:focus, a:focus {
     height: 120px;
   }
 
-  .body.xs-2 {
-    height: 240px;
-  }
-
   .body.sm {
     height: 330px;
   }
@@ -974,6 +970,10 @@ span:focus, a:focus {
     border: none;
     box-shadow: none;
   }
+}
+
+.uib-datepicker-popup.dropdown-menu {
+  z-index: 2000 !important;
 }
 
 @import 'header';

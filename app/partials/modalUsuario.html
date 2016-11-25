@@ -10,39 +10,39 @@
       <div ng-show="opt === 'info'">
         <div class="col-md-12">
           <h4>Nome</h4>
-          <input type="text" class="form-control" ng-model="modal.usuario.nome">
+          <input type="text" class="form-control" ng-model="modal.usuario.nome" ng-disabled="tranca()">
         </div>
         <div class="col-md-6">
           <h4>Email</h4>
-          <input type="text" class="form-control" ng-model="modal.usuario.email">
+          <input type="text" class="form-control" ng-model="modal.usuario.email" ng-disabled="tranca()">
         </div>
         <div class="col-md-6">
           <h4>Nome de usuário</h4>
-          <input type="text" class="form-control" ng-model="modal.usuario.usuario">
+          <input type="text" class="form-control" ng-model="modal.usuario.usuario" ng-disabled="tranca()">
         </div>
         <div class="col-md-6">
           <h4>Nova senha</h4>
-          <input type="password" class="form-control" ng-model="modal.usuario.senha">
+          <input type="password" class="form-control" ng-model="modal.usuario.senha" ng-disabled="tranca()">
         </div>
         <div class="col-md-6">
           <h4>Confirme a senha</h4>
-          <input type="password" class="form-control" ng-model="modal.senhaCheck">
+          <input type="password" class="form-control" ng-model="modal.senhaCheck" ng-disabled="tranca()">
         </div>
         <div class="col-md-6">
           <h4>Perfil</h4>
           <select class="form-control" ng-model="modal.usuario.perfilId"
-                  ng-options="perfil.id as perfil.nome for perfil in modal.perfis">
+                  ng-options="perfil.id as perfil.nome for perfil in modal.perfis" ng-disabled="tranca()">
             <option value="" disabled>Selecione um perfil</option>
           </select>
         </div>
         <div class="col-md-6">
           <div><h4>Ativo</h4></div>
           <div class="btn-group btn-toggle botao-esticado">
-            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="true">
+            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="true" ng-disabled="tranca()">
               <span class="glyphicon glyphicon-eye-open"></span>
               Sim
             </label>
-            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="false">
+            <label class="btn btn-primary" ng-model="modal.usuario.ativo" uib-btn-radio="false" ng-disabled="tranca()">
               <span class="glyphicon glyphicon-eye-close"></span> Não
             </label>
           </div>
@@ -50,14 +50,14 @@
         <div class="col-md-6">
           <h4>Loja</h4>
           <select class="form-control" ng-model="modal.usuario.lojaId"
-                  ng-options="l.id as l.nome for l in modal.lojas">
+                  ng-options="l.id as l.nome for l in modal.lojas" ng-disabled="tranca()">
             <option value="" disabled>Selecione uma loja</option>
           </select>
         </div>
         <div class="col-md-6">
           <h4>Tabela de preços</h4>
           <select class="form-control" ng-model="modal.usuario.precosId"
-                  ng-options="tp.id as tp.nome for tp in modal.tabelaPrecos">
+                  ng-options="tp.id as tp.nome for tp in modal.tabelaPrecos" ng-disabled="tranca()">
             <option value="" disabled>Selecione uma tabela de preços</option>
           </select>
         </div>
@@ -65,11 +65,11 @@
   </div>
 
   <div class="footer">
-    <button class="btn btn-default botao-esticado botao-principal" ng-click="cancel()"><span
-      class="glyphicon glyphicon-remove"></span> Fechar
+    <button class="btn btn-default botao-esticado botao-principal" ng-click="cancel()">
+      <span class="glyphicon glyphicon-remove"></span> Fechar
     </button>
-    <button class="btn btn-default botao-esticado botao-principal" ng-click="salvar()"><span
-      class="glyphicon glyphicon-floppy-save"></span> Salvar
+    <button class="btn btn-default botao-esticado botao-principal" ng-click="salvar()" ng-disabled="tranca()">
+      <span class="glyphicon glyphicon-floppy-save"></span> Salvar
     </button>
   </div>
 </div>

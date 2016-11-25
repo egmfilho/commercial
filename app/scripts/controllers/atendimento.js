@@ -23,13 +23,16 @@ angular.module('commercialApp.controllers')
     'TipoContato',
     'ProviderUsuario',
     'Usuario',
+    'ProviderLoja',
+    'Loja',
     'ModalConfirm',
-    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, providerHistorico, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario, modalConfirm) {
+    function ($rootScope, $scope, $routeParams, $location, providerPedido, Pedido, providerAtendimento, Parecer, providerHistorico, HistoricoAtendimento, Atendimento, providerStatusAtendimento, StatusHistoricoAtendimento, providerTipoContato, TipoContato, providerUsuario, Usuario, providerLoja, Loja, modalConfirm) {
 
       var self = this;
 
       self.atendimento = new Atendimento();
       $scope.dt = new Date();
+      $scope.trancaLoja = false;
 
       self.dateOptions = {
         minDate: new Date(),
@@ -69,6 +72,7 @@ angular.module('commercialApp.controllers')
             return;
           }
 
+          getLojas();
           getStatusAtendimento();
           getTiposContato();
           getUsuarios();
@@ -108,6 +112,20 @@ angular.module('commercialApp.controllers')
         }
       });
 
+      function getLojas() {
+        self.lojas = [];
+        $rootScope.loading.load();
+        providerLoja.obterTodos().then(function(success) {
+          angular.forEach(success.data, function(item, index) {
+            self.lojas.push(new Loja(Loja.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
       function getPedido(codigo) {
         $rootScope.loading.load();
         providerPedido.obterPedidoPorCodigo(codigo, true, null, null, true).then(function (success) {
@@ -118,6 +136,7 @@ angular.module('commercialApp.controllers')
             voltar();
           }
           self.atendimento.setPedido(pedido);
+          $scope.trancaLoja = self.atendimento.lojaId || false;
           $rootScope.loading.unload();
         }, function (error) {
           console.log(error);
@@ -132,6 +151,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         providerAtendimento.obterPorCodigo(codigo, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
+          $scope.trancaLoja = self.atendimento.lojaId || false;
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
           $scope.novoHistorico.proximoContato = new Date();
           if (self.atendimento.historico[0].statusId == 1001) {
@@ -162,6 +182,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         providerAtendimento.obterPorCodigoPedido(codigoPedido, true, true, true, true).then(function (success) {
           self.atendimento = new Atendimento(Atendimento.converterEmEntrada(success.data));
+          $scope.trancaLoja = self.atendimento.lojaId || false;
           $scope.novoHistorico = new HistoricoAtendimento(self.atendimento.historico[0]);
           if (self.atendimento.historico[0].statusId == 1001) {
             $scope.novoHistorico.statusId = !self.statusArray ? null : self.statusArray[1].id;
@@ -283,10 +304,20 @@ angular.module('commercialApp.controllers')
           return;
         }
 
+        if (!self.atendimento.lojaId) {
+          $rootScope.alerta.show('Informe a loja!', 'alert-danger');
+          return;
+        }
+
         jQuery('#modal-historico').modal('show');
       };
 
       this.encerrarAtendimento = function () {
+        if (!self.atendimento.lojaId) {
+          $rootScope.alerta.show('Informe a loja!', 'alert-danger');
+          return;
+        }
+
         jQuery('#modal-parecer-final').modal('show');
       };
 
@@ -324,7 +355,8 @@ angular.module('commercialApp.controllers')
 
             return;
           }
-
+console.log(Atendimento.converterEmSaida(att));
+return;
           jQuery('#modal-historico').modal('hide');
           if (self.atendimento.id) {
             $rootScope.loading.load();

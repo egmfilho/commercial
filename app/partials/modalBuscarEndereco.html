@@ -24,7 +24,7 @@
             <span class="input-group-addon">em</span>
             <input type="text" name="cidade" class="form-control" ng-model="cidade" keys-shortcuts enter="buscarPorLogradouro(logradouro, cidade)" placeholder="Ex. Rio de Janeiro">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="buscarPorLogradouro(logradouro)" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
+              <button class="btn btn-default" ng-click="buscarPorLogradouro(logradouro, cidade)" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>
             </span>
           </div>
         </div>
@@ -50,7 +50,7 @@
                 <td>{{e.bairro}}</td>
                 <td>{{e.logradouro}}</td>
               </tr>
-              <tr ng-if="enderecos.length < pagination.max" ng-repeat="n in getNumber(enderecos.length < pagination.max ? pagination.max - enderecos.length : 0)">
+              <tr ng-if="enderecos.length < pagination.max" ng-repeat="n in getNumber(enderecos.length < pagination.max ? pagination.max - enderecos.length : 0) track by $index">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>

@@ -13,8 +13,11 @@ angular.module('commercialApp.controllers')
     'ProviderPedido',
     'Pedido',
     'ModalBuscarPessoa',
+    'ProviderLoja',
+    'Loja',
+    'ProviderConfig',
     'DataSaida',
-    function ($rootScope, $scope, $location, $filter, providerPedido, Pedido, modalBuscarPessoa, DataSaida) {
+    function ($rootScope, $scope, $location, $filter, providerPedido, Pedido, modalBuscarPessoa, providerLoja, Loja, providerConfig, DataSaida) {
 
       var self = this, pedidosMarcados = [];
 
@@ -31,6 +34,8 @@ angular.module('commercialApp.controllers')
         pedido: '',
         cliente: {id: null, nome: null},
         vendedor: {id: null, nome: null},
+        loja: null,
+        status: null,
         dataMin: null,
         dataMax: null,
         valorMin: null,
@@ -38,16 +43,49 @@ angular.module('commercialApp.controllers')
       };
 
       $scope.$on('$viewContentLoaded', function () {
-
+        getLojas();
+        getStatus();
         getPedidos();
       });
+
+      function getLojas() {
+        self.lojas = [];
+        $rootScope.loading.load();
+        providerLoja.obterTodos().then(function(success) {
+          angular.forEach(success.data, function(item, index) {
+            self.lojas.push(new Loja(Loja.converterEmEntrada(item)));
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getStatus() {
+        $rootScope.loading.load();
+        self.statusArray = [];
+        providerConfig.obterStatusPedido().then(function(success) {
+          console.log(success.data);
+          angular.forEach(success.data, function(item, index) {
+            self.statusArray.push({
+              id: item.order_status_id.toString(),
+              nome: item.order_status_name
+            });
+          });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
 
       function getPedidos() {
         $rootScope.loading.load();
         self.pedidos = [];
         var limite = (self.pagination.current - 1) * self.pagination.max + ',' + self.pagination.max;
-        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), null, 'N', true, false, false, true, false, false, limite).then(function (success) {
-          self.pagination.total = success.info.order_quantity;
+        providerPedido.obterPedidosComFiltros(self.filtro.vendedor.id, self.filtro.cliente.id, self.filtro.valorMin, self.filtro.valorMax, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), self.filtro.status, self.filtro.loja, 'N', true, false, false, true, false, false, limite).then(function (success) {
+          self.pagination.total = success.info ? success.info.order_quantity : 0;
           angular.forEach(success.data, function (item, index) {
             var pedido = new Pedido(Pedido.converterEmEntrada(item));
             self.pedidos.push({
@@ -60,6 +98,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           $scope.showFiltros = false;
         }, function (error) {
+          self.pagination.total = 0;
           console.log(error);
           $rootScope.loading.unload();
         });
@@ -167,6 +206,8 @@ angular.module('commercialApp.controllers')
           pedido: '',
           cliente: {id: null, nome: null},
           vendedor: {id: null, nome: null},
+          loja: null,
+          status: null,
           dataMin: null,
           dataMax: null,
           valorMin: null,
@@ -200,6 +241,16 @@ angular.module('commercialApp.controllers')
 
       $scope.removeVendedor = function () {
         self.filtro.vendedor = {id: null, nome: null};
+      };
+
+      $scope.getStatusName = function (id) {
+        for (var i = 0; i < self.statusArray.length; i++) {
+          if (self.statusArray[i].id == id) {
+            return self.statusArray[i].nome;
+          }
+        }
+
+        return 'não disponível';
       };
 
     }]);

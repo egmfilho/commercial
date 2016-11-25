@@ -8,6 +8,7 @@ angular.module('commercialApp.controllers')
   .controller('ModalUsuarioCtrl', [
     '$rootScope',
     '$scope',
+    '$cookies',
     '$uibModalInstance',
     'ProviderUsuario',
     'ProviderLoja',
@@ -17,10 +18,20 @@ angular.module('commercialApp.controllers')
     'usuario',
     'perfis',
     'permissoes',
-    function ($rootScope, $scope, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Usuario, usuario, perfis, permissoes) {
+    function ($rootScope, $scope, $cookies, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Usuario, usuario, perfis, permissoes) {
 
-      var self = this;
+      var self = this,
+          currentUser = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))) : null;
+
       self.usuario = new Usuario();
+
+      $scope.tranca = function() {
+        if (self.usuario.id == 1001) {
+          return !(currentUser.id == 1001);
+        } else {
+          return false;
+        }
+      };
 
       $uibModalInstance.opened.then(function () {
         self.usuario = new Usuario(usuario);

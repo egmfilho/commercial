@@ -86,6 +86,21 @@
     </div>
     <div class="col-xs-12" uib-collapse="!formularios.info">
       <div class="row">
+        <div class="col-md-4">
+          <h4>Loja</h4>
+          <ui-select ng-model="atendimento.atendimento.lojaId" title="Informe a loja" ng-disabled="trancaLoja">
+            <ui-select-match placeholder="Informe a loja">{{$select.selected.nome}}</ui-select-match>
+            <ui-select-choices repeat="loja.id as loja in atendimento.lojas | propsFilter: {nome: $select.search, codigo: $select.search}">
+              <div ng-bind-html="loja.nome | highlight: $select.search"></div>
+              <small>
+                Código: <span ng-bind-html="loja.codigo | highlight: $select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-8"></div>
+      </div>
+      <div class="row">
         <div class="col-md-6">
           <h4>Dados do Atendimento</h4>
           <div class="info well">
@@ -125,6 +140,8 @@
               </dd>
               <dt>Vendedor:</dt>
               <dd>{{atendimento.atendimento.pedido.vendedor.nome || 'Não disponível'}}</dd>
+              <dt>Loja:</dt>
+              <dd>{{atendimento.atendimento.pedido.loja.nome}}</dd>
               <dt>Valor Total:</dt>
               <dd>{{atendimento.atendimento.pedido.valor | currency: 'R$ '}}</dd>
             </dl>
@@ -252,7 +269,7 @@
             <div class="row status">
               <div class="col-xs-12 col-md-12">
                 <h4 ng-init="aberto = false">Próximo Contato</h4>
-                <div class="well well-sm clearfix" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" popup-placement="bottom-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar">
+                <div class="well well-sm clearfix" uib-datepicker-popup="dd/MM/yyyy" show-button-bar="false" popup-placement="bottom-right" ng-model="novoHistorico.proximoContato" is-open="aberto" datepicker-options="atendimento.dateOptions" ng-required="true" clear-text="Limpar" current-text="Hoje" close-text="Fechar" datepicker-append-to-body="true">
                   <b>Data:</b> {{novoHistorico.proximoContato | date:'fullDate'}}
                   <button type="button" class="btn btn-default pull-right botao-calendario" ng-click="aberto = !aberto" ng-disabled="atendimento.atendimento.isEncerrado()"><i class="caret"></i></button>
                 </div>
@@ -267,15 +284,11 @@
               </div>
               <div class="col-md-12">
                 <h4>Spy</h4>
-                <ui-select title="Informe os emails" multiple tagging="atendimento.emailExterno" limit="10" theme="bootstrap" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()">
+                <ui-select title="Informe os emails" multiple tagging="atendimento.emailExterno" limit="10" theme="bootstrap" sortable="true" search-enabled="atendimento.emails.length < 10" ng-model="atendimento.emails" ng-disabled="atendimento.atendimento.isEncerrado()" append-to-body="true" style="z-index: 1051">
                   <ui-select-match placeholder="Informe os emails">{{$item.nome}} &lt;{{$item.email}}&gt;</ui-select-match>
-                  <ui-select-choices repeat="usuario in atendimento.contatos | filter: {nome: $select.search, email: $select.search}">
-                    <div ng-if="!usuario.isTag" ng-bind-html="''+usuario.nome | highlight: $select.search">
-                      <small>
-                        nome: {{usuario.nome}}
-                        email: <span ng-bind-html="''+usuario.email | highlight: $select.search"></span>
-                      </small>
-                    </div>
+                  <ui-select-choices repeat="usuario in atendimento.contatos | propsFilter: {nome: $select.search, email: $select.search}">
+                    <div ng-bind-html="''+usuario.nome | highlight: $select.search"></div>
+                    <small ng-if="!usuario.isTag">email: <span ng-bind-html="''+usuario.email | highlight: $select.search"></span></small>
                     <div ng-if="usuario.isTag" ng-bind-html="(usuario.email | highlight: $select.search) +' (externo)'"></div>
                   </ui-select-choices>
                 </ui-select>

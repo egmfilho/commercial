@@ -38,7 +38,7 @@ angular.module('commercialApp.services')
       // "get_order_seller": "1"
 
       return {
-        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroCliente, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax, limite) {
+        obterTodos: function (getPedido, getUsuario, getParecer, getHistorico, filtroStatus, filtroCliente, filtroResponsavel, filtroData, filtroDataMin, filtroDataMax, lojaId, limite) {
           return provider.query({
             action: 'getList'
           }, {
@@ -57,7 +57,9 @@ angular.module('commercialApp.services')
             attendance_date_column: filtroData,
             attendance_date_start: filtroDataMin,
             attendance_date_end: filtroDataMax,
-            attendance_limit: limite
+            get_attendance_shop: true,
+            attendance_limit: limite,
+            attendance_shop_id: lojaId
           }).$promise;
         },
 
@@ -92,7 +94,8 @@ angular.module('commercialApp.services')
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
             get_attendance_history_status: getHistorico,
-            get_order_seller: true
+            get_order_seller: true,
+            get_order_shop: true
           }).$promise;
         },
 
@@ -110,7 +113,9 @@ angular.module('commercialApp.services')
             get_attendance_history_maker: getHistorico,
             get_attendance_history_responsible: getHistorico,
             get_attendance_history_status: getHistorico,
-            get_order_seller: true
+            get_attendance_shop: true,
+            get_order_seller: true,
+            get_order_shop: true
           }).$promise;
         },
 
