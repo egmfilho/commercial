@@ -801,6 +801,7 @@ function Orcamento(
             self.pedido.codigo = result.codigo;
             self.pedido.idLoja = result.idLoja;
             self.pedido.setLoja(result.loja);
+            self.pedido.mensagem = result.mensagem;
             console.log(success.data);
             $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();

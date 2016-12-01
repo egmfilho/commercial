@@ -355,8 +355,7 @@ angular.module('commercialApp.controllers')
 
             return;
           }
-console.log(Atendimento.converterEmSaida(att));
-return;
+
           jQuery('#modal-historico').modal('hide');
           if (self.atendimento.id) {
             $rootScope.loading.load();

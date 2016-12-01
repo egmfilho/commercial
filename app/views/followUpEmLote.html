@@ -52,7 +52,7 @@
         <div class="col-xs-12 col-md-2">
           <h4>Loja</h4>
           <ui-select ng-model="emLote.filtro.loja" title="Escolha uma loja">
-            <ui-select-match placeholder="Escolha uma loja">{{$select.selected.nome}}</ui-select-match>
+            <ui-select-match placeholder="Escolha uma loja" allow-clear="true">{{$select.selected.nome}}</ui-select-match>
             <ui-select-choices repeat="loja.id as loja in emLote.lojas | propsFilter: {nome: $select.search, codigo: $select.search}">
               <div ng-bind-html="loja.nome | highlight: $select.search"></div>
               <small>
