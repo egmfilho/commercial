@@ -51,3 +51,20 @@ div[name="footer"] {
     }
   }
 }
+
+.atalhos-doido {
+  width: 100%;
+  background-color: darken($cor-principal, 10);
+  position: fixed;
+  bottom: 60px;
+  height: 30px;
+  color: white;
+  padding: 3px 10px;
+  text-align: center;
+
+  .comando {
+    display: inline;
+    margin-right: 20px;
+    vertical-align: middle;
+  }
+}
