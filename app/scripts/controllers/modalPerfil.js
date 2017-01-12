@@ -30,7 +30,7 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        console.log(PerfilUsuario.converterEmSaida(self.perfil));
+        //@ console.log(PerfilUsuario.converterEmSaida(self.perfil));
 
         $rootScope.loading.load();
         if (self.perfil.id) {
@@ -39,7 +39,7 @@ angular.module('commercialApp.controllers')
             $rootScope.alerta.show('Perfil "' + self.perfil.nome + '" editado!', 'alert-success');
             $uibModalInstance.close(true);
           }, function(error) {
-            console.log(error);
+            //@ console.log(error);
             $rootScope.loading.unload();
             if (error.status == 420) {
               $rootScope.alerta.show('Nome de perfil ja registrado!', 'alert-danger');
@@ -51,7 +51,7 @@ angular.module('commercialApp.controllers')
             $rootScope.alerta.show('Perfil registrado com sucesso!', 'alert-success');
             $uibModalInstance.close(true);
           }, function(error) {
-            console.log(error);
+            //@ console.log(error);
             $rootScope.loading.unload();
             if (error.status == 420) {
               $rootScope.alerta.show('Nome de perfil ja registrado!', 'alert-danger');

@@ -121,7 +121,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -130,7 +130,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         providerPedido.obterPedidoPorCodigo(codigo, true, null, null, true).then(function (success) {
           var pedido = new Pedido(Pedido.converterEmEntrada(success.data));
-          console.log(pedido);
+          //@ console.log(pedido);
           if (pedido.atendimentoId) {
             $rootScope.alerta.show('Este pedido já possui um atendimento em aberto!', 'alert-danger');
             voltar();
@@ -139,7 +139,7 @@ angular.module('commercialApp.controllers')
           $scope.trancaLoja = self.atendimento.lojaId || false;
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
             voltar();
@@ -167,10 +167,10 @@ angular.module('commercialApp.controllers')
               }
             });
           }
-          console.log(success.data, self.atendimento);
+          //@ console.log(success.data, self.atendimento);
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
             voltar();
@@ -197,10 +197,10 @@ angular.module('commercialApp.controllers')
               }
             });
           }
-          console.log(success.data, self.atendimento);
+          //@ console.log(success.data, self.atendimento);
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
             voltar();
@@ -217,7 +217,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -239,7 +239,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         })
       }
@@ -254,7 +254,7 @@ angular.module('commercialApp.controllers')
           getContatos();
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -347,7 +347,7 @@ angular.module('commercialApp.controllers')
               $rootScope.alerta.show('Atendimentos salvos', 'alert-success');
               voltar();
             }, function (error) {
-              console.log(error);
+              //@ console.log(error);
               $rootScope.loading.unload();
               $rootScope.alerta.show('Não foi possível salvar os atendimentos.', 'alert-danger');
               jQuery('#modal-historico').modal('show');
@@ -364,7 +364,7 @@ angular.module('commercialApp.controllers')
               $rootScope.alerta.show('Salvo', 'alert-success');
               voltar();
             }, function (error) {
-              console.log(error);
+              //@ console.log(error);
               $rootScope.loading.unload();
               $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
               jQuery('#modal-historico').modal('show');
@@ -376,7 +376,7 @@ angular.module('commercialApp.controllers')
               $rootScope.alerta.show('Salvo', 'alert-success');
               voltar();
             }, function (error) {
-              console.log(error);
+              //@ console.log(error);
               $rootScope.loading.unload();
               $rootScope.alerta.show('Não foi possível salvar o atendimento.', 'alert-danger');
               jQuery('#modal-historico').modal('show');

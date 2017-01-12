@@ -111,7 +111,7 @@ function Orcamento(
         $rootScope.loading.load();
         providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
           setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
-          console.log(self.pedido);
+          //@ console.log(self.pedido);
           if (self.pedido.erp) {
             jQuery('#formulario-orcamento input, textarea, .input-group-btn .btn').prop('disabled', true).prop('tabindex', '-1');
           }
@@ -140,7 +140,7 @@ function Orcamento(
       });
       $rootScope.loading.unload();
     }, function(error) {
-      console.log(error);
+      //@ console.log(error);
       $rootScope.loading.unload();
     });
   }
@@ -156,7 +156,7 @@ function Orcamento(
         isTag: item.nome === 'Externo'
       })
     });
-    console.log(self.emails);
+    //@ console.log(self.emails);
 
     angular.forEach(self.usuarios, function(item, index) {
       self.contatos.push({
@@ -366,7 +366,7 @@ function Orcamento(
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        console.log('Vendedor não encontrado!');
+        //@ console.log('Vendedor não encontrado!');
         $rootScope.alerta.show('Vendedor não encontrado!');
       }
     });
@@ -418,7 +418,7 @@ function Orcamento(
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        console.log('Cliente não encontrado!');
+        //@ console.log('Cliente não encontrado!');
         $rootScope.alerta.show('Cliente não encontrado!');
         modalBuscarPessoa.show('Cliente').then(function (result) {
           if (result) {
@@ -515,7 +515,7 @@ function Orcamento(
 
     this.pedido.cliente.tpPessoa = 'Cliente';
     $rootScope.loading.load();
-    console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
+    //@ console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
     providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function (success) {
       self.pedido.setIdCliente(success.data.IdPessoa);
       self.pedido.cliente.codigo = success.data.CdPessoa;
@@ -523,7 +523,7 @@ function Orcamento(
       $scope.cliente.novo = false;
       $rootScope.loading.unload();
     }, function (error) {
-      console.log(error);
+      //@ console.log(error);
       $rootScope.loading.unload();
       if (error.data.status.code == 409) {
         self.pedido.cliente.tipo == 'F' ? modalAlert.show('Aviso', 'CFP já cadastrado!') : modalAlert.show('Aviso', 'CNPJ já cadastrado!');
@@ -582,7 +582,7 @@ function Orcamento(
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        console.log('Produto não encontrado!');
+        //@ console.log('Produto não encontrado!');
         $rootScope.alerta.show('Produto não encontrado!');
       }
     });
@@ -596,7 +596,7 @@ function Orcamento(
       $rootScope.loading.unload();
       return success.data;
     }, function (err) {
-      console.log(err);
+      //@ console.log(err);
       $rootScope.loading.unload();
       $rootScope.alerta.show('Produto não encontrado!');
     });
@@ -715,7 +715,7 @@ function Orcamento(
       }, function (error) {
         $rootScope.loading.unload();
         if (error.status == 404) {
-          console.log('CEP não encontrado!');
+          //@ console.log('CEP não encontrado!');
           $rootScope.alerta.show('CEP não encontrado!');
         }
       });
@@ -788,7 +788,7 @@ function Orcamento(
       }
 
       modalConfirm.show('Aviso', 'Salvar orçamento?').then(function() {
-        console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
+        //@ console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
         // $uibModalStack.dismissAll();
 
         $rootScope.loading.load();
@@ -796,18 +796,18 @@ function Orcamento(
         if (!self.pedido.id && !self.pedido.codigo) { // salvar novo
           providerPedido.adicionarPedido(Pedido.converterEmSaida(self.pedido)).then(function (success) {
             var result = new Pedido(Pedido.converterEmEntrada(success.data));
+            //@ console.log(result);
             $scope.backup = null;
             self.pedido.id = result.id;
             self.pedido.codigo = result.codigo;
-            self.pedido.idLoja = result.idLoja;
             self.pedido.setLoja(result.loja);
             self.pedido.mensagem = result.mensagem;
-            console.log(success.data);
+            //@ console.log(self.pedido);
             $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();
             $scope.mostrarOpcoesSalvo();
           }, function (error) {
-            console.log(error);
+            //@ console.log(error);
             $rootScope.loading.unload();
           });
         } else { // salvar editado
@@ -817,7 +817,7 @@ function Orcamento(
             $rootScope.loading.unload();
             $scope.mostrarOpcoesSalvo();
           }, function (error) {
-            console.log(error);
+            //@ console.log(error);
             $rootScope.loading.unload();
           });
         }
@@ -876,7 +876,7 @@ function Orcamento(
           self.limpar();
         });
       }, function (error) {
-        console.log(error);
+        //@ console.log(error);
         modalAlert.show('Aviso', 'Não foi possível excluir o orçamento.');
       });
     });
@@ -943,7 +943,7 @@ function Orcamento(
         $rootScope.loading.unload();
         $rootScope.alerta.show('Email enviado!', 'alert-success');
       }, function(error) {
-        console.log(error);
+        //@ console.log(error);
         $rootScope.loading.unload();
         $rootScope.alerta.show(error.data.status.message + ' ' + error.data.status.description, 'alert-danger');
       });
@@ -978,7 +978,7 @@ function Orcamento(
         $rootScope.alerta.show('Orçamento foi exportado!', 'alert-success');
         $scope.mostrarOpcoesExportado();
       }, function(error) {
-        console.log(error);
+        //@ console.log(error);
         $rootScope.loading.unload();
         $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
       });

@@ -132,7 +132,7 @@ angular.module('commercialApp.services')
       },
 
       setLoja: function(shop) {
-        this.loja = new Loja(Loja.converterEmEntrada(shop));
+        this.loja = new Loja(shop);
         this.lojaId = this.loja.id;
       },
 

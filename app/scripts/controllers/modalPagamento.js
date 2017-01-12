@@ -110,7 +110,7 @@ angular.module('commercialApp.controllers')
         }, function (error) {
           $rootScope.loading.unload();
           if (error.status == 404) {
-            console.log('Modalidade não encontrada!');
+            //@ console.log('Modalidade não encontrada!');
             $rootScope.alerta.show('Modalidade não encontrada!');
           }
         });

@@ -37,7 +37,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         $scope.statusArray = [];
         providerConfig.obterStatusPedido().then(function(success) {
-          console.log(success.data);
+          //@ console.log(success.data);
           angular.forEach(success.data, function(item, index) {
             $scope.statusArray.push({
               id: item.order_status_id.toString(),
@@ -46,7 +46,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       })();
@@ -105,7 +105,7 @@ angular.module('commercialApp.controllers')
       $scope.buscarCliente = function() {
         ModalBuscarPessoa.show('Cliente').then(function(result) {
           if (result) {
-            console.log(result);
+            //@ console.log(result);
             $scope.cliente = new Pessoa(result);
           }
         });
@@ -145,16 +145,16 @@ angular.module('commercialApp.controllers')
         }
 
         $rootScope.loading.load();
-        console.log('busca de orçamento por código');
+        //@ console.log('busca de orçamento por código');
         $scope.pedidos = [ ];
         provider.obterPedidoPorCodigo(codigo, true, null, null, true, null, null).then(function(success) {
           $scope.pedidos.push(new Pedido(Pedido.converterEmEntrada(success.data)));
           $rootScope.loading.unload();
         }, function(error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           if (error.status == 404) {
-            console.log('Orçamento não encontrado!');
+            //@ console.log('Orçamento não encontrado!');
             $rootScope.alerta.show('Orçamento não encontrado!');
           }
         });
@@ -185,7 +185,7 @@ angular.module('commercialApp.controllers')
             $rootScope.loading.unload();
           }, function(error) {
             $scope.pagination.total = 0;
-            console.log(error);
+            //@ console.log(error);
             $rootScope.loading.unload();
             if (error.status == 404) {
               $rootScope.alerta.show('Nenhum resultado.');
@@ -210,7 +210,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
         }, function(error) {
           $scope.pagination.total = 0;
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       };

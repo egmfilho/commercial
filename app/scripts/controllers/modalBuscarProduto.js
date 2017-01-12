@@ -45,7 +45,7 @@ angular.module('commercialApp.controllers')
           $scope.produtos.push(new Produto(Produto.converterEmEntrada(success.data)));
           $rootScope.loading.unload();
         }, function(error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       };
@@ -65,7 +65,7 @@ angular.module('commercialApp.controllers')
           }, 300);
           $rootScope.loading.unload();
         }, function(error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
         });
       };

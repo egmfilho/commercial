@@ -43,7 +43,7 @@ function ImpressaoCtrl($scope, $routeParams, $http, Pedido, urls) {
         self.pedido = new Pedido(Pedido.converterEmEntrada(success.data.data));
         window.callPhantom();
       }, function(error) {
-        console.log(error);
+        //@ console.log(error);
       });
     }
   });

@@ -38,7 +38,7 @@ angular.module('commercialApp.controllers')
           $scope.pessoas.push(new Pessoa(Pessoa.converterEmEntrada(success.data)));
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           $rootScope.alerta.show('Nenhuma pessoa encontrada');
         });
@@ -56,7 +56,7 @@ angular.module('commercialApp.controllers')
           ordenarPorCodigo();
           $rootScope.loading.unload();
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
           $rootScope.loading.unload();
           $rootScope.alerta.show('Nenhuma pessoa encontrada');
         });
@@ -80,7 +80,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           $uibModalInstance.close(new Pessoa(Pessoa.converterEmEntrada(success.data)));
         }, function (error) {
-          console.log(error);
+          //@ console.log(error);
         });
       };
 

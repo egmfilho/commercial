@@ -116,7 +116,7 @@ angular
       return new Array(num);
     };
 
-    $rootScope.versao = '1.0.0';
+    $rootScope.versao = '1.0.1';
 
     $rootScope.loading = {
       count: 0,
@@ -158,26 +158,27 @@ angular
       $uibModalStack.dismissAll();
       $rootScope.currentPath = $location.path();
 
-      // // Bloqueia acesso de usuarios nao logados
-      // if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
-      //   if (next && next.templateUrl) {
-      //     if (next.templateUrl !== 'views/login.html' && next.templateUrl.indexOf('impressaoOrcamento.html') < 0) {
-      //       $location.path('/login');
-      //     }
-      //     return;
-      //   }
-      // }
-      //
-      // // Bloqueia acessos pelas permissoes
-      // if ($cookies.get('currentUser')) {
-      //   var user = JSON.parse(window.atob($cookies.get('currentUser')));
-      //   if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
-      //     if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
-      //       $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
-      //       $location.path('/home');
-      //     }
-      //   }
-      // }
+      // Bloqueia acesso de usuarios nao logados
+      if (!$cookies.get('COMMERCIAL') || !$cookies.get('currentUser') || $cookies.get('COMMERCIAL') != JSON.parse(window.atob($cookies.get('currentUser'))).sessao) {
+        if (next && next.templateUrl) {
+          if (next.templateUrl !== 'views/login.html' && next.templateUrl.indexOf('impressaoOrcamento.html') < 0) {
+            $location.path('/login');
+          }
+          return;
+        }
+      }
+
+      // Bloqueia acessos pelas permissoes
+      if ($cookies.get('currentUser')) {
+        var user = JSON.parse(window.atob($cookies.get('currentUser')));
+        if (next.modulo && user.perfil.permissoes.hasOwnProperty(next.modulo)) {
+          if (!user.perfil.permissoes[next.modulo].permissoes['access'].valor) {
+            $rootScope.alerta.show('Acesso não autorizado!', 'alert-danger');
+            $location.path('/home');
+          }
+        }
+      }
+
     });
 
   }]);

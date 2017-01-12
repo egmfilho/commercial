@@ -14,10 +14,10 @@
           <span class="logo"><img src="images/carrapeta.jpg" alt=""></span>
         </td>
         <td class="endereco">
-          <b>LOJA:</b> {{orcamento.pedido.loja.nome}}<br>
-          <b>ENDEREÇO:</b> {{orcamento.pedido.loja.endereco.logradouro}} <b>COMPLEMENTO:</b> {{orcamento.pedido.loja.complemento}}<br>
-          <b>BAIRRO:</b> {{orcamento.pedido.loja.endereco.bairro}} <b>CIDADE:</b> {{orcamento.pedido.loja.endereco.cidade}} <br>
-          <b>CEP:</b> {{orcamento.pedido.loja.endereco.cep}} <b>TEL:</b> {{orcamento.pedido.loja.telefone}}
+          {{orcamento.pedido.loja.nome}}<br>
+          {{orcamento.pedido.loja.endereco.logradouro}} {{orcamento.pedido.loja.complemento}}<br>
+          {{orcamento.pedido.loja.endereco.bairro}} - {{orcamento.pedido.loja.endereco.cidade}} <br>
+          {{orcamento.pedido.loja.endereco.cep}} &nbsp;&nbsp;&nbsp;&nbsp; {{orcamento.pedido.loja.telefone}}
         </td>
         <td class="text-right">
           <h4 class="orcamento-identificacao">Orçamento n&#186;: {{orcamento.pedido.codigo}}</h4>
@@ -32,66 +32,69 @@
   </div>
 
   <div class="info">
-    <!--<br>-->
-    <!--<table class="dados">-->
-      <!--<tr>-->
-        <!--<td>-->
-          <!--<h5>Cliente: </h5>-->
-          <!--({{orcamento.pedido.cliente.codigo}}) {{orcamento.pedido.cliente.nome}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>CPF/CNPJ: </h5>-->
-          <!--{{orcamento.pedido.cliente.cpf || orcamento.pedido.cliente.cnpj}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>Insc. Est.: </h5>-->
-          <!--{{orcamento.pedido.cliente.iEstadual}}-->
-        <!--</td>-->
-      <!--</tr>-->
-      <!--<tr>-->
-        <!--<td>-->
-          <!--<h5>Endereço: </h5>-->
-          <!--{{orcamento.pedido.cliente.endereco.logradouro}} {{orcamento.pedido.cliente.endereco.numero}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>Bairro: </h5>-->
-          <!--{{orcamento.pedido.cliente.endereco.bairro}}, {{orcamento.pedido.cliente.endereco.cidade}} - {{orcamento.pedido.cliente.endereco.uf}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>CEP: </h5>-->
-          <!--{{orcamento.pedido.cliente.endereco.cep}}-->
-        <!--</td>-->
-      <!--</tr>-->
-      <!--<tr>-->
-        <!--<td>-->
-          <!--<h5>Telefone: </h5>-->
-          <!--{{orcamento.pedido.cliente.endereco.ddd}} {{orcamento.pedido.cliente.telefone}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>Celular: </h5>-->
-          <!--{{orcamento.pedido.cliente.celular}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>email: </h5>-->
-          <!--{{orcamento.pedido.cliente.email}}-->
-        <!--</td>-->
-      <!--</tr>-->
-      <!--<tr>-->
-        <!--<td>-->
-          <!--<h5>Vendedor: </h5>-->
-          <!--({{orcamento.pedido.vendedor.codigo}}) {{orcamento.pedido.vendedor.nome}}-->
-        <!--</td>-->
-        <!--<td>-->
+    <br>
+    <table class="dados">
+      <tr>
+        <td>
+          <h5>Cliente: </h5>
+          ({{orcamento.pedido.cliente.codigo}}) {{orcamento.pedido.cliente.nome}}
+        </td>
+        <td>
+          <h5>CPF/CNPJ: </h5>
+          {{orcamento.pedido.cliente.cpf || orcamento.pedido.cliente.cnpj}}
+        </td>
+        <td>
+          <h5>Insc. Est.: </h5>
+          {{orcamento.pedido.cliente.iEstadual}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h5>Endereço: </h5>
+          {{orcamento.pedido.cliente.endereco.logradouro}} {{orcamento.pedido.cliente.endereco.numero}}
+        </td>
+        <td>
+          <h5>Bairro: </h5>
+          {{orcamento.pedido.cliente.endereco.bairro}}, {{orcamento.pedido.cliente.endereco.cidade}} - {{orcamento.pedido.cliente.endereco.uf}}
+        </td>
+        <td>
+          <h5>CEP: </h5>
+          {{orcamento.pedido.cliente.endereco.cep}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h5>Telefone: </h5>
+          <span ng-show="orcamento.pedido.cliente.telefone">{{orcamento.pedido.cliente.endereco.ddd}} {{orcamento.pedido.cliente.telefone}}</span>
+          <span ng-hide="orcamento.pedido.cliente.telefone">Indisponível</span>
+        </td>
+        <td>
+          <h5>Celular: </h5>
+          <span ng-show="orcamento.pedido.cliente.celular">{{orcamento.pedido.cliente.celular}}</span>
+          <span ng-hide="orcamento.pedido.cliente.celular">Indisponível</span>
+        </td>
+        <td>
+          <h5>email: </h5>
+          <span ng-show="orcamento.pedido.cliente.email">{{orcamento.pedido.cliente.email}}</span>
+          <span ng-hide="orcamento.pedido.cliente.email">Indisponível</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h5>Vendedor: </h5>
+          ({{orcamento.pedido.vendedor.codigo}}) {{orcamento.pedido.vendedor.nome}}
+        </td>
+        <td>
+          <h5>Data da emissão: </h5>
+          {{orcamento.pedido.dataPedido | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </td>
+        <td>
           <!--<h5>Loja: </h5>-->
           <!--{{orcamento.pedido.loja.shop_name}}-->
-        <!--</td>-->
-        <!--<td>-->
-          <!--<h5>Data da emissão: </h5>-->
-          <!--{{orcamento.pedido.dataPedido | date: 'medium'}}-->
-        <!--</td>-->
-      <!--</tr>-->
-    <!--</table>-->
-    <!--<br>-->
+        </td>
+      </tr>
+    </table>
+    <br>
     <p class="mensagem text-center">{{orcamento.pedido.mensagem}}</p>
     <br>
 
