@@ -1,12 +1,16 @@
-<div class="atalhos-doido" ng-show="currentPath === '/orcamento/new' || currentPath === '/orcamento/edit'">
-  <div class="comando"><span class="label label-primary">Enter</span> Ação ou avançar p/ próx. campo</div>
-  <div class="comando"><span class="label label-primary">Shift</span> + <span class="label label-primary">Enter</span> Avançar para próximo módulo</div>
-  <div class="comando"><span class="label label-primary">F1</span> Abrir busca</div>
-  <div class="comando"><span class="label label-primary">F5</span> Salvar orçamento</div>
-</div>
+
 <div class="navbar navbar-default navbar-fixed-bottom">
-  <div class="footer">
-  <!--<div class="footer">-->
+  <div class="footer clearfix" ng-class="{'footer-orcamento': currentPath === '/orcamento/new' || currentPath === '/orcamento/edit'}">
+    <div class="atalhos-doido" ng-show="currentPath === '/orcamento/new' || currentPath === '/orcamento/edit'">
+      <div class="atalhos-doido-box">
+        <div class="comando"><span class="label label-primary">Enter</span> Ação / Avançar</div>
+        <div class="comando"><span class="label label-primary">Shift</span> + <span class="label label-primary">Enter</span> Próximo módulo</div>
+        <div class="comando"><span class="label label-primary">F1</span> Abrir busca</div>
+        <div class="comando"><span class="label label-primary">F5</span> Salvar</div>
+      </div>
+    </div>
+    <div class="agencia"><a href="http://www.futuraagencia.com.br/" target="_blank">Futura Agência</a> - 2016 - Commercial ver. {{versao}}</div>
+    <!--<div class="footer">-->
     <!--<div class="dropup pull-left" ng-hide="currentPath === '/login' || currentPath === '/signup'">-->
       <!--<button class="btn btn-primary dropdown-toggle" type="button" id="dropup-atalhos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
         <!--<span class="glyphicon glyphicon-list-alt"></span> Atalhos de teclado-->
@@ -25,6 +29,6 @@
       <!--</ul>-->
     <!--</div>-->
 
-    <span class="agencia"><a href="http://www.futuraagencia.com.br/" target="_blank">Futura Agência</a> - 2016 - Commercial ver. {{versao}}</span>
+
   </div>
 </div>

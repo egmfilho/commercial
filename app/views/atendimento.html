@@ -159,6 +159,8 @@
               <dd>{{atendimento.atendimento.pedido.loja.nome}}</dd>
               <dt>Valor Total:</dt>
               <dd>{{atendimento.atendimento.pedido.valor | currency: 'R$ '}}</dd>
+              <dt>Orçamento</dt>
+              <dd><a href="" ng-click="atendimento.verItens()">Ver Resumo</a></dd>
             </dl>
           </div>
         </div>
@@ -579,4 +581,212 @@
       </div>
     </div>
   </div>
+
+
+<!--MODAL TIPO CONTATO-->
+<div class="modal meu-modal fade modalItens" id="modalItensPedido" tabindex="-1" role="dialog" aria-labelledby="modalItensPedido">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="header">
+        <div class="title">
+          <span class="glyphicon glyphicon-pencil"></span>
+          <span>Resumo </span><span class="hidden-xs">do Orçamento</span>
+          <span class="glyphicon glyphicon-remove close" data-dismiss="modal"></span>
+        </div>
+      </div>
+      <div class="body condensar-rows">
+        <div class="col-md-12">
+
+          <uib-accordion>
+            <!-- VENDEDOR -->
+            <div uib-accordion-group class="panel-default" is-open="vendedor_open">
+              <uib-accordion-heading>
+                <div class="title-accordion">
+                  <span>Vendedor</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-menu-down': vendedor_open, 'glyphicon-menu-up': !vendedor_open}"></i>
+                </div>
+              </uib-accordion-heading>
+              <div>
+                <div class="col-xs-12">
+                  <div class="col-xs-3 col-sm-2 data-caption">Vendedor:</div>
+                  <div class="col-xs-9 col-sm-10 data-data">({{atendimento.atendimento.pedido.vendedor.codigo}}) {{atendimento.atendimento.pedido.vendedor.nome}}</div>
+                </div>
+              </div>
+            </div>
+            <!-- VENDEDOR -->
+
+            <!-- PRODUTOS -->
+            <div uib-accordion-group class="panel-default" is-open="produto_open">
+              <uib-accordion-heading>
+                <div class="title-accordion">
+                  <span>Produtos</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-menu-down': produto_open, 'glyphicon-menu-up': !produto_open}"></i>
+                </div>
+
+              </uib-accordion-heading>
+              <div>
+                <div class="col-xs-12">
+                  <table class="tabela tabela-bordered tabela-esticada">
+                    <thead>
+                    <tr>
+                      <th valign="middle">Cód</th>
+                      <th>Descrição</th>
+                      <th>Un</th>
+                      <th>Qtd</th>
+                      <th>Vl unit</th>
+                      <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in atendimento.atendimento.pedido.items track by $index">
+                      <td data-label="Código">{{i.produto.codigo}}</td>
+                      <td data-label="Descrição">{{i.produto.nome | truncate : 20 }}</td>
+                      <td data-label="Un">{{i.produto.unidade}}</td>
+                      <td data-label="Qtd">{{i.quantidade | currency : ''}}</td>
+                      <td data-label="Vl unit">{{i.produto.preco | currency: 'R$ '}}</td>
+                      <td data-label="Total">{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- PRODUTOS -->
+
+            <!-- CLIENTE -->
+            <div uib-accordion-group class="panel-default" is-open="cliente_open">
+              <uib-accordion-heading>
+                <div class="title-accordion">
+                  <span>Cliente</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-menu-down': cliente_open, 'glyphicon-menu-up': !cliente_open}"></i>
+                </div>
+              </uib-accordion-heading>
+              <div class="striped">
+                <div class="col-xs-12 visible-xs-block">
+                  <div class="col-xs-4 data-caption">Código:</div>
+                  <div class="col-xs-8 data-data">{{atendimento.atendimento.pedido.cliente.codigo}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 data-caption visible-xs-block">Nome:</div>
+                  <div class="col-xs-8 data-data visible-xs-block">{{atendimento.atendimento.pedido.cliente.nome}}</div>
+
+                  <div class="col-sm-2 data-caption hidden-xs">Cliente:</div>
+                  <div class="col-sm-10 data-data hidden-xs">({{atendimento.atendimento.pedido.cliente.codigo}}) {{atendimento.atendimento.pedido.cliente.nome}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Tipo:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.tipo == 'J' ? 'PESSOA JURÍDICA' : 'PESSOA FÍSICA'}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">CPF:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.cpf}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">CNPJ:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.cnpj}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">IE:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.iEstadual}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">CEP:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.endereco.cep}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">UF:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.endereco.uf}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Logradouro:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.endereco.logradouro}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Número:</div>
+                  <div class="col-xs-8 col-sm-10">{{atendimento.atendimento.pedido.cliente.endereco.numero}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Bairro:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.endereco.bairro}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Cidade:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.endereco.cidade}}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Telefone:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.telefone ? '(' + atendimento.atendimento.pedido.cliente.endereco.ddd +') ' + atendimento.atendimento.pedido.cliente.telefone : 'NÃO DISPONÍVEL' }}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Celular:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.celular ? '(' + atendimento.atendimento.pedido.cliente.dddCelular +') ' + atendimento.atendimento.pedido.cliente.celular : 'NÃO DISPONÍVEL' }}</div>
+                </div>
+                <div class="col-xs-12">
+                  <div class="col-xs-4 col-sm-2 data-caption">Email:</div>
+                  <div class="col-xs-8 col-sm-10 data-data">{{atendimento.atendimento.pedido.cliente.email}}</div>
+                </div>
+
+              </div>
+            </div>
+            <!-- CLIENTE -->
+
+            <!-- OBSERVAÇÕES -->
+            <div uib-accordion-group class="panel-default" is-open="observacoes_open">
+              <uib-accordion-heading>
+                <div class="title-accordion">
+                  <span>Observações</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-menu-down': observacoes_open, 'glyphicon-menu-up': !observacoes_open}"></i>
+                </div>
+              </uib-accordion-heading>
+              <div>
+                <div class="col-xs-12">
+                  <p>{{atendimento.atendimento.pedido.observacoes}}</p>
+                </div>
+              </div>
+            </div>
+            <!-- OBSERVAÇÕES -->
+
+            <!-- PAGAMENTO -->
+            <div uib-accordion-group class="panel-default" is-open="pagamento_open">
+              <uib-accordion-heading>
+                <div class="title-accordion">
+                  <span>Pagamentos</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-menu-down': pagamento_open, 'glyphicon-menu-up': !pagamento_open}"></i>
+                </div>
+
+              </uib-accordion-heading>
+              <div>
+                <div class="col-xs-12">
+                  <table class="tabela tabela-bordered tabela-esticada">
+                    <thead>
+                    <tr>
+                      <th>Modalidade</th>
+                      <th>Valor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in atendimento.atendimento.pedido.pagamentos track by $index">
+                      <td data-label="Modalidade">{{i.modalidade.nome}}</td>
+                      <td data-label="Valor">{{i.valor | currency: 'R$ '}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- PAGAMENTO -->
+
+          </uib-accordion>
+
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL-->
+
+
 </div>

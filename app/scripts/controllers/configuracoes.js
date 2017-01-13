@@ -28,7 +28,7 @@ angular.module('commercialApp.controllers')
         width = parseInt(jQuery(window).width()),
         banner = 100,
         header = 60,
-        footer = 60,
+        footer = 50,
         height = jQuery(window).height() - banner - header - footer;
 
       self.statusAtendimento = new StatusHistoricoAtendimento();
@@ -110,7 +110,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -121,7 +121,7 @@ angular.module('commercialApp.controllers')
           self.permissoes = new PermissoesUsuario(PermissoesUsuario.converterEmEntrada(success.data));
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -135,7 +135,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -149,7 +149,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -168,7 +168,7 @@ angular.module('commercialApp.controllers')
           };
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.email = {
             status: 'falha'
           };
@@ -188,7 +188,7 @@ angular.module('commercialApp.controllers')
           };
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.conexao = {
             status: 'falha'
           };
@@ -202,7 +202,7 @@ angular.module('commercialApp.controllers')
           self.mensagemOrcamento = success.data.order_message;
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -223,7 +223,7 @@ angular.module('commercialApp.controllers')
             self.atualizarUsuarios();
           });
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       };
@@ -250,7 +250,7 @@ angular.module('commercialApp.controllers')
             self.atualizarUsuarios();
             $rootScope.alerta.show('Usuário excluído!', 'alert-success');
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show(error.data.status.description, 'alert-danger');
@@ -273,7 +273,7 @@ angular.module('commercialApp.controllers')
             self.atualizarPerfis();
           });
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       };
@@ -296,7 +296,7 @@ angular.module('commercialApp.controllers')
             self.atualizarPerfis();
             $rootScope.alerta.show('Perfil excluído!', 'alert-success');
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show('Não é possível excluir perfis em uso!', 'alert-danger');
@@ -332,7 +332,7 @@ angular.module('commercialApp.controllers')
             $rootScope.alerta.show('Status removido!', 'alert-success');
           }, function (error) {
             $rootScope.loading.unload();
-            //@ console.log(error);
+            console.log(error);
             if (error.status === 420) {
               $rootScope.alerta.show('Não é possível excluir um Status em uso!', 'alert-danger');
             }
@@ -355,7 +355,7 @@ angular.module('commercialApp.controllers')
             self.statusAtendimento = new StatusHistoricoAtendimento();
             self.atualizarStatusAtendimento();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
@@ -368,7 +368,7 @@ angular.module('commercialApp.controllers')
             self.statusAtendimento = new StatusHistoricoAtendimento();
             self.atualizarStatusAtendimento();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             jQuery('#modalStatus').modal('hide');
             self.statusAtendimento = new StatusHistoricoAtendimento();
@@ -405,7 +405,7 @@ angular.module('commercialApp.controllers')
             $rootScope.alerta.show('Tipo de contato removido!', 'alert-success');
           }, function (error) {
             $rootScope.loading.unload();
-            //@ console.log(error);
+            console.log(error);
             if (error.status === 420) {
               $rootScope.alerta.show('Não é possível excluir tipos de contato em uso!', 'alert-danger');
             }
@@ -428,7 +428,7 @@ angular.module('commercialApp.controllers')
             self.tipoContato = new TipoContato();
             self.atualizarTiposContato();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
             jQuery('#modalTipoContato').modal('hide');
@@ -442,7 +442,7 @@ angular.module('commercialApp.controllers')
             self.tipoContato = new TipoContato();
             self.atualizarTiposContato();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             $rootScope.alerta.show('Não foi possível adicionar o tipo de contato!', 'alert-danger');
             jQuery('#modalTipoContato').modal('hide');
@@ -470,7 +470,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           $rootScope.alerta.show('Configurações de email salvas!', 'alert-success');
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.email.status = 'falha';
           self.email.retorno = error.data.status.description;
           $rootScope.loading.unload();
@@ -490,7 +490,7 @@ angular.module('commercialApp.controllers')
           self.email.retorno = 'Configuração bem sucedida!';
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.email.status = 'falha';
           self.email.retorno = error.data.status.description;
           $rootScope.loading.unload();
@@ -510,7 +510,7 @@ angular.module('commercialApp.controllers')
           self.conexao.retorno = 'Conexão bem sucedida!';
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.conexao.status = 'falha';
           self.conexao.retorno = error.data.status.description;
           $rootScope.loading.unload();
@@ -530,7 +530,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           $rootScope.alerta.show('Configurações de conexão salvas!', 'alert-success');
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           self.conexao.retorno = self.conexao.retorno = error.data.status.description;
           self.conexao.status = 'falha';
           $rootScope.loading.unload();
@@ -543,7 +543,7 @@ angular.module('commercialApp.controllers')
           $rootScope.alerta.show('Mensagem salva!', 'alert-success');
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }

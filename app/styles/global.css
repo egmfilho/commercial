@@ -690,7 +690,6 @@ span:focus, a:focus {
     height: 200px !important; }
 
 div[name="footer"] .navbar {
-  height: 60px !important;
   box-shadow: 0 -2px 4px rgba(50, 50, 50, 0.35); }
 
 .footer .dropup {
@@ -711,8 +710,10 @@ div[name="footer"] .navbar {
   color: white;
   font-size: .8em;
   opacity: .8;
-  float: right;
-  margin: 20px; }
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  right: 0; }
   .footer .agencia a {
     text-decoration: none;
     font-weight: bold;
@@ -720,20 +721,51 @@ div[name="footer"] .navbar {
     .footer .agencia a:hover, .footer .agencia a:visited {
       color: white; }
 
+.footer-orcamento {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
 .atalhos-doido {
-  width: 100%;
-  background-color: #2d4373;
-  position: fixed;
-  bottom: 60px;
-  height: 30px;
+  width: calc(100% - 316px);
   color: white;
-  padding: 3px 10px;
-  text-align: center; }
+  text-align: center;
+  font-size: 15px;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  -ms-align-items: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  height: 50px; }
   .atalhos-doido .comando {
     display: inline;
     margin-right: 20px;
     vertical-align: middle; }
+  .atalhos-doido .comando:last-child {
+    margin-right: 0; }
 
+.atalhos-doido-box {
+  background-color: #2d4373;
+  padding: 3px 5px 6px;
+  border-radius: 5px; }
+
+@media (max-width: 992px) {
+  .footer {
+    display: block; }
+
+  .agencia {
+    position: inherit !important;
+    margin: 5px !important;
+    text-align: center; }
+
+  .atalhos-doido {
+    width: 100%;
+    background-color: #2d4373;
+    display: block;
+    height: auto; } }
 #login {
   text-align: center; }
   #login .frase {
@@ -1290,6 +1322,29 @@ div[name="footer"] .navbar {
         height: 100%; }
   .atendimento #modal-parecer-final .body.sm {
     height: 370px; }
+  .atendimento .modalItens .panel-heading {
+    background-color: #6481bb;
+    padding: 0; }
+    .atendimento .modalItens .panel-heading a:hover, .atendimento .modalItens .panel-heading a:focus {
+      outline: none;
+      text-decoration: none; }
+    .atendimento .modalItens .panel-heading .panel-title {
+      color: white !important; }
+    .atendimento .modalItens .panel-heading .title-accordion {
+      padding: 15px; }
+  .atendimento .modalItens .panel-body {
+    padding: 15px 0;
+    color: #333; }
+  .atendimento .modalItens .data-caption {
+    text-align: right;
+    font-weight: bold;
+    padding: 0; }
+  .atendimento .modalItens .data-data {
+    padding: 0 0 0 10px; }
+  .atendimento .modalItens .striped > div:nth-child(2n) {
+    background-color: #f5f5f5; }
+  .atendimento .modalItens .well {
+    margin-bottom: 0; }
 
 .configuracoes .dropdown .dropdown-toggle {
   font-size: 1.5em; }
