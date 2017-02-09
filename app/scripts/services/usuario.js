@@ -37,7 +37,7 @@ angular.module('commercialApp.services')
 
       usuario.id = user.user_id;
       usuario.perfilId = user.user_profile_id;
-      usuario.lojaId = user.user_shop_id;
+      usuario.lojaId = parseInt(user.user_shop_id);
       usuario.loja = user.user_shop;
       usuario.precosId = user.user_price_id;
       usuario.precos = user.user_price;
