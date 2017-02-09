@@ -687,10 +687,11 @@ function Orcamento(
     $rootScope.loading.load();
 
     if (!$scope.cdCEP || forceModal) {
-      modalBuscarEndereco.show([], function (result) {
+      modalBuscarEndereco.show([]).then(function (result) {
         if (result) {
           self.pedido.cliente.setEndereco(result);
           $scope.cdCEP = self.pedido.cliente.endereco.cep;
+          jQuery('input[name="endNumero"]').focus();
         }
       });
     } else {

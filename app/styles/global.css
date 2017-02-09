@@ -913,6 +913,9 @@ div[name="footer"] .navbar {
   box-shadow: 0 12px 14px rgba(50, 50, 50, 0.35); }
 
 @media print {
+  object {
+    display: none; }
+
   .header {
     display: none; }
 

@@ -132,7 +132,7 @@
         </tbody>
       </table>
 
-      <span ng-init="max=orcamento.pedido.blocos.length==1?15:($index==0?15:($index+1>=orcamento.pedido.blocos.length?15:30))"></span>
+      <span ng-init="max=orcamento.pedido.blocos.length==1?10:($index==0?10:($index+1>=orcamento.pedido.blocos.length?10:30))"></span>
       <div class="espacador" ng-repeat="n in getNumber(max - (bloco.length >= max ? max : bloco.length)) track by $index"></div>
 
       <p ng-class="{ 'quebra': $index + 1 >= orcamento.pedido.blocos.length && orcamento.pedido.blocos[$index].length >= 18 }"></p>
@@ -159,7 +159,7 @@
           <h5>Pagamento:</h5>
           <span ng-repeat="p in orcamento.pedido.pagamentos"><br>{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}</span>
           <br>
-          <h5>Total:</h5><br>{{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}
+          <h5>Total:</h5> {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}
         </td>
       </tr>
     </table>

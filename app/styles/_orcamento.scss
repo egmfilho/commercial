@@ -1,6 +1,10 @@
 $print-font-size: 11px;
 
 @media print {
+  object {
+    display: none;
+  }
+
   .header {
     display: none;
   }

@@ -16,7 +16,7 @@
         <div class="col-md-4">
           <h4>Loja</h4>
           <ui-select ng-model="atendimento.atendimento.lojaId" title="Informe a loja" ng-disabled="trancaLoja">
-            <ui-select-match placeholder="Informe a loja">{{$select.selected.nome}}</ui-select-match>
+            <ui-select-match placeholder="Informe a loja">{{$select.selected.codigo}} - {{$select.selected.nome}}</ui-select-match>
             <ui-select-choices repeat="loja.id as loja in atendimento.lojas | propsFilter: {nome: $select.search, codigo: $select.search}">
               <div ng-bind-html="loja.nome | highlight: $select.search"></div>
               <small>
@@ -104,7 +104,7 @@
         <div class="col-md-4">
           <h4>Loja</h4>
           <ui-select ng-model="atendimento.atendimento.lojaId" title="Informe a loja" ng-disabled="trancaLoja">
-            <ui-select-match placeholder="Informe a loja">{{$select.selected.nome}}</ui-select-match>
+            <ui-select-match placeholder="Informe a loja">{{$select.selected.codigo}} - {{$select.selected.nome}}</ui-select-match>
             <ui-select-choices repeat="loja.id as loja in atendimento.lojas | propsFilter: {nome: $select.search, codigo: $select.search}">
               <div ng-bind-html="loja.nome | highlight: $select.search"></div>
               <small>

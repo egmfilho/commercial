@@ -14,11 +14,12 @@ angular.module('commercialApp.controllers')
     'ProviderLoja',
     'ProviderTabelaPrecos',
     'ModalAlert',
+    'Loja',
     'Usuario',
     'usuario',
     'perfis',
     'permissoes',
-    function ($rootScope, $scope, $cookies, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Usuario, usuario, perfis, permissoes) {
+    function ($rootScope, $scope, $cookies, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Loja, Usuario, usuario, perfis, permissoes) {
 
       var self = this,
           currentUser = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))) : null;
@@ -49,10 +50,7 @@ angular.module('commercialApp.controllers')
         self.lojas = [ ];
         providerLoja.obterTodos().then(function(success) {
           angular.forEach(success.data, function(item, index) {
-            self.lojas.push({
-              id: item.shop_id.toString(),
-              nome: item.shop_name
-            });
+            self.lojas.push(new Loja(Loja.converterEmEntrada(item)));
           });
           $rootScope.loading.unload();
         }, function(error) {
