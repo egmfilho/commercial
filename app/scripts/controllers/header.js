@@ -57,7 +57,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.unload();
         $rootScope.alerta.show('Senha alterada!', 'alert-success');
       }, function(error) {
-        //@ console.log(error);
+        console.log(error);
         $rootScope.loading.unload();
       });
     };

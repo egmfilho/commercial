@@ -70,7 +70,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -87,7 +87,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           self.showFiltros = false;
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -95,7 +95,7 @@ angular.module('commercialApp.controllers')
       function getAtendimentosPorCodigoDePedido(codigo) {
         self.atendimentos = [];
         $rootScope.loading.load();
-        //@ console.log(self.filtro.responsavel);
+        console.log(self.filtro.responsavel);
         var limite = ($scope.pagination.current - 1) * $scope.pagination.max + ',' + $scope.pagination.max;
         providerAtendimento.obterTodosPorCodigoPedido(codigo, true, true, true, true, self.filtro.status, self.filtro.responsavel, self.filtro.data, DataSaida.converter(self.filtro.dataMin), DataSaida.converter(self.filtro.dataMax), limite).then(function (success) {
           $scope.pagination.total = success.info.attendance_quantity;
@@ -106,7 +106,7 @@ angular.module('commercialApp.controllers')
           self.showFiltros = false;
         }, function (error) {
           $scope.pagination.total = 0;
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -119,7 +119,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           self.showFiltros = false;
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -133,7 +133,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -187,7 +187,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }

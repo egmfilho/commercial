@@ -7,6 +7,6 @@
 angular.module('commercialApp.controllers')
   .controller('ClienteCtrl', ['$scope', '$http', function($scope, $http) {
 
-    //@ console.log('Teste');
+    console.log('Teste');
 
   }]);

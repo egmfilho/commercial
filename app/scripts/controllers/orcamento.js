@@ -30,7 +30,11 @@ Orcamento.$inject = [
   'ModalBuscarPedido',
   'ModalConfirm',
   'ModalAlert',
-  'ValidadorDocumento'
+  'ValidadorDocumento',
+  'ProviderPrazoPagamento',
+  'PrazoPagamento',
+  'FormaPagamento',
+  'Pagamento'
 ];
 
 function Orcamento(
@@ -57,7 +61,11 @@ function Orcamento(
   modalBuscarPedido,
   modalConfirm,
   modalAlert,
-  ValidadorDocumento) {
+  ValidadorDocumento,
+  providerPrazo,
+  PrazoPagamento,
+  FormaPagamento,
+  Pagamento) {
 
   var self = this,
       user = JSON.parse(window.atob($cookies.get('currentUser')));
@@ -92,6 +100,16 @@ function Orcamento(
       wait: 100,
       min_length: 3
     };
+    $scope.typeaheadCliente = {
+      search: '',
+      wait: 500,
+      min_length: 3
+    };
+    $scope.typeaheadVendedor = {
+      search: '',
+      wait: 500,
+      min_length: 3
+    };
 
     focarVendedor();
 
@@ -111,7 +129,7 @@ function Orcamento(
         $rootScope.loading.load();
         providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
           setPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
-          //@ console.log(self.pedido);
+          console.log(self.pedido);
           if (self.pedido.erp) {
             jQuery('#formulario-orcamento input, textarea, .input-group-btn .btn').prop('disabled', true).prop('tabindex', '-1');
           }
@@ -140,7 +158,7 @@ function Orcamento(
       });
       $rootScope.loading.unload();
     }, function(error) {
-      //@ console.log(error);
+      console.log(error);
       $rootScope.loading.unload();
     });
   }
@@ -156,7 +174,7 @@ function Orcamento(
         isTag: item.nome === 'Externo'
       })
     });
-    //@ console.log(self.emails);
+    console.log(self.emails);
 
     angular.forEach(self.usuarios, function(item, index) {
       self.contatos.push({
@@ -241,6 +259,9 @@ function Orcamento(
     $scope.cdCEP = pedido.cliente.endereco.cep;
     self.pedido = new Pedido(pedido);
     $scope.backup = new Pedido(pedido);
+
+    self.cdPrazo = pedido.prazo.codigo;
+    self.tempPrazo = new PrazoPagamento(pedido.prazo);
 
     setContatos();
   }
@@ -338,17 +359,21 @@ function Orcamento(
     });
   };
 
+  this.buscaVendedor = function() {
+    modalBuscarPessoa.show('Vendedor', $scope.typeaheadVendedor.search).then(function (result) {
+      if (result) {
+        self.pedido.setVendedor(result);
+        $scope.cdVendedor = result.codigo;
+        jQuery('input[name="CdVendedor"]').focus().select();
+      }
+    }, function (error) {
+      jQuery('input[name="CdVendedor"]').focus().select();
+    });
+  };
+
   this.buscaVendedorPorCodigo = function (codigo) {
     if (!codigo) {
-      modalBuscarPessoa.show('Vendedor').then(function (result) {
-        if (result) {
-          self.pedido.setVendedor(result);
-          $scope.cdVendedor = result.codigo;
-          jQuery('input[name="CdVendedor"]').focus().select();
-        }
-      }, function (error) {
-        jQuery('input[name="CdVendedor"]').focus().select();
-      });
+      this.buscaVendedor();
 
       return;
     }
@@ -366,10 +391,38 @@ function Orcamento(
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        //@ console.log('Vendedor não encontrado!');
+        console.log('Vendedor não encontrado!');
         $rootScope.alerta.show('Vendedor não encontrado!');
       }
     });
+  };
+
+  this.buscaVendedorPorNome = function(nome) {
+    $scope.typeaheadVendedor.search = nome;
+    $rootScope.loading.load();
+    return providerPessoa.obterPessoasPorNome('Vendedor', nome, 10).then(function(success) {
+      var vendedores = [];
+      angular.forEach(success.data, function(item, index) {
+        vendedores.push(new Pessoa(Pessoa.converterEmEntrada(item)));
+      });
+      vendedores.push({ codigo: -1, nome: 'Mais resultados...'});
+      $rootScope.loading.unload();
+      return vendedores;
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      return [];
+    });
+  };
+
+  this.selectVendedor = function(vendedor) {
+    if (vendedor.codigo === -1) {
+      this.buscaVendedor();
+      this.pedido.setVendedor(new Pessoa());
+    } else {
+      $scope.cdVendedor = vendedor.codigo;
+      self.pedido.setVendedor(new Pessoa(vendedor));
+    }
   };
 
   this.limparVendedor = function ($event) {
@@ -380,45 +433,49 @@ function Orcamento(
     if ($event) $event.stopPropagation();
   };
 
+  this.buscarCliente = function () {
+    modalBuscarPessoa.show('Cliente', $scope.typeaheadCliente.search).then(function (result) {
+      if (result) {
+        if (!self.pedido.setCliente(result)) {
+          $rootScope.alerta.show('Cliente inativo!');
+        }
+        $scope.cdCliente = result.codigo;
+        setContatos();
+        jQuery('input[name="CdCliente"]').focus().select();
+      }
+    }, function (error) {
+      jQuery('input[name="CdCliente"]').focus().select();
+    });
+  };
+
   this.buscaClientePorCodigo = function (codigo) {
     if (!codigo) {
-      modalBuscarPessoa.show('Cliente').then(function (result) {
-        if (result) {
-          if (!self.pedido.setCliente(result)) {
-            $rootScope.alerta.show('Cliente inativo!');
-          }
-          $scope.cdCliente = result.codigo;
-          setContatos();
-          jQuery('input[name="CdCliente"]').focus().select();
-        }
-      }, function (error) {
-        jQuery('input[name="CdCliente"]').focus().select();
-      });
-
+      this.buscarCliente();
       return;
     }
 
     if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
       //this.salvar();
-      return;
+      // return;
     }
 
     $rootScope.loading.load();
     providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function (success) {
       $rootScope.loading.unload();
       var cliente = new Pessoa(Pessoa.converterEmEntrada(success.data));
-      if (!cliente.ativo) {
-        $rootScope.alerta.show('Cliente inativo!');
-        jQuery('input[name="CdCliente"]').focus().select();
-        return;
-      }
+      // if (!cliente.ativo) {
+      //   $rootScope.alerta.show('Cliente inativo!');
+      //   jQuery('input[name="CdCliente"]').focus().select();
+      //   return;
+      // }
+      console.log(cliente);
       self.pedido.setCliente(cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
       setContatos();
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        //@ console.log('Cliente não encontrado!');
+        console.log('Cliente não encontrado!');
         $rootScope.alerta.show('Cliente não encontrado!');
         modalBuscarPessoa.show('Cliente').then(function (result) {
           if (result) {
@@ -434,6 +491,37 @@ function Orcamento(
         });
       }
     });
+  };
+
+  this.buscaClientePorNome = function(nome) {
+    $scope.typeaheadCliente.search = nome;
+    $rootScope.loading.load();
+    return providerPessoa.obterPessoasPorNome('Cliente', nome, 10).then(function(success) {
+      var clientes = [];
+      angular.forEach(success.data, function(item, index) {
+        clientes.push(new Pessoa(Pessoa.converterEmEntrada(item)));
+      });
+      clientes.push({ codigo: -1, nome: 'Mais resultados...'});
+      $rootScope.loading.unload();
+      return clientes;
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      return [];
+    });
+  };
+
+  this.selectCliente = function(cliente) {
+    if (cliente.codigo === -1) {
+      this.buscarCliente();
+      this.pedido.setCliente(new Pessoa());
+    } else {
+      console.log(cliente);
+      self.buscaClientePorCodigo(cliente.codigo);
+      // $scope.cdCliente = cliente.codigo;
+      // self.pedido.setCliente(new Pessoa(cliente));
+      // setContatos();
+    }
   };
 
   this.limparCliente = function ($event, force) {
@@ -515,7 +603,7 @@ function Orcamento(
 
     this.pedido.cliente.tpPessoa = 'Cliente';
     $rootScope.loading.load();
-    //@ console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
+    console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
     providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function (success) {
       self.pedido.setIdCliente(success.data.IdPessoa);
       self.pedido.cliente.codigo = success.data.CdPessoa;
@@ -523,7 +611,7 @@ function Orcamento(
       $scope.cliente.novo = false;
       $rootScope.loading.unload();
     }, function (error) {
-      //@ console.log(error);
+      console.log(error);
       $rootScope.loading.unload();
       if (error.data.status.code == 409) {
         self.pedido.cliente.tipo == 'F' ? modalAlert.show('Aviso', 'CFP já cadastrado!') : modalAlert.show('Aviso', 'CNPJ já cadastrado!');
@@ -582,7 +670,7 @@ function Orcamento(
     }, function (error) {
       $rootScope.loading.unload();
       if (error.status == 404) {
-        //@ console.log('Produto não encontrado!');
+        console.log('Produto não encontrado!');
         $rootScope.alerta.show('Produto não encontrado!');
       }
     });
@@ -596,7 +684,7 @@ function Orcamento(
       $rootScope.loading.unload();
       return success.data;
     }, function (err) {
-      //@ console.log(err);
+      console.log(err);
       $rootScope.loading.unload();
       $rootScope.alerta.show('Produto não encontrado!');
     });
@@ -716,7 +804,7 @@ function Orcamento(
       }, function (error) {
         $rootScope.loading.unload();
         if (error.status == 404) {
-          //@ console.log('CEP não encontrado!');
+          console.log('CEP não encontrado!');
           $rootScope.alerta.show('CEP não encontrado!');
         }
       });
@@ -789,7 +877,7 @@ function Orcamento(
       }
 
       modalConfirm.show('Aviso', 'Salvar orçamento?').then(function() {
-        //@ console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
+        console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
         // $uibModalStack.dismissAll();
 
         $rootScope.loading.load();
@@ -797,18 +885,18 @@ function Orcamento(
         if (!self.pedido.id && !self.pedido.codigo) { // salvar novo
           providerPedido.adicionarPedido(Pedido.converterEmSaida(self.pedido)).then(function (success) {
             var result = new Pedido(Pedido.converterEmEntrada(success.data));
-            //@ console.log(result);
+            console.log(result);
             $scope.backup = null;
             self.pedido.id = result.id;
             self.pedido.codigo = result.codigo;
             self.pedido.setLoja(result.loja);
             self.pedido.mensagem = result.mensagem;
-            //@ console.log(self.pedido);
+            console.log(self.pedido);
             $rootScope.alerta.show('Orçamento código ' + result.codigo + ' salvo!', 'alert-success');
             $rootScope.loading.unload();
             $scope.mostrarOpcoesSalvo();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
           });
         } else { // salvar editado
@@ -818,7 +906,7 @@ function Orcamento(
             $rootScope.loading.unload();
             $scope.mostrarOpcoesSalvo();
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
           });
         }
@@ -877,7 +965,7 @@ function Orcamento(
           self.limpar();
         });
       }, function (error) {
-        //@ console.log(error);
+        console.log(error);
         modalAlert.show('Aviso', 'Não foi possível excluir o orçamento.');
       });
     });
@@ -944,7 +1032,7 @@ function Orcamento(
         $rootScope.loading.unload();
         $rootScope.alerta.show('Email enviado!', 'alert-success');
       }, function(error) {
-        //@ console.log(error);
+        console.log(error);
         $rootScope.loading.unload();
         $rootScope.alerta.show(error.data.status.message + ' ' + error.data.status.description, 'alert-danger');
       });
@@ -979,10 +1067,69 @@ function Orcamento(
         $rootScope.alerta.show('Orçamento foi exportado!', 'alert-success');
         $scope.mostrarOpcoesExportado();
       }, function(error) {
-        //@ console.log(error);
+        console.log(error);
         $rootScope.loading.unload();
         $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
       });
     });
   };
+
+  this.abrirModalPagamento = function (callback_positive, callback_negative) {
+    jQuery('#modalPagamento').on('shown.bs.modal', function (e) {
+      jQuery('input[name="cdPrazo"]').focus().select();
+    }).modal('show').on('hidden.bs.modal', function (e) {
+      if (callback_negative) callback_negative();
+    }).find('.control button[name="positive"]').unbind('click').click(function () {
+      if (callback_positive) callback_positive();
+    });
+  };
+
+  this.buscarPrazoPorCodigo = function (codigo) {
+    $rootScope.loading.load();
+    providerPrazo.obterPorCodigo(codigo).then(function (success) {
+      self.selectPrazo(new PrazoPagamento(PrazoPagamento.converterEmEntrada(success.data)));
+      $rootScope.loading.unload();
+    }, function (error) {
+      console.log(error);
+      $rootScope.loading.unload();
+    });
+  };
+
+  this.selectPrazo = function (prazo) {
+    if (prazo.codigo === -1) {
+      // $scope.buscarPrazo();
+    } else {
+      self.pedido.setPrazo(prazo);
+      self.cdPrazo = self.pedido.prazo.codigo;
+      self.tempPrazo = new PrazoPagamento(self.pedido.prazo);
+      setParcelas();
+    }
+  };
+
+  function setParcelas() {
+    self.pedido.pagamentos = [];
+    for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
+      self.pedido.pagamentos.push(new Pagamento());
+      self.pedido.pagamentos[i].valor = self.pedido.getValorTotalComDesconto() / self.pedido.prazo.parcelas;
+      self.pedido.pagamentos[i].vencimento = getDataDaParcela(self.pedido.prazo, i);
+      self.pedido.pagamentos[i].forma = self.pedido.prazo.formas[0];
+      self.pedido.pagamentos[i].setForma();
+    }
+  }
+
+  function getDataDaParcela(prazo, parcela) {
+    var hoje = new Date();
+
+    if (parcela < 0) {
+      return;
+    }
+
+    if (parcela == 0) {
+      hoje.setDate(hoje.getDate() + prazo.iniciaEm);
+    } else {
+      hoje.setDate(hoje.getDate() + prazo.iniciaEm + (prazo.intervalo * parcela));
+    }
+
+    return hoje;
+  }
 }

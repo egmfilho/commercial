@@ -47,12 +47,14 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
-        obterPessoasPorNome: function(tipo, nome) {
+        obterPessoasPorNome: function(tipo, nome, limite, pagina) {
           return provider.query({
             action: 'getList'
           }, {
             TpPessoa: tipo,
-            NmPessoa: nome
+            NmPessoa: nome,
+            Limite: limite,
+            page: pagina
           }).$promise;
         },
 

@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'Loja', 'DataSaida', function ($filter, $cookies, ItemPedido, Pessoa, Pagamento, Loja, dataSaida) {
+  .factory('Pedido', ['$filter', '$cookies', 'ItemPedido', 'Pessoa', 'Pagamento', 'PrazoPagamento', 'Loja', 'DataSaida', function ($filter, $cookies, ItemPedido, Pessoa, Pagamento, PrazoPagamento, Loja, dataSaida) {
 
     function compare(pedido) {
       var i;
@@ -24,6 +24,7 @@ angular.module('commercialApp.services')
       if (this.observacoes != pedido.observacoes) return false;
 
       if (this.pagamentos.length != pedido.pagamentos.length) return false;
+      if (this.idPrazo != pedido.idPrazo) return false;
 
       for (i = 0; i < this.items.length; i++) {
         if (this.items[i].idProduto != pedido.items[i].idProduto) return false;
@@ -36,6 +37,7 @@ angular.module('commercialApp.services')
 
       for (i = 0; i < this.pagamentos.length; i++) {
         if (this.pagamentos[i].idModalidade != pedido.pagamentos[i].idModalidade) return false;
+        if (this.pagamentos[i].idForma != pedido.pagamentos[i].idForma) return false;
         if (this.pagamentos[i].descontoPercent != pedido.pagamentos[i].descontoPercent) return false;
         if (this.pagamentos[i].descontoDinheiro != pedido.pagamentos[i].descontoDinheiro) return false;
         if (this.pagamentos[i].valor != pedido.pagamentos[i].valor) return false;
@@ -77,6 +79,9 @@ angular.module('commercialApp.services')
 
       this.pagamentos = [];
 
+      this.idPrazo = p ? p.idPrazo : '';
+      this.prazo = p ? new PrazoPagamento(p.prazo) : new PrazoPagamento();
+
       if (p) {
         angular.forEach(p.pagamentos, function (item, index) {
           self.pagamentos.push(new Pagamento(item));
@@ -95,6 +100,11 @@ angular.module('commercialApp.services')
     }
 
     Pedido.prototype = {
+
+      setPrazo: function(prazo) {
+        this.idPrazo = prazo.id;
+        this.prazo = new PrazoPagamento(prazo);
+      },
 
       contemItem: function (item) {
         var result = -1;
@@ -121,9 +131,9 @@ angular.module('commercialApp.services')
       },
 
       setCliente: function (cliente) {
-        if (!cliente.ativo) {
-          return false;
-        }
+        // if (!cliente.ativo) {
+        //   return false;
+        // }
 
         this.idCliente = cliente.id;
         this.cliente = cliente;
@@ -351,6 +361,13 @@ angular.module('commercialApp.services')
         });
       }
 
+      pedido.idPrazo = p.order_payment_term_id;
+      if (p.order_payment_term) {
+        pedido.prazo = new PrazoPagamento(PrazoPagamento.converterEmEntrada(p.order_payment_term));
+      } else {
+        pedido.prazo = new PrazoPagamento();
+      }
+
       return pedido;
     };
 
@@ -377,6 +394,8 @@ angular.module('commercialApp.services')
       angular.forEach(pedido.pagamentos, function (item, index) {
         p.order_payments.push(Pagamento.converterEmSaida(item));
       });
+
+      p.order_payment_term_id = pedido.idPrazo;
 
       //p.DtAtualizacao = dataSaida.converter(pedido.dataAtualizacao);
       //p.DtPedido = dataSaida.converter(pedido.dataPedido);

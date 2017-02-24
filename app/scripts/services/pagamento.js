@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('Pagamento', ['Modalidade', function (Modalidade) {
+  .factory('Pagamento', ['Modalidade', 'FormaPagamento', 'DataSaida', function (Modalidade, FormaPagamento, DataSaida) {
 
     function Pagamento(pagamento) {
       this.id = pagamento ? pagamento.id : '';
@@ -17,9 +17,20 @@ angular.module('commercialApp.services')
       this.valor = pagamento ? pagamento.valor : 0;
       this.dataPagamento = pagamento ? pagamento.dataPagamento : new Date();
       this.dataAtualizacao = pagamento ? pagamento.dataAtualizacao : new Date();
+
+      this.idForma = pagamento ? pagamento.idForma : '';
+      this.forma = pagamento ? new FormaPagamento(pagamento.forma) : new FormaPagamento();
+      this.vencimento = pagamento ? pagamento.vencimento : new Date();
     }
 
     Pagamento.prototype = {
+
+      setForma: function(forma) {
+        if (forma) {
+          this.forma = new FormaPagamento(forma);
+        }
+        this.idForma = this.forma.id;
+      },
 
       setModalidade: function (modalidade) {
         if (!modalidade) return;
@@ -74,17 +85,24 @@ angular.module('commercialApp.services')
       pagamento.dataPagamento = new Date(p.order_payment_date);
       pagamento.dataAtualizacao = new Date(p.order_payment_update);
 
+      pagamento.idForma = p.modality_id;
+      pagamento.forma = new FormaPagamento(FormaPagamento.converterEmEntrada(p.modality));
+      pagamento.vencimento = new Date((p.order_payment_deadline || p.order_payment_deadline) + 'T12:00:00');
+
       return pagamento;
     };
 
     Pagamento.converterEmSaida = function (pagamento) {
       var p = {};
 
-      p.modality_id = pagamento.modalidade.id;
+      // p.modality_id = pagamento.modalidade.id;
       p.order_payment_al_discount = pagamento.descontoPercent;
       p.order_payment_vl_discount = pagamento.descontoDinheiro;
       p.order_payment_value = pagamento.valor;
       p.order_payment_value_total = pagamento.getValorTotalComDesconto();
+
+      p.modality_id = pagamento.idForma;
+      p.order_payment_deadline = DataSaida.converter(pagamento.vencimento);
 
       return p;
     };

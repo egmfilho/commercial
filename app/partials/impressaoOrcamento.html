@@ -11,7 +11,7 @@
     <table class="clearfix">
       <tr>
         <td>
-          <span class="logo"><img src="images/carrapeta.jpg" alt=""></span>
+          <span class="logo"><img src="images/header_carton.png" alt=""></span>
         </td>
         <td class="endereco">
           {{orcamento.pedido.loja.nome}}<br>
@@ -157,7 +157,8 @@
         </td>
         <td>
           <h5>Pagamento:</h5>
-          <span ng-repeat="p in orcamento.pedido.pagamentos"><br>{{p.modalidade.nome}} - {{p.valor | currency: 'R$ '}}</span>
+          <br>
+          <span>{{orcamento.pedido.prazo.descricao}}</span>
           <br>
           <h5>Total:</h5> {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}
         </td>

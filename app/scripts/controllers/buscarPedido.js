@@ -48,7 +48,7 @@ angular.module('commercialApp.controllers')
         $rootScope.loading.load();
         $scope.statusArray = [];
         providerConfig.obterStatusPedido().then(function(success) {
-          //@ console.log(success.data);
+          console.log(success.data);
           angular.forEach(success.data, function(item, index) {
             $scope.statusArray.push({
               id: item.order_status_id.toString(),
@@ -57,7 +57,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -81,7 +81,7 @@ angular.module('commercialApp.controllers')
           $scope.showFiltros = false;
         }, function (error) {
           self.pagination.total = 0;
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -99,7 +99,7 @@ angular.module('commercialApp.controllers')
           $rootScope.loading.unload();
           $scope.showFiltros = false;
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }

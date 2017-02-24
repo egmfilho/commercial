@@ -36,7 +36,7 @@ angular.module('commercialApp.controllers')
 
       $uibModalInstance.opened.then(function () {
         self.usuario = new Usuario(usuario);
-        //@ console.log(self.usuario);
+        console.log(self.usuario);
         self.perfis = perfis; // para usar no select
         if (!self.usuario.perfil.permissoes) {
           self.usuario.perfil.permissoes = permissoes;
@@ -54,7 +54,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -71,7 +71,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       }
@@ -121,7 +121,7 @@ angular.module('commercialApp.controllers')
       //    $rootScope.loading.unload();
       //    $uibModalInstance.close('Usuário excluído!');
       //  }, function (error) {
-      //    //@ console.log(error);
+      //    console.log(error);
       //    $rootScope.loading.unload();
       //  });
       //};
@@ -131,7 +131,7 @@ angular.module('commercialApp.controllers')
           return;
         }
 
-        //@ console.log(Usuario.converterEmSaida(self.usuario));
+        console.log(Usuario.converterEmSaida(self.usuario));
 
         $rootScope.loading.load();
         if (self.usuario.id) {
@@ -141,7 +141,7 @@ angular.module('commercialApp.controllers')
             modalAlert.show('Editado!', 'Alterações de usuário terão efeito na próxima vez que o login for realizado.');
             $uibModalInstance.close(true);
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');
@@ -153,7 +153,7 @@ angular.module('commercialApp.controllers')
             $rootScope.alerta.show('Usuário registrado com sucesso!', 'alert-success');
             $uibModalInstance.close(true);
           }, function (error) {
-            //@ console.log(error);
+            console.log(error);
             $rootScope.loading.unload();
             if (error.status === 420) {
               $rootScope.alerta.show('Nome de usuário ja registrado!', 'alert-danger');

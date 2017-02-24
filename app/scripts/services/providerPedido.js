@@ -39,10 +39,11 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades,
+            get_order_payments_modality: true,
             get_order_attendance: true,
             get_order_shop: true,
-            get_shop_cep: true
+            get_shop_cep: true,
+            get_order_payment_term: true
           }).$promise;
         },
 
@@ -56,10 +57,11 @@ angular.module('commercialApp.services')
             get_order_items_product: produtos,
             get_order_client: cliente,
             get_order_payments: pagamentos,
-            get_order_payments_modality: modalidades,
+            get_order_payments_modality: true,
             get_order_attendance: true,
             get_order_shop: true,
-            get_shop_cep: true
+            get_shop_cep: true,
+            get_order_payment_term: true
           }).$promise;
         },
 

@@ -4,10 +4,10 @@ $brand-info:    #5bc0de;
 $brand-warning: #f0ad4e;
 $brand-danger:  #d9534f;
 
-$cor-principal:            #3b5998; //rgb(0, 167, 156);
-$cor-principal-leve:       #5c78ab;
-$cor-principal-clara:      #6481bb;
-$cor-highlight:            #29487d; //rgb(0, 196, 193);
+$cor-principal: #1373a4;
+$cor-principal-leve:       lighten($cor-principal, 4%);
+$cor-principal-clara:      lighten($cor-principal, 8%);
+$cor-highlight:            darken($cor-principal, 8%);
 $cor-active:               rgb(0, 130, 120);
 $cor-de-fundo:             #ddd;
 $cor-fundo-tabela:         #f2f2f2;

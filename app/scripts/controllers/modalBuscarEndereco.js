@@ -51,7 +51,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function (error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       };
@@ -70,7 +70,7 @@ angular.module('commercialApp.controllers')
           });
           $rootScope.loading.unload();
         }, function(error) {
-          //@ console.log(error);
+          console.log(error);
           $rootScope.loading.unload();
         });
       };

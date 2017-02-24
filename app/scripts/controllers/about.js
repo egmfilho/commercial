@@ -20,16 +20,16 @@ angular.module('commercialApp')
     };
 
     this.teste = function(msg) {
-      //@ console.log(msg);
+      console.log(msg);
     };
 
     this.click = function(obj) {
-      ////@ console.log(obj);
+      //console.log(obj);
       prototipo();
     };
 
     $('.teste-absolute').click(function(event) {
-      //@ console.log('click');
+      console.log('click');
     });
 
   }]);

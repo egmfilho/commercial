@@ -8,7 +8,7 @@ angular.module('commercialApp.services')
   .service('ArrayPrototype', [function() {
 
     this.contains = function() {
-      //@ console.log('Método .contains(searchElement[, fromIndex]) adicionado ao prototype do Array!');
+      console.log('Método .contains(searchElement[, fromIndex]) adicionado ao prototype do Array!');
 
       if (![].contains) {
         Object.defineProperty(Array.prototype, 'contains', {
