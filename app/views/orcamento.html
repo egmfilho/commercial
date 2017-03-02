@@ -80,7 +80,15 @@
       </div>
       <div class="col-xs-7 col-sm-9">
         <h4>Nome</h4>
-        <input type="text" class="form-control" tabindex="-1" ng-value="orcamento.pedido.vendedor.nome" readonly="true">
+        <input name="nome-vendedor" type="text" class="form-control" ng-model="orcamento.pedido.vendedor"
+               style="transition: none"
+               keys-shortcuts prevent-default="true" shift-enter="orcamento.escapeVendedor()"
+               uib-typeahead="vendedor as vendedor.nome for vendedor in orcamento.buscaVendedorPorNome($viewValue)"
+               typeahead-template-url="partials/pessoasTypeaheadPopup.html"
+               typeahead-min-length="typeaheadVendedor.min_length"
+               typeahead-loading="isLoading"
+               typeahead-wait-ms="typeaheadVendedor.wait"
+               typeahead-on-select="orcamento.selectVendedor($item)" required>
       </div>
     </div>
   </div>
@@ -313,8 +321,20 @@
       <div class="col-xs-7 col-sm-9">
         <h4>Nome <sup>{{cliente.novo ? '1' : ''}}</sup></h4>
         <input name="nome-cliente" type="text" class="form-control" ng-model="orcamento.pedido.cliente.nome"
-               ng-readonly="!cliente.novo" keys-shortcuts prevent-default="true"
+               style="transition: none"
+               ng-show="cliente.novo" keys-shortcuts prevent-default="true"
                enter="orcamento.avancar('select', 'tipo')" shift-enter="orcamento.salvar()" maxlength="60">
+
+        <input name="nome-cliente-ta" type="text" class="form-control" ng-model="orcamento.pedido.cliente" ng-show="!cliente.novo"
+               style="transition: none" keys-shortcuts prevent-default="true"
+               shift-enter="orcamento.salvar()"
+               uib-typeahead="cliente as cliente.nome for cliente in orcamento.buscaClientePorNome($viewValue)"
+               typeahead-template-url="partials/pessoasTypeaheadPopup.html"
+               typeahead-min-length="typeaheadCliente.min_length"
+               typeahead-loading="isLoading"
+               typeahead-wait-ms="typeaheadCliente.wait"
+               typeahead-on-select="orcamento.selectCliente($item)" required>
+
       </div>
       <div class="col-xs-6 col-sm-3">
         <h4>Tipo <sup>{{cliente.novo ? '1' : ''}}</sup></h4>

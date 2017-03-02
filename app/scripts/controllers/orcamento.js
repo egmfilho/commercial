@@ -92,6 +92,16 @@ function Orcamento(
       wait: 100,
       min_length: 3
     };
+    $scope.typeaheadCliente = {
+      search: '',
+      wait: 500,
+      min_length: 3
+    };
+    $scope.typeaheadVendedor = {
+      search: '',
+      wait: 500,
+      min_length: 3
+    };
 
     focarVendedor();
 
@@ -338,17 +348,21 @@ function Orcamento(
     });
   };
 
+  this.buscaVendedor = function() {
+    modalBuscarPessoa.show('Vendedor', $scope.typeaheadVendedor.search).then(function (result) {
+      if (result) {
+        self.pedido.setVendedor(result);
+        $scope.cdVendedor = result.codigo;
+        jQuery('input[name="CdVendedor"]').focus().select();
+      }
+    }, function (error) {
+      jQuery('input[name="CdVendedor"]').focus().select();
+    });
+  };
+
   this.buscaVendedorPorCodigo = function (codigo) {
     if (!codigo) {
-      modalBuscarPessoa.show('Vendedor').then(function (result) {
-        if (result) {
-          self.pedido.setVendedor(result);
-          $scope.cdVendedor = result.codigo;
-          jQuery('input[name="CdVendedor"]').focus().select();
-        }
-      }, function (error) {
-        jQuery('input[name="CdVendedor"]').focus().select();
-      });
+      this.buscaVendedor();
 
       return;
     }
@@ -372,6 +386,34 @@ function Orcamento(
     });
   };
 
+  this.buscaVendedorPorNome = function(nome) {
+    $scope.typeaheadVendedor.search = nome;
+    $rootScope.loading.load();
+    return providerPessoa.obterPessoasPorNome('Vendedor', nome, 10).then(function(success) {
+      var vendedores = [];
+      angular.forEach(success.data, function(item, index) {
+        vendedores.push(new Pessoa(Pessoa.converterEmEntrada(item)));
+      });
+      vendedores.push({ codigo: -1, nome: 'Mais resultados...'});
+      $rootScope.loading.unload();
+      return vendedores;
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      return [];
+    });
+  };
+
+  this.selectVendedor = function(vendedor) {
+    if (vendedor.codigo === -1) {
+      this.buscaVendedor();
+      this.pedido.setVendedor(new Pessoa());
+    } else {
+      $scope.cdVendedor = vendedor.codigo;
+      self.pedido.setVendedor(new Pessoa(vendedor));
+    }
+  };
+
   this.limparVendedor = function ($event) {
     modalConfirm.show('Aviso', 'Limpar campos do Vendedor?').then(function() {
       $scope.cdVendedor = '';
@@ -380,21 +422,24 @@ function Orcamento(
     if ($event) $event.stopPropagation();
   };
 
+  this.buscarCliente = function () {
+    modalBuscarPessoa.show('Cliente', $scope.typeaheadCliente.search).then(function (result) {
+      if (result) {
+        if (!self.pedido.setCliente(result)) {
+          $rootScope.alerta.show('Cliente inativo!');
+        }
+        $scope.cdCliente = result.codigo;
+        setContatos();
+        jQuery('input[name="CdCliente"]').focus().select();
+      }
+    }, function (error) {
+      jQuery('input[name="CdCliente"]').focus().select();
+    });
+  };
+
   this.buscaClientePorCodigo = function (codigo) {
     if (!codigo) {
-      modalBuscarPessoa.show('Cliente').then(function (result) {
-        if (result) {
-          if (!self.pedido.setCliente(result)) {
-            $rootScope.alerta.show('Cliente inativo!');
-          }
-          $scope.cdCliente = result.codigo;
-          setContatos();
-          jQuery('input[name="CdCliente"]').focus().select();
-        }
-      }, function (error) {
-        jQuery('input[name="CdCliente"]').focus().select();
-      });
-
+      this.buscarCliente();
       return;
     }
 
@@ -407,11 +452,11 @@ function Orcamento(
     providerPessoa.obterPessoaPorCodigo('Cliente', codigo).then(function (success) {
       $rootScope.loading.unload();
       var cliente = new Pessoa(Pessoa.converterEmEntrada(success.data));
-      if (!cliente.ativo) {
-        $rootScope.alerta.show('Cliente inativo!');
-        jQuery('input[name="CdCliente"]').focus().select();
-        return;
-      }
+      // if (!cliente.ativo) {
+      //   $rootScope.alerta.show('Cliente inativo!');
+      //   jQuery('input[name="CdCliente"]').focus().select();
+      //   return;
+      // }
       self.pedido.setCliente(cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
       setContatos();
@@ -434,6 +479,35 @@ function Orcamento(
         });
       }
     });
+  };
+
+  this.buscaClientePorNome = function(nome) {
+    $scope.typeaheadCliente.search = nome;
+    $rootScope.loading.load();
+    return providerPessoa.obterPessoasPorNome('Cliente', nome, 10).then(function(success) {
+      var clientes = [];
+      angular.forEach(success.data, function(item, index) {
+        clientes.push(new Pessoa(Pessoa.converterEmEntrada(item)));
+      });
+      clientes.push({ codigo: -1, nome: 'Mais resultados...'});
+      $rootScope.loading.unload();
+      return clientes;
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      return [];
+    });
+  };
+
+  this.selectCliente = function(cliente) {
+    if (cliente.codigo === -1) {
+      this.buscarCliente();
+      this.pedido.setCliente(new Pessoa());
+    } else {
+      $scope.cdCliente = cliente.codigo;
+      self.pedido.setCliente(new Pessoa(cliente));
+      setContatos();
+    }
   };
 
   this.limparCliente = function ($event, force) {

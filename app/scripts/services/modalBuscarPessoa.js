@@ -8,7 +8,7 @@ angular.module('commercialApp.services')
   .factory('ModalBuscarPessoa', ['$q', '$uibModal', function ($q, $uibModal) {
 
     return {
-      show: function (tipo) {
+      show: function (tipo, nome) {
         return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalBuscarPessoa.html',
@@ -17,6 +17,9 @@ angular.module('commercialApp.services')
           resolve: {
             tipo: function () {
               return tipo;
+            },
+            nome: function() {
+              return nome;
             }
           }
         }).result;

@@ -1,0 +1,4 @@
+<a href="">
+  <span ng-if="match.model.codigo != -1">{{match.model.codigo}} - </span>
+  <span ng-bind-html="match.model.nome | uibTypeaheadHighlight:query"></span>
+</a>
