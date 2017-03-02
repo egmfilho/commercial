@@ -1056,23 +1056,31 @@ function Orcamento(
       }
     }
 
-    modalConfirm.show('Exportar para venda?', 'Depois de exportado, o orçamento não poderá mais ser editado. Deseja continuar?').then(function() {
-      $scope.ocultarOpcoes();
-      $rootScope.loading.load();
-      providerPedido.exportar(self.pedido.id).then(function(success) {
-        var p = new Pedido(Pedido.converterEmEntrada(success.data));
-        self.pedido.erp = p.erp;
-        self.pedido.idStatus = p.idStatus;
-        $rootScope.loading.unload();
-        $rootScope.alerta.show('Orçamento foi exportado!', 'alert-success');
-        $scope.mostrarOpcoesExportado();
-      }, function(error) {
-        console.log(error);
-        $rootScope.loading.unload();
-        $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
-      });
+    modalConfirm.show('Exportar?', 'Depois de exportado, o orçamento não poderá mais ser editado. Você pode exportar para Pré pedido ou DAV, para qual deseja exportar?', 'Pré pedido', 'DAV', true).then(function() {
+      exportOrder('exportOrder');
+    }, function(res) {
+      if (res) {
+        exportOrder('exportDAV');
+      }
     });
   };
+
+  function exportOrder(action) {
+    $scope.ocultarOpcoes();
+    $rootScope.loading.load();
+    providerPedido.exportarCustom(self.pedido.id, action).then(function(success) {
+      var p = new Pedido(Pedido.converterEmEntrada(success.data));
+      self.pedido.erp = p.erp;
+      self.pedido.idStatus = p.idStatus;
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('Orçamento foi exportado!', 'alert-success');
+      $scope.mostrarOpcoesExportado();
+    }, function(error) {
+      console.log(error);
+      $rootScope.loading.unload();
+      $rootScope.alerta.show('Não foi possível exportar o orçamento!', 'alert-danger');
+    });
+  }
 
   this.abrirModalPagamento = function (callback_positive, callback_negative) {
     jQuery('#modalPagamento').on('shown.bs.modal', function (e) {
@@ -1087,6 +1095,35 @@ function Orcamento(
   this.buscarPrazoPorCodigo = function (codigo) {
     $rootScope.loading.load();
     providerPrazo.obterPorCodigo(codigo).then(function (success) {
+      self.selectPrazo(new PrazoPagamento(PrazoPagamento.converterEmEntrada(success.data)));
+      $rootScope.loading.unload();
+    }, function (error) {
+      console.log(error);
+      $rootScope.loading.unload();
+    });
+  };
+
+  this.buscarPrazosPorDescricao = function (descricao) {
+    $rootScope.loading.load();
+    return providerPrazo.obterPorDescricao(descricao).then(function (success) {
+      var prazos = [];
+      angular.forEach(success.data, function (item, index) {
+        prazos.push(new PrazoPagamento(PrazoPagamento.converterEmEntrada(item)));
+      });
+      $rootScope.loading.unload();
+      return prazos;
+    }, function (error)  {
+      if (error.status == 404) {
+        $rootScope.alerta.show('Não encontrado!');
+      }
+      console.log(error);
+      $rootScope.loading.unload();
+    });
+  };
+
+  this.prepararPrazo = function (prazo) {
+    $rootScope.loading.load();
+    providerPrazo.obterPorCodigo(prazo.codigo).then(function (success) {
       self.selectPrazo(new PrazoPagamento(PrazoPagamento.converterEmEntrada(success.data)));
       $rootScope.loading.unload();
     }, function (error) {

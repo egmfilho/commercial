@@ -9,7 +9,7 @@
     <p style="font-size: 1.2em">{{message}}</p>
   </div>
   <div class="footer">
-    <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> {{negative || 'Não'}}</button>
-    <button name="positivo" class="btn btn-default" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span> {{positive || 'Sim'}}</button>
+    <button class="btn btn-default" ng-click="cancel('negative')"><span class="glyphicon glyphicon-remove" ng-hide="hideButtonIcons"></span> {{negative || 'Não'}}</button>
+    <button name="positivo" class="btn btn-default" ng-click="ok('positive')"><span class="glyphicon glyphicon-ok" ng-hide="hideButtonIcons"></span> {{positive || 'Sim'}}</button>
   </div>
 </div>

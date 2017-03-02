@@ -16,6 +16,7 @@ angular.module('commercialApp.controllers')
       $scope.message = options.message;
       $scope.positive = options.positive;
       $scope.negative = options.negative;
+      $scope.hideButtonIcons = options.hideButtonIcons;
 
       $uibModalInstance.opened.then(function() {
         $timeout(function() {
@@ -23,12 +24,12 @@ angular.module('commercialApp.controllers')
         }, 200);
       });
 
-      $scope.ok = function() {
-        $uibModalInstance.close();
+      $scope.ok = function(reason) {
+        $uibModalInstance.close(reason);
       };
 
-      $scope.cancel = function() {
-        $uibModalInstance.dismiss();
+      $scope.cancel = function(reason) {
+        $uibModalInstance.dismiss(reason);
       };
 
     }]);

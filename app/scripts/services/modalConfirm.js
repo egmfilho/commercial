@@ -8,7 +8,7 @@ angular.module('commercialApp.services')
   .factory('ModalConfirm', ['$uibModal', function($uibModal) {
 
     return {
-      show: function(title, message, positive, negative) {
+      show: function(title, message, positive, negative, hideButtonIcons) {
         return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalConfirm.html',
@@ -21,7 +21,8 @@ angular.module('commercialApp.services')
                 title: title,
                 message: message,
                 positive: positive,
-                negative: negative
+                negative: negative,
+                hideButtonIcons: hideButtonIcons
               };
             }
           }

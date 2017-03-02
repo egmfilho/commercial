@@ -155,6 +155,14 @@ angular.module('commercialApp.services')
           }, {
             order_id: id
           }).$promise;
+        },
+
+        exportarCustom: function(id, action) {
+          return provider.save({
+            action: action
+          }, {
+            order_id: id
+          }).$promise;
         }
 
       };
