@@ -197,6 +197,12 @@ $print-font-size: 11px;
 
   border: 2px solid $cor-principal-clara;
 
+  @media (max-height: 800px) {
+    tbody {
+      height: 150px;
+    }
+  }
+
   th, td {
     white-space: nowrap;
 

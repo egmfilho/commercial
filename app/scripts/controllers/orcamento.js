@@ -866,15 +866,16 @@ function Orcamento(
 
     if (validar()) {
 
-      // if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
-      //   this.pagamento();
-      //   return;
-      // }
-      if (this.pedido.pagamentos.length) {
-        if (this.pedido.troco() != 0) {
-          self.pedido.pagamentos[0].valor = self.pedido.getValorTotalComDesconto();
-        }
+      if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
+        // this.pagamento();
+        this.abrirModalPagamento();
+        return;
       }
+      // if (this.pedido.pagamentos.length) {
+      //   if (this.pedido.troco() != 0) {
+      //     self.pedido.pagamentos[0].valor = self.pedido.getValorTotalComDesconto();
+      //   }
+      // }
 
       modalConfirm.show('Aviso', 'Salvar orçamento?').then(function() {
         console.log('saida pedido', Pedido.converterEmSaida(self.pedido));

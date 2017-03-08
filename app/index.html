@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="styles/global.css">
     <!-- endbuild -->
   </head>
-  <body class="padding-bottom" ng-class="{ 'padding-top': currentPath === '/login' }" ng-app="commercialApp">
+  <body class="padding-bottom" ng-app="commercialApp">
 
     <!--[if lte IE 8]>
       <p class="browsehappy">Você está usando um navegador <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhor experiência.</p>
@@ -32,7 +32,7 @@
     <div id="loading" ng-show="loading.isLoading()" ng-include="'partials/loading.html'"></div>
 
     <div name="header" ng-include="'partials/header.html'" ng-hide="currentPath === '/login' || currentPath === '/signup' || currentPath.indexOf('/orcamento/impressao/') >= 0"></div>
-    <div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>
+    <!--<div name="header-alternativo" ng-include="'partials/header-alternativo.html'" ng-show="currentPath === '/login' || currentPath === '/signup'"></div>-->
 
     <!--<div class="container">-->
       <div name="view-principal" ng-view=""></div>

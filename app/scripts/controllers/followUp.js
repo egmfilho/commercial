@@ -197,7 +197,8 @@ angular.module('commercialApp.controllers')
       };
 
       this.buscarPedido = function () {
-        modalBuscarPedido.show().then(function (result) {
+        var origem = 'f';
+        modalBuscarPedido.show(null, null, origem).then(function (result) {
           if (result) {
             if (result.atendimentoId) {
               $location.path('/atendimento/open').search('type', 'order').search('code', result.codigo);

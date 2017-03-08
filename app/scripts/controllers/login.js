@@ -15,7 +15,7 @@ angular.module('commercialApp.controllers')
             break;
           case 200:
             $rootScope.alerta.show('Login efetuado!', 'alert-success');
-            $location.path('#/home');
+            $location.path('buscar-orcamento');
             break;
           default:
             break;

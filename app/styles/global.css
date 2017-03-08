@@ -589,6 +589,23 @@ span:focus, a:focus {
       background-color: #0f597f; }
     .navbar-default .navbar-header .navbar-toggle .icon-bar {
       background-color: white; }
+  .navbar-default .navbar-collapse ul.navbar-left li {
+    width: 120px;
+    height: 50px;
+    margin: 0 15px 0 -15px; }
+    .navbar-default .navbar-collapse ul.navbar-left li a {
+      padding: 0;
+      width: 100%;
+      height: 100%; }
+      .navbar-default .navbar-collapse ul.navbar-left li a:hover, .navbar-default .navbar-collapse ul.navbar-left li a:focus {
+        background-color: #1373a4; }
+      .navbar-default .navbar-collapse ul.navbar-left li a .logo {
+        width: 100%;
+        height: 100%;
+        background-image: url("../images/logo_nome_branco.png");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat; }
   @media (max-width: 767px) {
     .navbar-default {
       position: fixed;
@@ -774,6 +791,14 @@ div[name="footer"] .navbar {
     #login .frase h1, #login .frase h2 {
       font-weight: 400;
       color: #1373a4; }
+  #login .logo {
+    width: 100%;
+    height: 160px;
+    background-image: url("../images/logotipo.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto; }
   #login .form-login {
     width: 340px;
     height: 340px;
@@ -1022,6 +1047,9 @@ div[name="footer"] .navbar {
 
 #tabela-orcamento {
   border: 2px solid #178dc9; }
+  @media (max-height: 800px) {
+    #tabela-orcamento tbody {
+      height: 150px; } }
   #tabela-orcamento th, #tabela-orcamento td {
     white-space: nowrap; }
     #tabela-orcamento th:nth-child(1), #tabela-orcamento th:nth-child(5), #tabela-orcamento th:nth-child(6), #tabela-orcamento th:nth-child(7), #tabela-orcamento th:nth-child(8), #tabela-orcamento td:nth-child(1), #tabela-orcamento td:nth-child(5), #tabela-orcamento td:nth-child(6), #tabela-orcamento td:nth-child(7), #tabela-orcamento td:nth-child(8) {

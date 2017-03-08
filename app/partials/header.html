@@ -1,7 +1,7 @@
-<div class="banner hidden-xs">
-  <div class="header_left"></div>
-  <div class="header_right"></div>
-</div>
+<!--<div class="banner hidden-xs">-->
+  <!--<div class="header_left"></div>-->
+  <!--<div class="header_right"></div>-->
+<!--</div>-->
 
 <span ng-controller="HeaderCtrl as header">
   <div class="navbar navbar-default">
@@ -19,9 +19,16 @@
       </div>
 
       <div class="collapse navbar-collapse" id="menu-collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li>
+            <a href="#/">
+              <div class="logo"></div>
+            </a>
+          </li>
+        </ul>
         <ul class="nav navbar-nav" tabindex="-1">
           <li><a ng-href="#/home"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a ng-href="#/orcamento/new"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
+          <li><a ng-href="#/buscar-orcamento"><span class="glyphicon glyphicon-shopping-cart"></span> Orçamento</a></li>
           <li><a ng-href="#/follow-up"><span class="glyphicon glyphicon-comment"></span> Follow Up</a></li>
           <li><a ng-href="#/configuracoes"><span class="glyphicon glyphicon-cog"></span> Configurações</a></li>
         </ul>

@@ -8,7 +8,7 @@ angular.module('commercialApp.services')
   .factory('ModalBuscarPedido', ['$q', '$uibModal', function ($q, $uibModal) {
 
     return {
-      show: function (destino, atendimento) {
+      show: function (destino, atendimento, origem) {
         return $uibModal.open({
           animation: true,
           templateUrl: 'partials/modalBuscarPedido.html',
@@ -20,6 +20,9 @@ angular.module('commercialApp.services')
             },
             atendimento: function () {
               return atendimento;
+            },
+            origem: function () {
+              return origem;
             }
           }
         }).result;
