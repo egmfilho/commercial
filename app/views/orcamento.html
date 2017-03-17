@@ -531,7 +531,7 @@
       </div>
     </div>
     <div class="col-xs-6 col-md-3">
-      <button class="btn btn-orcamento" ng-click="orcamento.abrirModalPagamento()" ng-disabled="orcamento.pedido.erp">
+      <button class="btn btn-orcamento" ng-click="orcamento.abrirModalPagamento()">
         <span class="glyphicon glyphicon-credit-card hidden-xs"></span> Pagamento
       </button>
     </div>
@@ -642,9 +642,9 @@
         <div class="col-md-3">
           <h4>Código</h4>
           <div class="input-group">
-            <input type="text" class="form-control" name="cdPrazo" ng-model="orcamento.cdPrazo" keys-shortcuts enter="orcamento.buscarPrazoPorCodigo(orcamento.cdPrazo)" blur-to="orcamento.documento.prazo.codigo">
+            <input type="text" class="form-control" name="cdPrazo" ng-model="orcamento.cdPrazo" keys-shortcuts enter="orcamento.buscarPrazoPorCodigo(orcamento.cdPrazo)" blur-to="orcamento.documento.prazo.codigo" ng-disabled="orcamento.pedido.erp">
             <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="orcamento.buscarPrazo()">
+              <button class="btn btn-default" ng-click="orcamento.buscarPrazo()" ng-disabled="orcamento.pedido.erp">
                 <span class="glyphicon glyphicon-search"></span>
               </button>
             </span>
@@ -652,7 +652,7 @@
         </div>
         <div class="col-md-9">
           <h4>Descrição</h4>
-          <input type="text" class="form-control" placeholder="Descrição do prazo" ng-model="orcamento.tempPrazo" blur-to="orcamento.pedido.prazo.descricao"
+          <input type="text" class="form-control" placeholder="Descrição do prazo" ng-model="orcamento.tempPrazo" blur-to="orcamento.pedido.prazo.descricao" ng-disabled="orcamento.pedido.erp"
                  keys-shortcuts enter=""
                  uib-typeahead="prazo as prazo.descricao for prazo in orcamento.buscarPrazosPorDescricao($viewValue)"
                  typeahead-min-length="2"
@@ -675,7 +675,7 @@
             <tr ng-repeat="pagamento in orcamento.pedido.pagamentos track by $index">
               <td>{{$index + 1}}</td>
               <td>
-                <select class="form-control" ng-options="forma as forma.descricao for forma in orcamento.pedido.prazo.formas track by forma.codigo" ng-model="pagamento.forma" ng-change="pagamento.setForma()">
+                <select class="form-control" ng-options="forma as forma.descricao for forma in orcamento.pedido.prazo.formas track by forma.codigo" ng-model="pagamento.forma" ng-change="orcamento.checkFormasPagamento(pagamento.forma); pagamento.setForma();" ng-disabled="orcamento.pedido.erp">
                   <option value="" disabled>Selecione a forma</option>
                 </select>
               </td>

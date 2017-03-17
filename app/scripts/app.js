@@ -116,7 +116,7 @@ angular
       return new Array(num);
     };
 
-    $rootScope.versao = '1.1.2';
+    $rootScope.versao = '1.1.3';
 
     $rootScope.loading = {
       count: 0,

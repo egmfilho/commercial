@@ -26,8 +26,8 @@ angular.module('commercialApp.controllers')
 
       var self = this,
         width = parseInt(jQuery(window).width()),
-        banner = 100,
-        header = 60,
+        banner = 0, //100,
+        header = 50, //60,
         footer = 50,
         height = jQuery(window).height() - banner - header - footer;
 

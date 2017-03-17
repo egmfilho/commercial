@@ -14,6 +14,7 @@ angular.module('commercialApp.services')
       this.troco = forma ? forma.troco : false;
       this.baixaNaInclusao = forma ? forma.baixaNaInclusao : false;
       this.ativo = forma ? forma.ativo : true;
+      this.tipo = forma ? forma.tipo : '';
       this.dataCadastro = forma ? forma.dataCadastro : '';
       this.dataUpdate = forma ? forma.dataUpdate : '';
     }
@@ -27,6 +28,7 @@ angular.module('commercialApp.services')
       forma.troco = mode.payment_mode_change === 'Y';
       forma.baixaNaInclusao = mode.payment_mode_drop_inclusion === 'Y';
       forma.ativo = mode.payment_mode_active === 'Y';
+      forma.tipo = mode.payment_mode_type;
       forma.dataCadastro = new Date(mode.payment_mode_date);
       forma.dataUpdate = mode.payment_mode_update ? new Date(mode.payment_mode_update) : null;
 

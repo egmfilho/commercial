@@ -1133,6 +1133,19 @@ function Orcamento(
     });
   };
 
+  this.checkFormasPagamento = function(forma) {
+    if (forma.tipo === 'A') {
+      for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
+        self.pedido.pagamentos[i].setForma(forma);
+      }
+    } else {
+      for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
+        if (self.pedido.pagamentos[i].forma.tipo === 'A')
+          self.pedido.pagamentos[i].setForma(forma);
+      }
+    }
+  };
+
   this.selectPrazo = function (prazo) {
     if (prazo.codigo === -1) {
       // $scope.buscarPrazo();
