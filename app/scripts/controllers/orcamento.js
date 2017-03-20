@@ -34,7 +34,8 @@ Orcamento.$inject = [
   'ProviderPrazoPagamento',
   'PrazoPagamento',
   'FormaPagamento',
-  'Pagamento'
+  'Pagamento',
+  'ModalPermissao'
 ];
 
 function Orcamento(
@@ -65,7 +66,8 @@ function Orcamento(
   providerPrazo,
   PrazoPagamento,
   FormaPagamento,
-  Pagamento) {
+  Pagamento,
+  modalPermissao) {
 
   var self = this,
       user = JSON.parse(window.atob($cookies.get('currentUser')));
@@ -1183,4 +1185,38 @@ function Orcamento(
 
     return hoje;
   }
+
+  this.setDescontoPercentItem = function(e) {
+    if (parseFloat($scope.item.descontoPercent) > user.maxDesconto) {
+      modalPermissao.show('order', 'user_discount').then(function(success) {
+        if ($scope.item.descontoPercent > success.user_max_discount) {
+          modalAlert.show('Aviso!', 'O desconto máximo para esta autorização é de ' + success.user_max_discount + '%.');
+        }
+        $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, success.user_max_discount);
+        $scope.item.setDescontoPercent($scope.item.descontoPercent);
+      }, function(error) {
+        $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, user.maxDesconto);
+        $scope.item.setDescontoPercent($scope.item.descontoPercent);
+      });
+    } else {
+      $scope.item.setDescontoPercent($scope.item.descontoPercent);
+    }
+  };
+
+  this.setDescontoDinheiroItem = function() {
+    if ($scope.item.descontoDinheiro > $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100)) {
+      modalPermissao.show('order', 'user_discount').then(function(success) {
+        if ($scope.item.descontoDinheiro > $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100)) {
+          modalAlert.show('Aviso!', 'O desconto máximo para esta autorização é de ' + success.user_max_discount + '%.');
+        }
+        $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100));
+        $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+      }, function(error) {
+        $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100));
+        $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+      });
+    }
+
+    $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+  };
 }

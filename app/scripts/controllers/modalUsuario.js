@@ -112,6 +112,11 @@ angular.module('commercialApp.controllers')
           return false;
         }
 
+        if (!self.usuario.maxDesconto) {
+          $rootScope.alerta.show('Informe o desconto máximo deste usuário!');
+          return false;
+        }
+
         return true;
       }
 

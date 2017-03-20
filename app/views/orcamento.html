@@ -157,7 +157,7 @@
           <input name="quantidade" type="text" class="form-control" currency symbol="''" number-only
                  ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts
                  prevent-default="true"
-                 enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()"
+                 enter="orcamento.avancar('input', 'percent')"
                  shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()"
                  uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
@@ -167,9 +167,9 @@
         <h4>Desconto %</h4>
         <span class="input-group">
           <input name="percent" type="text" class="form-control" currency symbol="''" number-only
-                 ng-model="item.descontoPercent" ng-change="item.setDescontoPercent(item.descontoPercent);"
+                 ng-model="item.descontoPercent" ng-change="orcamento.setDescontoPercentItem()"
                  keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')"
-                 shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+                 shift-enter="orcamento.escapeProdutos()">
           <span class="input-group-addon">%</span>
         </span>
       </div>
@@ -178,9 +178,10 @@
         <span class="input-group">
           <span class="input-group-addon">R$</span>
           <input name="dinheiro" type="text" class="form-control" currency symbol="''" number-only
-                 ng-model="item.descontoDinheiro" ng-change="item.setDescontoDinheiro(item.descontoDinheiro)"
-                 keys-shortcuts prevent-default="true" enter="orcamento.addItem()"
-                 shift-enter="orcamento.escapeProdutos()" readonly="true" tabindex="-1">
+                 ng-model="item.descontoDinheiro" ng-change="orcamento.setDescontoDinheiroItem()"
+                 keys-shortcuts prevent-default="true"
+                 enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()"
+                 shift-enter="orcamento.escapeProdutos()">
         </span>
       </div>
       <div class="col-xs-4 col-sm-3">
@@ -701,3 +702,28 @@
   </div>
 </div>
 <!--FIM MODAL PAGAMENTO-->
+
+<!--MODAL AUTORIZAR DESCONTO-->
+<div class="modal meu-modal fade" id="modalAutorizarDesconto" tabindex="-1" role="dialog" aria-labelledby="modalAutorizarDesconto">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="header">
+        <div class="title">
+          <span class="glyphicon glyphicon-lock"></span> Autorizar <span class="glyphicon glyphicon-remove close" data-dismiss="modal"></span>
+        </div>
+      </div>
+      <div class="body" style="height: 244px">
+        <h4>Login</h4>
+        <input type="text" class="form-control">
+        <h4>Senha</h4>
+        <input type="password" class="form-control">
+      </div>
+      <div class="footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--FIM MODAL AUTORIZAR DESCONTO-->

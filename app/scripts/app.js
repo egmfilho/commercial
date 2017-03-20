@@ -109,6 +109,8 @@ angular
       });
   })
   .run(['$rootScope', 'ArrayPrototype', function ($rootScope, ArrayPrototype) {
+    $rootScope.hoje = new Date();
+
     ArrayPrototype.contains();
 
     // para ser usado no ng-repeat
@@ -116,7 +118,7 @@ angular
       return new Array(num);
     };
 
-    $rootScope.versao = '1.1.3';
+    $rootScope.versao = '1.1.4';
 
     $rootScope.loading = {
       count: 0,

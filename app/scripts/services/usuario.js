@@ -21,6 +21,7 @@ angular.module('commercialApp.services')
       this.senha = usuario ? usuario.senha : '';
       this.email = usuario ? usuario.email : '';
       this.ultimoAcesso = usuario ? usuario.ultimoAcesso : new Date();
+      this.maxDesconto = usuario ? usuario.maxDesconto : 0;
 
       this.perfil = usuario ? new PerfilUsuario(usuario.perfil) : new PerfilUsuario();
     }
@@ -47,6 +48,7 @@ angular.module('commercialApp.services')
       usuario.usuario = user.user_user;
       usuario.email = user.user_mail;
       usuario.ultimoAcesso = user.user_login ? new Date(user.user_login) : null;
+      usuario.maxDesconto = parseFloat(user.user_max_discount) || 0;
 
       if (user.user_profile) {
         usuario.perfil = new PerfilUsuario(PerfilUsuario.converterEmEntrada(user.user_profile));
@@ -69,6 +71,7 @@ angular.module('commercialApp.services')
       user.user_pass = usuario.senha;
       user.user_name = usuario.nome;
       user.user_mail = usuario.email;
+      user.user_max_discount = usuario.maxDesconto;
 
       //user.user_profile_access = PerfilUsuario.converterEmSaida(usuario.perfil).user_profile_access;
 
