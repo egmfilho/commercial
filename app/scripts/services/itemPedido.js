@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('commercialApp.services')
-  .factory('ItemPedido', ['Produto', 'Pessoa', function(Produto, Pessoa) {
+  .factory('ItemPedido', ['Produto', 'Pessoa', 'DataSaida', function(Produto, Pessoa, DataSaida) {
 
     function ItemPedido(itemPedido) {
       this.id = itemPedido ? itemPedido.id : '';
@@ -16,6 +16,7 @@ angular.module('commercialApp.services')
       this.descontoDinheiro = itemPedido ? itemPedido.descontoDinheiro : 0;
       this.quantidade = itemPedido ? itemPedido.quantidade : 1;
       this.produto = itemPedido ? new Produto(itemPedido.produto) : new Produto();
+      this.auditoria = itemPedido ? itemPedido.auditoria : { idUsuario: '', data: null };
     }
 
     ItemPedido.prototype = {
@@ -24,6 +25,8 @@ angular.module('commercialApp.services')
         this.produto = new Produto(Produto.converterEmEntrada(produto));
         this.idProduto = produto.id;
         this.precoProduto = produto.preco;
+        this.descontoPercent = 0;
+        this.descontoDinheiro = 0;
       },
 
       setQuantidade: function(quantidade) {
@@ -67,6 +70,11 @@ angular.module('commercialApp.services')
       item.descontoPercent = parseFloat(i.order_item_al_discount);
       item.descontoDinheiro = parseFloat(i.order_item_vl_discount);
 
+      item.auditoria = {
+        idUsuario: i.order_item_audit.user_id,
+        data: i.order_item_audit.date ? new Date(i.order_item_audit.date) : null
+      };
+
       if (i.product) {
         item.produto = new Produto(Produto.converterEmEntrada(i.product));
       } else {
@@ -85,6 +93,10 @@ angular.module('commercialApp.services')
       i.order_item_amount = item.quantidade;
       i.order_item_value_total = item.getTotalComDesconto();
       i.product_id = item.idProduto || item.produto.id;
+      i.order_item_audit = {
+        user_id: item.auditoria.idUsuario,
+        date: DataSaida.converter(item.auditoria.data)
+      };
 
       return i;
     };

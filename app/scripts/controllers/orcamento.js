@@ -1194,11 +1194,17 @@ function Orcamento(
         }
         $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, success.user_max_discount);
         $scope.item.setDescontoPercent($scope.item.descontoPercent);
+        $scope.item.auditoria.idUsuario = success.user_id;
+        $scope.item.auditoria.data = new Date();
       }, function(error) {
         $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, user.maxDesconto);
         $scope.item.setDescontoPercent($scope.item.descontoPercent);
+        $scope.item.auditoria.idUsuario = '';
+        $scope.item.auditoria.data = null;
       });
     } else {
+      $scope.item.auditoria.idUsuario = '';
+      $scope.item.auditoria.data = null;
       $scope.item.setDescontoPercent($scope.item.descontoPercent);
     }
   };
@@ -1211,12 +1217,17 @@ function Orcamento(
         }
         $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100));
         $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+        $scope.item.auditoria.idUsuario = success.user_id;
+        $scope.item.auditoria.data = new Date()
       }, function(error) {
         $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100));
         $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+        $scope.item.auditoria.idUsuario = '';
+        $scope.item.auditoria.data = null;
       });
     }
-
+    $scope.item.auditoria.idUsuario = '';
+    $scope.item.auditoria.data = null;
     $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
   };
 }

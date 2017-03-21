@@ -159,7 +159,7 @@
                  prevent-default="true"
                  enter="orcamento.avancar('input', 'percent')"
                  shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()"
-                 uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true">
+                 uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true" ng-readonly="!item.produto.id">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </span>
       </div>
@@ -169,7 +169,7 @@
           <input name="percent" type="text" class="form-control" currency symbol="''" number-only
                  ng-model="item.descontoPercent" ng-change="orcamento.setDescontoPercentItem()"
                  keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')"
-                 shift-enter="orcamento.escapeProdutos()">
+                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id" ng-model-options="{'debounce': 500}">
           <span class="input-group-addon">%</span>
         </span>
       </div>
@@ -181,7 +181,7 @@
                  ng-model="item.descontoDinheiro" ng-change="orcamento.setDescontoDinheiroItem()"
                  keys-shortcuts prevent-default="true"
                  enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()"
-                 shift-enter="orcamento.escapeProdutos()">
+                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id" ng-model-options="{'debounce': 500}">
         </span>
       </div>
       <div class="col-xs-4 col-sm-3">
