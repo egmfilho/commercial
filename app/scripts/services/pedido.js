@@ -77,11 +77,10 @@ angular.module('commercialApp.services')
       this.valor = p ? p.valor : 0;
       this.valorComDesconto = p ? p.valorComDesconto : 0;
 
-      this.pagamentos = [];
-
       this.idPrazo = p ? p.idPrazo : '';
       this.prazo = p ? new PrazoPagamento(p.prazo) : new PrazoPagamento();
 
+      this.pagamentos = [];
       if (p) {
         angular.forEach(p.pagamentos, function (item, index) {
           self.pagamentos.push(new Pagamento(item));

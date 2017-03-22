@@ -115,13 +115,13 @@ function Orcamento(
 
     focarVendedor();
 
-    jQuery('body').bind('keyup', function (event) {
-      // TECLA F5
-      if (event.keyCode === 116) {
-        self.salvar();
-        event.preventDefault();
-      }
-    });
+    // jQuery('body').bind('keyup', function (event) {
+    //   // TECLA F5
+    //   if (event.keyCode === 116) {
+    //     self.salvar();
+    //     event.preventDefault();
+    //   }
+    // });
 
     if ($routeParams.action) {
       if ($routeParams.action == 'edit') {
@@ -141,6 +141,18 @@ function Orcamento(
         });
       } else if ($routeParams.action == 'new') {
 
+      } else if ($routeParams.action == 'duplicate') {
+        if (!$routeParams.code) {
+          return;
+        }
+        $rootScope.loading.load();
+        providerPedido.obterPedidoPorCodigo($routeParams.code, true, true, true, true, true, true, true).then(function(success) {
+          duplicarPedido(new Pedido(Pedido.converterEmEntrada(success.data)));
+          console.log(self.pedido);
+          $rootScope.loading.unload();
+        }, function(error) {
+          $rootScope.loading.unload();
+        });
       } else {
         $location.path('/');
       }
@@ -266,6 +278,39 @@ function Orcamento(
     self.tempPrazo = new PrazoPagamento(pedido.prazo);
 
     setContatos();
+  }
+
+  function duplicarPedido(pedido) {
+    $scope.formularios.vendedor = false;
+    $scope.formularios.produtos = false;
+    $scope.formularios.cliente = false;
+    $scope.formularios.observacoes = false;
+    $scope.lockCodigo = false;
+    $scope.lockDescricao = false;
+    $scope.cdVendedor = pedido.vendedor.codigo;
+    $scope.cdCliente = pedido.cliente.codigo;
+    $scope.cdCEP = pedido.cliente.endereco.cep;
+    self.pedido = new Pedido(pedido);
+    self.pedido.id = '';
+    self.pedido.codigo = '';
+    self.pedido.idStatus = 1001;
+    self.pedido.atendimentoId = '';
+    self.pedido.erp = '';
+    self.pedido.nfe = '';
+    self.idUsuario = user.id;
+    self.emailsEnviados = [ ];
+
+    angular.forEach(self.pedido.items, function(item) {
+      item.setDescontoPercent(0);
+    });
+
+    self.cdPrazo = pedido.prazo.codigo;
+    self.tempPrazo = new PrazoPagamento(pedido.prazo);
+
+    setContatos();
+    setParcelas();
+
+    console.log(self.pedido);
   }
 
   $scope.blurCdVendedor = function () {
@@ -452,13 +497,9 @@ function Orcamento(
 
   this.buscaClientePorCodigo = function (codigo) {
     if (!codigo) {
-      this.buscarCliente();
-      return;
-    }
-
-    if (parseInt(codigo) == parseInt(this.pedido.cliente.codigo)) {
-      //this.salvar();
+      // this.buscarCliente();
       // return;
+      codigo = '097448';
     }
 
     $rootScope.loading.load();
@@ -867,17 +908,13 @@ function Orcamento(
     }
 
     if (validar()) {
-
-      if (!this.pedido.pagamentos.length || this.pedido.troco() != 0) {
+      if (!this.pedido.pagamentos.length) {
         // this.pagamento();
         this.abrirModalPagamento();
         return;
+      } else if (this.pedido.troco() != 0) {
+        setParcelas();
       }
-      // if (this.pedido.pagamentos.length) {
-      //   if (this.pedido.troco() != 0) {
-      //     self.pedido.pagamentos[0].valor = self.pedido.getValorTotalComDesconto();
-      //   }
-      // }
 
       modalConfirm.show('Aviso', 'Salvar orçamento?').then(function() {
         console.log('saida pedido', Pedido.converterEmSaida(self.pedido));
@@ -1086,6 +1123,8 @@ function Orcamento(
   }
 
   this.abrirModalPagamento = function (callback_positive, callback_negative) {
+    setParcelas();
+
     jQuery('#modalPagamento').on('shown.bs.modal', function (e) {
       jQuery('input[name="cdPrazo"]').focus().select();
     }).modal('show').on('hidden.bs.modal', function (e) {
@@ -1160,13 +1199,15 @@ function Orcamento(
   };
 
   function setParcelas() {
-    self.pedido.pagamentos = [];
+    // self.pedido.pagamentos = [];
     for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
-      self.pedido.pagamentos.push(new Pagamento());
+      // self.pedido.pagamentos.push(new Pagamento());
       self.pedido.pagamentos[i].valor = self.pedido.getValorTotalComDesconto() / self.pedido.prazo.parcelas;
       self.pedido.pagamentos[i].vencimento = getDataDaParcela(self.pedido.prazo, i);
-      self.pedido.pagamentos[i].forma = self.pedido.prazo.formas[0];
-      self.pedido.pagamentos[i].setForma();
+      if (!self.pedido.pagamentos[i].idForma) {
+        self.pedido.pagamentos[i].forma = self.pedido.prazo.formas[0];
+        self.pedido.pagamentos[i].setForma();
+      }
     }
   }
 
@@ -1196,6 +1237,9 @@ function Orcamento(
         $scope.item.setDescontoPercent($scope.item.descontoPercent);
         $scope.item.auditoria.idUsuario = success.user_id;
         $scope.item.auditoria.data = new Date();
+        $scope.item.auditoria.usuario = success.user_name;
+        $scope.item.auditoria.produto = $scope.item.produto.nome;
+        $scope.item.auditoria.codigoProduto = $scope.item.produto.codigo;
       }, function(error) {
         $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, user.maxDesconto);
         $scope.item.setDescontoPercent($scope.item.descontoPercent);
@@ -1218,16 +1262,24 @@ function Orcamento(
         $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100));
         $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
         $scope.item.auditoria.idUsuario = success.user_id;
-        $scope.item.auditoria.data = new Date()
+        $scope.item.auditoria.data = new Date();
+        $scope.item.auditoria.usuario = success.user_name;
+        $scope.item.auditoria.produto = $scope.item.produto.nome;
+        $scope.item.auditoria.codigoProduto = $scope.item.produto.codigo;
       }, function(error) {
         $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100));
         $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
-        $scope.item.auditoria.idUsuario = '';
-        $scope.item.auditoria.data = null;
+        $scope.item.limparAuditoria();
       });
     }
-    $scope.item.auditoria.idUsuario = '';
-    $scope.item.auditoria.data = null;
+    $scope.item.limparAuditoria();
     $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
   };
+
+  this.duplicar = function() {
+    modalConfirm.show('Duplicar Orçamento', 'O novo orçamento não contará com os descontos do orçamento atual. Deseja continuar?').then(function(success) {
+      $location.path('/orcamento/duplicate')
+        .search('code', self.pedido.codigo);
+    }, function(error) { });
+  }
 }

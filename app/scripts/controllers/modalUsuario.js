@@ -83,6 +83,11 @@ angular.module('commercialApp.controllers')
           return false;
         }
 
+        if (!self.usuario.email) {
+          $rootScope.alerta.show('Informe o email deste usuário!');
+          return false;
+        }
+
         if (!self.usuario.usuario) {
           $rootScope.alerta.show('Preencha o nome de usuário!');
           return false;

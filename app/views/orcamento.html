@@ -12,14 +12,17 @@
     <div class="col-md-12">
       <div class="main-head text-center">
         <h3>
-          <span class="glyphicon glyphicon-shopping-cart"></span>
+          <!--<span class="glyphicon glyphicon-shopping-cart"></span>-->
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('Código ' + orcamento.pedido.codigo) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
-          <span class="hidden-xs">{{orcamento.pedido.loja ? ('- ' + (orcamento.pedido.loja.nome)) : ''}}</span>
+          <span class="hidden-xs">{{orcamento.pedido.loja && orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.loja.nome)) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.dataPedido | date:'dd/MM/yyyy') : ''}}</span>
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
-          <a href="" class="pull-right" ng-click="orcamento.imprimir()"><span class="glyphicon glyphicon-print"></span></a>
+          <a href="" class="pull-right" ng-click="orcamento.duplicar()" title="Duplicar" ng-if="orcamento.pedido.codigo">
+            <span class="glyphicon glyphicon-duplicate"></span>
+          </a>
+          <a href="" class="pull-right" ng-click="orcamento.imprimir()" title="Imprimir" style="margin-right: 10px"><span class="glyphicon glyphicon-print"></span></a>
         </h3>
       </div>
     </div>
@@ -70,7 +73,7 @@
           <input type="text" number-only name="CdVendedor" class="form-control" aria-describedby="basic-addon2"
                  ng-model="cdVendedor" ng-blur="blurCdVendedor()" keys-shortcuts prevent-default="true"
                  enter="orcamento.buscaVendedorPorCodigo(cdVendedor)" shift-enter="orcamento.escapeVendedor()"
-                 f1="orcamento.buscaVendedorPorCodigo()" uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+                 f2="orcamento.buscaVendedorPorCodigo()" uib-tooltip="Use F2 para buscar" tooltip-append-to-body="true">
           <span class="input-group-btn">
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaVendedorPorCodigo()">
               <span class="glyphicon glyphicon-search"></span>
@@ -101,7 +104,7 @@
         <h3>Produtos
           <span ng-if="!formularios.produtos && orcamento.pedido.items.length > 0">
             &raquo; {{orcamento.pedido.items.length}} {{orcamento.pedido.items.length > 1 ? 'Produtos' : 'Produto'}}
-            <span class="hidden-xs">- Total: {{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}}</span>
+            <span class="hidden-xs">- Total: {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}</span>
           </span>
           <a href="" class="limpar" ng-click="orcamento.limparProdutos($event)" uib-tooltip="Limpar campos" tooltip-append-to-body="true">
             <span class="glyphicon glyphicon-erase"></span>
@@ -121,7 +124,7 @@
         <input name="CdProduto" type="text" number-only class="form-control text-right" aria-describedby="basic-addon2"
                ng-model="cdProduto" ng-blur="blurProduto()" keys-shortcuts prevent-default="true"
                enter="orcamento.buscaProdutoPorCodigo(cdProduto)" shift-enter="orcamento.escapeProdutos()"
-               f1="orcamento.pesquisarProdutoNoModal()" maxlength="6" uib-tooltip="Use F1 para buscar"
+               f2="orcamento.pesquisarProdutoNoModal()" maxlength="6" uib-tooltip="Use F2 para buscar"
                tooltip-append-to-body="true">
       </div>
       <div class="visible-xs-inline-block col-xs-5">
@@ -136,7 +139,7 @@
                ng-blur="blurProduto()"
                keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'quantidade')"
                shift-enter="orcamento.escapeProdutos()"
-               f1="orcamento.pesquisarProdutoNoModal()"
+               f2="orcamento.pesquisarProdutoNoModal()"
                uib-typeahead="produto as produto.NmProduto for produto in orcamento.buscaProdutoPorDescricao($viewValue)"
                typeahead-template-url="partials/produtosTypeaheadPopup.html"
                typeahead-min-length="typeahead.min_length"
@@ -158,7 +161,7 @@
                  ng-model="item.quantidade" ng-change="item.setQuantidade(item.quantidade)" keys-shortcuts
                  prevent-default="true"
                  enter="orcamento.avancar('input', 'percent')"
-                 shift-enter="orcamento.escapeProdutos()" f1="orcamento.pesquisarProdutoNoModal()"
+                 shift-enter="orcamento.escapeProdutos()" f2="orcamento.pesquisarProdutoNoModal()"
                  uib-tooltip="Use Enter para adicionar" tooltip-append-to-body="true" ng-readonly="!item.produto.id">
           <span class="input-group-addon">{{item.produto.unidade || '(un)'}}</span>
         </span>
@@ -266,14 +269,14 @@
         </div>
         <div class=" col-sm-4 col-md-4">
           <h4>Total do pedido</h4>
-          <div class="div-display">{{orcamento.pedido.getValorTotalSemDesconto() | currency : "R$ "}}</div>
+          <div class="div-display">{{orcamento.pedido.getValorTotalComDesconto() | currency : "R$ "}}</div>
         </div>
       </div>
       <div class="visible-xs-block col-xs-12">
         <h4 class="pull-right">Total do Pedido</h4>
       </div>
       <div class="visible-xs-block col-xs-12">
-        <h3 class="pull-right" style="margin: 0">{{orcamento.pedido.getValorTotalSemDesconto() | currency : "R$ "}}</h3>
+        <h3 class="pull-right" style="margin: 0">{{orcamento.pedido.getValorTotalComDesconto() | currency : "R$ "}}</h3>
       </div>
     </div>
   </div>
@@ -307,10 +310,10 @@
           <input type="text" number-only class="form-control" name="CdCliente" aria-describedby="basic-addon2"
                  ng-model="cdCliente" ng-blur="blurCdCliente()" keys-shortcuts prevent-default="true"
                  enter="orcamento.buscaClientePorCodigo(cdCliente)" shift-enter="orcamento.escapeCliente()"
-                 f1="orcamento.buscaClientePorCodigo()" ng-readonly="cliente.novo" maxlength="6"
-                 uib-tooltip="Use F1 para buscar" tooltip-append-to-body="true">
+                 f2="orcamento.buscarCliente()" ng-readonly="cliente.novo" maxlength="6"
+                 uib-tooltip="Use F2 para buscar" tooltip-append-to-body="true">
           <span class="input-group-btn">
-            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscaClientePorCodigo()" ng-disabled="cliente.novo || orcamento.pedido.erp">
+            <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscarCliente()" ng-disabled="cliente.novo || orcamento.pedido.erp">
               <span class="glyphicon glyphicon-search"></span>
             </button>
             <button class="btn btn-default" tabindex="-1" ng-click="orcamento.novoCliente()" ng-disabled="cliente.novo || orcamento.pedido.erp">
@@ -375,8 +378,8 @@
           <span name="cepCliente" ng-class="cliente.novo ? 'input-group' : ''" ng-show="cliente.novo" style="transition:none">
             <input name="cep" type="text" class="form-control" keys-shortcuts prevent-default="true"
                    enter="cdCEP == orcamento.pedido.cliente.endereco.cep ? orcamento.avancar('input', 'endNumero') : orcamento.buscarCEP()"
-                   shift-enter="orcamento.salvar()" f1="orcamento.buscarCEP(true)" ng-disabled="!cliente.novo"
-                   ng-model="cdCEP" ui-mask="99999-999" ng-blur="blurCdCEP()" uib-tooltip="Use F1 para buscar"
+                   shift-enter="orcamento.salvar()" f2="orcamento.buscarCEP(true)" ng-disabled="!cliente.novo"
+                   ng-model="cdCEP" ui-mask="99999-999" ng-blur="blurCdCEP()" uib-tooltip="Use F2 para buscar"
                    tooltip-append-to-body="true">
             <span class="input-group-btn" ng-hide="!cliente.novo">
               <button class="btn btn-default" tabindex="-1" ng-click="orcamento.buscarCEP(true)">

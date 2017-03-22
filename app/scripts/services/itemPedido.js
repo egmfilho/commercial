@@ -16,7 +16,7 @@ angular.module('commercialApp.services')
       this.descontoDinheiro = itemPedido ? itemPedido.descontoDinheiro : 0;
       this.quantidade = itemPedido ? itemPedido.quantidade : 1;
       this.produto = itemPedido ? new Produto(itemPedido.produto) : new Produto();
-      this.auditoria = itemPedido ? itemPedido.auditoria : { idUsuario: '', data: null };
+      this.auditoria = itemPedido ? itemPedido.auditoria : { idUsuario: null, data: null, usuario: null, produto: null, codigoProduto: null };
     }
 
     ItemPedido.prototype = {
@@ -56,6 +56,16 @@ angular.module('commercialApp.services')
 
       getTotalComDesconto: function() {
         return (this.quantidade * this.produto.preco) - this.descontoDinheiro;
+      },
+
+      limparAuditoria: function() {
+        this.auditoria = {
+          idUsuario: null,
+          data: null,
+          usuario: null,
+          produto: null,
+          codigoProduto: null
+        };
       }
     };
 
@@ -71,8 +81,11 @@ angular.module('commercialApp.services')
       item.descontoDinheiro = parseFloat(i.order_item_vl_discount);
 
       item.auditoria = {
-        idUsuario: i.order_item_audit.user_id,
-        data: i.order_item_audit.date ? new Date(i.order_item_audit.date) : null
+        idUsuario: i.order_item_audit ? i.order_item_audit.user_id : null,
+        data: i.order_item_audit ? new Date(i.order_item_audit.date) : null,
+        usuario: i.order_item_audit ? i.order_item_audit.user_name : null,
+        produto: i.order_item_audit ? i.order_item_audit.product_name : null,
+        codigoProduto: i.order_item_audit ? i.order_item_audit.product_code : null
       };
 
       if (i.product) {
@@ -95,7 +108,10 @@ angular.module('commercialApp.services')
       i.product_id = item.idProduto || item.produto.id;
       i.order_item_audit = {
         user_id: item.auditoria.idUsuario,
-        date: DataSaida.converter(item.auditoria.data)
+        date: DataSaida.converter(item.auditoria.data),
+        user_name: item.auditoria.usuario,
+        product_name: item.auditoria.produto,
+        product_code: item.auditoria.codigoProduto
       };
 
       return i;
