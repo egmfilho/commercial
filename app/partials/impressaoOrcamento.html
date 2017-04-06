@@ -117,6 +117,8 @@
             <th>UND</th>
             <th>QTD</th>
             <th>PREÇO</th>
+            <th>DESC %</th>
+            <th>DESC R$</th>
             <th>TOTAL</th>
           </tr>
         <!--</thead>-->
@@ -127,6 +129,8 @@
             <td>{{i.produto.unidade}}</td>
             <td>{{i.quantidade}}</td>
             <td>{{i.produto.preco | currency: 'R$ '}}</td>
+            <td>{{i.descontoPercent | currency: ''}}%</td>
+            <td>{{i.descontoDinheiro | currency: 'R$ '}}</td>
             <td>{{(i.quantidade * i.produto.preco) | currency: 'R$ '}}</td>
           </tr>
         </tbody>
@@ -152,12 +156,11 @@
         </td>
         <td>
           <h5>Valor Total: </h5>{{orcamento.pedido.getValorTotalSemDesconto() | currency: 'R$ '}}<br>
-          <h5>Desconto Total: </h5>{{orcamento.pedido.descontoDinheiro | currency: 'R$ '}}<br>
+          <h5>Desconto Total: </h5>{{orcamento.pedido.getDescontoPercentItens() | currency : ''}}% {{orcamento.pedido.getDescontoDinheiroItens() | currency: 'R$ '}}<br>
           <h5>Valor Líquido: </h5>{{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}<br>
         </td>
         <td>
           <h5>Pagamento:</h5>
-          <br>
           <span>{{orcamento.pedido.prazo.descricao}}</span>
           <br>
           <h5>Total:</h5> {{orcamento.pedido.getValorTotalComDesconto() | currency: 'R$ '}}

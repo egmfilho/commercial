@@ -169,6 +169,11 @@ angular.module('commercialApp.services')
         this.atualizarValores();
       },
 
+      setQuantidade: function (quantidade) {
+        this.item.quantidade = quantidade;
+        i.setDescontoPercent();
+      },
+
       setDescontoPercent: function (percent) {
         var userDesc = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))).perfil.permissoes['order'].permissoes['max_al_discount'].valor : 0;
         percent > userDesc ? percent = userDesc : false;
@@ -187,14 +192,7 @@ angular.module('commercialApp.services')
       },
 
       getDescontoPercentItens: function () {
-        //return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
-        var total = 0;
-
-        angular.forEach(this.items, function (item, index) {
-          total += item.descontoPercent;
-        });
-
-        return total;
+        return 100 - ((this.getValorTotalComDesconto() * 100) / this.getValorTotalSemDesconto());
       },
 
       getDescontoDinheiroItens: function () {

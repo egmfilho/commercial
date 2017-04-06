@@ -1199,9 +1199,14 @@ function Orcamento(
   };
 
   function setParcelas() {
-    // self.pedido.pagamentos = [];
+    // if (!self.pedido.pagamentos.length) {
+      self.pedido.pagamentos = new Array(self.pedido.prazo.parcelas);
+      for (var i = 0; i < self.pedido.pagamentos.length; i++) {
+        self.pedido.pagamentos[i] = new Pagamento();
+      }
+      console.log(self.pedido.pagamentos);
+    // }
     for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
-      // self.pedido.pagamentos.push(new Pagamento());
       self.pedido.pagamentos[i].valor = self.pedido.getValorTotalComDesconto() / self.pedido.prazo.parcelas;
       self.pedido.pagamentos[i].vencimento = getDataDaParcela(self.pedido.prazo, i);
       if (!self.pedido.pagamentos[i].idForma) {
@@ -1227,53 +1232,62 @@ function Orcamento(
     return hoje;
   }
 
-  this.setDescontoPercentItem = function(e) {
-    if (parseFloat($scope.item.descontoPercent) > user.maxDesconto) {
+  this.setDescontoPercentItem = function(item) {
+    if (!item)
+      item = $scope.item;
+
+    if (!item.descontoPercent)
+      item.descontoPercent = 0;
+
+    if (parseFloat(item.descontoPercent) > user.maxDesconto) {
       modalPermissao.show('order', 'user_discount').then(function(success) {
-        if ($scope.item.descontoPercent > success.user_max_discount) {
+        if (item.descontoPercent > success.user_max_discount) {
           modalAlert.show('Aviso!', 'O desconto máximo para esta autorização é de ' + success.user_max_discount + '%.');
         }
-        $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, success.user_max_discount);
-        $scope.item.setDescontoPercent($scope.item.descontoPercent);
-        $scope.item.auditoria.idUsuario = success.user_id;
-        $scope.item.auditoria.data = new Date();
-        $scope.item.auditoria.usuario = success.user_name;
-        $scope.item.auditoria.produto = $scope.item.produto.nome;
-        $scope.item.auditoria.codigoProduto = $scope.item.produto.codigo;
+        item.descontoPercent = Math.min(item.descontoPercent, success.user_max_discount);
+        item.setDescontoPercent(item.descontoPercent);
+        item.auditoria.idUsuario = user_id;
+        item.auditoria.data = new Date();
+        item.auditoria.usuario = user_name;
+        item.auditoria.produto = item.produto.nome;
+        item.auditoria.codigoProduto = item.produto.codigo;
       }, function(error) {
-        $scope.item.descontoPercent = Math.min($scope.item.descontoPercent, user.maxDesconto);
-        $scope.item.setDescontoPercent($scope.item.descontoPercent);
-        $scope.item.auditoria.idUsuario = '';
-        $scope.item.auditoria.data = null;
+        item.descontoPercent = Math.min(item.descontoPercent, user.maxDesconto);
+        item.setDescontoPercent(item.descontoPercent);
+        item.auditoria.idUsuario = '';
+        item.auditoria.data = null;
       });
     } else {
-      $scope.item.auditoria.idUsuario = '';
-      $scope.item.auditoria.data = null;
-      $scope.item.setDescontoPercent($scope.item.descontoPercent);
+      item.auditoria.idUsuario = '';
+      item.auditoria.data = null;
+      item.setDescontoPercent(item.descontoPercent);
     }
   };
 
-  this.setDescontoDinheiroItem = function() {
-    if ($scope.item.descontoDinheiro > $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100)) {
+  this.setDescontoDinheiroItem = function(item) {
+    if (!item)
+        item = $scope.item;
+
+    if (item.descontoDinheiro > item.getTotalSemDesconto() * (user.maxDesconto / 100)) {
       modalPermissao.show('order', 'user_discount').then(function(success) {
-        if ($scope.item.descontoDinheiro > $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100)) {
+        if (item.descontoDinheiro > item.getTotalSemDesconto() * (success.user_max_discount / 100)) {
           modalAlert.show('Aviso!', 'O desconto máximo para esta autorização é de ' + success.user_max_discount + '%.');
         }
-        $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (success.user_max_discount / 100));
-        $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
-        $scope.item.auditoria.idUsuario = success.user_id;
-        $scope.item.auditoria.data = new Date();
-        $scope.item.auditoria.usuario = success.user_name;
-        $scope.item.auditoria.produto = $scope.item.produto.nome;
-        $scope.item.auditoria.codigoProduto = $scope.item.produto.codigo;
+        item.descontoDinheiro = Math.min(item.descontoDinheiro, item.getTotalSemDesconto() * (success.user_max_discount / 100));
+        item.setDescontoDinheiro(item.descontoDinheiro);
+        item.auditoria.idUsuario = success.user_id;
+        item.auditoria.data = new Date();
+        item.auditoria.usuario = success.user_name;
+        item.auditoria.produto = item.produto.nome;
+        item.auditoria.codigoProduto = item.produto.codigo;
       }, function(error) {
-        $scope.item.descontoDinheiro = Math.min($scope.item.descontoDinheiro, $scope.item.getTotalSemDesconto() * (user.maxDesconto / 100));
-        $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
-        $scope.item.limparAuditoria();
+        item.descontoDinheiro = Math.min(item.descontoDinheiro, item.getTotalSemDesconto() * (user.maxDesconto / 100));
+        item.setDescontoDinheiro(item.descontoDinheiro);
+        item.limparAuditoria();
       });
     }
-    $scope.item.limparAuditoria();
-    $scope.item.setDescontoDinheiro($scope.item.descontoDinheiro);
+    item.limparAuditoria();
+    item.setDescontoDinheiro(item.descontoDinheiro);
   };
 
   this.duplicar = function() {

@@ -218,14 +218,20 @@
           <td>{{i.produto.unidade}}</td>
           <td class="editable-elem" editable-elem ng-if="!orcamento.pedido.erp">
             <span>{{i.quantidade | currency : ""}}</span>
-            <input currency symbol="''" number-only type="text" ng-model="i.quantidade" ng-blur="i.quantidade <= 0 || !i.quantidade ? i.quantidade = 1 : ''">
+            <input currency symbol="''" number-only type="text" ng-model="i.quantidade" ng-change="i.setDescontoPercent()" ng-blur="i.quantidade <= 0 || !i.quantidade ? i.setQuantidade(1) : ''">
           </td>
           <td ng-if="orcamento.pedido.erp">
             <span>{{i.quantidade | currency : ""}}</span>
           </td>
           <td>{{i.produto.preco | currency}}</td>
-          <td><span>{{i.descontoPercent | currency : ""}}%</span></td>
-          <td><span>{{i.descontoDinheiro | currency : "R$ "}}</span></td>
+          <td class="editable-elem" editable-elem ng-if="!orcamento.pedido.erp">
+            <span>{{i.descontoPercent | currency : ""}}%</span>
+            <input currency symbol="''" number-only type="text" ng-model="i.descontoPercent" ng-blur="orcamento.setDescontoPercentItem(i)">
+          </td>
+          <td class="editable-elem" editable-elem ng-if="!orcamento.pedido.erp">
+            <span>{{i.descontoDinheiro | currency : "R$ "}}</span>
+            <input currency symbol="''" number-only type="text" ng-model="i.descontoDinheiro" ng-blur="orcamento.setDescontoDinheiroItem(i)">
+          </td>
           <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
           <td>
             <a tabindex="-1" confirm-popup title="Aviso" message="Deseja remover o item?" ok-func="orcamento.removerItem(i)" placement="left" ng-if="!orcamento.pedido.erp">
@@ -656,7 +662,7 @@
         </div>
         <div class="col-md-9">
           <h4>Descrição</h4>
-          <input type="text" class="form-control" placeholder="Descrição do prazo" ng-model="orcamento.tempPrazo" blur-to="orcamento.pedido.prazo.descricao" ng-disabled="orcamento.pedido.erp"
+          <input type="text" class="form-control" placeholder="Descrição do prazo" ng-model="orcamento.tempPrazo" ng-disabled="orcamento.pedido.erp"
                  keys-shortcuts enter=""
                  uib-typeahead="prazo as prazo.descricao for prazo in orcamento.buscarPrazosPorDescricao($viewValue)"
                  typeahead-min-length="2"
@@ -665,6 +671,9 @@
         </div>
 
         <div class="col-xs-12">
+          <br>
+          <h3 class="text-center">{{orcamento.pedido.idPrazo ? orcamento.pedido.prazo.descricao : 'Nenhum prazo selecionado'}}</h3>
+          <br>
           <h4>Parcelas</h4>
           <table class="tabela tabela-esticada tabela-bordered" ng-hide="!orcamento.pedido.pagamentos.length">
             <thead>

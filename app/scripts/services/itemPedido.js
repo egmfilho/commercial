@@ -39,15 +39,19 @@ angular.module('commercialApp.services')
       },
 
       setDescontoPercent: function(percent) {
-        // percent = Math.min(parseFloat(percent), 20);
-        this.descontoPercent = parseFloat(percent);
-        this.descontoDinheiro = parseFloat(percent) > 0 ? this.getTotalSemDesconto() * (parseFloat(percent) / 100) : 0;
+        percent = Math.max(percent, 0);
+
+        if (percent)
+          this.descontoPercent = parseFloat(percent);
+
+        this.descontoDinheiro = this.getTotalSemDesconto() * (this.descontoPercent / 100);
       },
 
       setDescontoDinheiro: function(dinheiro) {
-        // dinheiro = Math.min(dinheiro, this.getTotalSemDesconto() * (0.2));
-        this.descontoDinheiro = parseFloat(dinheiro);
-        this.descontoPercent = (parseFloat(dinheiro) * 100) / this.getTotalSemDesconto();
+        if (dinheiro)
+          this.descontoDinheiro = parseFloat(dinheiro);
+
+        this.descontoPercent = (this.descontoDinheiro * 100) / this.getTotalSemDesconto();
       },
 
       getTotalSemDesconto: function() {
