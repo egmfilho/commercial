@@ -1199,13 +1199,14 @@ function Orcamento(
   };
 
   function setParcelas() {
-    // if (!self.pedido.pagamentos.length) {
+    if (self.pedido.pagamentos.length != self.pedido.prazo.parcelas) {
       self.pedido.pagamentos = new Array(self.pedido.prazo.parcelas);
       for (var i = 0; i < self.pedido.pagamentos.length; i++) {
         self.pedido.pagamentos[i] = new Pagamento();
       }
       console.log(self.pedido.pagamentos);
-    // }
+    }
+
     for (var i = 0; i < self.pedido.prazo.parcelas; i++) {
       self.pedido.pagamentos[i].valor = self.pedido.getValorTotalComDesconto() / self.pedido.prazo.parcelas;
       self.pedido.pagamentos[i].vencimento = getDataDaParcela(self.pedido.prazo, i);

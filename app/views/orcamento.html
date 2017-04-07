@@ -672,7 +672,7 @@
 
         <div class="col-xs-12">
           <br>
-          <h3 class="text-center">{{orcamento.pedido.idPrazo ? orcamento.pedido.prazo.descricao : 'Nenhum prazo selecionado'}}</h3>
+          <h3 class="text-center" ng-show="orcamento.pedido.idPrazo">{{orcamento.pedido.prazo.descricao}}</h3>
           <br>
           <h4>Parcelas</h4>
           <table class="tabela tabela-esticada tabela-bordered" ng-hide="!orcamento.pedido.pagamentos.length">
