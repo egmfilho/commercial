@@ -80,7 +80,7 @@ angular.module('commercialApp.services')
       item.idPedido = i.order_id;
       item.idProduto = i.product_id;
       item.quantidade = parseFloat(i.order_item_amount);
-      item.precoProduto = parseFloat(i.order_item_value);
+      item.precoProduto = parseFloat(i.order_item_value_unitary);
       item.descontoPercent = parseFloat(i.order_item_al_discount);
       item.descontoDinheiro = parseFloat(i.order_item_vl_discount);
 

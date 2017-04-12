@@ -222,7 +222,7 @@ angular.module('commercialApp.services')
           total += item.getTotalComDesconto();
         });
 
-        return Math.round((total - this.descontoDinheiro) * 100) / 100;
+        return Math.round(total * 100) / 100;
       },
 
       addPagamento: function (pagamento) {

@@ -228,9 +228,15 @@
             <span>{{i.descontoPercent | currency : ""}}%</span>
             <input currency symbol="''" number-only type="text" ng-model="i.descontoPercent" ng-blur="orcamento.setDescontoPercentItem(i)">
           </td>
+          <td ng-if="orcamento.pedido.erp">
+            <span>{{i.descontoPercent | currency : ""}}%</span>
+          </td>
           <td class="editable-elem" editable-elem ng-if="!orcamento.pedido.erp">
             <span>{{i.descontoDinheiro | currency : "R$ "}}</span>
             <input currency symbol="''" number-only type="text" ng-model="i.descontoDinheiro" ng-blur="orcamento.setDescontoDinheiroItem(i)">
+          </td>
+          <td ng-if="orcamento.pedido.erp">
+            <span>{{i.descontoDinheiro | currency : "R$ "}}</span>
           </td>
           <td>{{i.getTotalComDesconto() | currency: 'R$ '}}</td>
           <td>
