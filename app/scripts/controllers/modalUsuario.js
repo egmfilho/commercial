@@ -19,7 +19,9 @@ angular.module('commercialApp.controllers')
     'usuario',
     'perfis',
     'permissoes',
-    function ($rootScope, $scope, $cookies, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Loja, Usuario, usuario, perfis, permissoes) {
+    'ProviderPessoa',
+    'Pessoa',
+    function ($rootScope, $scope, $cookies, $uibModalInstance, provider, providerLoja, providerTabelaPrecos, modalAlert, Loja, Usuario, usuario, perfis, permissoes, providerPessoa, Pessoa) {
 
       var self = this,
           currentUser = $cookies.get('currentUser') ? JSON.parse(window.atob($cookies.get('currentUser'))) : null;
@@ -43,6 +45,7 @@ angular.module('commercialApp.controllers')
         }
         getLojas();
         getTabelaPrecos();
+        getRepresentantes();
       });
 
       function getLojas() {
@@ -52,6 +55,22 @@ angular.module('commercialApp.controllers')
           angular.forEach(success.data, function(item, index) {
             self.lojas.push(new Loja(Loja.converterEmEntrada(item)));
           });
+          $rootScope.loading.unload();
+        }, function(error) {
+          console.log(error);
+          $rootScope.loading.unload();
+        });
+      }
+
+      function getRepresentantes() {
+        $rootScope.loading.load();
+        self.representantes = [ ];
+
+        providerPessoa.obterPessoasPorTipo('Vendedor').then(function(success){
+          angular.forEach(success.data, function(item, index) {
+            self.representantes.push(new Pessoa(Pessoa.converterEmEntrada(item)));
+          });
+          console.log(self.representantes);
           $rootScope.loading.unload();
         }, function(error) {
           console.log(error);
@@ -114,6 +133,11 @@ angular.module('commercialApp.controllers')
 
         if (!self.usuario.perfilId) {
           $rootScope.alerta.show('Selecione um perfil!');
+          return false;
+        }
+
+        if (!self.usuario.lojaId) {
+          $rootScope.alerta.show('Selecione uma Empresa!');
           return false;
         }
 

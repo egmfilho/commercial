@@ -46,13 +46,32 @@
               <span class="glyphicon glyphicon-eye-close"></span> Não
             </label>
           </div>
-        </div>
+        </div>        
         <div class="col-sm-12">
           <h4>Loja</h4>
           <select class="form-control" ng-model="modal.usuario.lojaId"
                   ng-options="l.id as (l.codigo + ' - ' + l.nome) for l in modal.lojas" ng-disabled="tranca()">
             <option value="" disabled>Selecione uma loja</option>
           </select>
+        </div>
+        <div class="col-sm-6">
+          <h4>Representante</h4>
+          <select class="form-control" ng-model="modal.usuario.representanteId"
+                  ng-options="l.id as (l.codigo + ' - ' + l.nome) for l in modal.representantes" ng-disabled="tranca()">
+            <option value="" disabled>Selecione um Representante</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <div><h4>Desbloqueia Aparelho</h4></div>
+          <div class="btn-group btn-toggle botao-esticado">
+            <label class="btn btn-primary" ng-model="modal.usuario.desbloqueador" uib-btn-radio="true" ng-disabled="tranca()">
+              <span class="glyphicon glyphicon-eye-open"></span>
+              Sim
+            </label>
+            <label class="btn btn-primary" ng-model="modal.usuario.desbloqueador" uib-btn-radio="false" ng-disabled="tranca()">
+              <span class="glyphicon glyphicon-eye-close"></span> Não
+            </label>
+          </div>
         </div>
         <div class="col-sm-6">
           <h4>Tabela de preços</h4>

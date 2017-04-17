@@ -1,4 +1,10 @@
-<a href="">
+<a href="" style="padding: 5px" ng-class="{'text-light': !match.model.Ativo && match.model.CdProduto != -1}">
   <span ng-if="match.model.CdProduto != -1">{{match.model.CdProduto}} - </span>
   <span ng-bind-html="match.model.NmProduto | uibTypeaheadHighlight:query"></span>
+  <span ng-if="match.model.CdProduto != -1">
+	<br>
+  	<span>Preço: {{match.model.VlPreco | currency:'R$ '}}</span>
+  	<br>
+  	<span>Qtd em estoque: {{match.model.QtEstoque}} {{match.model.Unidade}}</span>	
+  </span>
 </a>

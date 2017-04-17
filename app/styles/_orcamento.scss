@@ -163,6 +163,8 @@ $print-font-size: 11px;
   .dropdown-menu {
     min-width: 200px;
     width: 97.5%;
+    overflow-y: auto;
+    max-height: 350px;
 
     li {
       overflow-x: hidden;

@@ -58,6 +58,14 @@ angular.module('commercialApp.services')
           }).$promise;
         },
 
+        obterPessoasPorTipo: function(tipo) {
+          return provider.query({
+            action: 'getList'
+          }, {
+            TpPessoa: tipo
+          }).$promise;
+        },
+
         adicionarPessoa: function(pessoa) {
           return provider.save({
             action: 'insert'

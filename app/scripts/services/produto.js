@@ -14,7 +14,7 @@ angular.module('commercialApp.services')
       this.marca = produto ? produto.marca : '';
       this.referencia = produto ? produto.referencia : '';
       this.codBarras = produto ? produto.codBarras : '';
-      this.qtdEstoque = produto ? produto.qtdEstoque : '';
+      this.qtdEstoque = produto ? produto.qtdEstoque : 0;
       this.preco = produto ? produto.preco : 0;
       this.unidade = produto ? produto.unidade : '';
       this.ativo = produto ? produto.ativo : '';

@@ -93,6 +93,8 @@ function Orcamento(
 
   $scope.$on('$viewContentLoaded', function () {
     self.pedido = new Pedido();
+    self.pedido.setVendedor(user.representante);
+    $scope.cdVendedor = user.representante.codigo;
     $scope.item = new ItemPedido();
     $scope.cliente = {novo: false};
     $scope.lockCodigo = false;
@@ -648,8 +650,10 @@ function Orcamento(
     $rootScope.loading.load();
     console.log('saida cliente', Pessoa.converterEmSaida(this.pedido.cliente));
     providerPessoa.adicionarPessoa(Pessoa.converterEmSaida(this.pedido.cliente)).then(function (success) {
-      self.pedido.setIdCliente(success.data.IdPessoa);
-      self.pedido.cliente.codigo = success.data.CdPessoa;
+      //self.pedido.setIdCliente(success.data.IdPessoa);
+      self.pedido.setCliente(new Pessoa(Pessoa.converterEmEntrada(success.data)));
+      //self.pedido.cliente.codigo = success.data.CdPessoa;
+      console.log(self.pedido.cliente);
       $scope.cdCliente = self.pedido.cliente.codigo;
       $scope.cliente.novo = false;
       $rootScope.loading.unload();
@@ -795,12 +799,14 @@ function Orcamento(
 
     function limpa() {
       self.pedido = new Pedido();
+      self.pedido.setVendedor(user.representante);
+      $scope.cdVendedor = user.representante.codigo;
       $scope.item = new ItemPedido();
       $scope.cdCliente = null;
       $scope.cdVendedor = null;
       focarVendedor();
       $location.search('code', null);
-      $location.path('/orcamento/new');
+      $location.path('/orcamento/new');      
     }
 
     if (perguntar) {

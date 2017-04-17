@@ -74,6 +74,9 @@ body.padding-bottom {
   -moz-box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35);
   box-shadow: 0 2px 4px rgba(50, 50, 50, 0.35); }
 
+.text-light {
+  color: #bbb !important; }
+
 .card {
   background-color: white;
   padding: 10px; }
@@ -1030,7 +1033,9 @@ div[name="footer"] .navbar {
     padding: 10px; }
   #formulario-orcamento .dropdown-menu {
     min-width: 200px;
-    width: 97.5%; }
+    width: 97.5%;
+    overflow-y: auto;
+    max-height: 350px; }
     #formulario-orcamento .dropdown-menu li {
       overflow-x: hidden; }
       #formulario-orcamento .dropdown-menu li > a {

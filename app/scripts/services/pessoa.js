@@ -60,11 +60,9 @@ angular.module('commercialApp.services')
       pessoa.telefone = p.Telefone;
 
       if (p.Celular) {
-        pessoa.celular = p.Celular.length >= 11 ? p.Celular.substr(2, 9) : '';
-        pessoa.dddCelular = p.Celular.length >= 11 ? p.Celular.substr(0, 2) : '';
+        pessoa.celular = p.Celular;
       } else {
         pessoa.celular = '';
-        pessoa.dddCelular = '';
       }
 
       pessoa.email = p.Email;
@@ -99,7 +97,7 @@ angular.module('commercialApp.services')
       p.Doc = pessoa.tipo == 'F' ? pessoa.cpf : pessoa.cnpj;
       p.IEstadual = pessoa.iEstadual;
       p.Telefone = pessoa.telefone;
-      p.Celular = pessoa.celular.length > 0 ? pessoa.dddCelular + pessoa.celular : '';
+      p.Celular = pessoa.celular.length > 0 ? pessoa.celular : '';
       p.Email = pessoa.email;
       p.Ativo = pessoa.ativo;
       p.Origem = pessoa.origem;

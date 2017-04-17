@@ -114,6 +114,10 @@ body.padding-bottom {
   box-shadow: 0 2px 4px $cor-sombra;
 }
 
+.text-light {
+  color: #bbb !important;
+}
+
 .card {
   @extend .sombra;
   background-color: white;

@@ -13,7 +13,7 @@
       <div class="main-head text-center">
         <h3>
           <!--<span class="glyphicon glyphicon-shopping-cart"></span>-->
-          <span class="hidden-xs">{{orcamento.pedido.codigo ? ('Código ' + orcamento.pedido.codigo) : ''}}</span>
+          <span class="hidden-xs">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
           <span class="hidden-xs">{{orcamento.pedido.loja && orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.loja.nome)) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
@@ -301,7 +301,7 @@
         <h3>Cliente
           <span ng-if="!formularios.cliente && orcamento.pedido.cliente.nome">
             &raquo; ({{cliente.novo ? 'Novo Cliente' : orcamento.pedido.cliente.codigo}})
-            <span class="hidden-xs">- {{orcamento.pedido.cliente.nome}})</span>
+            <span class="hidden-xs">- {{orcamento.pedido.cliente.nome}}</span>
           </span>
           <a href="" class="limpar" ng-click="orcamento.limparCliente($event)" uib-tooltip="Limpar campos" tooltip-append-to-body="true">
             <span class="glyphicon glyphicon-erase"></span>

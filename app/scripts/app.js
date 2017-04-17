@@ -26,9 +26,10 @@ angular
     'ui.select',
     'colorpicker.module'
   ])
-  .config(['$httpProvider', function ($httpProvider) {
+  .config(['$httpProvider', '$locationProvider', function ($httpProvider, $locationProvider) {
     $httpProvider.interceptors.push('SessionInjector');
     //$httpProvider.defaults.withCredentials = true;
+    $locationProvider.hashPrefix('');
   }])
   .config(function ($routeProvider) {
     $routeProvider
@@ -118,7 +119,7 @@ angular
       return new Array(num);
     };
 
-    $rootScope.versao = '1.2.1';
+    $rootScope.versao = '1.2.3';
 
     $rootScope.loading = {
       count: 0,
