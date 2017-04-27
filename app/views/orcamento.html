@@ -13,9 +13,8 @@
       <div class="main-head text-center">
         <h3>
           <!--<span class="glyphicon glyphicon-shopping-cart"></span>-->
-          <span class="hidden-xs">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
-          <span class="hidden-xs">{{orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.dataPedido | date:'dd/MM/yyyy')) : ''}}</span>
-          <span class="hidden-xs">{{orcamento.pedido.loja && orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.loja.nome)) : ''}}</span>
+          <span class="hidden-xs">{{orcamento.pedido.codigo ? ('Código: ' + orcamento.pedido.codigo) : ''}}</span>
+          <span class="hidden-xs">{{orcamento.pedido.codigo ? ('- ' + (orcamento.pedido.dataPedido | date:'short')) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.codigo) : ''}}</span>
           <span class="visible-xs-inline">{{orcamento.pedido.codigo ? (orcamento.pedido.dataPedido | date:'dd/MM/yyyy') : ''}}</span>
           {{orcamento.pedido.codigo ? '' : 'Novo Orçamento'}}
@@ -25,6 +24,11 @@
           <a href="" class="pull-right" ng-click="orcamento.imprimir()" title="Imprimir" style="margin-right: 10px"><span class="glyphicon glyphicon-print"></span></a>
         </h3>
       </div>
+    </div>
+    <div class="col-xs-12" ng-show="orcamento.pedido.loja && orcamento.pedido.codigo">
+      <h3 class="text-center">
+        <span class="hidden-xs">{{orcamento.pedido.loja.nome}}</span>
+      </h3>
     </div>
     <br class="visible-xs-block">
     <div class="col-xs-6 col-md-3">
@@ -170,9 +174,9 @@
         <h4>Desconto %</h4>
         <span class="input-group">
           <input name="percent" type="text" class="form-control" currency symbol="''" number-only
-                 ng-model="item.descontoPercent" ng-change="orcamento.setDescontoPercentItem()"
-                 keys-shortcuts prevent-default="true" enter="orcamento.avancar('input', 'dinheiro')"
-                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id" ng-model-options="{'debounce': 500}">
+                 ng-model="item.descontoPercent" keys-shortcuts prevent-default="true"
+                 ng-blur="orcamento.setDescontoPercentItem()" enter="orcamento.avancar('input', 'dinheiro')"
+                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id">
           <span class="input-group-addon">%</span>
         </span>
       </div>
@@ -180,11 +184,11 @@
         <h4>Desconto R$</h4>
         <span class="input-group">
           <span class="input-group-addon">R$</span>
-          <input name="dinheiro" type="text" class="form-control" currency symbol="''" number-only
-                 ng-model="item.descontoDinheiro" ng-change="orcamento.setDescontoDinheiroItem()"
-                 keys-shortcuts prevent-default="true"
+          <input name="dinheiro" type="text" class="form-control"  currency symbol="''" number-only
+                 ng-model="item.descontoDinheiro" keys-shortcuts prevent-default="true"
+                 ng-blur="orcamento.setDescontoDinheiroItem()"
                  enter="item.quantidade <= 0 ? orcamento.limparProdutoTemp() : orcamento.addItem()"
-                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id" ng-model-options="{'debounce': 500}">
+                 shift-enter="orcamento.escapeProdutos()" ng-readonly="!item.produto.id">
         </span>
       </div>
       <div class="col-xs-4 col-sm-3">
