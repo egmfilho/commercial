@@ -6,7 +6,7 @@ angular.module('commercialApp.controllers')
     this.login = function(username, password) {
       authentication.login(username, password, function(res) {
 
-        switch (res.status) {
+        switch (res.status.code) {
           case 401:
             $rootScope.alerta.show('Usuário não autorizado!', 'alert-danger');
             break;
