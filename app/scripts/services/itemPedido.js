@@ -44,14 +44,14 @@ angular.module('commercialApp.services')
         if (percent)
           this.descontoPercent = parseFloat(percent);
 
-        this.descontoDinheiro = this.getTotalSemDesconto() * (this.descontoPercent / 100);
+        this.descontoDinheiro = (this.getTotalSemDesconto() * (this.descontoPercent / 100)).toFixed(2);
       },
 
       setDescontoDinheiro: function(dinheiro) {
         if (dinheiro)
           this.descontoDinheiro = parseFloat(dinheiro);
 
-        this.descontoPercent = (this.descontoDinheiro * 100) / this.getTotalSemDesconto();
+        this.descontoPercent = ((this.descontoDinheiro * 100) / this.getTotalSemDesconto()).toFixed(2);
       },
 
       getTotalSemDesconto: function() {
