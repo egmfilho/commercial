@@ -109,29 +109,30 @@
         <span class="data"><h5>Data da impressão: </h5>{{getHoje() | date: 'medium'}}</span>
       </div>
 
-      <table class="tabela" ng-class="$index > 0 ? 'margem' : ''">
+      <table class="tabela" style="table-layout: fixed;" ng-class="$index > 0 ? 'margem' : ''">
         <!--<thead>-->
           <tr>
-            <th>CÓDIGO</th>
-            <th>DESCRIÇÃO</th>
-            <th>UND</th>
-            <th>QTD</th>
-            <th>PREÇO</th>
-            <th>DESC %</th>
-            <th>DESC R$</th>
-            <th>TOTAL</th>
+            <th style="width: 7%">CÓD</th>
+            <th style="width: 40%">DESCRIÇÃO</th>
+            <th style="width: 5%">UND</th>
+            <th style="width: 5%">QTD</th>
+            <th style="width: 8%">VALOR</th>
+            <th colspan="2" style="width: auto">DESCONTO</th>
+            <th style="width: 8%">LÍQUIDO</th>
+            <th style="width: 12%">TOTAL</th>
           </tr>
         <!--</thead>-->
         <tbody>
           <tr ng-repeat="i in bloco">
-            <td>{{i.produto.codigo}}</td>
-            <td>{{i.produto.nome | truncate: '50'}}</td>
-            <td>{{i.produto.unidade}}</td>
-            <td>{{i.quantidade}}</td>
-            <td>{{i.produto.preco | currency: 'R$ '}}</td>
-            <td>{{i.descontoPercent | currency: ''}}%</td>
-            <td>{{i.descontoDinheiro | currency: 'R$ '}}</td>
-            <td>{{(i.quantidade * i.produto.preco) | currency: 'R$ '}}</td>
+            <td style="width: 7%">{{i.produto.codigo}}</td>
+            <td style="width: 40%">{{i.produto.nome | truncate: '50'}}</td>
+            <td style="width: 5%">{{i.produto.unidade}}</td>
+            <td style="width: 5%">{{i.quantidade}}</td>
+            <td style="width: 8%">{{i.produto.preco | currency}}</td>
+            <td style="width: 7%">{{i.descontoPercent | currency: ''}}%</td>
+            <td style="width: 8%">{{i.descontoDinheiro | currency}}</td>
+            <td style="width: 8%">{{(i.getTotalComDesconto() / i.quantidade) | currency}}</td>
+            <td style="width: 12%">{{i.getTotalComDesconto() | currency}}</td>
           </tr>
         </tbody>
       </table>
