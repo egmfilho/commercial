@@ -31,6 +31,8 @@ $print-font-size: 11px;
 
     .tabela {
       border: 1px solid black !important;
+      //table-layout: fixed !important;
+
       td, th {
         background-color: white !important;
         border: 1px solid black !important;
